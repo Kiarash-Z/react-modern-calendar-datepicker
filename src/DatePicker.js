@@ -15,6 +15,8 @@ const App = () => {
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedDayRange, setSelectedDayRange] = useState({ from: null, to: null });
+
+  // get mouse live position
   useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove, false);
     return () => {
@@ -22,11 +24,11 @@ const App = () => {
     }
   }, []);
   useEffect(() => {
-    if (!isCalendarOpen && selectedDay) dateInput.current.blur();
-    if (!isCalendarOpen &&
+    const shouldCloseSingleSelectCalendar = !isCalendarOpen && selectedDay;
+    const shouldCloseRangeSelectCalendar = !isCalendarOpen &&
       selectedDayRange.from &&
-      selectedDayRange.to
-    ) dateInput.current.blur();
+      selectedDayRange.to;
+    if(shouldCloseRangeSelectCalendar || shouldCloseSingleSelectCalendar) dateInput.current.blur();
   });
 
   const toggleCalendar = () => setCalendarVisiblity(!isCalendarOpen);
