@@ -78,7 +78,7 @@ const Calendar = ({
       .concat(isEndingDayRange ? ' -selectedEnd' : '')
       .concat(isWithinRange ? ' -selectedBetween' : '');
     return classNames;
-  }
+  };
 
   const renderMonthDays = isNewMonth => {
     const date = getDate(!isNewMonth);
@@ -99,13 +99,13 @@ const Calendar = ({
     return allDays.map(({ id, value: day , month, year, isStandard }) => {
       const dayItem = { day, month, year };
       const additionalClass = getDayClassNames({ ...dayItem, isStandard });
-
+      const isFromSelectedOnly = isSameDay(dayItem, selectedDayRange.from) && !selectedDayRange.to;
       return (
         <button
           key={id}
           className={`Calendar__day ${additionalClass}`}
           onClick={() => { handleDayClick({ day, month, year }); }}
-          disabled={!isStandard}
+          disabled={!isStandard || isFromSelectedOnly}
         >
           {toPersianNumber(day)}
         </button>
@@ -208,7 +208,7 @@ const Calendar = ({
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default Calendar;
