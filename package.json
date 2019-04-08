@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jalaali-js": "^1.1.0"
+    "jalaali-js": "^1.1.0",
+    "prop-types": "^15.7.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

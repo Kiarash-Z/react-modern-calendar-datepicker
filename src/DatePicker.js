@@ -8,13 +8,14 @@ import DatePickerInput from './DatePickerInput';
 
 let shouldPreventFocus, mousePosition;
 
-let isDayRange = true; // remove this
-
-const DatePicker = () => {
+const DatePicker = ({
+  isDayRange,
+  selectedDay,
+  onChange,
+}) => {
   const calendarContainer = useRef(null)
   const dateInput = useRef(null);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
-  const [selectedDay, setSelectedDay] = useState(null);
   const [selectedDayRange, setSelectedDayRange] = useState({ from: null, to: null });
 
   // get mouse live position
@@ -25,12 +26,14 @@ const DatePicker = () => {
     }
   }, []);
   useEffect(() => {
-    const shouldCloseSingleSelectCalendar = !isCalendarOpen && selectedDay;
-    const shouldCloseRangeSelectCalendar = !isCalendarOpen &&
+    const shouldCloseCalendar = !isDayRange ?
+    !isCalendarOpen : (
+      !isCalendarOpen &&
       selectedDayRange.from &&
-      selectedDayRange.to;
-    if(shouldCloseRangeSelectCalendar || shouldCloseSingleSelectCalendar) dateInput.current.blur();
-  });
+      selectedDayRange.to
+    );
+    if (shouldCloseCalendar) dateInput.current.blur();
+  }, [selectedDay, isCalendarOpen]);
 
   const toggleCalendar = () => setCalendarVisiblity(!isCalendarOpen);
 
@@ -63,7 +66,7 @@ const DatePicker = () => {
   };
 
   const handleDaySelect = day => {
-    setSelectedDay(day);
+    onChange(day);
     toggleCalendar();
   };
 
@@ -97,6 +100,20 @@ const DatePicker = () => {
       />
     </div>
   );
+};
+
+DatePicker.defaultProps = {
+  isDayRange: false,
+  selectedDay: null,
+};
+
+DatePicker.propTypes = {
+  selectedDay: PropTypes.shape({
+    year: PropTypes.number.isRequired,
+    month: PropTypes.number.isRequired,
+    day: PropTypes.number.isRequired,
+  }),
+  onChange: PropTypes.func,
 };
 
 export default DatePicker;
