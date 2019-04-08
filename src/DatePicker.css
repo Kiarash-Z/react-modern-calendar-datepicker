@@ -1,0 +1,47 @@
+.DatePicker, .DatePicker * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  direction: rtl;
+}
+
+.DatePicker {
+  --cl-color-black: #444444;
+  --cl-color-disabled: #d4d4d4;
+  --cl-color-primary: #0eca2d;
+  --cl-color-primary-light: #cff4d5;
+  --cl-color-error: #ff2929;
+  --animation-duration: 0.3s;
+  position: relative;
+  font-size: 10px;
+}
+
+.DatePicker button {
+  font-family: inherit;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.DatePicker__input {
+  border: none;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 0.4rem 0.8rem;
+  font-family: inherit;
+  text-align: center;
+  border-radius: 3px;
+  outline: none;
+  font-size: 0.8rem;
+  color: var(--cl-color-black);
+}
+
+.DatePicker__input::placeholder { color: #979797; }
+
+.DatePicker__calendarContainer {
+  position: absolute;
+  top: calc(100% + 2em);
+  left: 50%;
+  transform: translateX(-50%);
+}

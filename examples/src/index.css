@@ -1,0 +1,9 @@
+
+body {
+  background: #FBFBFB;
+  font-family: 'IRANYekan'; /* remove this line */
+  display: flex;  /* remove this line */
+  justify-content: center;  /* remove this line */
+  padding-top: 10rem;
+  height: 100vh;  /* remove this line */
+}
