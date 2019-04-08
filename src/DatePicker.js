@@ -12,6 +12,10 @@ const DatePicker = ({
   isDayRange,
   selectedDay,
   onChange,
+  formatInputText,
+  inputPlaceholder,
+  inputClassName,
+  renderInput,
 }) => {
   const calendarContainer = useRef(null)
   const dateInput = useRef(null);
@@ -95,8 +99,11 @@ const DatePicker = ({
         ref={dateInput}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        formatInputText={formatInputText}
         selectedDay={selectedDay}
-        placeholder="انتخاب"
+        inputPlaceholder={inputPlaceholder}
+        inputClassName={inputClassName}
+        renderInput={renderInput}
       />
     </div>
   );
@@ -113,7 +120,7 @@ DatePicker.propTypes = {
     month: PropTypes.number.isRequired,
     day: PropTypes.number.isRequired,
   }),
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default DatePicker;
