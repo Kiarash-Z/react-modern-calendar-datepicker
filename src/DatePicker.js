@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 
 import './DatePicker.css';
 
@@ -9,7 +10,7 @@ let shouldPreventFocus, mousePosition;
 
 let isDayRange = true; // remove this
 
-const App = () => {
+const DatePicker = () => {
   const calendarContainer = useRef(null)
   const dateInput = useRef(null);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
@@ -96,6 +97,6 @@ const App = () => {
       />
     </div>
   );
-}
+};
 
-export default App;
+export default DatePicker;
