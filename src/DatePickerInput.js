@@ -1,24 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { toPersianNumber } from './utils';
+import { toPersianNumber, putZero } from './utils';
 
 const DatePickerInput = React.forwardRef(({
   onFocus,
   onBlur,
   selectedDay,
+  selectedDayRange,
   inputPlaceholder,
   inputClassName,
   formatInputText,
   renderInput,
+  isDayRange
 }, ref) => {
-  const getValue = () => {
+
+  const getSelectedDayValue = () => {
     if (!selectedDay) return '';
     const year = toPersianNumber(selectedDay.year);
-    const month = toPersianNumber(selectedDay.month);
-    const day = toPersianNumber(selectedDay.day);
-    return formatInputText({ year, month, day });
+    const month = toPersianNumber(putZero(selectedDay.month));
+    const day = toPersianNumber(putZero(selectedDay.day));
+    return `${year}/${month}/${day}`;
   };
+  const getSelectedRangeValue = () => {
+    if (!selectedDayRange.from || !selectedDayRange.to) return '';
+    const { from, to } = selectedDayRange;
+    const fromText = `${toPersianNumber(putZero(from.month))}/${toPersianNumber(putZero(from.day))}`;
+    const toText = `${toPersianNumber(putZero(to.month))}/${toPersianNumber(putZero(to.day))}`;
+    return `از ${fromText} تا ${toText}`;
+  };
+  const getValue = () => {
+    if (formatInputText()) return formatInputText();
+    return isDayRange ? getSelectedRangeValue() : getSelectedDayValue();
+  };
+
   const render = () => {
     return renderInput({ ref, onFocus, onBlur }) || (
       <input
@@ -37,7 +52,7 @@ const DatePickerInput = React.forwardRef(({
 });
 
 DatePickerInput.defaultProps = {
-  formatInputText: ({ year, month, day }) => `${year}/${month}/${day}`,
+  formatInputText: () => '',
   renderInput: () => null,
   inputPlaceholder: 'انتخاب',
   inputClassName: '',

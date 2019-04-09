@@ -16,11 +16,11 @@ const DatePicker = ({
   inputPlaceholder,
   inputClassName,
   renderInput,
+  selectedDayRange,
 }) => {
-  const calendarContainer = useRef(null)
+  const calendarContainer = useRef(null);
   const dateInput = useRef(null);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
-  const [selectedDayRange, setSelectedDayRange] = useState({ from: null, to: null });
 
   // get mouse live position
   useEffect(() => {
@@ -75,7 +75,7 @@ const DatePicker = ({
   };
 
   const handleDayRangeSelect = range => {
-    setSelectedDayRange(range);
+    onChange(range);
     if (range.from && range.to) toggleCalendar();
   };
 
@@ -101,24 +101,36 @@ const DatePicker = ({
         onBlur={handleBlur}
         formatInputText={formatInputText}
         selectedDay={selectedDay}
+        selectedDayRange={selectedDayRange}
         inputPlaceholder={inputPlaceholder}
         inputClassName={inputClassName}
         renderInput={renderInput}
+        isDayRange={isDayRange}
       />
     </div>
   );
 };
 
+const dayShape = {
+  year: PropTypes.number.isRequired,
+  month: PropTypes.number.isRequired,
+  day: PropTypes.number.isRequired,
+};
+
 DatePicker.defaultProps = {
   isDayRange: false,
   selectedDay: null,
+  selectedDayRange: {
+    from: null,
+    to: null
+  },
 };
 
 DatePicker.propTypes = {
-  selectedDay: PropTypes.shape({
-    year: PropTypes.number.isRequired,
-    month: PropTypes.number.isRequired,
-    day: PropTypes.number.isRequired,
+  selectedDay: PropTypes.shape(dayShape),
+  selectedDayRange: PropTypes.shape({
+    from: PropTypes.shape(dayShape),
+    to: PropTypes.shape(dayShape),
   }),
   onChange: PropTypes.func.isRequired,
 };

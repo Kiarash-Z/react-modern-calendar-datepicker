@@ -99,6 +99,8 @@ const checkDayInDayRange = ({ day, from, to }) => {
   return (nativeDay > nativeFrom) && (nativeDay < nativeTo);
 };
 
+const putZero = number => number.toString().length === 1 ? `0${number}` : number;
+
 export {
   WEEK_DAYS,
   CURRENT_DATE,
@@ -112,4 +114,5 @@ export {
   isSameDay,
   checkDayInDayRange,
   isBeforeDate,
+  putZero,
 };
