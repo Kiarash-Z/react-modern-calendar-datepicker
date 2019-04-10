@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 
-import './Calendar.css'
+import './Calendar.css';
 import arrow from './assets/arrow.svg';
 import {
   CURRENT_DATE,
@@ -20,9 +21,8 @@ let activeDate = CURRENT_DATE;
 
 const Calendar = ({
   selectedDay,
-  onDaySelect,
   selectedDayRange,
-  onDayRangeSelect,
+  onChange,
   isDayRange,
 }) => {
   const monthYearTextWrapper = useRef(null);
@@ -48,7 +48,7 @@ const Calendar = ({
   };
 
   const handleDayClick = day => {
-    if (!isDayRange) return onDaySelect(day);
+    if (!isDayRange) return onChange(day);
     const clonedDayRange = JSON.parse(JSON.stringify(selectedDayRange)); // deep clone;
     const dayRangeValue = (clonedDayRange.from && clonedDayRange.to) ? { from: null, to: null } : clonedDayRange;
     const dayRangeProp = !dayRangeValue.from ? 'from' : 'to';
@@ -60,7 +60,7 @@ const Calendar = ({
       dayRangeValue.from = to;
       dayRangeValue.to = from;
     }
-    onDayRangeSelect(dayRangeValue);
+    onChange(dayRangeValue);
   };
 
   const getDayClassNames = dayItem => {
@@ -210,5 +210,29 @@ const Calendar = ({
     </div>
   );
 };
+
+const dayShape = {
+  year: PropTypes.number.isRequired,
+  month: PropTypes.number.isRequired,
+  day: PropTypes.number.isRequired,
+};
+
+Calendar.defaultProps = {
+  onChange: () => null,
+
+  selectedDay: null,
+  selectedDayRange: {
+    from: null,
+    to: null
+  },
+}
+
+Calendar.propTypes = {
+  selectedDay: PropTypes.shape(dayShape),
+  selectedDayRange: PropTypes.shape({
+    from: PropTypes.shape(dayShape),
+    to: PropTypes.shape(dayShape),
+  }),
+}
 
 export default Calendar;

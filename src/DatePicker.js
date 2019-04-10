@@ -89,6 +89,7 @@ const DatePicker = ({
           <Calendar
             onDaySelect={handleDaySelect}
             selectedDay={selectedDay}
+            onChange={isDayRange ? handleDayRangeSelect : handleDaySelect}
             selectedDayRange={selectedDayRange}
             onDayRangeSelect={handleDayRangeSelect}
             isDayRange={isDayRange}
@@ -111,27 +112,12 @@ const DatePicker = ({
   );
 };
 
-const dayShape = {
-  year: PropTypes.number.isRequired,
-  month: PropTypes.number.isRequired,
-  day: PropTypes.number.isRequired,
-};
-
 DatePicker.defaultProps = {
   isDayRange: false,
   selectedDay: null,
-  selectedDayRange: {
-    from: null,
-    to: null
-  },
 };
 
 DatePicker.propTypes = {
-  selectedDay: PropTypes.shape(dayShape),
-  selectedDayRange: PropTypes.shape({
-    from: PropTypes.shape(dayShape),
-    to: PropTypes.shape(dayShape),
-  }),
   onChange: PropTypes.func.isRequired,
 };
 
