@@ -1,11 +1,11 @@
-.CalendarWrapper, .CalendarWrapper * {
+.Calendar, .Calendar * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   direction: rtl;
 }
 
-.CalendarWrapper {
+.Calendar {
   --cl-color-black: #444444;
   --cl-color-disabled: #d4d4d4;
   --cl-color-primary: #0eca2d;
@@ -27,7 +27,7 @@
   min-height: 35.7em;
 }
 
-.CalendarWrapper button {
+.Calendar button {
   font-family: inherit;
   background: transparent;
   outline: none;
@@ -35,7 +35,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.CalendarWrapper::after {
+.Calendar::after {
   content: "";
   position: absolute;
   width: 0;

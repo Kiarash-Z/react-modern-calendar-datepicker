@@ -24,6 +24,12 @@ const Calendar = ({
   selectedDayRange,
   onChange,
   isDayRange,
+  calendarClassName,
+  calendarTodayClassName,
+  calendarSelectedDayClassName,
+  calendarRangeStartClassName,
+  calendarRangeBetweenClassName,
+  calendarRangeEndClassName,
 }) => {
   const monthYearTextWrapper = useRef(null);
   const calendarSectionWrapper = useRef(null);
@@ -71,12 +77,12 @@ const Calendar = ({
     const isEndingDayRange = isSameDay(dayItem, endingDay);
     const isWithinRange = checkDayInDayRange({ day: dayItem, from: startingDay, to: endingDay });
     const classNames = ''
-      .concat((isToday && !isSelected) ? ' -today' : '')
+      .concat((isToday && !isSelected) ? ` -today ${calendarTodayClassName}` : '')
       .concat(!dayItem.isStandard ? ' -blank' : '')
-      .concat(isSelected ? ' -selected' : '')
-      .concat(isStartedDayRange ? ' -selectedStart' : '')
-      .concat(isEndingDayRange ? ' -selectedEnd' : '')
-      .concat(isWithinRange ? ' -selectedBetween' : '');
+      .concat(isSelected ? ` -selected ${calendarSelectedDayClassName}` : '')
+      .concat(isStartedDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
+      .concat(isEndingDayRange ? ` -selectedEnd ${calendarRangeEndClassName}` : '')
+      .concat(isWithinRange ? ` -selectedBetween ${calendarRangeBetweenClassName}` : '');
     return classNames;
   };
 
@@ -154,7 +160,7 @@ const Calendar = ({
   // determine the hidden animated item
   const isCycleCountEven = newMonthState.cycleCount % 2 === 0;
   return (
-    <div className="CalendarWrapper">
+    <div className={`Calendar ${calendarClassName}`}>
       <div className="Calendar__header">
         <button
           className="Calendar__monthArrowWrapper -right"
@@ -219,20 +225,32 @@ const dayShape = {
 
 Calendar.defaultProps = {
   onChange: () => null,
-
   selectedDay: null,
   selectedDayRange: {
     from: null,
     to: null
   },
+  calendarClassName: '',
+  calendarTodayClassName: '',
+  calendarSelectedDayClassName: '',
+  calendarRangeStartClassName: '',
+  calendarRangeBetweenClassName: '',
+  calendarRangeEndClassName: '',
 }
 
 Calendar.propTypes = {
+  onChange: PropTypes.func,
   selectedDay: PropTypes.shape(dayShape),
   selectedDayRange: PropTypes.shape({
     from: PropTypes.shape(dayShape),
     to: PropTypes.shape(dayShape),
   }),
+  calendarClassName: PropTypes.string,
+  calendarTodayClassName: PropTypes.string,
+  calendarSelectedDayClassName: PropTypes.string,
+  calendarRangeStartClassName: PropTypes.string,
+  calendarRangeBetweenClassName: PropTypes.string,
+  calendarRangeEndClassName: PropTypes.string,
 }
 
 export default Calendar;

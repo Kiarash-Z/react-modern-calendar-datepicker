@@ -17,6 +17,13 @@ const DatePicker = ({
   inputClassName,
   renderInput,
   selectedDayRange,
+  wrapperClassName,
+  calendarClassName,
+  calendarTodayClassName,
+  calendarSelectedDayClassName,
+  calendarRangeStartClassName,
+  calendarRangeBetweenClassName,
+  calendarRangeEndClassName,
 }) => {
   const calendarContainer = useRef(null);
   const dateInput = useRef(null);
@@ -80,7 +87,7 @@ const DatePicker = ({
   };
 
   return (
-    <div className="DatePicker">
+    <div className={`DatePicker ${wrapperClassName}`}>
       {isCalendarOpen && (
         <div
           ref={calendarContainer}
@@ -93,6 +100,12 @@ const DatePicker = ({
             selectedDayRange={selectedDayRange}
             onDayRangeSelect={handleDayRangeSelect}
             isDayRange={isDayRange}
+            calendarClassName={calendarClassName}
+            calendarTodayClassName={calendarTodayClassName}
+            calendarSelectedDayClassName={calendarSelectedDayClassName}
+            calendarRangeStartClassName={calendarRangeStartClassName}
+            calendarRangeBetweenClassName={calendarRangeBetweenClassName}
+            calendarRangeEndClassName={calendarRangeEndClassName}
           />
         </div>
       )}
@@ -115,10 +128,11 @@ const DatePicker = ({
 DatePicker.defaultProps = {
   isDayRange: false,
   selectedDay: null,
+  wrapperClassName: '',
 };
 
 DatePicker.propTypes = {
-  onChange: PropTypes.func.isRequired,
+  wrapperClassName: PropTypes.string,
 };
 
 export default DatePicker;
