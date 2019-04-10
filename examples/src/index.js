@@ -10,7 +10,6 @@ const App = () => {
     <DatePicker
       selectedDay={selectedDay}
       onChange={setValue}
-      calendarSelectedDayClassName="range-start"
     />
   );
 };

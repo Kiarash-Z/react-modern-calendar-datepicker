@@ -7,15 +7,3 @@ body {
   padding-top: 10rem;
   height: 100vh;  /* remove this line */
 }
-
-.range-start {
-  background: red !important;
-}
-
-.range-end {
-  background: blue !important;
-}
-
-.range-between {
-  background: yellow !important;
-}

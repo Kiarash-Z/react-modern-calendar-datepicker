@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import './Calendar.css';
@@ -15,9 +15,10 @@ import {
   isSameDay,
   checkDayInDayRange,
   isBeforeDate,
+  shallowCloneObject,
 } from './utils';
 
-let activeDate = CURRENT_DATE;
+let activeDate = null;
 
 const Calendar = ({
   selectedDay,
@@ -37,6 +38,18 @@ const Calendar = ({
     status: 'NEXT',
     cycleCount: 1,
   });
+  useEffect(() => {
+    return () => {
+      activeDate = null;
+    };
+  }, [])
+
+  const setActiveDate = () => {
+    if (selectedDay) activeDate = shallowCloneObject(selectedDay);
+    else if (selectedDayRange.from) activeDate = shallowCloneObject(selectedDayRange.from);
+    else activeDate = shallowCloneObject(CURRENT_DATE);
+  };
+  if(!activeDate) setActiveDate();
 
   const renderWeekDays = () => Object
     .keys(WEEK_DAYS)

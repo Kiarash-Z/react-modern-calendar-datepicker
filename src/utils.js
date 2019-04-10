@@ -100,6 +100,7 @@ const checkDayInDayRange = ({ day, from, to }) => {
 };
 
 const putZero = number => number.toString().length === 1 ? `0${number}` : number;
+const shallowCloneObject = obj => ({...obj});
 
 export {
   WEEK_DAYS,
@@ -115,4 +116,5 @@ export {
   checkDayInDayRange,
   isBeforeDate,
   putZero,
+  shallowCloneObject,
 };
