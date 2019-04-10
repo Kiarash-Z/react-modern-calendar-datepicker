@@ -86,7 +86,7 @@ const Calendar = ({
     return classNames;
   };
 
-  const renderMonthDays = isNewMonth => {
+  const getViewMonthDays = isNewMonth =>  {
     const date = getDate(!isNewMonth);
     const prependingBlankDays = createUniqueRange(getMonthFirstWeekday(date), 'starting-blank');
 
@@ -102,6 +102,11 @@ const Calendar = ({
       'standard'
     );
     const allDays = prependingBlankDays.concat(standardDays, appendingBlankDays);
+    return allDays;
+  };
+
+  const renderMonthDays = isNewMonth => {
+    const allDays = getViewMonthDays(isNewMonth);
     return allDays.map(({ id, value: day , month, year, isStandard }) => {
       const dayItem = { day, month, year };
       const additionalClass = getDayClassNames({ ...dayItem, isStandard });
