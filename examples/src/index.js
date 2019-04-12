@@ -5,12 +5,11 @@ import DatePicker from '../../src/DatePicker';
 import * as serviceWorker from './serviceWorker';
 
 const App = () => {
-  const [selectedDay, setValue] = useState({ from: null, to: null });
+  const [selectedDay, setValue] = useState(null);
   return (
     <DatePicker
-      selectedDayRange={selectedDay}
+      selectedDay={selectedDay}
       onChange={setValue}
-      isDayRange
     />
   );
 };

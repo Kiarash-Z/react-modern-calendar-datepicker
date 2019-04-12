@@ -216,10 +216,6 @@
 .Calendar__day:nth-child(7n):not(.-selected):not(.-blank):not(.-selectedStart):not(.-selectedEnd) {
   color: var(--cl-color-error);
 }
-.Calendar__day:nth-child(7n).-today:not(.-selected) {
-  color: var(--cl-color-error);
-  border-color: var(--cl-color-error);
-}
 .Calendar__day.-disabled {
   color: var(--cl-color-disabled) !important;
   background: transparent !important;
@@ -227,7 +223,9 @@
 }
 .Calendar__day.-selected { border-radius: 50%; }
 .Calendar__day.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween) {
-  color: var(--cl-color-primary);
+  font-weight: bold;
+  color: var(--cl-color-black);
+  color: #000;
 }
 
 
