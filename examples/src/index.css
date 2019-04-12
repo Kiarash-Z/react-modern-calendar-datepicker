@@ -1,9 +1,11 @@
 
+@import './fonts/fonts.css';
+
 body {
   background: #FBFBFB;
-  font-family: 'IRANYekan'; /* remove this line */
-  display: flex;  /* remove this line */
-  justify-content: center;  /* remove this line */
+  font-family: iranyekan;
+  display: flex;
+  justify-content: center;
   padding-top: 10rem;
-  height: 100vh;  /* remove this line */
+  height: 100vh;
 }

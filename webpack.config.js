@@ -15,6 +15,10 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        use: 'file-loader',
+        test: /\.(woff(2)?|ttf)(\?v=\d+\.\d+\.\d+)?$/,
+      },
+      {
         test: /\.(gif|png|jpe?g|svg)$/i,
         use: [
           'file-loader',
@@ -38,5 +42,6 @@ module.exports = {
   },
   devServer: {
     port: 3001
-  }
+  },
+  devtool: 'source-map',
 };
