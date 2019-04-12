@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import './Calendar.css';
 import arrow from './assets/arrow.svg';
+
 import {
   CURRENT_DATE,
   WEEK_DAYS,
@@ -45,18 +46,21 @@ const Calendar = ({
     return () => {
       activeDate = null;
     };
-  }, [])
+  }, []);
 
   const setActiveDate = () => {
     if (selectedDay) activeDate = shallowCloneObject(selectedDay);
     else if (selectedDayRange.from) activeDate = shallowCloneObject(selectedDayRange.from);
     else activeDate = shallowCloneObject(CURRENT_DATE);
   };
-  if(!activeDate) setActiveDate();
+  if (!activeDate) setActiveDate();
 
-  const renderWeekDays = () => Object
-    .keys(WEEK_DAYS)
-    .map(key => <span key={key} className="Calendar__weekDay">{WEEK_DAYS[key][0]}</span>);
+  const renderWeekDays = () =>
+    Object.keys(WEEK_DAYS).map(key => (
+      <span key={key} className="Calendar__weekDay">
+        {WEEK_DAYS[key][0]}
+      </span>
+    ));
 
   const getDate = isThisMonth => {
     return isThisMonth ? activeDate : getDateAccordingToMonth(activeDate, newMonthState.status);
@@ -72,7 +76,8 @@ const Calendar = ({
   const handleDayClick = day => {
     if (!isDayRange) return onChange(day);
     const clonedDayRange = JSON.parse(JSON.stringify(selectedDayRange)); // deep clone;
-    const dayRangeValue = (clonedDayRange.from && clonedDayRange.to) ? { from: null, to: null } : clonedDayRange;
+    const dayRangeValue =
+      clonedDayRange.from && clonedDayRange.to ? { from: null, to: null } : clonedDayRange;
     const dayRangeProp = !dayRangeValue.from ? 'from' : 'to';
     dayRangeValue[dayRangeProp] = day;
     const { from, to } = dayRangeValue;
@@ -93,7 +98,7 @@ const Calendar = ({
     const isEndingDayRange = isSameDay(dayItem, endingDay);
     const isWithinRange = checkDayInDayRange({ day: dayItem, from: startingDay, to: endingDay });
     const classNames = ''
-      .concat((isToday && !isSelected) ? ` -today ${calendarTodayClassName}` : '')
+      .concat(isToday && !isSelected ? ` -today ${calendarTodayClassName}` : '')
       .concat(!dayItem.isStandard ? ' -blank' : '')
       .concat(isSelected ? ` -selected ${calendarSelectedDayClassName}` : '')
       .concat(isStartedDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
@@ -103,20 +108,20 @@ const Calendar = ({
     return classNames;
   };
 
-  const getViewMonthDays = isNewMonth =>  {
+  const getViewMonthDays = isNewMonth => {
     const date = getDate(!isNewMonth);
     const prependingBlankDays = createUniqueRange(getMonthFirstWeekday(date), 'starting-blank');
 
     // all months will have an additional 7 days(week) for rendering purpose
     const appendingBlankDays = createUniqueRange(7 - getMonthFirstWeekday(date), 'ending-blank');
-    const standardDays = createUniqueRange(
-      getMonthLength(date)).map(day => ({
+    const standardDays = createUniqueRange(getMonthLength(date)).map(
+      day => ({
         ...day,
         isStandard: true,
         month: date.month,
-        year: date.year
+        year: date.year,
       }),
-      'standard'
+      'standard',
     );
     const allDays = prependingBlankDays.concat(standardDays, appendingBlankDays);
     return allDays;
@@ -124,7 +129,7 @@ const Calendar = ({
 
   const renderMonthDays = isNewMonth => {
     const allDays = getViewMonthDays(isNewMonth);
-    return allDays.map(({ id, value: day , month, year, isStandard }) => {
+    return allDays.map(({ id, value: day, month, year, isStandard }) => {
       const dayItem = { day, month, year };
       const isDisabled = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
       const additionalClass = getDayClassNames({ ...dayItem, isStandard, isDisabled });
@@ -133,8 +138,11 @@ const Calendar = ({
         <button
           key={id}
           className={`Calendar__day ${additionalClass}`}
-          onClick={() => { handleDayClick({ day, month, year }); }}
+          onClick={() => {
+            handleDayClick({ day, month, year });
+          }}
           disabled={!isStandard || isFromSelectedOnly || isDisabled}
+          type="button"
         >
           {toPersianNumber(day)}
         </button>
@@ -151,16 +159,16 @@ const Calendar = ({
     const hiddenItem = wrapperChildren.find(child => child !== shownItem);
     const baseClass = shownItem.classList[0];
     const isNextMonth = direction === 'NEXT';
-    const getAnimationClass = value => value ? '-hiddenNext' : '-hiddenPrevious';
+    const getAnimationClass = value => (value ? '-hiddenNext' : '-hiddenPrevious');
     shownItem.className = `${baseClass} ${getAnimationClass(!isNextMonth)}`;
-    hiddenItem.className =  `${baseClass} ${getAnimationClass(isNextMonth)}`;
+    hiddenItem.className = `${baseClass} ${getAnimationClass(isNextMonth)}`;
     hiddenItem.classList.add('-shownAnimated');
   };
 
   const handleMonthClick = (e, direction) => {
     setNewMonthState({
       ...newMonthState,
-      status: direction
+      status: direction,
     });
     animateContent(direction, monthYearTextWrapper);
     animateContent(direction, calendarSectionWrapper);
@@ -191,34 +199,28 @@ const Calendar = ({
         <button
           className="Calendar__monthArrowWrapper -right"
           onClick={e => handleMonthClick(e, 'NEXT')}
+          type="button"
         >
-          <img src={arrow} className="Calendar__monthArrow" alt="فلش راست"/>
+          <img src={arrow} className="Calendar__monthArrow" alt="فلش راست" />
         </button>
         <div className="Calendar__monthYearContainer" ref={monthYearTextWrapper}>
           &nbsp;
-          <span
-            onAnimationEnd={handleAnimationEnd}
-            className="Calendar__monthYear -shown"
-          >
+          <span onAnimationEnd={handleAnimationEnd} className="Calendar__monthYear -shown">
             {getMonthYearText(isCycleCountEven)}
           </span>
-          <span
-            onAnimationEnd={handleAnimationEnd}
-            className="Calendar__monthYear -hiddenNext"
-          >
+          <span onAnimationEnd={handleAnimationEnd} className="Calendar__monthYear -hiddenNext">
             {getMonthYearText(!isCycleCountEven)}
           </span>
         </div>
         <button
           className="Calendar__monthArrowWrapper -left"
           onClick={e => handleMonthClick(e, 'PREVIOUS')}
+          type="button"
         >
-          <img src={arrow} className="Calendar__monthArrow" alt="فلش چپ"/>
+          <img src={arrow} className="Calendar__monthArrow" alt="فلش چپ" />
         </button>
       </div>
-      <div className="Calendar__weekDays">
-        {renderWeekDays()}
-      </div>
+      <div className="Calendar__weekDays">{renderWeekDays()}</div>
       <div ref={calendarSectionWrapper} className="Calendar__sectionWrapper">
         <div
           onAnimationEnd={e => {
@@ -254,7 +256,7 @@ Calendar.defaultProps = {
   selectedDay: null,
   selectedDayRange: {
     from: null,
-    to: null
+    to: null,
   },
   disabledDays: [],
   colorPrimary: '#0eca2d',
@@ -265,7 +267,7 @@ Calendar.defaultProps = {
   calendarRangeStartClassName: '',
   calendarRangeBetweenClassName: '',
   calendarRangeEndClassName: '',
-}
+};
 
 Calendar.propTypes = {
   onChange: PropTypes.func,
@@ -283,6 +285,6 @@ Calendar.propTypes = {
   calendarRangeEndClassName: PropTypes.string,
   colorPrimary: PropTypes.string,
   colorPrimaryLight: PropTypes.string,
-}
+};
 
 export default Calendar;

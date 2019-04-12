@@ -6,7 +6,8 @@ import './DatePicker.css';
 import Calendar from './Calendar';
 import DatePickerInput from './DatePickerInput';
 
-let shouldPreventFocus, mousePosition;
+let shouldPreventFocus;
+let mousePosition;
 
 const DatePicker = ({
   isDayRange,
@@ -32,20 +33,22 @@ const DatePicker = ({
   const dateInput = useRef(null);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
 
+  const handleMouseMove = e => {
+    const { clientX: x, clientY: y } = e;
+    mousePosition = { x, y };
+  };
+
   // get mouse live position
   useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove, false);
     return () => {
       document.removeEventListener('mousemove', handleMouseMove, false);
-    }
+    };
   }, []);
   useEffect(() => {
-    const shouldCloseCalendar = !isDayRange ?
-    !isCalendarOpen : (
-      !isCalendarOpen &&
-      selectedDayRange.from &&
-      selectedDayRange.to
-    );
+    const shouldCloseCalendar = !isDayRange
+      ? !isCalendarOpen
+      : !isCalendarOpen && selectedDayRange.from && selectedDayRange.to;
     if (shouldCloseCalendar) dateInput.current.blur();
   }, [selectedDay, isCalendarOpen]);
 
@@ -57,8 +60,9 @@ const DatePicker = ({
     const { current: calendar } = calendarContainer;
     if (!calendar) return;
     const calendarPosition = calendar.getBoundingClientRect();
-    const isInBetween = (value, start, end) => (value >= start) && (value <= end);
-    const isInsideCalendar = isInBetween(mousePosition.x, calendarPosition.left, calendarPosition.right) &&
+    const isInBetween = (value, start, end) => value >= start && value <= end;
+    const isInsideCalendar =
+      isInBetween(mousePosition.x, calendarPosition.left, calendarPosition.right) &&
       isInBetween(mousePosition.y, calendarPosition.top, calendarPosition.bottom);
     if (isInsideCalendar) {
       shouldPreventFocus = true;
@@ -74,11 +78,6 @@ const DatePicker = ({
     toggleCalendar();
   };
 
-  const handleMouseMove = e => {
-    const { clientX: x, clientY: y } = e;
-    mousePosition = { x, y };
-  };
-
   const handleDaySelect = day => {
     onChange(day);
     toggleCalendar();
@@ -92,10 +91,7 @@ const DatePicker = ({
   return (
     <div className={`DatePicker ${wrapperClassName}`}>
       {isCalendarOpen && (
-        <div
-          ref={calendarContainer}
-          className="DatePicker__calendarContainer"
-        >
+        <div ref={calendarContainer} className="DatePicker__calendarContainer">
           <Calendar
             onDaySelect={handleDaySelect}
             selectedDay={selectedDay}
@@ -132,8 +128,6 @@ const DatePicker = ({
 };
 
 DatePicker.defaultProps = {
-  isDayRange: false,
-  selectedDay: null,
   wrapperClassName: '',
 };
 
