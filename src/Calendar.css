@@ -8,8 +8,6 @@
 .Calendar {
   --cl-color-black: #444444;
   --cl-color-disabled: #d4d4d4;
-  --cl-color-primary: #0eca2d;
-  --cl-color-primary-light: #cff4d5;
   --cl-color-error: #ff2929;
   --animation-duration: 0.3s;
   font-size: 10px;

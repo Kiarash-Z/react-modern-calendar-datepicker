@@ -32,6 +32,8 @@ const Calendar = ({
   calendarRangeBetweenClassName,
   calendarRangeEndClassName,
   disabledDays,
+  colorPrimary,
+  colorPrimaryLight,
 }) => {
   const monthYearTextWrapper = useRef(null);
   const calendarSectionWrapper = useRef(null);
@@ -181,7 +183,10 @@ const Calendar = ({
   // determine the hidden animated item
   const isCycleCountEven = newMonthState.cycleCount % 2 === 0;
   return (
-    <div className={`Calendar ${calendarClassName}`}>
+    <div
+      className={`Calendar ${calendarClassName}`}
+      style={{ '--cl-color-primary': colorPrimary, '--cl-color-primary-light': colorPrimaryLight }}
+    >
       <div className="Calendar__header">
         <button
           className="Calendar__monthArrowWrapper -right"
@@ -252,6 +257,8 @@ Calendar.defaultProps = {
     to: null
   },
   disabledDays: [],
+  colorPrimary: '#0eca2d',
+  colorPrimaryLight: '#cff4d5',
   calendarClassName: '',
   calendarTodayClassName: '',
   calendarSelectedDayClassName: '',
@@ -274,6 +281,8 @@ Calendar.propTypes = {
   calendarRangeStartClassName: PropTypes.string,
   calendarRangeBetweenClassName: PropTypes.string,
   calendarRangeEndClassName: PropTypes.string,
+  colorPrimary: PropTypes.string,
+  colorPrimaryLight: PropTypes.string,
 }
 
 export default Calendar;
