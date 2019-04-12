@@ -31,6 +31,7 @@ const Calendar = ({
   calendarRangeStartClassName,
   calendarRangeBetweenClassName,
   calendarRangeEndClassName,
+  disabledDays,
 }) => {
   const monthYearTextWrapper = useRef(null);
   const calendarSectionWrapper = useRef(null);
@@ -95,7 +96,8 @@ const Calendar = ({
       .concat(isSelected ? ` -selected ${calendarSelectedDayClassName}` : '')
       .concat(isStartedDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
       .concat(isEndingDayRange ? ` -selectedEnd ${calendarRangeEndClassName}` : '')
-      .concat(isWithinRange ? ` -selectedBetween ${calendarRangeBetweenClassName}` : '');
+      .concat(isWithinRange ? ` -selectedBetween ${calendarRangeBetweenClassName}` : '')
+      .concat(dayItem.isDisabled ? '-disabled' : '');
     return classNames;
   };
 
@@ -122,14 +124,15 @@ const Calendar = ({
     const allDays = getViewMonthDays(isNewMonth);
     return allDays.map(({ id, value: day , month, year, isStandard }) => {
       const dayItem = { day, month, year };
-      const additionalClass = getDayClassNames({ ...dayItem, isStandard });
+      const isDisabled = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
+      const additionalClass = getDayClassNames({ ...dayItem, isStandard, isDisabled });
       const isFromSelectedOnly = isSameDay(dayItem, selectedDayRange.from) && !selectedDayRange.to;
       return (
         <button
           key={id}
           className={`Calendar__day ${additionalClass}`}
           onClick={() => { handleDayClick({ day, month, year }); }}
-          disabled={!isStandard || isFromSelectedOnly}
+          disabled={!isStandard || isFromSelectedOnly || isDisabled}
         >
           {toPersianNumber(day)}
         </button>
@@ -248,6 +251,7 @@ Calendar.defaultProps = {
     from: null,
     to: null
   },
+  disabledDays: [],
   calendarClassName: '',
   calendarTodayClassName: '',
   calendarSelectedDayClassName: '',
@@ -263,6 +267,7 @@ Calendar.propTypes = {
     from: PropTypes.shape(dayShape),
     to: PropTypes.shape(dayShape),
   }),
+  disabledDays: PropTypes.arrayOf(PropTypes.shape(dayShape)),
   calendarClassName: PropTypes.string,
   calendarTodayClassName: PropTypes.string,
   calendarSelectedDayClassName: PropTypes.string,

@@ -24,6 +24,7 @@ const DatePicker = ({
   calendarRangeStartClassName,
   calendarRangeBetweenClassName,
   calendarRangeEndClassName,
+  disabledDays,
 }) => {
   const calendarContainer = useRef(null);
   const dateInput = useRef(null);
@@ -106,6 +107,7 @@ const DatePicker = ({
             calendarRangeStartClassName={calendarRangeStartClassName}
             calendarRangeBetweenClassName={calendarRangeBetweenClassName}
             calendarRangeEndClassName={calendarRangeEndClassName}
+            disabledDays={disabledDays}
           />
         </div>
       )}
