@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import './DatePicker.css';
-
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
 
