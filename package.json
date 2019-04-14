@@ -2,19 +2,33 @@
   "name": "react-persian-date-picker",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "lint": "eslint src",
     "test": "jest test",
     "clean": "rimraf lib",
-    "build": "yarn clean && cross-env NODE_ENV=production babel src -d lib --copy-files"
+    "build": "yarn clean && cross-env NODE_ENV=production babel src -d lib --copy-files",
+    "size": "size-limit"
   },
+  "files": [
+    "lib"
+  ],
   "author": "",
   "license": "ISC",
+  "size-limit": [
+    {
+      "path": "lib/index.js",
+      "limit": "8 KB"
+    }
+  ],
   "dependencies": {
     "jalaali-js": "^1.1.0",
     "prop-types": "^15.7.2"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
@@ -41,6 +55,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "rimraf": "^2.6.3",
+    "size-limit": "^1.0.1",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
