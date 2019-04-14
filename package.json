@@ -6,7 +6,9 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "lint": "eslint src",
-    "test": "jest test"
+    "test": "jest test",
+    "clean": "rimraf lib",
+    "build": "yarn clean && cross-env NODE_ENV=production babel src -d lib --copy-files"
   },
   "author": "",
   "license": "ISC",
@@ -15,12 +17,14 @@
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
+    "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -36,6 +40,7 @@
     "prettier": "^1.16.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "rimraf": "^2.6.3",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
