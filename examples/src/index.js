@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import '../../lib/DatePicker.css';
 import { DatePicker } from '../../lib';
 import * as serviceWorker from './serviceWorker';
 
