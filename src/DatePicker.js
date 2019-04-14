@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './DatePicker.css';
 
-import Calendar from './Calendar';
+import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
 
 let shouldPreventFocus;
@@ -135,4 +135,4 @@ DatePicker.propTypes = {
   wrapperClassName: PropTypes.string,
 };
 
-export default DatePicker;
+export { DatePicker };

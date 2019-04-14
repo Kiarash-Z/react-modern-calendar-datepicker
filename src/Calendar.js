@@ -287,4 +287,4 @@ Calendar.propTypes = {
   colorPrimaryLight: PropTypes.string,
 };
 
-export default Calendar;
+export { Calendar };
