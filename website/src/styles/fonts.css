@@ -4,9 +4,8 @@
   font-style: normal;
   font-weight: 300;
   src: local('Source Sans Pro Light'), local('SourceSansPro-Light'),
-       url('../fonts/source-sans-pro-v12-latin-300.woff2') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/source-sans-pro-v12-latin-300.woff') format('woff'), /* Modern Browsers */
-       url('../fonts/source-sans-pro-v12-latin-300.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/ssp300.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/ssp300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 @font-face {
@@ -14,9 +13,8 @@
   font-style: normal;
   font-weight: 400;
   src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'),
-       url('../fonts/source-sans-pro-v12-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/source-sans-pro-v12-latin-regular.woff') format('woff'), /* Modern Browsers */
-       url('../fonts/source-sans-pro-v12-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/sspregular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/sspregular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 @font-face {
@@ -24,7 +22,6 @@
   font-style: normal;
   font-weight: 600;
   src: local('Source Sans Pro SemiBold'), local('SourceSansPro-SemiBold'),
-       url('../fonts/source-sans-pro-v12-latin-600.woff2') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/source-sans-pro-v12-latin-600.woff') format('woff'), /* Modern Browsers */
-       url('../fonts/source-sans-pro-v12-latin-600.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/ssp600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/ssp600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
