@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from "gatsby"
 
+import Logo from '../../images/logo.svg';
+
 import styles from "./navbar.module.css"
 
 const Navbar = ({ version }) => {
   return (
     <nav className={styles.Navbar}>
       <div className={styles.Navbar__titleContainer}>
+        <Logo className={styles.Navbar__logo} />
         <h1>
           <Link className={styles.Navbar__title} to="/">react-persian-date-picker</Link>
         </h1>
