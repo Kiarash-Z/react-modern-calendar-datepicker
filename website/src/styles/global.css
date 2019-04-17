@@ -21,3 +21,36 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+button {
+  -webkit-tap-highlight-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+@media (max-width: 1199.98px) {
+  html {
+    font-size: 56.25%; /* 9 px */
+  }
+}
+
+@media (max-width: 991.98px) {
+  html {
+    font-size: 50%; /* 8 px */
+  }
+}
+
+@media (max-width: 767.98px) {
+  html {
+    font-size: 43.75%; /* 7 px */
+  }
+}
+
+@media (max-width: 575.98px) {
+  html {
+    font-size: 37.5%; /* 6 px */
+  }
+}
+
