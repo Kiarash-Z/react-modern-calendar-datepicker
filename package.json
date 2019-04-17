@@ -1,24 +1,25 @@
 {
   "name": "react-persian-date-picker",
   "version": "1.0.0",
-  "description": "",
+  "description": "A lightweight, customizable, Persian date picker for React",
   "main": "lib/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "lint": "eslint src",
-    "test": "jest test",
+    "test": "jest ./test",
     "clean": "rimraf lib",
     "build": "yarn clean && cross-env NODE_ENV=production babel src -d lib --copy-files",
-    "size": "size-limit"
+    "size": "size-limit",
+    "checkAll": "yarn size && yarn lint && yarn test"
   },
   "files": [
     "lib"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Kiarash Zarinmehr",
+  "license": "MIT",
   "size-limit": [
     {
-      "path": "lib/index.js",
+      "path": "./src/index.js",
       "limit": "8 KB"
     }
   ],
