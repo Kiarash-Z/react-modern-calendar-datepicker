@@ -1,0 +1,16 @@
+.Button {
+  display: flex;
+  align-items: center;
+  background: #F6F6F6;
+  color: #7F8C8D;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  border-radius: 50rem;
+  padding: 1.2rem 4rem;
+  min-width: 19rem;
+  min-height: 5rem;
+}
+
+.Button span {
+  margin-left: 1.5rem;
+}

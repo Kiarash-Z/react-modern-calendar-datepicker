@@ -1,0 +1,10 @@
+.Button {
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  border-radius: 50rem;
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 1.2rem 1.5rem;
+  min-width: 19rem;
+  min-height: 5rem;
+}
