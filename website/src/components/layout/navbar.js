@@ -1,20 +1,22 @@
 import React from 'react';
 import { Link } from "gatsby"
 
+import styles from "./navbar.module.css"
+
 const Navbar = ({ version }) => {
   return (
-    <nav className="Navbar">
-      <div className="Navbar__titleContainer">
-        <h1 className="Navbar__title">
-          <Link to="/">react-persian-date-picker</Link>
+    <nav className={styles.Navbar}>
+      <div className={styles.Navbar__titleContainer}>
+        <h1>
+          <Link className={styles.Navbar__title} to="/">react-persian-date-picker</Link>
         </h1>
-        <span className="Navbar__version">{version}</span>
+        <span className={styles.Navbar__version}>v{version}</span>
       </div>
-      <ul className="Navbar__list">
-        <li className="Navbar__listItem">
+      <ul className={styles.Navbar__list}>
+        <li className={styles.Navbar__listItem}>
           <Link to="/docs">Docs</Link>
         </li>
-        <li className="Navbar__listItem">
+        <li className={styles.Navbar__listItem}>
           <Link to="/docs">Github</Link>
         </li>
       </ul>
