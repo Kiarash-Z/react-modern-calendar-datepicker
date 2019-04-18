@@ -1,5 +1,5 @@
 {
-  "name": "react-persian-date-picker",
+  "name": "react-persian-calendar-date-picker",
   "version": "1.0.0-beta.0",
   "description": "A lightweight, customizable, Persian date picker for React",
   "main": "lib/index.js",
@@ -18,7 +18,7 @@
   "author": "Kiarash Zarinmehr",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kiarash-Z/react-persian-date-picker"
+    "url": "https://github.com/Kiarash-Z/react-persian-calendar-date-picker.git"
   },
   "license": "MIT",
   "size-limit": [
