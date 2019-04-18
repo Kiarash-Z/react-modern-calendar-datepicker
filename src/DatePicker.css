@@ -42,7 +42,6 @@
   position: relative;
   user-select: none;
   padding-top: 3.2em;
-  padding-bottom: 1.5em;
   display: flex;
   flex-direction: column;
   width: 32em;
@@ -212,6 +211,7 @@
   width: calc(100% / 7);
   text-align: center;
   padding: calc(0.25em - 1px) 0;
+  min-height: 2.25em;
   font-size: 1.6em;
   border-radius: 50%;
   transition: 0.2s;
@@ -260,7 +260,7 @@
 }
 .Calendar__day.-selected { border-radius: 50%; }
 .Calendar__day.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween) {
-  font-weight: bold;
+  font-weight: 600;
   color: var(--cl-color-black);
   color: #000;
   position: relative;
