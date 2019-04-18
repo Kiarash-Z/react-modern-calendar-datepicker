@@ -35,14 +35,53 @@ const IndexPage = () => (
         </ButtonSocial>
       </div>
     </div>
-    {/* <div className="example">
+
+    <div className="installation">
+
+
+    </div>
+
+    <div className="exampleList">
       <div className="exampleItem">
-        <span className="exampleItem__title">Basic Date Picker</span>
-        <p className="exampleItem__description">
-          Consists of an input element + calendar
-        </p>
+        <div>
+          <span className="exampleItem__title">Basic Date Picker</span>
+          <p className="exampleItem__description">
+            Functions using an input and a calendar. Only one day is selectable.
+          </p>
+        </div>
       </div>
-    </div> */}
+
+      <div className="exampleItem">
+        <div>
+          <span className="exampleItem__title">Select a Range of Days</span>
+          <p className="exampleItem__description">
+            Select a range of days by specifying a starting and an ending day.
+          </p>
+        </div>
+      </div>
+
+      <div className="exampleItem">
+        <div>
+          <span className="exampleItem__title">
+            Use Standalone Calendar Component
+          </span>
+          <p className="exampleItem__description">
+            No input needed? No problem. You can use Calendar component itself.
+          </p>
+        </div>
+      </div>
+
+      <div className="exampleItem">
+        <div>
+          <span className="exampleItem__title">
+            Customize According to Your Styles
+          </span>
+          <p className="exampleItem__description">
+            Functions using an input and a calendar. Only one day is selectable.
+          </p>
+        </div>
+      </div>
+    </div>
   </Layout>
 )
 

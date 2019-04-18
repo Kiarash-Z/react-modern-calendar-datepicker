@@ -51,9 +51,35 @@
 }
 
 .exampleList {
-  
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding: 0 15rem;
 }
 
 .exampleItem {
+  flex-basis: calc(50% - 2rem);
+  display: flex;
+  flex-direction: column;
+  /* padding-left: 4rem; */
+  align-items: center;
+}
 
+.exampleItem:nth-last-child(-n + 2) {
+  margin-top: 5rem;
+}
+
+.exampleItem:nth-child(2n) {
+  margin-left: 4rem;
+}
+
+.exampleItem__title {
+  font-size: 2.1rem;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.exampleItem__description {
+  font-size: 1.6rem;
 }
