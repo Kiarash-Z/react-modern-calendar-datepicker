@@ -251,8 +251,30 @@
   font-weight: bold;
   color: var(--cl-color-black);
   color: #000;
+  position: relative;
 }
 
+.Calendar__day.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween)::after {
+  content: "";
+  position: absolute;
+  bottom: 0.2em;
+  display: block;
+  width: 0.6em;
+  height: 1px;
+  background: #000;
+  left: 50%;
+  opacity: 0.5;
+  transform: translateX(-50%);
+  transition: 0.2s;
+}
+
+.Calendar__day:nth-child(7n).-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween)::after {
+  background: var(--cl-color-error);
+}
+
+.Calendar__day.-today:hover:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween)::after {
+  opacity: 0;
+}
 
 .Calendar__day.-blank {
   color: transparent;
