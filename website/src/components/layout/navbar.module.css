@@ -1,0 +1,51 @@
+.Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-white);
+  padding: 2rem 4rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.Navbar__titleContainer {
+  display: flex;
+  align-items: center;
+}
+
+.Navbar__title {
+  font-size: 2rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  padding: 1rem;
+}
+
+.Navbar__logo {
+  width: 3.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  margin-right: 0.5rem;
+}
+
+.Navbar__version {
+  font-size: 1.3rem;
+  margin-left: 0.5rem;
+  margin-bottom: -0.5rem;
+}
+
+.Navbar__list {
+  display: flex;
+  font-size: 1.6rem;
+}
+
+.Navbar__listItem {
+  padding: 0.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.Navbar__list li:not(:last-child) {
+  margin-right: 3.5rem;
+}
