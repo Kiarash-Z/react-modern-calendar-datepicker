@@ -135,4 +135,4 @@ DatePicker.propTypes = {
   wrapperClassName: PropTypes.string,
 };
 
-export { DatePicker };
+export default DatePicker;

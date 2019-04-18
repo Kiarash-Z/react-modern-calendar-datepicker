@@ -16,8 +16,6 @@ import {
   shallowCloneObject,
 } from './utils';
 
-let activeDate = null;
-
 const Calendar = ({
   selectedDay,
   selectedDayRange,
@@ -35,21 +33,19 @@ const Calendar = ({
 }) => {
   const monthYearTextWrapper = useRef(null);
   const calendarSectionWrapper = useRef(null);
-  const [newMonthState, setNewMonthState] = useState({
+  const [mainState, setMainState] = useState({
     status: 'NEXT',
     cycleCount: 1,
+    activeDate: null,
   });
-  useEffect(() => {
-    return () => {
-      activeDate = null;
-    };
-  }, []);
+  let activeDate = mainState.activeDate ? shallowCloneObject(mainState.activeDate) : null;
 
   const setActiveDate = () => {
     if (selectedDay) activeDate = shallowCloneObject(selectedDay);
     else if (selectedDayRange.from) activeDate = shallowCloneObject(selectedDayRange.from);
     else activeDate = shallowCloneObject(CURRENT_DATE);
   };
+
   if (!activeDate) setActiveDate();
 
   const renderWeekDays = () =>
@@ -60,7 +56,7 @@ const Calendar = ({
     ));
 
   const getDate = isThisMonth => {
-    return isThisMonth ? activeDate : getDateAccordingToMonth(activeDate, newMonthState.status);
+    return isThisMonth ? activeDate : getDateAccordingToMonth(activeDate, mainState.status);
   };
 
   const getMonthYearText = isNewMonth => {
@@ -163,8 +159,8 @@ const Calendar = ({
   };
 
   const handleMonthClick = (e, direction) => {
-    setNewMonthState({
-      ...newMonthState,
+    setMainState({
+      ...mainState,
       status: direction,
     });
     animateContent(direction, monthYearTextWrapper);
@@ -178,15 +174,15 @@ const Calendar = ({
   };
 
   const updateDate = () => {
-    activeDate = getDateAccordingToMonth(activeDate, newMonthState.status);
-    setNewMonthState({
-      ...newMonthState,
-      cycleCount: newMonthState.cycleCount + 1,
+    setMainState({
+      ...mainState,
+      cycleCount: mainState.cycleCount + 1,
+      activeDate: getDateAccordingToMonth(activeDate, mainState.status),
     });
   };
 
   // determine the hidden animated item
-  const isCycleCountEven = newMonthState.cycleCount % 2 === 0;
+  const isCycleCountEven = mainState.cycleCount % 2 === 0;
   return (
     <div
       className={`Calendar ${calendarClassName}`}
