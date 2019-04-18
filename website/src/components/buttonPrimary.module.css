@@ -6,5 +6,6 @@
   color: var(--color-white);
   padding: 1.2rem 1.5rem;
   min-width: 19rem;
+  box-shadow: 0 1rem 2rem rgba(14, 202, 45, 0.35);
   min-height: 5rem;
 }

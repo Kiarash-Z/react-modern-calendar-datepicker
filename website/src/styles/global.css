@@ -11,6 +11,7 @@ html {
 body {
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 300;
+  color: var(--color-black);
 }
 
 li {
@@ -28,6 +29,10 @@ button {
   outline: none;
   cursor: pointer;
   font-family: inherit;
+}
+
+.persianFontWrapper {
+  font-family: 'iranyekan';
 }
 
 @media (max-width: 1199.98px) {

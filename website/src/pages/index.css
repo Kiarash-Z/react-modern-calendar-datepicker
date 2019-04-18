@@ -61,12 +61,17 @@
   flex-basis: calc(50% - 2rem);
   display: flex;
   flex-direction: column;
-  /* padding-left: 4rem; */
   align-items: center;
 }
 
+.exampleItem__subContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .exampleItem:nth-last-child(-n + 2) {
-  margin-top: 5rem;
+  margin-top: 10rem;
 }
 
 .exampleItem:nth-child(2n) {
@@ -82,4 +87,13 @@
 
 .exampleItem__description {
   font-size: 1.6rem;
+  margin-bottom: 3rem;
+}
+
+.exampleItem .exampleItem__customTodayCalendar::after {
+  display: none !important;
+}
+
+.exampleItem .exampleItem__customTodayCalendar {
+  background: rgba(0, 0, 0, 0.1)
 }

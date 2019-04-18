@@ -4,6 +4,11 @@
   align-items: center;
   background: var(--color-white);
   padding: 2rem 4rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
 }
 
 .Navbar__titleContainer {
@@ -41,6 +46,6 @@
   border-bottom: 2px solid var(--color-primary);
 }
 
-.Navbar__listItem:not(:last-child) {
+.Navbar__list li:not(:last-child) {
   margin-right: 3.5rem;
 }
