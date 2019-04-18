@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import arrow from './assets/arrow.svg';
-
 import {
   CURRENT_DATE,
   WEEK_DAYS,
@@ -200,7 +198,9 @@ const Calendar = ({
           onClick={e => handleMonthClick(e, 'NEXT')}
           type="button"
         >
-          <img src={arrow} className="Calendar__monthArrow" alt="فلش راست" />
+          <span className="Calendar__monthArrow" alt="فلش راست">
+            &nbsp;
+          </span>
         </button>
         <div className="Calendar__monthYearContainer" ref={monthYearTextWrapper}>
           &nbsp;
@@ -216,7 +216,9 @@ const Calendar = ({
           onClick={e => handleMonthClick(e, 'PREVIOUS')}
           type="button"
         >
-          <img src={arrow} className="Calendar__monthArrow" alt="فلش چپ" />
+          <span className="Calendar__monthArrow" alt="فلش چپ">
+            &nbsp;
+          </span>
         </button>
       </div>
       <div className="Calendar__weekDays">{renderWeekDays()}</div>

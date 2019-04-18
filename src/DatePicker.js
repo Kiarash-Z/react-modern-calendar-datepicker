@@ -43,6 +43,8 @@ const DatePicker = ({
       document.removeEventListener('mousemove', handleMouseMove, false);
     };
   }, []);
+
+  // handle input focus/blur
   useEffect(() => {
     const shouldCloseCalendar = !isDayRange
       ? !isCalendarOpen
