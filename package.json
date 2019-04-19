@@ -16,9 +16,13 @@
     "lib"
   ],
   "author": "Kiarash Zarinmehr",
+  "homepage": "https://kiarash-z.github.io/react-persian-calendar-date-picker",
   "repository": {
     "type": "git",
     "url": "https://github.com/Kiarash-Z/react-persian-calendar-date-picker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kiarash-Z/react-persian-calendar-date-picker/issues"
   },
   "license": "MIT",
   "size-limit": [
