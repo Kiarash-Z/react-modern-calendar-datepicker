@@ -1,6 +1,10 @@
 
 @import './fonts/fonts.css';
 
+html {
+  font-size: 50%;
+}
+
 body {
   background: #FBFBFB;
   font-family: iranyekan;

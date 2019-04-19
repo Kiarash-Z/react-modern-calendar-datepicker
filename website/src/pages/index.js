@@ -84,9 +84,11 @@ const IndexPage = () => {
             <p className="exampleItem__description">
               Functions using an input and a calendar. A single day is selectable.
             </p>
-            <div className="persianFontWrapper">
-              <DatePicker selectedDay={selectedDay1} onChange={setValue1} />
-            </div>
+            <DatePicker
+              selectedDay={selectedDay1}
+              onChange={setValue1}
+              wrapperClassName="persianFontWrapper -aboveAll"
+            />
           </div>
         </div>
 
@@ -98,9 +100,11 @@ const IndexPage = () => {
             <p className="exampleItem__description">
               No input needed? No problem. You can use Calendar component itself.
             </p>
-            <div className="persianFontWrapper">
-              <Calendar selectedDay={selectedDay2} onChange={setValue2} />
-            </div>
+            <Calendar
+              calendarClassName="persianFontWrapper"
+              selectedDay={selectedDay2}
+              onChange={setValue2}
+            />
           </div>
         </div>
 
@@ -110,13 +114,12 @@ const IndexPage = () => {
             <p className="exampleItem__description">
               Select a range of days by specifying a starting and an ending day.
             </p>
-            <div className="persianFontWrapper">
-              <Calendar
-                selectedDayRange={selectedDayRange1}
-                onChange={setSelectedDayRange1}
-                isDayRange
-              />
-            </div>
+            <Calendar
+              selectedDayRange={selectedDayRange1}
+              onChange={setSelectedDayRange1}
+              calendarClassName="persianFontWrapper"
+              isDayRange
+            />
           </div>
         </div>
 
@@ -128,17 +131,18 @@ const IndexPage = () => {
             <p className="exampleItem__description">
               Many props are available for you to customize your date picker as you wish.
             </p>
-            <div className="persianFontWrapper">
-              <Calendar
-                selectedDayRange={selectedDayRange2}
-                onChange={setSelectedDayRange2}
-                colorPrimary="#0fbcf9"
-                colorPrimaryLight="rgba(75, 207, 250, 0.4)"
-                calendarTodayClassName="exampleItem__customTodayCalendar"
-                calendarRangeBetweenClassName="exampleItem__customBetweenCalendar"
-                isDayRange
-              />
-            </div>
+            <Calendar
+              selectedDayRange={selectedDayRange2}
+              onChange={setSelectedDayRange2}
+              colorPrimary="#0fbcf9"
+              colorPrimaryLight="rgba(75, 207, 250, 0.4)"
+              calendarTodayClassName="exampleItem__customTodayCalendar"
+              calendarRangeBetweenClassName="exampleItem__customRangeCalendar"
+              calendarRangeStartClassName="exampleItem__customRangeCalendar"
+              calendarRangeEndClassName="exampleItem__customRangeCalendar"
+              calendarClassName="persianFontWrapper"
+              isDayRange
+            />
           </div>
         </div>
       </div>

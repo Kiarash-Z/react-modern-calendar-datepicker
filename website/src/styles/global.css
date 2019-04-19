@@ -35,6 +35,11 @@ button {
   font-family: 'iranyekan';
 }
 
+.-aboveAll {
+  position: relative;
+  z-index: 10;
+}
+
 @media (max-width: 1199.98px) {
   html {
     font-size: 56.25%; /* 9 px */
@@ -50,12 +55,6 @@ button {
 @media (max-width: 767.98px) {
   html {
     font-size: 43.75%; /* 7 px */
-  }
-}
-
-@media (max-width: 575.98px) {
-  html {
-    font-size: 37.5%; /* 6 px */
   }
 }
 
