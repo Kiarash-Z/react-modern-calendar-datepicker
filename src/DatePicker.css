@@ -100,7 +100,7 @@
   background-repeat: no-repeat;
   display: block;
   width: 1.7em;
-  height: 2.55em;
+  height: 1.8em;
   background-size: 100% 100%;
 }
 
@@ -241,7 +241,7 @@
 
 .Calendar__day.-selectedBetween {
   background: var(--cl-color-primary-light);
-  color: var(--cl-color-primary) !important;
+  color: var(--cl-color-primary);
   border-radius: 0;
 }
 
@@ -250,7 +250,7 @@
   border-bottom-left-radius: 100em;
 }
 
-.Calendar__day:nth-child(7n):not(.-selected):not(.-blank):not(.-selectedStart):not(.-selectedEnd) {
+.Calendar__day:nth-child(7n):not(.-selected):not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween) {
   color: var(--cl-color-error);
 }
 .Calendar__day.-disabled {
