@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  CURRENT_DATE,
   WEEK_DAYS,
+  getToday,
   toPersianNumber,
   getMonthName,
   getMonthLength,
@@ -38,12 +38,14 @@ const Calendar = ({
     cycleCount: 1,
     activeDate: null,
   });
+
+  const today = getToday();
   let activeDate = mainState.activeDate ? shallowCloneObject(mainState.activeDate) : null;
 
   const setActiveDate = () => {
     if (selectedDay) activeDate = shallowCloneObject(selectedDay);
     else if (selectedDayRange.from) activeDate = shallowCloneObject(selectedDayRange.from);
-    else activeDate = shallowCloneObject(CURRENT_DATE);
+    else activeDate = shallowCloneObject(today);
   };
 
   if (!activeDate) setActiveDate();
@@ -84,7 +86,7 @@ const Calendar = ({
   };
 
   const getDayClassNames = dayItem => {
-    const isToday = isSameDay(dayItem, CURRENT_DATE);
+    const isToday = isSameDay(dayItem, today);
     const isSelected = selectedDay ? isSameDay(dayItem, selectedDay) : false;
     const { from: startingDay, to: endingDay } = selectedDayRange;
     const isStartedDayRange = isSameDay(dayItem, startingDay);

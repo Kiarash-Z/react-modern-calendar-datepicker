@@ -1,10 +1,5 @@
 import jalaali from 'jalaali-js';
 
-const todayDate = new Date();
-const todayYear = todayDate.getFullYear();
-const todayMonth = todayDate.getMonth() + 1;
-const todayDay = todayDate.getDate();
-
 const PERSIAN_NUMBERS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
 const PERSIAN_MONTHS = [
   'فروردین',
@@ -20,8 +15,7 @@ const PERSIAN_MONTHS = [
   'بهمن',
   'اسفند',
 ];
-const { jy: J_YEAR, jm: J_MONTH, jd: J_DAY } = jalaali.toJalaali(todayYear, todayMonth, todayDay);
-const CURRENT_DATE = { year: J_YEAR, month: J_MONTH, day: J_DAY };
+
 const WEEK_DAYS = {
   saturday: 'شنبه',
   sunday: 'یکشنبه',
@@ -30,6 +24,16 @@ const WEEK_DAYS = {
   wednesday: 'چهارشنبه',
   thursday: 'پنجشنبه',
   friday: 'جمعه',
+};
+
+const getToday = () => {
+  const todayDate = new Date();
+  const todayYear = todayDate.getFullYear();
+  const todayMonth = todayDate.getMonth() + 1;
+  const todayDay = todayDate.getDate();
+  const { jy: J_YEAR, jm: J_MONTH, jd: J_DAY } = jalaali.toJalaali(todayYear, todayMonth, todayDay);
+  const currentDate = { year: J_YEAR, month: J_MONTH, day: J_DAY };
+  return currentDate;
 };
 
 const createUniqueRange = (number, startingId) =>
@@ -45,11 +49,11 @@ const toPersianNumber = number =>
     .map(letter => PERSIAN_NUMBERS[Number(letter)])
     .join('');
 
-const getMonthName = (month = CURRENT_DATE.month) => PERSIAN_MONTHS[month - 1];
+const getMonthName = month => PERSIAN_MONTHS[month - 1];
 
-const getMonthLength = (date = CURRENT_DATE) => jalaali.jalaaliMonthLength(date.year, date.month);
+const getMonthLength = date => jalaali.jalaaliMonthLength(date.year, date.month);
 
-const getMonthFirstWeekday = (_date = CURRENT_DATE) => {
+const getMonthFirstWeekday = _date => {
   const gregorianFirstDay = jalaali.toGregorian(_date.year, _date.month, 1);
   const gregorianDate = new Date(
     gregorianFirstDay.gy,
@@ -106,8 +110,8 @@ const shallowCloneObject = obj => ({ ...obj });
 
 export {
   WEEK_DAYS,
-  CURRENT_DATE,
   PERSIAN_MONTHS,
+  getToday,
   toPersianNumber,
   createUniqueRange,
   getMonthName,
