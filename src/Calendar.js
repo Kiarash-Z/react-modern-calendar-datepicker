@@ -194,6 +194,7 @@ const Calendar = ({
         <button
           className="Calendar__monthArrowWrapper -right"
           onClick={e => handleMonthClick(e, 'NEXT')}
+          aria-label="ماه بعد"
           type="button"
         >
           <span className="Calendar__monthArrow" alt="فلش راست">
@@ -212,6 +213,7 @@ const Calendar = ({
         <button
           className="Calendar__monthArrowWrapper -left"
           onClick={e => handleMonthClick(e, 'PREVIOUS')}
+          aria-label="ماه قبل"
           type="button"
         >
           <span className="Calendar__monthArrow" alt="فلش چپ">

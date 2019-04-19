@@ -51,6 +51,7 @@ const DatePickerInput = React.forwardRef(
             value={getValue()}
             placeholder={inputPlaceholder}
             className={`DatePicker__input ${inputClassName}`}
+            aria-label="انتخاب تاریخ"
           />
         )
       );
