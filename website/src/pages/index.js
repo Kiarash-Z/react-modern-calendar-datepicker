@@ -1,14 +1,13 @@
 import React, { useState } from "react"
 import DatePicker, { Calendar } from 'react-persian-calendar-date-picker';
-import 'react-persian-calendar-date-picker/lib/DatePicker.css';
-
+import { Link } from 'gatsby';
 
 import Logo from '../images/logo.svg';
 import GithubMark from '../images/github-mark.svg';
 
 import './index.css';
 
-import { Layout, SEO, ButtonPrimary, ButtonSocial } from "../components"
+import { Layout, SEO } from "../components"
 
 const SELECTED_DAY_RANGE_1 = {
   from: {
@@ -37,10 +36,14 @@ const SELECTED_DAY_RANGE_2 = {
 }
 
 const IndexPage = () => {
-  const [selectedDay1, setValue1] = useState(null);
-  const [selectedDay2, setValue2] = useState({ year: 1380, month: 7, day: 26 });
-  const [selectedDayRange1, setSelectedDayRange1] = useState(SELECTED_DAY_RANGE_1)
-  const [selectedDayRange2, setSelectedDayRange2] = useState(SELECTED_DAY_RANGE_2)
+  const [selectedDay1, setValue1] = useState(null)
+  const [selectedDay2, setValue2] = useState({ year: 1380, month: 7, day: 26 })
+  const [selectedDayRange1, setSelectedDayRange1] = useState(
+    SELECTED_DAY_RANGE_1
+  )
+  const [selectedDayRange2, setSelectedDayRange2] = useState(
+    SELECTED_DAY_RANGE_2
+  )
   return (
     <Layout>
       <SEO
@@ -60,13 +63,17 @@ const IndexPage = () => {
           A lightweight, customizable, Persian date picker for React
         </h2>
         <div className="hero__actionContainer">
-          <ButtonPrimary className="hero__actionButton">
+          <Link className="hero__actionButton -primary" to="/docs">
             Get Started
-          </ButtonPrimary>
-          <ButtonSocial className="hero__actionButton">
+          </Link>
+          <a
+            href="https://github.com/Kiarash-Z/react-persian-calendar-date-picker"
+            type="button"
+            className="hero__actionButton -social"
+          >
             <GithubMark className="hero__buttonIcon" />
             <span>Github</span>
-          </ButtonSocial>
+          </a>
         </div>
       </div>
 
@@ -75,7 +82,7 @@ const IndexPage = () => {
           <div className="exampleItem__subContainer">
             <span className="exampleItem__title">Basic Date Picker</span>
             <p className="exampleItem__description">
-              Functions using an input and a calendar. Only one day is selectable.
+              Functions using an input and a calendar. A single day is selectable.
             </p>
             <div className="persianFontWrapper">
               <DatePicker selectedDay={selectedDay1} onChange={setValue1} />
@@ -128,6 +135,7 @@ const IndexPage = () => {
                 colorPrimary="#0fbcf9"
                 colorPrimaryLight="rgba(75, 207, 250, 0.4)"
                 calendarTodayClassName="exampleItem__customTodayCalendar"
+                calendarRangeBetweenClassName="exampleItem__customBetweenCalendar"
                 isDayRange
               />
             </div>

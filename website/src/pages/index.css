@@ -28,10 +28,39 @@
   margin-top: 7rem
 }
 
-.hero__buttonIcon {  width: 2.8rem; }
+.hero__buttonIcon {
+  width: 2.8rem;
+  margin-right: 1.5rem;
+}
+
+.hero__actionButton {
+  min-width: 19rem;
+  min-height: 5rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  border-radius: 50rem;
+  display: flex;
+  align-items: center;
+}
 
 .hero__actionButton:not(:last-child) {
   margin-right: 5rem;
+}
+
+.hero__actionButton.-social {
+  background: #F6F6F6;
+  color: #7F8C8D;
+  padding: 1.2rem 4rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+}
+
+.hero__actionButton.-primary {
+  justify-content: center;
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 1rem 2rem rgba(14, 202, 45, 0.35);
 }
 
 @media (max-width: 480px) {
@@ -95,5 +124,10 @@
 }
 
 .exampleItem .exampleItem__customTodayCalendar {
-  background: rgba(0, 0, 0, 0.1)
+  background: rgba(0, 0, 0, 0.1);
+  color: #000;
+}
+
+.exampleItem .exampleItem__customBetweenCalendar {
+  border-radius: 50%;
 }
