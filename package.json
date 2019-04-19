@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "lint": "eslint src",
+    "lintWrite": "prettier --write \"./src/**/*.js\"",
     "test": "jest ./test",
     "clean": "rimraf lib",
     "build": "yarn clean && cross-env NODE_ENV=production babel src -d lib --copy-files",
