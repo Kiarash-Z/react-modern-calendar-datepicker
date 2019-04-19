@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from 'react';
 import DatePicker, { Calendar } from 'react-persian-calendar-date-picker';
 import { Link } from 'gatsby';
 
@@ -7,7 +7,7 @@ import GithubMark from '../images/github-mark.svg';
 
 import './index.css';
 
-import { Layout, SEO } from "../components"
+import { Layout, SEO } from '../components';
 
 const SELECTED_DAY_RANGE_1 = {
   from: {
@@ -20,7 +20,7 @@ const SELECTED_DAY_RANGE_1 = {
     month: 1,
     day: 21,
   },
-}
+};
 
 const SELECTED_DAY_RANGE_2 = {
   from: {
@@ -33,27 +33,27 @@ const SELECTED_DAY_RANGE_2 = {
     month: 1,
     day: 15,
   },
-}
+};
 
 const IndexPage = () => {
-  const [selectedDay1, setValue1] = useState(null)
-  const [selectedDay2, setValue2] = useState({ year: 1380, month: 7, day: 26 })
+  const [selectedDay1, setValue1] = useState(null);
+  const [selectedDay2, setValue2] = useState({ year: 1380, month: 7, day: 26 });
   const [selectedDayRange1, setSelectedDayRange1] = useState(
-    SELECTED_DAY_RANGE_1
-  )
+    SELECTED_DAY_RANGE_1,
+  );
   const [selectedDayRange2, setSelectedDayRange2] = useState(
-    SELECTED_DAY_RANGE_2
-  )
+    SELECTED_DAY_RANGE_2,
+  );
   return (
     <Layout>
       <SEO
         title="Home"
         keywords={[
-          "persian date picker",
-          "datepicker",
-          "application",
-          "react",
-          "persian",
+          'persian date picker',
+          'datepicker',
+          'application',
+          'react',
+          'persian',
         ]}
       />
       <div className="hero">
@@ -82,7 +82,8 @@ const IndexPage = () => {
           <div className="exampleItem__subContainer">
             <span className="exampleItem__title">Basic Date Picker</span>
             <p className="exampleItem__description">
-              Functions using an input and a calendar. A single day is selectable.
+              Functions using an input and a calendar. A single day is
+              selectable.
             </p>
             <DatePicker
               selectedDay={selectedDay1}
@@ -98,7 +99,8 @@ const IndexPage = () => {
               Use Standalone Calendar Component
             </span>
             <p className="exampleItem__description">
-              No input needed? No problem. You can use Calendar component itself.
+              No input needed? No problem. You can use Calendar component
+              itself.
             </p>
             <Calendar
               calendarClassName="persianFontWrapper"
@@ -129,7 +131,8 @@ const IndexPage = () => {
               Customize According to Your Preferences
             </span>
             <p className="exampleItem__description">
-              Many props are available for you to customize your date picker as you wish.
+              Many props are available for you to customize your date picker as
+              you wish.
             </p>
             <Calendar
               selectedDayRange={selectedDayRange2}
@@ -147,7 +150,7 @@ const IndexPage = () => {
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default IndexPage
+export default IndexPage;
