@@ -41,11 +41,65 @@
 }
 
 .Navbar__listItem {
+  display: block;
   padding: 0.5rem;
   padding-bottom: 0.8rem;
-  border-bottom: 2px solid var(--color-primary);
+  position: relative;
 }
+
+.Navbar__listItem::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+  height: 2px;
+  background: var(--color-primary);
+  left: 50%;
+  transform: translateX(-50%);
+  transition: 0.2s;
+}
+
+.Navbar__listItem:hover::after { width: 50%; }
 
 .Navbar__list li:not(:last-child) {
   margin-right: 3.5rem;
+}
+
+@media (max-width: 767.98px) {
+  .Navbar {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .Navbar__titleContainer {
+    align-self: flex-start;
+    padding: 1.5rem;
+  }
+
+  .Navbar__list {
+    width: 100%;
+    background: #F5F5F5;
+  }
+
+  .Navbar__list > li {
+    flex: 1;
+  }
+
+  .Navbar__listItem {
+    padding: 1.5rem;
+    flex: 1;
+    text-align: center;
+    color: #4587d3;
+    font-size: 2rem;
+  }
+
+  .Navbar__listItem::after {
+    display: none;
+  }
+}
+
+@media (max-width: 475px) {
+  .Navbar__titleContainer {
+    align-self: center;
+  }
 }

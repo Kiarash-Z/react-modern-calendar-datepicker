@@ -42,7 +42,12 @@
   border-radius: 50rem;
   display: flex;
   align-items: center;
+  transform: translateY(0);
 }
+
+.hero__actionButton:active { transform: translateY(1.5px); }
+.hero__actionButton.-social:active { box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.07); }
+.hero__actionButton.-primary:active { box-shadow: 0 1rem 1.5rem rgba(14, 202, 45, 0.20); }
 
 .hero__actionButton:not(:last-child) {
   margin-right: 5rem;
@@ -152,5 +157,4 @@
     min-height: 4.5rem;
     max-height: 4.5rem;
   }
-
 }

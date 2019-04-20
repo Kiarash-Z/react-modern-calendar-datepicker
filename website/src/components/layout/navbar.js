@@ -24,9 +24,14 @@ const Navbar = ({ version }) => {
           </Link>
         </li>
         <li>
-          <Link className={styles.Navbar__listItem} to="/docs">
-            Github
-          </Link>
+          <a
+            href="https://github.com/Kiarash-Z/react-persian-calendar-date-picker"
+            rel="noopener noreferrer"
+            target="_blank"
+            className={styles.Navbar__listItem}
+          >
+          Github
+          </a>
         </li>
       </ul>
     </nav>

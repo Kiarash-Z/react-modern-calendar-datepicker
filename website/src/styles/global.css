@@ -37,7 +37,7 @@ button {
 
 .-aboveAll {
   position: relative;
-  z-index: 10;
+  z-index: 9;
 }
 
 @media (max-width: 1199.98px) {

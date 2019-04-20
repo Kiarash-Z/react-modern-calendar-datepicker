@@ -68,7 +68,8 @@ const IndexPage = () => {
           </Link>
           <a
             href="https://github.com/Kiarash-Z/react-persian-calendar-date-picker"
-            type="button"
+            rel="noopener noreferrer"
+            target="_blank"
             className="hero__actionButton -social"
           >
             <GithubMark className="hero__buttonIcon" />
