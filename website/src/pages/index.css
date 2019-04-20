@@ -25,7 +25,7 @@
 
 .hero__actionContainer {
   display: flex;
-  margin-top: 7rem
+  margin-top: 7.5rem
 }
 
 .hero__buttonIcon {
@@ -73,6 +73,7 @@
   display: flex;
   flex-wrap: wrap;
   margin-top: 2rem;
+  margin-bottom: 8rem;
   padding: 0 15rem;
 }
 

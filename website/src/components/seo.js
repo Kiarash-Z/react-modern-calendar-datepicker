@@ -77,9 +77,7 @@ function SEO({ description, lang, meta, keywords, title }) {
             : [],
         )
         .concat(meta)}
-    >
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    </Helmet>
+    />
   );
 }
 

@@ -1,0 +1,33 @@
+.DocsNav {
+  min-height: calc(100vh - 15rem);
+  flex: 0 0 30rem;
+  padding: 4rem 0;
+  padding-left: 15rem;
+}
+
+.DocsNav__section:not(:last-child) {
+  margin-bottom: 2.5rem;
+}
+
+.DocsNav__sectionTitle {
+  display: block;
+  font-weight: 400;
+  font-size: 2rem;
+  margin-bottom: 0.8rem;
+}
+
+.DocsNav__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.DocsNav__listItem {
+  font-size: 1.5rem;
+  padding: 0.8rem 1.2rem;
+  margin-left: -1.2rem;
+  color: #4589d6;
+}
+
+.DocsNav__listItem:not(:last-child) {
+
+}

@@ -12,7 +12,7 @@ import { StaticQuery, graphql } from 'gatsby';
 import { Navbar } from './navbar';
 import Footer from './footer';
 
-const Layout = ({ children }) => (
+const Layout = ({ children, style }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -29,7 +29,7 @@ const Layout = ({ children }) => (
       return (
         <>
           <Navbar version={siteMetadata.version} />
-          <main style={{ marginTop: '7rem' }}>{children}</main>
+          <main style={{ marginTop: '7rem', ...style }}>{children}</main>
           <Footer />
         </>
       );
