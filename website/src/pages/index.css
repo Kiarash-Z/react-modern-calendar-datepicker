@@ -43,6 +43,7 @@
   display: flex;
   align-items: center;
   transform: translateY(0);
+  transition: 0.2s;
 }
 
 .hero__actionButton:active { transform: translateY(1.5px); }
@@ -66,22 +67,6 @@
   color: var(--color-white);
   padding: 1.2rem 1.5rem;
   box-shadow: 0 1rem 2rem rgba(14, 202, 45, 0.35);
-}
-
-@media (max-width: 480px) {
-  .hero__logo {
-    width: 15rem;
-  }
-
-  .hero__actionContainer {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hero__actionButton:not(:last-child) {
-    margin: 0;
-    margin-bottom: 2rem;
-  }
 }
 
 .exampleList {
@@ -156,5 +141,21 @@
     min-width: 17rem;
     min-height: 4.5rem;
     max-height: 4.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__logo {
+    width: 15rem;
+  }
+
+  .hero__actionContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero__actionButton:not(:last-child) {
+    margin: 0;
+    margin-bottom: 2rem;
   }
 }
