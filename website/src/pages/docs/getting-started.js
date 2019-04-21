@@ -14,10 +14,11 @@ const Installation = () => {
       </p>
 
       <p className="Docs__paragraph -marginTop">
-        <strong className="Docs__note">Important Note: </strong> This project uses your default font family in your project, but it&#39;s recommended
+        <strong className="Docs__note">Important Note: </strong> By Default, this package inhertis <code className="custom-code">font-family</code> from your project. It&#39;s recommended
         to use <a rel="noopener noreferrer" target="_blank" className="Docs__link" href="https://fontiran.com/%D9%81%D9%88%D9%86%D8%AA-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%DB%8C%DA%A9%D8%A7%D9%86-iran-yekan/"> Iran Yekan </a>
-        or <a rel="noopener noreferrer" target="_blank" className="Docs__link" href="https://fontiran.com/%D8%AE%D8%A7%D9%86%D9%88%D8%A7%D8%AF%D9%87-%D9%81%D9%88%D9%86%D8%AA-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B3%D9%86-%D8%B3%D8%B1%DB%8C%D9%81-iran-sans-%D9%BE%D9%86%D8%AC-%D9%88%D8%B2%D9%86-%D9%87%D9%85/"> Iran Sans </a> font families
-        for the best user experience.
+        or <a rel="noopener noreferrer" target="_blank" className="Docs__link" href="https://fontiran.com/%D8%AE%D8%A7%D9%86%D9%88%D8%A7%D8%AF%D9%87-%D9%81%D9%88%D9%86%D8%AA-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B3%D9%86-%D8%B3%D8%B1%DB%8C%D9%81-iran-sans-%D9%BE%D9%86%D8%AC-%D9%88%D8%B2%D9%86-%D9%87%D9%85/"> Iran Sans </a>
+        as your font families in order to have the best user experience.
+
       </p>
 
       <h2 className="Docs__titleSecondary">Installation</h2>
@@ -47,8 +48,8 @@ const Installation = () => {
 import DatePicker from 'react-persian-calendar-date-picker';`}
       </Code>
       <p className="Docs__paragraph">
-        Great job! You&#39;re all set. Now it&#39;s time to write some code.
-        This is how you use the <Link className="Docs__link" to="/getting-started">basic date picker</Link>.
+        Great job! You&#39;re all set. It&#39;s time to write some code now.
+        Learn more about using <Link className="Docs__link" to="/getting-started">the basic date picker</Link>.
       </p>
     </Docs>
   );

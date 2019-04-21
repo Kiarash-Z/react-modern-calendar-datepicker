@@ -1,12 +1,15 @@
 .Docs {
   display: flex;
-  padding: 4rem 0;
+  padding: 4rem 5rem;
 }
 
 .Docs__content {
-  padding: 0 25rem;
-  margin-left: 27rem;
+  margin-left: 47rem;
   min-height: calc(100vh - 23rem);
+}
+
+.Docs__content > * {
+  max-width: 70%;
 }
 
 .Docs__title {
@@ -31,7 +34,36 @@
 
 .Docs__link {
   color: #4589d6;
+  transition: 0.3s;
   font-weight: 400;
 }
 
 .Docs__link:hover { color: #2b507a; }
+
+
+@media (max-width: 1500px) {
+  .Docs__content > * {
+    max-width: 80%;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .Docs {
+    padding: 6rem 5rem;
+  }
+
+  .Docs__content {
+    margin-left: 32rem;
+  }
+
+  .Docs__content > * {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .Docs__content {
+    margin-left: 0;
+    padding: 5rem 0;
+  }
+}

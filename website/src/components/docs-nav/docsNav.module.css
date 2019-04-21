@@ -1,7 +1,7 @@
 .DocsNav {
   height: 100%;
-  width: 40rem;
-  padding-left: 20rem;
+  width: 35rem;
+  padding-left: 15rem;
   position: fixed;
   left: 0;
 }
@@ -26,6 +26,7 @@
   font-size: 1.5rem;
   padding: 0.7rem 1.2rem;
   margin-left: -1.2rem;
+  transition: 0.3s;
   color: #4589d6;
 }
 
@@ -35,4 +36,17 @@
 
 .DocsNav__listItem:hover {
   color: #2b507a;
+}
+
+@media (max-width: 1199.98px) {
+  .DocsNav {
+    width: 28rem;
+    padding-left: 10rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .DocsNav {
+    display: none;
+  }
 }

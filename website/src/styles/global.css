@@ -40,6 +40,12 @@ button {
   z-index: 9;
 }
 
+.custom-code {
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  padding: 0.2em 0.4em;
+}
+
 @media (max-width: 1199.98px) {
   html {
     font-size: 56.25%; /* 9 px */

@@ -7,7 +7,7 @@ const DocsNav = () => {
   return (
     <aside className={styles.DocsNav}>
       <div className={styles.DocsNav__section}>
-        <span className={styles.DocsNav__sectionTitle}>Getting Started</span>
+        <span className={styles.DocsNav__sectionTitle}>Tutorial</span>
         <ul className={styles.DocsNav__list}>
           <Link
             to="/docs/getting-started"

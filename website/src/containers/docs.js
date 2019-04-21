@@ -6,7 +6,7 @@ import './docs.css';
 
 const Docs = ({ title, children }) => {
   return (
-    <Layout style={{ padding: '0 5rem'}}>
+    <Layout>
       <SEO
         title={`${title} - react-persian-calendar-date-picker`}
         keywords={[title]}
