@@ -63,7 +63,7 @@ const IndexPage = () => {
           A lightweight, customizable, Persian date picker for React
         </h2>
         <div className="hero__actionContainer">
-          <Link className="hero__actionButton -primary" to="/docs">
+          <Link className="hero__actionButton -primary" to="/docs/getting-started">
             Get Started
           </Link>
           <a

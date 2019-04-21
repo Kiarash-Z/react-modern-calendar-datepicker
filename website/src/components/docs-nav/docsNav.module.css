@@ -1,8 +1,9 @@
 .DocsNav {
-  min-height: calc(100vh - 15rem);
-  flex: 0 0 30rem;
-  padding: 4rem 0;
-  padding-left: 15rem;
+  height: 100%;
+  width: 40rem;
+  padding-left: 20rem;
+  position: fixed;
+  left: 0;
 }
 
 .DocsNav__section:not(:last-child) {
@@ -13,7 +14,7 @@
   display: block;
   font-weight: 400;
   font-size: 2rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 2rem;
 }
 
 .DocsNav__list {
@@ -23,11 +24,15 @@
 
 .DocsNav__listItem {
   font-size: 1.5rem;
-  padding: 0.8rem 1.2rem;
+  padding: 0.7rem 1.2rem;
   margin-left: -1.2rem;
   color: #4589d6;
 }
 
-.DocsNav__listItem:not(:last-child) {
+.DocsNav__listItem.-active {
+  background: rgb(238, 247, 253);
+}
 
+.DocsNav__listItem:hover {
+  color: #2b507a;
 }

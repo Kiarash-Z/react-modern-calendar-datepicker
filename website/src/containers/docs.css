@@ -1,0 +1,37 @@
+.Docs {
+  display: flex;
+  padding: 4rem 0;
+}
+
+.Docs__content {
+  padding: 0 25rem;
+  margin-left: 27rem;
+  min-height: calc(100vh - 23rem);
+}
+
+.Docs__title {
+  font-size: 2.7rem;
+  margin-bottom: 6rem;
+}
+
+.Docs__titleSecondary {
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.Docs__paragraph {
+  font-size: 1.6rem;
+  line-height: 2;
+}
+
+.Docs__paragraph.-marginTop {
+  margin-top: 1.5rem;
+}
+
+.Docs__link {
+  color: #4589d6;
+  font-weight: 400;
+}
+
+.Docs__link:hover { color: #2b507a; }

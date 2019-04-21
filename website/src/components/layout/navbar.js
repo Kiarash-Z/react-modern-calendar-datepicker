@@ -19,7 +19,7 @@ const Navbar = ({ version }) => {
       </div>
       <ul className={styles.Navbar__list}>
         <li>
-          <Link className={styles.Navbar__listItem} to="/docs">
+          <Link className={styles.Navbar__listItem} to="/docs/getting-started">
             Docs
           </Link>
         </li>
