@@ -1,5 +1,6 @@
 .DatePicker {
   position: relative;
+  display: inline-block;
 }
 
 .DatePicker__input {
