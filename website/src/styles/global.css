@@ -33,6 +33,7 @@ button {
 
 .persianFontWrapper {
   font-family: 'iranyekan';
+  font-size: 10px
 }
 
 .-aboveAll {
@@ -46,9 +47,20 @@ button {
   padding: 0.2em 0.4em;
 }
 
+@media (min-width: 2560px) {
+  html {
+    font-size: 87.5%; /* 14 px */
+  }
+}
+
+
 @media (max-width: 1199.98px) {
   html {
     font-size: 56.25%; /* 9 px */
+  }
+
+  .persianFontWrapper {
+    font-size: 9px;
   }
 }
 

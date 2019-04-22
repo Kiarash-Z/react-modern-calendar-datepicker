@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import DatePicker, { Calendar } from 'react-persian-calendar-date-picker';
 import { Link } from 'gatsby';
 
-import Logo from '../images/logo.svg';
-import GithubMark from '../images/github-mark.svg';
+import { ReactComponent as Logo } from '../images/logo.svg';
+import { ReactComponent as GithubMark }  from '../images/github-mark.svg';
 
 import './index.css';
 
@@ -90,6 +90,7 @@ const IndexPage = () => {
               selectedDay={selectedDay1}
               onChange={setValue1}
               wrapperClassName="persianFontWrapper -aboveAll"
+              calendarClassName="persianFontWrapper"
             />
           </div>
         </div>
