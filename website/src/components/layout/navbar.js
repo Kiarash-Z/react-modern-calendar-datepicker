@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
-import Logo from '../../images/logo.svg';
+import { ReactComponent as Logo } from '../../images/logo.svg';
 
 import styles from './navbar.module.css';
 

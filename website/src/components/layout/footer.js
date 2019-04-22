@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import shortId from 'shortid';
 
-import Logo from '../../images/logo.svg';
+import { ReactComponent as Logo } from '../../images/logo.svg';
 import styles from './footer.module.css';
 
 const Footer = () => {

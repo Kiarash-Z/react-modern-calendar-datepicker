@@ -5,13 +5,14 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@svgr/webpack": "^4.2.0",
     "gatsby": "^2.3.16",
     "gatsby-image": "^2.0.37",
     "gatsby-plugin-manifest": "^2.0.28",
     "gatsby-plugin-offline": "^2.0.25",
     "gatsby-plugin-react-helmet": "^3.0.12",
-    "gatsby-plugin-react-svg": "^2.1.1",
     "gatsby-plugin-sharp": "^2.0.32",
+    "gatsby-plugin-svgr": "^2.0.2",
     "gatsby-source-filesystem": "^2.0.29",
     "gatsby-transformer-sharp": "^2.1.17",
     "prismjs": "^1.16.0",
@@ -19,10 +20,11 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
-    "react-persian-calendar-date-picker": "1.0.0-beta.4",
+    "react-persian-calendar-date-picker": "1.0.0-beta.5",
     "shortid": "^2.2.14"
   },
   "devDependencies": {
+    "gatsby-plugin-remove-trailing-slashes": "^2.0.10",
     "gh-pages": "^2.0.1",
     "prettier": "^1.17.0"
   },

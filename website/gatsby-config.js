@@ -5,7 +5,7 @@ module.exports = {
     author: `Kiarash Zarinmehr`,
     version: `1.0.0`,
   },
-  pathPrefix: "/react-persian-calendar-date-picker",
+  pathPrefix: `/react-persian-calendar-date-picker`,
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
@@ -17,29 +17,21 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    {
-      resolve: "gatsby-plugin-react-svg",
-      options: {
-        rule: {
-          include: /images/,
-        },
-      },
-    },
+    'gatsby-plugin-svgr',
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `react-persian-calendar-date-picker`,
+        short_name: `Persian Picker`,
         start_url: `/`,
         background_color: `#fff`,
         theme_color: `#0eca2d`,
-        display: `minimal-ui`,
-        icon: `src/images/fav512.png`,
-        legacy: true,
+        display: `standalone`,
+        icon: `src/images/icon.png`,
+        include_favicon: false,
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    `gatsby-plugin-offline`,
+    `gatsby-plugin-remove-trailing-slashes`,
   ],
-}
+};
