@@ -6,6 +6,7 @@
 .Docs__content {
   margin-left: 47rem;
   min-height: calc(100vh - 23rem);
+  width: 100%;
 }
 
 .Docs__content > * {
@@ -28,6 +29,15 @@
   line-height: 2;
 }
 
+.Docs__list {
+  margin: 2rem 0;
+  font-size: 1.6rem;
+}
+
+.Docs__list li:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
 .Docs__paragraph.-marginTop {
   margin-top: 1.5rem;
 }
@@ -40,10 +50,28 @@
 
 .Docs__link:hover { color: #2b507a; }
 
+.Docs__sampleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 90%;
+}
 
 @media (max-width: 1500px) {
-  .Docs__content > * {
+  .Docs__content > *:not(.Docs__sampleContainer) {
     max-width: 80%;
+  }
+}
+
+@media (max-width: 1420px) {
+  .Docs__content {
+    margin-left: 35rem;
+  }
+}
+
+@media (max-width: 1290px) {
+  .Docs__content {
+    margin-left: 25rem;
   }
 }
 
@@ -53,11 +81,26 @@
   }
 
   .Docs__content {
-    margin-left: 32rem;
+    margin-left: 22rem;
   }
 
-  .Docs__content > * {
+  .Docs__content > *:not(.Docs__sampleContainer) {
     max-width: 90%;
+  }
+
+  .Docs__sampleContainer .persianFontWrapper {
+    margin-left: 6rem;
+  }
+}
+
+@media (max-width: 1025px) {
+  .Docs__sampleContainer {
+    padding-top: 2rem;
+    flex-direction: column-reverse;
+  }
+
+  .Docs__sampleContainer .persianFontWrapper {
+    margin-bottom: 3rem;
   }
 }
 

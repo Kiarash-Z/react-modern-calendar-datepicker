@@ -17,7 +17,12 @@ const DocsNav = () => {
             Getting Started
           </Link>
           <Link
-            to="/docs" className={styles.DocsNav__listItem}>Basic Date Picker</Link>
+            to="/docs/core-concepts"
+            className={styles.DocsNav__listItem}
+            activeClassName={styles.Active}
+          >
+            Core Concepts
+          </Link>
           <Link
             to="/docs" className={styles.DocsNav__listItem}>Range Date Picker</Link>
         </ul>
