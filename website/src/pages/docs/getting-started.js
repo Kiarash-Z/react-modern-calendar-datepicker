@@ -8,7 +8,7 @@ const Installation = () => {
   return (
     <Docs title="Getting Started">
       <p className="Docs__paragraph">
-        Welcome to docs! react-persian-calendar-date-picker (quite long name!)
+        Welcome to docs! react-persian-calendar-date-picker (a quite long name!)
         is a react date picker
         package for the Persian community.
         It&#39;s lightweight; only ~5KB gizpped, and it&#39;s easy to use.
@@ -18,14 +18,14 @@ const Installation = () => {
       <ul className="Docs__list">
         <li>
           1- This package
-          uses <a rel="noopener noreferrer" target="_blank" className="Docs__link" href=" https://reactjs.org/docs/hooks-intro.html"> React hooks </a>. Make
+          uses <a rel="noopener noreferrer" target="_blank" className="Docs__link" href=" https://reactjs.org/docs/hooks-intro.html"> React hooks</a>. Make
           sure you&#39;re running <code className="custom-code">{`react >= 16.8.0`}</code> version.
         </li>
         <li>
-          2- By default, this package inhertis <code className="custom-code">font-family</code> from your project, but it&#39;s recommended
+          2- By default, this package inherits <code className="custom-code">font-family</code> from your project. It&#39;s recommended
           to use <a rel="noopener noreferrer" target="_blank" className="Docs__link" href="https://fontiran.com/%D9%81%D9%88%D9%86%D8%AA-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%DB%8C%DA%A9%D8%A7%D9%86-iran-yekan/"> Iran Yekan </a>
           or <a rel="noopener noreferrer" target="_blank" className="Docs__link" href="https://fontiran.com/%D8%AE%D8%A7%D9%86%D9%88%D8%A7%D8%AF%D9%87-%D9%81%D9%88%D9%86%D8%AA-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B3%D9%86-%D8%B3%D8%B1%DB%8C%D9%81-iran-sans-%D9%BE%D9%86%D8%AC-%D9%88%D8%B2%D9%86-%D9%87%D9%85/"> Iran Sans </a>
-          as your font families in order to have the best user experience.
+          as your font family in order to have the best user experience.
         </li>
       </ul>
 

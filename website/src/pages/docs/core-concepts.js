@@ -21,12 +21,12 @@ const CoreConcepts = () => {
       </p>
 
       <ul className="Docs__list">
-        <li>1- <code className="custom-code">{`<DatePicker />`}</code> default exported component which includes an input and a calendar.</li>
+        <li>1- <code className="custom-code">{`<DatePicker />`}</code> default-exported component which includes an input and a calendar.</li>
         <li>2- <code className="custom-code">{`<Calendar />`}</code> component which is the calendar itself.</li>
       </ul>
 
       <p className="Docs__paragraph">
-        By the way, we&#39;re gonna use <a rel="noopener noreferrer" target="_blank" className="Docs__link" href=" https://reactjs.org/docs/hooks-intro.html"> React hooks </a> for
+        By the way, we&#39;re going to use <a rel="noopener noreferrer" target="_blank" className="Docs__link" href=" https://reactjs.org/docs/hooks-intro.html"> React hooks </a> for
         examples provided in this document.
       </p>
 
@@ -109,7 +109,7 @@ export default App;
       <h2 className="Docs__titleSecondary">Selecting a Day Range</h2>
       <p className="Docs__paragraph">
         To turn out the picker into a range picker, you need to
-        add <code className="custom-code">isDayRange</code> prop, and
+        add <code className="custom-code">isDayRange</code> prop and
         replace <code className="custom-code">selectedDay</code> prop
         with <code className="custom-code">selectedDayRange</code>. Remember to change
         the default state. Here&#39;s an example:
@@ -151,7 +151,7 @@ export default App;
 
       <p className="Docs__paragraph">
         Note that you can replace <code className="custom-code">{`<Calendar />`}</code> with
-        <code className="custom-code">{`<DatePicker />`}</code> to have an input along with the calendar:
+        <code className="custom-code">{`<DatePicker />`}</code> to have the input along with the calendar:
       </p>
 
       <div className="Docs__sampleContainer">
@@ -187,6 +187,13 @@ export default App;
           isDayRange
         />
       </div>
+      <p className="Docs__paragraph">
+        So far so good. By now, you should feel pretty comfortable with this picker. In this
+        part, we used <code className="custom-code">null</code> as a default value for the single date
+        picker and <code className="custom-code">{`{ from: null, to: null }`}</code> as the default
+        value for the range date picker. In the next part, you&#39;ll learn more
+        about <Link className="Docs__link" to="/docs/default-values">default values</Link>.
+      </p>
     </Docs>
   );
 };
