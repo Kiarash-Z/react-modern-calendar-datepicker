@@ -26,8 +26,7 @@ const CoreConcepts = () => {
       </ul>
 
       <p className="Docs__paragraph">
-        By the way, we&#39;re going to use <a rel="noopener noreferrer" target="_blank" className="Docs__link" href=" https://reactjs.org/docs/hooks-intro.html"> React hooks </a> for
-        examples provided in this document.
+        By the way, all the examples provided in this document are implemented using <a rel="noopener noreferrer" target="_blank" className="Docs__link" href=" https://reactjs.org/docs/hooks-intro.html"> React hooks </a>.
       </p>
 
       <h2 className="Docs__titleSecondary">Basic Usage</h2>
@@ -49,6 +48,7 @@ const App = () => {
     <DatePicker
       selectedDay={selectedDay}
       onChange={setSelectedDay}
+      inputPlaceholder="انتخاب روز"
     />
   );
 };
@@ -61,12 +61,13 @@ export default App;
           wrapperClassName="persianFontWrapper -aboveAll"
           calendarClassName="persianFontWrapper"
           selectedDay={datePicker1Value}
+          inputPlaceholder="انتخاب روز"
           onChange={setDatePicker1Value}
         />
       </div>
 
       <p className="Docs__paragraph">
-        Without any input:
+        Without the input:
       </p>
 
       <div className="Docs__sampleContainer">
@@ -99,10 +100,9 @@ export default App;
 
       <p className="Docs__paragraph">
        <code className="custom-code">selectedDay</code> prop
-        is the value of our date picker, and <code className="custom-code">onChange</code> is
+        is the value of the date picker, and <code className="custom-code">onChange</code> is
         the function which
-        will take care of changing the state. In this case, we&#39;re
-        passing the state hook modifier.
+        will take care of changing the state using the state hook modifier.
         For a more detailed list of props, visit <Link to="/docs" className="Docs__link">props list</Link>.
       </p>
 
@@ -150,7 +150,10 @@ export default App;
       </div>
 
       <p className="Docs__paragraph">
-        Note that you can replace <code className="custom-code">{`<Calendar />`}</code> with
+        We&#39;ve used <code className="custom-code">from</code> on the default state to indicate
+        the starting point of the day range, and <code className="custom-code">to</code> for
+        the ending point of the day range. Note that you can
+        replace <code className="custom-code">{`<Calendar />`}</code> with
         <code className="custom-code">{`<DatePicker />`}</code> to have the input along with the calendar:
       </p>
 
@@ -167,9 +170,10 @@ const App = () => {
     to: null
   });
   return (
-    <DatePicker // here's what we've changed
+    <DatePicker // here's what's changed
       selectedDayRange={selectedDayRange}
       onChange={setSelectedDay}
+      inputPlaceholder="انتخاب روزهای نمایش"
       isDayRange
     />
   );
@@ -184,13 +188,14 @@ export default App;
           calendarClassName="persianFontWrapper"
           selectedDayRange={datePicker4Value}
           onChange={setDatePicker4Value}
+          inputPlaceholder="انتخاب روزهای نمایش"
           isDayRange
         />
       </div>
       <p className="Docs__paragraph">
         So far so good. By now, you should feel pretty comfortable with this picker. In this
-        part, we used <code className="custom-code">null</code> as a default value for the single date
-        picker and <code className="custom-code">{`{ from: null, to: null }`}</code> as the default
+        part, you used <code className="custom-code">null</code> as the default value for the single date
+        picker and similarly, <code className="custom-code">{`{ from: null, to: null }`}</code> as the default
         value for the range date picker. In the next part, you&#39;ll learn more
         about <Link className="Docs__link" to="/docs/default-values">default values</Link>.
       </p>
