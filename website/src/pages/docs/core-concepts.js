@@ -151,7 +151,7 @@ export default App;
 
       <p className="Docs__paragraph">
         Note that you can replace <code className="custom-code">{`<Calendar />`}</code> with
-        <code className="custom-code">{`<DatePicker />`}</code> to have an input along with calendar:
+        <code className="custom-code">{`<DatePicker />`}</code> to have an input along with the calendar:
       </p>
 
       <div className="Docs__sampleContainer">

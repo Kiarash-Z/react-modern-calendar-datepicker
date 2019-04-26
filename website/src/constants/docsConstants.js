@@ -5,27 +5,27 @@ export const TUTORIAL_ITEMS = [
     text: 'Getting Started',
   },
   {
-    id: 0,
+    id: 1,
     path: '/docs/core-concepts',
     text: 'Core Concepts',
   },
   {
-    id: 0,
+    id: 2,
     path: '/docs/default-values',
     text: 'Default Values',
   },
   {
-    id: 0,
+    id: 3,
     path: '/docs/disabled-days',
     text: 'Disabled Day(s)',
   },
   {
-    id: 0,
+    id: 4,
     path: '/docs/customization',
     text: 'Customization',
   },
   {
-    id: 0,
+    id: 5,
     path: '/docs/responsive-guide',
     text: 'Responsive Guide',
   },
