@@ -38,6 +38,13 @@
   color: #2b507a;
 }
 
+@media (max-width: 1440px) {
+  .DocsNav {
+    width: 30rem;
+    padding-left: 12rem;
+  }
+}
+
 @media (max-width: 1290px) {
   .DocsNav {
     width: 22rem;

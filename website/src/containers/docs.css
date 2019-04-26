@@ -4,7 +4,7 @@
 }
 
 .Docs__content {
-  margin-left: 47rem;
+  margin-left: 45rem;
   min-height: calc(100vh - 23rem);
   width: 100%;
 }
@@ -57,21 +57,33 @@
   max-width: 90%;
 }
 
-@media (max-width: 1500px) {
+.Docs__sampleContainer + .Docs__paragraph {
+  max-width: 55%;
+}
+
+@media (max-width: 1565px) {
   .Docs__content > *:not(.Docs__sampleContainer) {
     max-width: 80%;
   }
+
+  .Docs__sampleContainer + .Docs__paragraph {
+    max-width: 55%;
+  }
+
+  .Docs__content {
+    margin-left: 38rem;
+  }
 }
 
-@media (max-width: 1420px) {
+@media (max-width: 1440px) {
   .Docs__content {
-    margin-left: 35rem;
+    margin-left: 32rem;
   }
 }
 
 @media (max-width: 1290px) {
   .Docs__content {
-    margin-left: 25rem;
+    margin-left: 22rem;
   }
 }
 
@@ -80,12 +92,12 @@
     padding: 6rem 5rem;
   }
 
-  .Docs__content {
-    margin-left: 22rem;
-  }
-
   .Docs__content > *:not(.Docs__sampleContainer) {
     max-width: 90%;
+  }
+
+  .Docs__sampleContainer + .Docs__paragraph {
+    max-width: 55%;
   }
 
   .Docs__sampleContainer .persianFontWrapper {
@@ -93,10 +105,14 @@
   }
 }
 
-@media (max-width: 1025px) {
+@media (max-width: 1150px) {
   .Docs__sampleContainer {
     padding-top: 2rem;
     flex-direction: column-reverse;
+  }
+
+  .Docs__sampleContainer .persianFontWrapper {
+    margin-left: 0;
   }
 
   .Docs__sampleContainer .persianFontWrapper {
@@ -105,6 +121,14 @@
 }
 
 @media (max-width: 767.98px) {
+  .Docs {
+    padding: 5rem 9rem;
+  }
+
+  .Docs__sampleContainer {
+    align-items: center;
+  }
+
   .Docs__content {
     margin-left: 0;
     padding: 5rem 0;

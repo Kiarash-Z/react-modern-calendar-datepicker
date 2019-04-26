@@ -53,6 +53,12 @@ button {
   }
 }
 
+@media (max-width: 1550px) {
+  .persianFontWrapper {
+    font-size: 9px;
+  }
+}
+
 
 @media (max-width: 1199.98px) {
   html {
@@ -60,7 +66,7 @@ button {
   }
 
   .persianFontWrapper {
-    font-size: 9px;
+    font-size: 8px;
   }
 }
 
