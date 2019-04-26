@@ -170,10 +170,10 @@ const App = () => {
     to: null
   });
   return (
-    <DatePicker // here's what's changed
+    <DatePicker
       selectedDayRange={selectedDayRange}
       onChange={setSelectedDay}
-      inputPlaceholder="انتخاب روزهای نمایش"
+      inputPlaceholder="انتخاب روزهای نمایش" 
       isDayRange
     />
   );
