@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
+import { TUTORIAL_ITEMS } from '../../constants/docsConstants';
+
 import styles from './docsNav.module.css';
 
 const DocsNav = () => {
@@ -9,22 +11,16 @@ const DocsNav = () => {
       <div className={styles.DocsNav__section}>
         <span className={styles.DocsNav__sectionTitle}>Tutorial</span>
         <ul className={styles.DocsNav__list}>
-          <Link
-            to="/docs/getting-started"
-            className={styles.DocsNav__listItem}
-            activeClassName={styles.Active}
-          >
-            Getting Started
-          </Link>
-          <Link
-            to="/docs/core-concepts"
-            className={styles.DocsNav__listItem}
-            activeClassName={styles.Active}
-          >
-            Core Concepts
-          </Link>
-          <Link
-            to="/docs" className={styles.DocsNav__listItem}>Range Date Picker</Link>
+          {TUTORIAL_ITEMS.map(({ id, path, text }) => (
+            <Link
+              key={id}
+              to={path}
+              className={styles.DocsNav__listItem}
+              activeClassName={styles.Active}
+            >
+              {text}
+            </Link>
+          ))}
         </ul>
       </div>
       <div className={styles.DocsNav__section}>
