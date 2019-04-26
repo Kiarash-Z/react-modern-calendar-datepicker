@@ -102,8 +102,14 @@ export default App;
        <code className="custom-code">selectedDay</code> prop
         is the value of the date picker, and <code className="custom-code">onChange</code> is
         the function which
-        will take care of changing the state using the state hook modifier.
-        For a more detailed list of props, visit <Link to="/docs" className="Docs__link">props list</Link>.
+        will take care of changing the state using the state hook modifier. The interesting part is
+        <strong> you can use almost every prop
+        on both <code className="custom-code">{`<DatePicker />`}</code> and <code className="custom-code"> {`<Calendar />`}</code> components.</strong>
+      </p>
+
+      <p className="Docs__paragraph">
+        For a more detailed list of props,
+        visit <Link to="/docs" className="Docs__link">props list</Link>.
       </p>
 
       <h2 className="Docs__titleSecondary">Selecting a Day Range</h2>
@@ -173,7 +179,7 @@ const App = () => {
     <DatePicker
       selectedDayRange={selectedDayRange}
       onChange={setSelectedDay}
-      inputPlaceholder="انتخاب روزهای نمایش" 
+      inputPlaceholder="انتخاب روزهای نمایش"
       isDayRange
     />
   );
