@@ -24,6 +24,7 @@ const DatePicker = ({
   calendarRangeBetweenClassName,
   calendarRangeEndClassName,
   disabledDays,
+  onDisabledDayError,
   colorPrimary,
   colorPrimaryLight,
 }) => {
@@ -108,6 +109,7 @@ const DatePicker = ({
             disabledDays={disabledDays}
             colorPrimary={colorPrimary}
             colorPrimaryLight={colorPrimaryLight}
+            onDisabledDayError={onDisabledDayError}
           />
         </div>
       )}

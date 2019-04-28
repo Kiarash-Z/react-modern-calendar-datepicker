@@ -14,12 +14,14 @@ import {
   checkDayInDayRange,
   isBeforeDate,
   shallowCloneObject,
+  deepCloneObject,
 } from './utils';
 
 const Calendar = ({
   selectedDay,
   selectedDayRange,
   onChange,
+  onDisabledDayError,
   isDayRange,
   calendarClassName,
   calendarTodayClassName,
@@ -68,9 +70,8 @@ const Calendar = ({
     return `${month} ${year}`;
   };
 
-  const handleDayClick = day => {
-    if (!isDayRange) return onChange(day);
-    const clonedDayRange = JSON.parse(JSON.stringify(selectedDayRange)); // deep clone;
+  const getDayRangeValue = day => {
+    const clonedDayRange = deepCloneObject(selectedDayRange);
     const dayRangeValue =
       clonedDayRange.from && clonedDayRange.to ? { from: null, to: null } : clonedDayRange;
     const dayRangeProp = !dayRangeValue.from ? 'from' : 'to';
@@ -82,7 +83,26 @@ const Calendar = ({
       dayRangeValue.from = to;
       dayRangeValue.to = from;
     }
-    onChange(dayRangeValue);
+
+    const checkIncludingDisabledDay = disabledDay => {
+      return checkDayInDayRange({
+        day: disabledDay,
+        from: dayRangeValue.from,
+        to: dayRangeValue.to,
+      });
+    };
+    const includingDisabledDay = disabledDays.find(checkIncludingDisabledDay);
+    if (includingDisabledDay) {
+      onDisabledDayError(includingDisabledDay);
+      return selectedDayRange;
+    }
+
+    return dayRangeValue;
+  };
+
+  const handleDayClick = day => {
+    const newDayValue = isDayRange ? getDayRangeValue(day) : day;
+    onChange(newDayValue);
   };
 
   const getDayClassNames = dayItem => {
@@ -134,9 +154,13 @@ const Calendar = ({
           key={id}
           className={`Calendar__day ${additionalClass}`}
           onClick={() => {
+            if (isDisabled) {
+              onDisabledDayError(dayItem); // good for showing error messages
+              return;
+            }
             handleDayClick({ day, month, year });
           }}
-          disabled={!isStandard || isFromSelectedOnly || isDisabled}
+          disabled={!isStandard || isFromSelectedOnly}
           type="button"
         >
           {toPersianNumber(day)}
@@ -254,6 +278,7 @@ const dayShape = {
 
 Calendar.defaultProps = {
   onChange: () => null,
+  onDisabledDayError: () => null,
   selectedDay: null,
   selectedDayRange: {
     from: null,
@@ -272,6 +297,7 @@ Calendar.defaultProps = {
 
 Calendar.propTypes = {
   onChange: PropTypes.func,
+  onDisabledDayError: PropTypes.func,
   selectedDay: PropTypes.shape(dayShape),
   selectedDayRange: PropTypes.shape({
     from: PropTypes.shape(dayShape),
