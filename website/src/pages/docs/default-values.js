@@ -34,20 +34,9 @@ const DefaultValues = () => {
         In the previous part, you declared the default state value
         as some sort of <code className="custom-code">null</code>. What if
         you want to use a day(range) as your default state value? Well, it&#39;s pretty
-        straightforward. you need to pass your intended day instead
-        of <code className="custom-code">null</code>. All day formats in this package
-        are like:
+        straightforward. you need to pass your intended day in the correct format instead
+        of <code className="custom-code">null</code>.
       </p>
-
-      <Code language="javascript">
-        {`
-PropTypes.shape({
-  year: PropTypes.number.isRequired,
-  month: PropTypes.number.isRequired,
-  day: PropTypes.number.isRequired,
-})
-        `}
-      </Code>
 
       <h2 className="Docs__titleSecondary">Single Date Default Value</h2>
 

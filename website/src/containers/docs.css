@@ -38,9 +38,8 @@
   margin-bottom: 1rem;
 }
 
-.Docs__paragraph.-marginTop {
-  margin-top: 1.5rem;
-}
+.Docs__paragraph.-marginTop { margin-top: 1.5rem; }
+.Docs__paragraph.-marginBottom { margin-bottom: 1.5rem; }
 
 .Docs__link {
   color: #4589d6;
