@@ -26,6 +26,17 @@ const CoreConcepts = () => {
       </ul>
 
       <p className="Docs__paragraph">
+        These components are similar in many cases. <code className="custom-code">{`<DatePicker />`}</code> just
+        includes an extra input in comparison with <code className="custom-code">{`<Calendar />`}</code>. The simple
+        rule is:
+      </p>
+
+      <p className="Docs__paragraph -marginTop -marginBottom">
+        <strong> You can use almost every prop
+          on both <code className="custom-code">{`<DatePicker />`}</code> and <code className="custom-code"> {`<Calendar />`}</code> components.</strong>
+      </p>
+
+      <p className="Docs__paragraph">
         By the way, all the examples provided in this document are implemented using <a rel="noopener noreferrer" target="_blank" className="Docs__link" href=" https://reactjs.org/docs/hooks-intro.html"> React hooks </a>.
       </p>
 
@@ -102,10 +113,19 @@ export default App;
        <code className="custom-code">selectedDay</code> prop
         is the value of the date picker, and <code className="custom-code">onChange</code> is
         the function which
-        will take care of changing the state using the state hook modifier. The interesting part is
-        <strong> you can use almost every prop
-        on both <code className="custom-code">{`<DatePicker />`}</code> and <code className="custom-code"> {`<Calendar />`}</code> components.</strong>
+        will take care of changing the state using the state hook modifier. All day formats
+        in the picker are like:
       </p>
+
+      <Code language="javascript">
+              {`
+PropTypes.shape({
+  year: PropTypes.number.isRequired,
+  month: PropTypes.number.isRequired,
+  day: PropTypes.number.isRequired,
+})
+              `}
+            </Code>
 
       <p className="Docs__paragraph">
         For a more detailed list of props,
