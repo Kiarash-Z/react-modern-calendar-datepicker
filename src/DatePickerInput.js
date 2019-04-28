@@ -29,10 +29,12 @@ const DatePickerInput = React.forwardRef(
     const getSelectedRangeValue = () => {
       if (!selectedDayRange.from || !selectedDayRange.to) return '';
       const { from, to } = selectedDayRange;
-      const fromText = `${toPersianNumber(putZero(from.month))}/${toPersianNumber(
-        putZero(from.day),
-      )}`;
-      const toText = `${toPersianNumber(putZero(to.month))}/${toPersianNumber(putZero(to.day))}`;
+      const fromText = `${toPersianNumber(putZero(from.year))
+        .toString()
+        .slice(-2)}/${toPersianNumber(putZero(from.month))}/${toPersianNumber(putZero(from.day))}`;
+      const toText = `${toPersianNumber(putZero(to.year))
+        .toString()
+        .slice(-2)}/${toPersianNumber(putZero(to.month))}/${toPersianNumber(putZero(to.day))}`;
       return `از ${fromText} تا ${toText}`;
     };
     const getValue = () => {
