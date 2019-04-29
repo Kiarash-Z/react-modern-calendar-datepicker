@@ -1,0 +1,31 @@
+.tableWrapper {
+  overflow-x: auto;
+  width: 100%;
+  max-width: 90% !important;
+}
+
+.table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.table__data, .table__header {
+  padding: 1rem 1.5rem;
+  border: 1px solid #dfe2e5;
+}
+
+.table__header {
+  text-align: left;
+  font-size: 1.6rem;
+}
+
+.table__data {
+  font-size: 1.5rem;
+  max-width: 35rem;
+  line-height: 1.5;
+}
+
+.table__row:nth-child(odd) {
+  background: #F6F8FA;
+}

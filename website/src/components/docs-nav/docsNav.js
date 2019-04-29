@@ -24,7 +24,7 @@ const DocsNav = () => {
         </ul>
       </div>
       <div className={styles.DocsNav__section}>
-        <span className={styles.DocsNav__sectionTitle}>API</span>
+        <span className={styles.DocsNav__sectionTitle}>API Reference</span>
         <ul className={styles.DocsNav__list}>
           {API_ITEMS.map(({ id, path, text }) => (
             <Link
