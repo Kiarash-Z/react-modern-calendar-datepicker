@@ -30,7 +30,7 @@ const App = () => {
     <Calendar
       selectedDay={selectedDay}
       onChange={setSelectedDay}
-      calendarClassName="responsive-calendar"
+      calendarClassName="responsive-calendar" // added this
     />
   );
 };
