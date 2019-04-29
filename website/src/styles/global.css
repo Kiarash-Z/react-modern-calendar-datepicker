@@ -47,6 +47,14 @@ button {
   padding: 0.2em 0.4em;
 }
 
+.text-orange {
+  color: #e67e22 !important;
+  border: 1px solid #e67e22;
+}
+.-customPlaceholderColor::placeholder { color: rgba(156, 136, 255, 0.7); }
+.text-orange::after { visibility: hidden; }
+.purple-shadow { box-shadow: 0 1em 3em rgba(156, 136, 255,0.2); }
+
 @media (min-width: 2560px) {
   html {
     font-size: 87.5%; /* 14 px */
