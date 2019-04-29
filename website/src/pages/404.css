@@ -1,0 +1,16 @@
+.NotFound {
+  min-height: calc(100vh - 14.5rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.NotFound__title {
+  font-size: 5rem;
+  margin-bottom: 3rem;
+}
+
+.NotFound__description {
+  font-size: 2rem;
+}
