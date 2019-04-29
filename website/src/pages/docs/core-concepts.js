@@ -129,7 +129,7 @@ PropTypes.shape({
 
       <p className="Docs__paragraph">
         For a more detailed list of props,
-        visit <Link to="/docs" className="Docs__link">props list</Link>.
+        visit <Link to="/docs/props-list" className="Docs__link">props list</Link>.
       </p>
 
       <h2 className="Docs__titleSecondary">Selecting a Day Range</h2>

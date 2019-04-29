@@ -29,4 +29,17 @@ export const TUTORIAL_ITEMS = [
     path: '/docs/responsive-guide',
     text: 'Responsive Guide',
   },
+];
+
+export const API_ITEMS = [
+  {
+    id: 0,
+    path: '/docs/props-list',
+    text: 'Props List'
+  },
+  {
+    id: 1,
+    path: '/docs/utilities',
+    text: 'Utilities'
+  },
 ]

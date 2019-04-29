@@ -14,7 +14,8 @@ const DefaultValues = () => {
         calendar, you need to change the <code className="custom-code">font-size</code> of it!
         Because of the usage of CSS relative units in calendar styles, all the children of it will
         correspond correctly. To change the font size of the calendar, you
-        can set a custom class on the calendar. Here&#39;s an example:(resize the page to see the effect)
+        can set a custom class on the calendar.
+        Here&#39;s an example:(resize the page to see the effect)
       </p>
 
       <div className="Docs__sampleContainer">
