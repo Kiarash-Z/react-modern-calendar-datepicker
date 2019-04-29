@@ -157,7 +157,7 @@ const App = () => {
   return (
     <Calendar
       selectedDayRange={selectedDayRange} // this is required
-      onChange={setSelectedDay}
+      onChange={setSelectedDayRange}
       isDayRange // this line too!
     />
   );
@@ -188,7 +188,7 @@ export default App;
           {`
 import React, { useState } from "react";
 import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import { Calendar } from "react-persian-calendar-date-picker";
+import DatePicker from "react-persian-calendar-date-picker";
 
 const App = () => {
   const [selectedDayRange, setSelectedDayRange] = useState({
@@ -198,7 +198,7 @@ const App = () => {
   return (
     <DatePicker
       selectedDayRange={selectedDayRange}
-      onChange={setSelectedDay}
+      onChange={setSelectedDayRange}
       inputPlaceholder="انتخاب روزهای نمایش"
       isDayRange
     />

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Calendar } from 'react-persian-calendar-date-picker';
-// import { Link } from 'gatsby';
 
 import Docs from '../../containers/docs';
 import { Code } from '../../components';
@@ -45,7 +44,7 @@ const DefaultValues = () => {
           {`
 import React, { useState } from "react";
 import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import DatePicker from "react-persian-calendar-date-picker";
+import { Calendar } from "react-persian-calendar-date-picker";
 
 const App = () => {
   const defaultValue = {
@@ -82,7 +81,7 @@ export default App;
           {`
 import React, { useState } from "react";
 import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import DatePicker from "react-persian-calendar-date-picker";
+import { Calendar } from "react-persian-calendar-date-picker";
 
 const App = () => {
   const defaultFrom = {
@@ -98,8 +97,8 @@ const App = () => {
   };
 
   const defaultRange = {
-    from,
-    to,
+    from: defaultFrom,
+    to: defaultTo,
   };
 
   const [selectedDayRange, setSelectedDayRange] = useState(
