@@ -11,7 +11,7 @@ const Installation = () => {
         Welcome to docs! react-persian-calendar-date-picker (a quite long name!)
         is a react date picker
         package for the Persian community.
-        It&#39;s lightweight; only ~5KB gizpped, and it&#39;s easy to use.
+        It&#39;s lightweight; only ~5.5KB gizpped, and it&#39;s easy to use.
         Before using this package, please pay attention to these two important points:
       </p>
 
