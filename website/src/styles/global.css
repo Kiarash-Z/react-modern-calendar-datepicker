@@ -36,6 +36,34 @@ button {
   font-size: 10px
 }
 
+.responsive-calendar {
+  font-size: 9px !important;
+}
+
+@media (max-width: 1500px) {
+  .responsive-calendar {
+    font-size: 8px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .responsive-calendar {
+    font-size: 7px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .responsive-calendar {
+    font-size: 6px !important;
+  }
+}
+
+@media (min-width: 2500px) {
+  .responsive-calendar {
+    font-size: 12px !important;
+  }
+}
+
 .-aboveAll {
   position: relative;
   z-index: 9;
@@ -58,6 +86,10 @@ button {
 @media (min-width: 2560px) {
   html {
     font-size: 87.5%; /* 14 px */
+  }
+
+  .persianFontWrapper {
+    font-size: 12px;
   }
 }
 
