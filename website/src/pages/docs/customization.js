@@ -103,6 +103,7 @@ const App = () => {
   // render regular HTML input element
   const renderCustomInput = ({ ref, onFocus, onBlur }) => (
     <input
+      readOnly
       ref={ref} // necessary
       onFocus={onFocus} // necessary
       onBlur={onBlur} // necessary
@@ -143,6 +144,7 @@ export default App;
           onChange={setDatePicker2Value}
           renderInput={({ ref, onFocus, onBlur }) => (
             <input
+              readOnly
               ref={ref}
               onFocus={onFocus}
               onBlur={onBlur}
