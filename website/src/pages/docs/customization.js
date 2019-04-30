@@ -60,7 +60,7 @@ const App = () => {
     <DatePicker
       selectedDay={selectedDay}
       onChange={setSelectedDay}
-      inputPlaceholder="انتخاب تاریخ" // placeholder
+      inputPlaceholder=تاریخ"انتخاب " // placeholder
       formatInputText={formatInputValue} // format value
       inputClassName="my-custom-input" // custom class
     />
@@ -77,7 +77,7 @@ export default App;
           calendarClassName="persianFontWrapper"
           selectedDay={datePicker1Value}
           onChange={setDatePicker1Value}
-          inputPlaceholder="انتخاب روز"
+          inputPlaceholder="انتخاب تاریخ"
           formatInputText={() => {
             if (!datePicker1Value) return '';
             return `روز ${datePicker1Value.day}`
@@ -108,7 +108,7 @@ const App = () => {
       onFocus={onFocus} // necessary
       onBlur={onBlur} // necessary
       placeholder="اینپوت کاستوم"
-      value={datePicker1Value ? datePicker1Value.day : ''}
+      value={selectedDay ? selectedDay.day : ''}
       style={{
         textAlign: 'center',
         padding: '1rem 1.5rem',
@@ -121,7 +121,7 @@ const App = () => {
       }}
       className="my-custom-input-class" // a styling class
     />
-  )}
+  )
 
   return (
     <DatePicker

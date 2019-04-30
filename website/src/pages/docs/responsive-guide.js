@@ -78,7 +78,7 @@ export default App;
 }
 
 /* Large screens */
-@media (max-width: 2500px) {
+@media (min-width: 2500px) {
   .responsive-calendar {
     font-size: 12px !important;
   }
