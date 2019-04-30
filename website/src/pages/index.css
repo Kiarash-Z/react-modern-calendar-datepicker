@@ -3,11 +3,22 @@
   flex-direction: column;
   align-items: center;
   padding: 9rem 2rem;
+  position: relative;
 }
 
 .hero__logo {
   width: 20rem;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+.hero__logoBackground {
+  position: absolute;
+  left: calc(50% - 13.5rem);
+  transform: translateX(-50%);
+  top: 4.5rem;
+  width: 19rem;
+  z-index: 1;
 }
 
 .hero__title {
@@ -142,6 +153,16 @@
     min-width: 17rem;
     min-height: 4.5rem;
     max-height: 4.5rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hero {
+    padding-top: 15rem;
+  }
+
+  .hero__logoBackground {
+    top: 10.5rem;
   }
 }
 

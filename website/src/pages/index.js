@@ -3,6 +3,7 @@ import DatePicker, { Calendar } from 'react-persian-calendar-date-picker';
 import { Link } from 'gatsby';
 
 import { ReactComponent as Logo } from '../images/logo.svg';
+import { ReactComponent as LogoBackground } from '../images/logo-background.svg';
 import { ReactComponent as GithubMark }  from '../images/github-mark.svg';
 
 import './index.css';
@@ -58,6 +59,7 @@ const IndexPage = () => {
       />
       <div className="hero">
         <Logo className="hero__logo" />
+        <LogoBackground className="hero__logoBackground" />
         <h1 className="hero__title">react-persian-calendar-date-picker</h1>
         <h2 className="hero__titleSecondary">
           A lightweight, customizable, Persian date picker for React
