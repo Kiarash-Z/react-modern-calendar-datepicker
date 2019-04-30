@@ -60,7 +60,7 @@ const App = () => {
     <DatePicker
       selectedDay={selectedDay}
       onChange={setSelectedDay}
-      inputPlaceholder=تاریخ"انتخاب " // placeholder
+      inputPlaceholder="انتخاب تاریخ" // placeholder
       formatInputText={formatInputValue} // format value
       inputClassName="my-custom-input" // custom class
     />
