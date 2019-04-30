@@ -30,14 +30,14 @@ const DisabledDays = () => {
         This package is designed to be customizable. There are a couple of props to
         change the default styles according to your preferences. You
         can customize picker, calendar, and input. For the full list of available
-        props you can visit <Link className="Docs__link" to="/docs/props-list">props list</Link>.
+        props, you can visit <Link className="Docs__link" to="/docs/props-list">props list</Link>.
       </p>
 
       <h2 className="Docs__titleSecondary">Customized Input</h2>
 
       <p className="Docs__paragraph">
         Placeholder and the formatted value of input can be set directly by you.
-        Moreover, you can set additional class on the input. If that&#39;s not enough,
+        Moreover, you can set an additional class on the input. If that&#39;s not enough,
         you can render your own input as well. Let&#39;s take a look at a few examples:
       </p>
 
@@ -169,7 +169,7 @@ export default App;
       <h2 className="Docs__titleSecondary">Customized Calendar</h2>
 
       <p className="Docs__paragraph">
-        Calendar has a few more props for customization. The most basic ones
+        The calendar has a few more props for customization. The most basic ones
         are <code className="custom-code">colorPrimary</code>, <code className="custom-code">colorPrimaryLight</code>.
         Additional classes&#39; props are available for the calendar itself,
         selected day, disabled days, range start day, range end day, and more.

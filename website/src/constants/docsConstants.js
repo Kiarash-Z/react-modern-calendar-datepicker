@@ -29,6 +29,11 @@ export const TUTORIAL_ITEMS = [
     path: '/docs/responsive-guide',
     text: 'Responsive Guide',
   },
+  {
+    id: 6,
+    path: '/docs/utilities',
+    text: 'Utilities'
+  },
 ];
 
 export const API_ITEMS = [
@@ -37,11 +42,6 @@ export const API_ITEMS = [
     path: '/docs/props-list',
     text: 'Props List'
   },
-  {
-    id: 1,
-    path: '/docs/utilities',
-    text: 'Utilities'
-  },
 ];
 
 export const PROPS_TABLE_HEADERS = [
@@ -49,11 +49,6 @@ export const PROPS_TABLE_HEADERS = [
   'Type',
   'Default',
   'Description'
-];
-
-export const CODE_KEYWORDS = [
-  'onDisabledDayError',
-  'true',
 ];
 
 export const PROPS_TABLE_PICKER_ROWS = [

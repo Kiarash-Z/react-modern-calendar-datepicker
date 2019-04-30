@@ -73,7 +73,7 @@ PropTypes.arrayOf(PropTypes.shape({
       <p className="Docs__paragraph">
         By passing disabled days, users won&#39;t be able to select a disabled day
         or include one in a range. At such times, <code className="custom-code">onDisabledDayError</code>
-        function will be called, and you can show a message to user.
+        function will get called, and you can show a message to the users.
       </p>
 
       <h2 className="Docs__titleSecondary">Examples</h2>

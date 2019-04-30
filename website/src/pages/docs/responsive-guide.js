@@ -10,7 +10,7 @@ const DefaultValues = () => {
   return (
     <Docs title="Responsive Guide">
       <p className="Docs__paragraph">
-        By default, calendar element has a fixed size. If you wan&#39;t to use larger/smaller
+        By default, the calendar element has a fixed size. If you want to use a larger/smaller
         calendar, you need to change the <code className="custom-code">font-size</code> of it!
         Because of the usage of CSS relative units in calendar styles, all the children of it will
         correspond correctly. To change the font size of the calendar, you
