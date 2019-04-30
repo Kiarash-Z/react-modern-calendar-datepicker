@@ -81,6 +81,10 @@ function SEO({ description, lang, meta, keywords, title }) {
         .concat(meta)}
     >
       <link rel="shortcut icon" href={logoFavIcon} />
+      <meta name="image" content="https://user-images.githubusercontent.com/20098648/56985883-9debec80-6b9e-11e9-90cc-eeda8ac2f5a9.png" />
+      <meta itemProp="image" content="https://user-images.githubusercontent.com/20098648/56985883-9debec80-6b9e-11e9-90cc-eeda8ac2f5a9.png" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="og:type" content="website" />
     </Helmet>
   );
 }
