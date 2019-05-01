@@ -50,12 +50,20 @@ function SEO({ description, lang, meta, keywords, title }) {
           content: metaDescription,
         },
         {
+          property: `og:image`,
+          content: 'https://repository-images.githubusercontent.com/182072844/5b281580-6b9a-11e9-9eed-a13ca51956f2',
+        },
+        {
+          property: `og:url`,
+          content: 'https://kiarash-z.github.io/react-persian-calendar-date-picker',
+        },
+        {
           property: `og:type`,
           content: `website`,
         },
         {
           name: `twitter:card`,
-          content: `summary`,
+          content: `summary_large_image`,
         },
         {
           name: `twitter:creator`,
@@ -69,6 +77,10 @@ function SEO({ description, lang, meta, keywords, title }) {
           name: `twitter:description`,
           content: metaDescription,
         },
+        {
+          name: `twitter:image:src`,
+          content: 'https://repository-images.githubusercontent.com/182072844/5b281580-6b9a-11e9-9eed-a13ca51956f2',
+        },
       ]
         .concat(
           keywords.length > 0
@@ -80,21 +92,6 @@ function SEO({ description, lang, meta, keywords, title }) {
         )
         .concat(meta)}
     >
-      <meta name="description" content="A lightweight, customizable, Persian date picker for React" />
-      <meta name="image" content="https://user-images.githubusercontent.com/20098648/56985883-9debec80-6b9e-11e9-90cc-eeda8ac2f5a9.png" />
-      <meta itemProp="name" content="react-persian-calendar-date-picker" />
-      <meta itemProp="description" content="A lightweight, customizable, Persian date picker for React" />
-      <meta itemProp="image" content="https://user-images.githubusercontent.com/20098648/56985883-9debec80-6b9e-11e9-90cc-eeda8ac2f5a9.png" />
-      <meta name="twitter:card" content="summary" />
-      <meta name="twitter:title" content="react-persian-calendar-date-picker" />
-      <meta name="twitter:description" content="A lightweight, customizable, Persian date picker for React" />
-      <meta name="twitter:image:src" content="https://user-images.githubusercontent.com/20098648/56985883-9debec80-6b9e-11e9-90cc-eeda8ac2f5a9.png" />
-      <meta name="og:title" content="react-persian-calendar-date-picker" />
-      <meta name="og:description" content="A lightweight, customizable, Persian date picker for React" />
-      <meta name="og:image" content="https://user-images.githubusercontent.com/20098648/56985883-9debec80-6b9e-11e9-90cc-eeda8ac2f5a9.png" />
-      <meta name="og:url" content="https://kiarash-z.github.io/react-persian-calendar-date-picker" />
-      <meta name="og:type" content="website" />
-
       <link rel="shortcut icon" href={logoFavIcon} />
     </Helmet>
   );
