@@ -171,6 +171,11 @@
     width: 15rem;
   }
 
+  .hero__logoBackground {
+    width: 14rem;
+    left: calc(50% - 10rem);
+  }
+
   .hero__actionContainer {
     flex-direction: column;
     align-items: center;
