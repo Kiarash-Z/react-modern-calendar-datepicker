@@ -26,6 +26,14 @@
     "url": "https://github.com/Kiarash-Z/react-persian-calendar-date-picker/issues"
   },
   "license": "MIT",
+  "keywords": [
+    "react",
+    "persian",
+    "calendar",
+    "datepicker",
+    "datepicker-range",
+    "datepicker-component"
+  ],
   "size-limit": [
     {
       "path": "./lib/index.js",
