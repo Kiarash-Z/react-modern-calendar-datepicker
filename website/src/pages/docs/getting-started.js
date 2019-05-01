@@ -23,7 +23,7 @@ const Installation = () => {
         </li>
         <li>
           2- By default, this package inherits <code className="custom-code">font-family</code> from your project. It&#39;s recommended
-          to use <a rel="noopener noreferrer" target="_blank" className="Docs__link" href="https://fontiran.com/%D9%81%D9%88%D9%86%D8%AA-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%DB%8C%DA%A9%D8%A7%D9%86-iran-yekan/"> Iran Yekan </a>
+          to use <a rel="noopener noreferrer" target="_blank" className="Docs__link" href="https://fontiran.com/%D9%81%D9%88%D9%86%D8%AA-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%DB%8C%DA%A9%D8%A7%D9%86-iran-yekan/"> Iran Yekan (primary choice) </a>
           or <a rel="noopener noreferrer" target="_blank" className="Docs__link" href="https://fontiran.com/%D8%AE%D8%A7%D9%86%D9%88%D8%A7%D8%AF%D9%87-%D9%81%D9%88%D9%86%D8%AA-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B3%D9%86-%D8%B3%D8%B1%DB%8C%D9%81-iran-sans-%D9%BE%D9%86%D8%AC-%D9%88%D8%B2%D9%86-%D9%87%D9%85/"> Iran Sans </a>
           as your font family in order to have the best user experience.
         </li>
