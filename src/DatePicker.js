@@ -53,7 +53,7 @@ const DatePicker = ({
     if (shouldCloseCalendar) dateInput.current.blur();
   }, [selectedDay, isCalendarOpen]);
 
-  const toggleCalendar = () => setCalendarVisiblity(!isCalendarOpen);
+  const toggleCalendar = () => setCalendarVisiblity(true);
 
   // keep calendar open if clicked inside the calendar
   const handleBlur = e => {
