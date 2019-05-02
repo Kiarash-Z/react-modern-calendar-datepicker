@@ -105,6 +105,9 @@ const checkDayInDayRange = ({ day, from, to }) => {
   return nativeDay > nativeFrom && nativeDay < nativeTo;
 };
 
+const checkDayInDayRangeIncluding = ({ day, from, to }) =>
+  checkDayInDayRange({ day, from, to }) || isSameDay(day, from) || isSameDay(day, to);
+
 const putZero = number => (number.toString().length === 1 ? `0${number}` : number);
 
 const shallowCloneObject = obj => ({ ...obj });
@@ -123,6 +126,7 @@ export {
   getDateAccordingToMonth,
   isSameDay,
   checkDayInDayRange,
+  checkDayInDayRangeIncluding,
   isBeforeDate,
   putZero,
   shallowCloneObject,
