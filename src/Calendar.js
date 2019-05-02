@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useReducer, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -40,9 +40,6 @@ const Calendar = ({
     cycleCount: 1,
     activeDate: null,
   });
-  const [firstSelectedDay, directlySetFirstSelectedDay] = useState(null);
-  const [secondSelectedDay, directlySetSecondSelectedDay] = useState(null);
-  const [currentlyDragging, setCurrentlyDragging] = useState(false);
 
   const createDateFromDays = (first, second) => {
     if (!isDayRange) {
@@ -53,7 +50,6 @@ const Calendar = ({
     }
     return { from: second, to: first };
   };
-
   const getSelectedDisabledDayIfAny = date => {
     if (isDayRange) {
       return disabledDays.find(disabledDay =>
@@ -63,31 +59,87 @@ const Calendar = ({
     return disabledDays.find(disabledDay => isSameDay(disabledDay, date));
   };
 
+  const [selectedDaysState, dispatchSelectedDays] = useReducer((state, { type, date }) => {
+    const { firstSelectedDay, secondSelectedDay, currentlyDragging } = state;
+    let newState;
+    switch (type) {
+      case 'SELECT':
+        if (!isDayRange) {
+          newState = {
+            firstSelectedDay: date,
+            secondSelectedDay: date,
+            currentlyDragging: 'FIRST',
+          };
+        } else if (isSameDay(date, firstSelectedDay)) {
+          newState = {
+            firstSelectedDay: date,
+            secondSelectedDay,
+            currentlyDragging: 'FIRST',
+          };
+        } else if (isSameDay(date, secondSelectedDay)) {
+          newState = {
+            firstSelectedDay,
+            secondSelectedDay,
+            currentlyDragging: 'SECOND',
+          };
+        } else if (!firstSelectedDay) {
+          newState = {
+            firstSelectedDay: date,
+            secondSelectedDay,
+            currentlyDragging: 'SECOND',
+          };
+        } else if (secondSelectedDay) {
+          newState = {
+            firstSelectedDay: date,
+            secondSelectedDay: null,
+            currentlyDragging: 'SECOND',
+          };
+        } else {
+          newState = {
+            firstSelectedDay,
+            secondSelectedDay: date,
+            currentlyDragging: 'SECOND',
+          };
+        }
+        break;
+      case 'ENTER':
+        if (currentlyDragging === 'FIRST' && !isSameDay(date, secondSelectedDay)) {
+          newState = {
+            firstSelectedDay: date,
+            secondSelectedDay,
+            currentlyDragging,
+          };
+        } else if (currentlyDragging === 'SECOND' && !isSameDay(date, firstSelectedDay)) {
+          newState = {
+            firstSelectedDay,
+            secondSelectedDay: date,
+            currentlyDragging,
+          };
+        }
+        break;
+      case 'RELEASE':
+        return {
+          ...state,
+          currentlyDragging: null,
+        };
+      default:
+        newState = null;
+    }
+    if (!newState) return state;
+    const newDate = createDateFromDays(newState.firstSelectedDay, newState.secondSelectedDay);
+    const disabledDay = getSelectedDisabledDayIfAny(newDate);
+    if (disabledDay) {
+      onDisabledDayError(disabledDay);
+      return state;
+    }
+    return newState;
+  }, selectedDayRange);
+
+  const { firstSelectedDay, secondSelectedDay, currentlyDragging } = selectedDaysState;
+
   useEffect(() => {
     onChange(createDateFromDays(firstSelectedDay, secondSelectedDay));
   }, [firstSelectedDay, secondSelectedDay]);
-
-  const setFirstSelectedDay = firstDay => {
-    const secondDay = secondSelectedDay;
-    const newDate = createDateFromDays(firstDay, secondDay);
-    const disabledDay = getSelectedDisabledDayIfAny(newDate);
-    if (disabledDay) {
-      onDisabledDayError(disabledDay);
-    } else {
-      directlySetFirstSelectedDay(firstDay);
-    }
-  };
-
-  const setSecondSelectedDay = secondDay => {
-    const firstDay = firstSelectedDay;
-    const newDate = createDateFromDays(firstDay, secondDay);
-    const disabledDay = getSelectedDisabledDayIfAny(newDate);
-    if (disabledDay) {
-      onDisabledDayError(disabledDay);
-    } else {
-      directlySetSecondSelectedDay(secondDay);
-    }
-  };
 
   const today = getToday();
   let activeDate = mainState.activeDate ? shallowCloneObject(mainState.activeDate) : null;
@@ -118,49 +170,13 @@ const Calendar = ({
     return `${month} ${year}`;
   };
 
-  const handleDayMouseDown = day => {
-    if (!isDayRange) {
-      setFirstSelectedDay(day);
-      setSecondSelectedDay(day);
-      setCurrentlyDragging('FIRST');
-    } else if (isSameDay(day, firstSelectedDay)) {
-      setCurrentlyDragging('FIRST');
-    } else if (isSameDay(day, secondSelectedDay)) {
-      setCurrentlyDragging('SECOND');
-    } else if (!firstSelectedDay) {
-      setFirstSelectedDay(day);
-      setCurrentlyDragging('SECOND');
-    } else if (secondSelectedDay) {
-      setFirstSelectedDay(day);
-      setSecondSelectedDay(null);
-      setCurrentlyDragging('SECOND');
-    } else {
-      setSecondSelectedDay(day);
-      setCurrentlyDragging('SECOND');
-    }
-  };
-
-  const handleDayMouseEnter = day => {
-    switch (currentlyDragging) {
-      case 'FIRST':
-        if (!isSameDay(day, secondSelectedDay)) setFirstSelectedDay(day);
-        break;
-      case 'SECOND':
-        if (!isSameDay(day, firstSelectedDay)) setSecondSelectedDay(day);
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleDayMouseUp = useCallback(() => {
-    setCurrentlyDragging(null);
-  }, []);
-
   React.useEffect(() => {
-    window.addEventListener('mouseup', handleDayMouseUp);
-    return () => window.removeEventListener('mouseup', handleDayMouseUp);
-  }, [handleDayMouseUp]);
+    function handler() {
+      dispatchSelectedDays({ type: 'RELEASE' });
+    }
+    window.addEventListener('mouseup', handler);
+    return () => window.removeEventListener('mouseup', handler);
+  }, []);
 
   const getDayClassNames = dayItem => {
     const isToday = isSameDay(dayItem, today);
@@ -210,15 +226,15 @@ const Calendar = ({
           key={id}
           className={`Calendar__day ${additionalClass}`}
           onMouseDown={() => {
-            handleDayMouseDown({ day, month, year });
+            dispatchSelectedDays({ type: 'SELECT', date: { day, month, year } });
           }}
           onMouseEnter={() => {
-            if (isStandard) {
-              handleDayMouseEnter({ day, month, year });
+            if (isStandard && currentlyDragging) {
+              dispatchSelectedDays({ type: 'ENTER', date: { day, month, year } });
             }
           }}
           onMouseUp={() => {
-            handleDayMouseUp({ day, month, year });
+            dispatchSelectedDays({ type: 'RELEASE', date: { day, month, year } });
           }}
           disabled={!isStandard}
           type="button"
