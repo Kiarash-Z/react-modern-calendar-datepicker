@@ -221,6 +221,20 @@ const Calendar = ({
     return allDays;
   };
 
+  function onDaySelect(date) {
+    dispatchSelectedDays({ type: 'SELECT', date });
+  }
+
+  function onDayEnter(date, isStandard = true) {
+    if (isStandard && currentlyDragging) {
+      dispatchSelectedDays({ type: 'ENTER', date });
+    }
+  }
+
+  function onDayRelease(date) {
+    dispatchSelectedDays({ type: 'RELEASE', date });
+  }
+
   const renderMonthDays = isNewMonth => {
     const allDays = getViewMonthDays(isNewMonth);
     return allDays.map(({ id, value: day, month, year, isStandard }) => {
@@ -232,15 +246,19 @@ const Calendar = ({
           key={id}
           className={`Calendar__day ${additionalClass}`}
           onMouseDown={() => {
-            dispatchSelectedDays({ type: 'SELECT', date: { day, month, year } });
+            onDaySelect(dayItem, isStandard);
           }}
           onMouseEnter={() => {
-            if (isStandard && currentlyDragging) {
-              dispatchSelectedDays({ type: 'ENTER', date: { day, month, year } });
-            }
+            onDayEnter(dayItem, isStandard);
           }}
           onMouseUp={() => {
-            dispatchSelectedDays({ type: 'RELEASE', date: { day, month, year } });
+            onDayRelease(dayItem, isStandard);
+          }}
+          onTouchStart={() => {
+            onDaySelect(dayItem, isStandard);
+          }}
+          onTouchEnd={() => {
+            onDayRelease(dayItem, isStandard);
           }}
           disabled={!isStandard}
           type="button"
