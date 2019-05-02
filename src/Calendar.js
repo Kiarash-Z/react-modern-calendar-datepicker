@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -14,7 +14,6 @@ import {
   checkDayInDayRange,
   isBeforeDate,
   shallowCloneObject,
-  deepCloneObject,
 } from './utils';
 
 const Calendar = ({
@@ -40,6 +39,19 @@ const Calendar = ({
     cycleCount: 1,
     activeDate: null,
   });
+  const [firstSelectedDate, setFirstSelectedDate] = useState(null);
+  const [secondSelectedDate, setSecondSelectedDate] = useState(null);
+  const [currentlyDragging, setCurrentlyDragging] = useState(false);
+
+  useEffect(() => {
+    const first = firstSelectedDate;
+    const second = secondSelectedDate;
+    if (isBeforeDate(first, second) || !second) {
+      onChange({ from: first, to: second });
+    } else {
+      onChange({ from: second, to: first });
+    }
+  }, [firstSelectedDate, secondSelectedDate]);
 
   const today = getToday();
   let activeDate = mainState.activeDate ? shallowCloneObject(mainState.activeDate) : null;
@@ -70,40 +82,79 @@ const Calendar = ({
     return `${month} ${year}`;
   };
 
-  const getDayRangeValue = day => {
-    const clonedDayRange = deepCloneObject(selectedDayRange);
-    const dayRangeValue =
-      clonedDayRange.from && clonedDayRange.to ? { from: null, to: null } : clonedDayRange;
-    const dayRangeProp = !dayRangeValue.from ? 'from' : 'to';
-    dayRangeValue[dayRangeProp] = day;
-    const { from, to } = dayRangeValue;
+  // const getDayRangeValue = day => {
+  //   const clonedDayRange = deepCloneObject(selectedDayRange);
+  //   const dayRangeValue =
+  //     clonedDayRange.from && clonedDayRange.to ? { from: null, to: null } : clonedDayRange;
+  //   const dayRangeProp = !dayRangeValue.from ? 'from' : 'to';
+  //   dayRangeValue[dayRangeProp] = day;
+  //   const { from, to } = dayRangeValue;
 
-    // swap from and to values if from is later than to
-    if (isBeforeDate(dayRangeValue.to, dayRangeValue.from)) {
-      dayRangeValue.from = to;
-      dayRangeValue.to = from;
+  //   // swap from and to values if from is later than to
+  //   if (isBeforeDate(dayRangeValue.to, dayRangeValue.from)) {
+  //     dayRangeValue.from = to;
+  //     dayRangeValue.to = from;
+  //   }
+
+  //   const checkIncludingDisabledDay = disabledDay => {
+  //     return checkDayInDayRange({
+  //       day: disabledDay,
+  //       from: dayRangeValue.from,
+  //       to: dayRangeValue.to,
+  //     });
+  //   };
+  //   const includingDisabledDay = disabledDays.find(checkIncludingDisabledDay);
+  //   if (includingDisabledDay) {
+  //     onDisabledDayError(includingDisabledDay);
+  //     return selectedDayRange;
+  //   }
+
+  //   return dayRangeValue;
+  // };
+
+  const handleDayMouseDown = day => {
+    if (!isDayRange) {
+      setFirstSelectedDate(day);
+      setSecondSelectedDate(day);
+      setCurrentlyDragging('FIRST');
+    } else if (isSameDay(day, firstSelectedDate)) {
+      setCurrentlyDragging('FIRST');
+    } else if (isSameDay(day, secondSelectedDate)) {
+      setCurrentlyDragging('SECOND');
+    } else if (!firstSelectedDate) {
+      setFirstSelectedDate(day);
+      setCurrentlyDragging('SECOND');
+    } else if (secondSelectedDate) {
+      setFirstSelectedDate(day);
+      setSecondSelectedDate(null);
+      setCurrentlyDragging('SECOND');
+    } else {
+      setSecondSelectedDate(day);
+      setCurrentlyDragging('SECOND');
     }
-
-    const checkIncludingDisabledDay = disabledDay => {
-      return checkDayInDayRange({
-        day: disabledDay,
-        from: dayRangeValue.from,
-        to: dayRangeValue.to,
-      });
-    };
-    const includingDisabledDay = disabledDays.find(checkIncludingDisabledDay);
-    if (includingDisabledDay) {
-      onDisabledDayError(includingDisabledDay);
-      return selectedDayRange;
-    }
-
-    return dayRangeValue;
   };
 
-  const handleDayClick = day => {
-    const newDayValue = isDayRange ? getDayRangeValue(day) : day;
-    onChange(newDayValue);
+  const handleDayMouseEnter = day => {
+    switch (currentlyDragging) {
+      case 'FIRST':
+        if (!isSameDay(day, secondSelectedDate)) setFirstSelectedDate(day);
+        break;
+      case 'SECOND':
+        if (!isSameDay(day, firstSelectedDate)) setSecondSelectedDate(day);
+        break;
+      default:
+        break;
+    }
   };
+
+  const handleDayMouseUp = useCallback(() => {
+    setCurrentlyDragging(null);
+  }, []);
+
+  React.useEffect(() => {
+    window.addEventListener('mouseup', handleDayMouseUp);
+    return () => window.removeEventListener('mouseup', handleDayMouseUp);
+  }, [handleDayMouseUp]);
 
   const getDayClassNames = dayItem => {
     const isToday = isSameDay(dayItem, today);
@@ -146,21 +197,28 @@ const Calendar = ({
     const allDays = getViewMonthDays(isNewMonth);
     return allDays.map(({ id, value: day, month, year, isStandard }) => {
       const dayItem = { day, month, year };
-      const isDisabled = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
+      const isDisabled = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay)); // Todo
       const additionalClass = getDayClassNames({ ...dayItem, isStandard, isDisabled });
-      const isFromSelectedOnly = isSameDay(dayItem, selectedDayRange.from) && !selectedDayRange.to;
       return (
         <button
           key={id}
           className={`Calendar__day ${additionalClass}`}
-          onClick={() => {
-            if (isDisabled) {
+          onMouseDown={() => {
+            if (isDisabled || !isStandard) {
               onDisabledDayError(dayItem); // good for showing error messages
               return;
             }
-            handleDayClick({ day, month, year });
+            handleDayMouseDown({ day, month, year });
           }}
-          disabled={!isStandard || isFromSelectedOnly}
+          onMouseEnter={() => {
+            if (isStandard) {
+              handleDayMouseEnter({ day, month, year });
+            }
+          }}
+          onMouseUp={() => {
+            handleDayMouseUp({ day, month, year });
+          }}
+          disabled={!isStandard}
           type="button"
         >
           {toPersianNumber(day)}
