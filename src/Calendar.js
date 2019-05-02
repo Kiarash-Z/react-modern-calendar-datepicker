@@ -70,11 +70,17 @@ const Calendar = ({
             secondSelectedDay: date,
             currentlyDragging: 'FIRST',
           };
-        } else if (isSameDay(date, firstSelectedDay)) {
+        } else if (isSameDay(date, firstSelectedDay) && secondSelectedDay) {
           newState = {
             firstSelectedDay: date,
             secondSelectedDay,
             currentlyDragging: 'FIRST',
+          };
+        } else if (isSameDay(date, firstSelectedDay) && !secondSelectedDay) {
+          newState = {
+            firstSelectedDay,
+            secondSelectedDay,
+            currentlyDragging: 'SECOND',
           };
         } else if (isSameDay(date, secondSelectedDay)) {
           newState = {
@@ -88,7 +94,7 @@ const Calendar = ({
             secondSelectedDay,
             currentlyDragging: 'SECOND',
           };
-        } else if (secondSelectedDay) {
+        } else if (firstSelectedDay && secondSelectedDay) {
           newState = {
             firstSelectedDay: date,
             secondSelectedDay: null,
