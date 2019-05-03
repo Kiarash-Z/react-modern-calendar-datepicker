@@ -225,7 +225,7 @@ const Calendar = ({
     dispatchSelectedDays({ type: 'SELECT', date });
   }
 
-  function onDayEnter(date, isStandard = true) {
+  function onDayEnter(date, isStandard) {
     if (isStandard && currentlyDragging) {
       dispatchSelectedDays({ type: 'ENTER', date });
     }
