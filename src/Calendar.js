@@ -244,6 +244,9 @@ const Calendar = ({
       return (
         <button
           key={id}
+          data-year={year}
+          data-month={month}
+          data-day={day}
           className={`Calendar__day ${additionalClass}`}
           onMouseDown={() => {
             onDaySelect(dayItem, isStandard);
@@ -256,6 +259,35 @@ const Calendar = ({
           }}
           onTouchStart={() => {
             onDaySelect(dayItem, isStandard);
+          }}
+          onTouchMove={e => {
+            const touchStartedFrom = e.currentTarget;
+            const currentlyTouched = document.elementFromPoint(
+              e.targetTouches[0].pageX,
+              e.targetTouches[0].pageY,
+            );
+            const getDateFromDOMNode = domNODE => {
+              const { year: yearString, month: monthString, day: dayString } = domNODE.dataset;
+              return {
+                year: Number(yearString),
+                month: Number(monthString),
+                day: Number(dayString),
+                isStandard:
+                  yearString !== undefined && monthString !== undefined && dayString !== undefined,
+              };
+            };
+            if (touchStartedFrom !== currentlyTouched) {
+              const {
+                year: currentlyTouchedYear,
+                month: currentlyTouchedMonth,
+                day: currentlyTouchedDay,
+                isStandard: currentlyTouchedIsStandard,
+              } = getDateFromDOMNode(currentlyTouched);
+              onDayEnter(
+                { currentlyTouchedYear, currentlyTouchedMonth, currentlyTouchedDay },
+                currentlyTouchedIsStandard,
+              );
+            }
           }}
           onTouchEnd={() => {
             onDayRelease(dayItem, isStandard);

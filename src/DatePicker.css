@@ -217,6 +217,7 @@
   border-radius: 50%;
   transition: 0.2s;
   border: 1px solid transparent;
+  touch-action: none;
 }
 
 .Calendar__day:not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween):not(.-selected):hover {
