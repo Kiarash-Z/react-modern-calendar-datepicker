@@ -20,7 +20,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
-    "react-persian-calendar-date-picker": "1.0.0-beta.7",
+    "react-persian-calendar-date-picker": "^1.0.1",
     "shortid": "^2.2.14"
   },
   "devDependencies": {

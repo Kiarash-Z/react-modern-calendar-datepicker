@@ -7842,9 +7842,9 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-persian-calendar-date-picker@1.0.0-beta.7:
-  version "1.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/react-persian-calendar-date-picker/-/react-persian-calendar-date-picker-1.0.0-beta.7.tgz#392e86edfd9e709ea88f654fc1aaadc23228f911"
+react-persian-calendar-date-picker@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-persian-calendar-date-picker/-/react-persian-calendar-date-picker-1.0.1.tgz#3016dd9d8f5e1e9d326e791c45053aacd04221ca"
   dependencies:
     jalaali-js "^1.1.0"
     prop-types "^15.7.2"
