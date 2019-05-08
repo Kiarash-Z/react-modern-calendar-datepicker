@@ -184,7 +184,7 @@ const Calendar = ({
     hiddenItem.classList.add('-shownAnimated');
   };
 
-  const handleMonthClick = (e, direction) => {
+  const handleMonthClick = direction => {
     setMainState({
       ...mainState,
       status: direction,
@@ -217,8 +217,8 @@ const Calendar = ({
       <div className="Calendar__header">
         <button
           className="Calendar__monthArrowWrapper -right"
-          onClick={e => handleMonthClick(e, 'NEXT')}
-          aria-label="ماه بعد"
+          onClick={() => handleMonthClick('PREVIOUS')}
+          aria-label="ماه قبل"
           type="button"
         >
           <span className="Calendar__monthArrow" alt="فلش راست">
@@ -236,8 +236,8 @@ const Calendar = ({
         </div>
         <button
           className="Calendar__monthArrowWrapper -left"
-          onClick={e => handleMonthClick(e, 'PREVIOUS')}
-          aria-label="ماه قبل"
+          onClick={() => handleMonthClick('NEXT')}
+          aria-label="ماه بعد"
           type="button"
         >
           <span className="Calendar__monthArrow" alt="فلش چپ">

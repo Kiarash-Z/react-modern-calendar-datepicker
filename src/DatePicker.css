@@ -35,7 +35,7 @@
   --cl-color-black: #444444;
   --cl-color-disabled: #d4d4d4;
   --cl-color-error: #ff2929;
-  --animation-duration: 0.3s;
+  --animation-duration: 0.4s;
   font-size: 10px;
   background: #fff;
   box-shadow: 0 1em 4em rgba(0, 0, 0, 0.07);
@@ -135,12 +135,12 @@
 
 .Calendar__monthYear.-hiddenNext {
   opacity: 0;
-  transform: translateX(50%);
+  transform: translateX(-150%);
 }
 
 .Calendar__monthYear.-hiddenPrevious {
   opacity: 0;
-  transform: translateX(-150%);
+  transform: translateX(50%);
 }
 
 .Calendar__monthYear.-shown {
@@ -188,13 +188,13 @@
   transition: var(--animation-duration);
 }
 
-.Calendar__section.-hiddenNext {
+.Calendar__section.-hiddenPrevious {
   opacity: 0.5;
   transform: translateX(90%);
 
 }
 
-.Calendar__section.-hiddenPrevious {
+.Calendar__section.-hiddenNext {
   opacity: 0.5;
   transform: translateX(-90%);
   padding: 1px solid #ddd;
@@ -307,4 +307,3 @@
     transform: translateX(0);
   }
 }
-
