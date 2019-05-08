@@ -135,12 +135,12 @@
 
 .Calendar__monthYear.-hiddenNext {
   opacity: 0;
-  transform: translateX(50%);
+  transform: translateX(-150%);
 }
 
 .Calendar__monthYear.-hiddenPrevious {
   opacity: 0;
-  transform: translateX(-150%);
+  transform: translateX(50%);
 }
 
 .Calendar__monthYear.-shown {
@@ -188,13 +188,13 @@
   transition: var(--animation-duration);
 }
 
-.Calendar__section.-hiddenNext {
+.Calendar__section.-hiddenPrevious {
   opacity: 0.5;
   transform: translateX(90%);
 
 }
 
-.Calendar__section.-hiddenPrevious {
+.Calendar__section.-hiddenNext {
   opacity: 0.5;
   transform: translateX(-90%);
   padding: 1px solid #ddd;
@@ -307,4 +307,3 @@
     transform: translateX(0);
   }
 }
-
