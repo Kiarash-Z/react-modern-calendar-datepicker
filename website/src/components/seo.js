@@ -81,6 +81,10 @@ function SEO({ description, lang, meta, keywords, title }) {
           name: `twitter:image:src`,
           content: 'https://repository-images.githubusercontent.com/182072844/5b281580-6b9a-11e9-9eed-a13ca51956f2',
         },
+        {
+          name: 'theme-color',
+          content: "#0eca2d",
+        }
       ]
         .concat(
           keywords.length > 0
