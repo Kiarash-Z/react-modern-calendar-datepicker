@@ -30,23 +30,24 @@ const DatePickerInput = React.forwardRef(
       if (!selectedDayRange.from && !selectedDayRange.to) {
         return '';
       }
-      if (selectedDayRange.from && !selectedDayRange.to) {
+      let text;
+      if (selectedDayRange.from) {
         const { from } = selectedDayRange;
         const fromText = `${toPersianNumber(putZero(from.year))
           .toString()
           .slice(-2)}/${toPersianNumber(putZero(from.month))}/${toPersianNumber(
           putZero(from.day),
         )}`;
-        return `از ${fromText}`;
+        text = `از ${fromText}`;
       }
-      const { from, to } = selectedDayRange;
-      const fromText = `${toPersianNumber(putZero(from.year))
-        .toString()
-        .slice(-2)}/${toPersianNumber(putZero(from.month))}/${toPersianNumber(putZero(from.day))}`;
-      const toText = `${toPersianNumber(putZero(to.year))
-        .toString()
-        .slice(-2)}/${toPersianNumber(putZero(to.month))}/${toPersianNumber(putZero(to.day))}`;
-      return `از ${fromText} تا ${toText}`;
+      if (selectedDayRange.to) {
+        const { to } = selectedDayRange;
+        const toText = `${toPersianNumber(putZero(to.year))
+          .toString()
+          .slice(-2)}/${toPersianNumber(putZero(to.month))}/${toPersianNumber(putZero(to.day))}`;
+        text += ` تا ${toText}`;
+      }
+      return text;
     };
     const getValue = () => {
       if (formatInputText()) return formatInputText();
