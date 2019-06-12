@@ -71,6 +71,11 @@ const Calendar = ({
     return `${month} ${year}`;
   };
 
+  const isBeforeThisMonth = isNewMonth => {
+    const date = getDate(!isNewMonth);
+    return isBeforeDate(date, today);
+  };
+
   const getDayRangeValue = day => {
     const clonedDayRange = deepCloneObject(selectedDayRange);
     const dayRangeValue =
@@ -219,8 +224,13 @@ const Calendar = ({
     >
       <div className="Calendar__header">
         <button
-          className="Calendar__monthArrowWrapper -right"
-          onClick={() => handleMonthClick('PREVIOUS')}
+          className={`Calendar__monthArrowWrapper -right ${
+            disableBackwards && isBeforeThisMonth(isCycleCountEven) ? '-disabled' : ''
+          }`}
+          onClick={() => {
+            if (!(disableBackwards && isBeforeThisMonth(isCycleCountEven)))
+              handleMonthClick('PREVIOUS');
+          }}
           aria-label="ماه قبل"
           type="button"
         >
