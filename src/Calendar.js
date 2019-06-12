@@ -32,7 +32,7 @@ const Calendar = ({
   disabledDays,
   colorPrimary,
   colorPrimaryLight,
-  disableBackward,
+  disableBackwards,
 }) => {
   const monthYearTextWrapper = useRef(null);
   const calendarSectionWrapper = useRef(null);
@@ -148,7 +148,7 @@ const Calendar = ({
     return allDays.map(({ id, value: day, month, year, isStandard }) => {
       const dayItem = { day, month, year };
       let isDisabled = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
-      if (disableBackward && month && isBeforeDate(dayItem, today) && !isSameDay(dayItem, today))
+      if (disableBackwards && month && isBeforeDate(dayItem, today) && !isSameDay(dayItem, today))
         isDisabled = true;
       const additionalClass = getDayClassNames({ ...dayItem, isStandard, isDisabled });
       const isFromSelectedOnly = isSameDay(dayItem, selectedDayRange.from) && !selectedDayRange.to;
@@ -296,7 +296,7 @@ Calendar.defaultProps = {
   calendarRangeStartClassName: '',
   calendarRangeBetweenClassName: '',
   calendarRangeEndClassName: '',
-  disableBackward: false,
+  disableBackwards: false,
 };
 
 Calendar.propTypes = {
@@ -316,7 +316,7 @@ Calendar.propTypes = {
   calendarRangeEndClassName: PropTypes.string,
   colorPrimary: PropTypes.string,
   colorPrimaryLight: PropTypes.string,
-  disableBackward: PropTypes.bool,
+  disableBackwards: PropTypes.bool,
 };
 
 export { Calendar };

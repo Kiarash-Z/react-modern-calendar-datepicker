@@ -27,7 +27,7 @@ const DatePicker = ({
   onDisabledDayError,
   colorPrimary,
   colorPrimaryLight,
-  disableBackward,
+  disableBackwards,
 }) => {
   const calendarContainer = useRef(null);
   const dateInput = useRef(null);
@@ -111,7 +111,7 @@ const DatePicker = ({
             colorPrimary={colorPrimary}
             colorPrimaryLight={colorPrimaryLight}
             onDisabledDayError={onDisabledDayError}
-            disableBackward={disableBackward}
+            disableBackwards={disableBackwards}
           />
         </div>
       )}

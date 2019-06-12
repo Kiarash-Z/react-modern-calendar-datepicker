@@ -69,6 +69,7 @@ export const PROPS_TABLE_CALENDAR_ROWS = [
     they can't be included in a day range. If user tries to select/include them onDisabledDayError will be called`
   ],
   ['onDisabledDayError', 'Function', 'disabledDay => null', 'Gets called when user tries to select/include a disabled day'],
+  ['disableBackwards', 'Boolean', 'false', 'If true, disable all days before today'],
   ['colorPrimary', 'String', '#0eca2d', `The color of selected day in the single date picker and the color of
     range start and range end in range date picker`
   ],
