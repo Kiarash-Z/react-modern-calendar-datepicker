@@ -148,12 +148,8 @@ const Calendar = ({
     return allDays.map(({ id, value: day, month, year, isStandard }) => {
       const dayItem = { day, month, year };
       let isDisabled = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
-      if (disableBackward && dayItem.year <= today.year)
-        if (
-          dayItem.month < today.month ||
-          (dayItem.month === today.month && dayItem.day < today.day)
-        )
-          isDisabled = true;
+      if (disableBackward && month && isBeforeDate(dayItem, today) && !isSameDay(dayItem, today))
+        isDisabled = true;
       const additionalClass = getDayClassNames({ ...dayItem, isStandard, isDisabled });
       const isFromSelectedOnly = isSameDay(dayItem, selectedDayRange.from) && !selectedDayRange.to;
       return (
