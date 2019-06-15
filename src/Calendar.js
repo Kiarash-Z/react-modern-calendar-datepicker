@@ -148,7 +148,6 @@ const Calendar = ({
       const dayItem = { day, month, year };
       const isDisabled = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
       const additionalClass = getDayClassNames({ ...dayItem, isStandard, isDisabled });
-      const isFromSelectedOnly = isSameDay(dayItem, selectedDayRange.from) && !selectedDayRange.to;
       return (
         <button
           key={id}
@@ -160,7 +159,7 @@ const Calendar = ({
             }
             handleDayClick({ day, month, year });
           }}
-          disabled={!isStandard || isFromSelectedOnly}
+          disabled={!isStandard}
           type="button"
         >
           {toPersianNumber(day)}
