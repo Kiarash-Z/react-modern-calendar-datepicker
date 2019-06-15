@@ -94,7 +94,7 @@ const toNativeDate = date => {
 
 const isBeforeDate = (day1, day2) => {
   if (!day1 || !day2) return false;
-  return toNativeDate(day1) <= toNativeDate(day2);
+  return toNativeDate(day1) < toNativeDate(day2);
 };
 
 const checkDayInDayRange = ({ day, from, to }) => {
