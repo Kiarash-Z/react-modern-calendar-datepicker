@@ -3,7 +3,7 @@ module.exports = {
     title: `React Persian Calendar Date Picker`,
     description: `A lightweight, customizable, Persian date picker for React`,
     author: `Kiarash Zarinmehr`,
-    version: `1.0.1`,
+    version: `1.0.2`,
   },
   pathPrefix: `/react-persian-calendar-date-picker`,
   plugins: [
