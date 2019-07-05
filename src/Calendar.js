@@ -35,22 +35,21 @@ const Calendar = ({
 }) => {
   const monthYearTextWrapper = useRef(null);
   const calendarSectionWrapper = useRef(null);
+  const activeDate = useRef(null);
   const [mainState, setMainState] = useState({
     status: 'NEXT',
     cycleCount: 1,
-    activeDate: null,
   });
 
   const today = getToday();
-  let activeDate = mainState.activeDate ? shallowCloneObject(mainState.activeDate) : null;
 
   const setActiveDate = () => {
-    if (selectedDay) activeDate = shallowCloneObject(selectedDay);
-    else if (selectedDayRange.from) activeDate = shallowCloneObject(selectedDayRange.from);
-    else activeDate = shallowCloneObject(today);
+    if (selectedDay) activeDate.current = shallowCloneObject(selectedDay);
+    else if (selectedDayRange.from) activeDate.current = shallowCloneObject(selectedDayRange.from);
+    else activeDate.current = shallowCloneObject(today);
   };
 
-  if (!activeDate) setActiveDate();
+  if (!activeDate.current) setActiveDate();
 
   const renderWeekDays = () =>
     Object.keys(WEEK_DAYS).map(key => (
@@ -60,7 +59,9 @@ const Calendar = ({
     ));
 
   const getDate = isThisMonth => {
-    return isThisMonth ? activeDate : getDateAccordingToMonth(activeDate, mainState.status);
+    return isThisMonth
+      ? activeDate.current
+      : getDateAccordingToMonth(activeDate.current, mainState.status);
   };
 
   const getMonthYearText = isNewMonth => {
@@ -199,10 +200,10 @@ const Calendar = ({
   };
 
   const updateDate = () => {
+    activeDate.current = getDateAccordingToMonth(activeDate.current, mainState.status);
     setMainState({
       ...mainState,
       cycleCount: mainState.cycleCount + 1,
-      activeDate: getDateAccordingToMonth(activeDate, mainState.status),
     });
   };
 
