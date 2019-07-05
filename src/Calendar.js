@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -15,6 +15,8 @@ import {
   isBeforeDate,
   shallowCloneObject,
   deepCloneObject,
+  PERSIAN_MONTHS,
+  getMonthNumber,
 } from './utils';
 
 const Calendar = ({
@@ -37,25 +39,23 @@ const Calendar = ({
 }) => {
   const monthYearTextWrapper = useRef(null);
   const calendarSectionWrapper = useRef(null);
-  const activeDate = useRef(null);
+  const monthSelector = useRef(null);
   const [mainState, setMainState] = useState({
     status: 'NEXT',
     cycleCount: 1,
-  });
-
-  useEffect(() => {
-    console.log(activeDate.current);
+    activeDate: null,
   });
 
   const today = getToday();
+  let activeDate = mainState.activeDate ? shallowCloneObject(mainState.activeDate) : null;
 
   const setActiveDate = () => {
-    if (selectedDay) activeDate.current = shallowCloneObject(selectedDay);
-    else if (selectedDayRange.from) activeDate.current = shallowCloneObject(selectedDayRange.from);
-    else activeDate.current = shallowCloneObject(today);
+    if (selectedDay) activeDate = shallowCloneObject(selectedDay);
+    else if (selectedDayRange.from) activeDate = shallowCloneObject(selectedDayRange.from);
+    else activeDate = shallowCloneObject(today);
   };
 
-  if (!activeDate.current) setActiveDate();
+  if (!activeDate) setActiveDate();
 
   const renderWeekDays = () =>
     Object.keys(WEEK_DAYS).map(key => (
@@ -65,14 +65,12 @@ const Calendar = ({
     ));
 
   const getDate = isThisMonth => {
-    return isThisMonth
-      ? activeDate.current
-      : getDateAccordingToMonth(activeDate.current, mainState.status);
+    return isThisMonth ? activeDate : getDateAccordingToMonth(activeDate, mainState.status);
   };
 
   const getMonthYearText = isNewMonth => {
     const date = getDate(!isNewMonth);
-    const year = toPersianNumber(date.year).slice(-2);
+    const year = toPersianNumber(date.year);
     const month = getMonthName(date.month);
     return `${month} ${year}`;
   };
@@ -212,14 +210,56 @@ const Calendar = ({
   };
 
   const updateDate = () => {
-    activeDate.current = getDateAccordingToMonth(activeDate.current, mainState.status);
     setMainState({
       ...mainState,
       cycleCount: mainState.cycleCount + 1,
+      activeDate: getDateAccordingToMonth(activeDate, mainState.status),
     });
   };
-  const isNextMonthArrowDisabled = maximumDate && activeDate.current.month >= maximumDate.month;
-  const isPreviousMonthArrowDisabled = minimumDate && activeDate.current.month <= minimumDate.month;
+
+  const toggleMonthSelector = () => {
+    const arrows = [...document.querySelectorAll('.Calendar__monthArrowWrapper')];
+    arrows.forEach(arrow => {
+      arrow.classList.toggle('-hidden');
+    });
+    const monthText = document.querySelector('.Calendar__monthYear.-shown > *');
+    const yearText = monthText.nextSibling;
+    const isClosed = yearText.classList.contains('-hidden');
+    const scale = isClosed ? 1 : 1.05;
+    const translateX = isClosed ? 0 : `-${yearText.offsetWidth / 2}`;
+    monthText.style.transform = `scale(${scale}) translateX(${translateX}px)`;
+    monthText.classList.toggle('-activeBackground');
+    yearText.classList.toggle('-hidden');
+    monthSelector.current.classList.toggle('-open');
+  };
+
+  const handleMonthSelect = newMonthNumber => {
+    setMainState({
+      ...mainState,
+      activeDate: { ...activeDate, month: newMonthNumber },
+    });
+    toggleMonthSelector();
+  };
+
+  const renderMonthSelectorItems = () =>
+    PERSIAN_MONTHS.map(persianMonth => (
+      <div key={persianMonth} className="Calendar__monthSelectorItem">
+        <button
+          onClick={() => {
+            handleMonthSelect(getMonthNumber(persianMonth));
+          }}
+          className={`Calendar__monthSelectorItemText ${
+            getMonthNumber(persianMonth) === activeDate.month ? '-active' : ''
+          }`}
+          type="button"
+        >
+          {persianMonth}
+        </button>
+      </div>
+    ));
+
+  const isNextMonthArrowDisabled = maximumDate && activeDate.month >= maximumDate.month;
+  const isPreviousMonthArrowDisabled = minimumDate && activeDate.month <= minimumDate.month;
 
   // determine the hidden animated item
   const isCycleCountEven = mainState.cycleCount % 2 === 0;
@@ -242,12 +282,22 @@ const Calendar = ({
         </button>
         <div className="Calendar__monthYearContainer" ref={monthYearTextWrapper}>
           &nbsp;
-          <span onAnimationEnd={handleAnimationEnd} className="Calendar__monthYear -shown">
-            {getMonthYearText(isCycleCountEven)}
-          </span>
-          <span onAnimationEnd={handleAnimationEnd} className="Calendar__monthYear -hiddenNext">
-            {getMonthYearText(!isCycleCountEven)}
-          </span>
+          <div onAnimationEnd={handleAnimationEnd} className="Calendar__monthYear -shown">
+            <button onClick={toggleMonthSelector} type="button" className="Calendar__monthText">
+              {getMonthYearText(isCycleCountEven).split(' ')[0]}
+            </button>
+            <button type="button" className="Calendar__yearText">
+              {getMonthYearText(isCycleCountEven).split(' ')[1]}
+            </button>
+          </div>
+          <div onAnimationEnd={handleAnimationEnd} className="Calendar__monthYear -hiddenNext">
+            <button onClick={toggleMonthSelector} type="button" className="Calendar__monthText">
+              {getMonthYearText(!isCycleCountEven).split(' ')[0]}
+            </button>
+            <button type="button" className="Calendar__yearText">
+              {getMonthYearText(!isCycleCountEven).split(' ')[1]}
+            </button>
+          </div>
         </div>
         <button
           className="Calendar__monthArrowWrapper -left"
@@ -260,6 +310,11 @@ const Calendar = ({
             &nbsp;
           </span>
         </button>
+      </div>
+      <div className="Calendar__monthSelectorWrapper">
+        <div ref={monthSelector} className="Calendar__monthSelector">
+          {renderMonthSelectorItems()}
+        </div>
       </div>
       <div className="Calendar__weekDays">{renderWeekDays()}</div>
       <div ref={calendarSectionWrapper} className="Calendar__sectionWrapper">
