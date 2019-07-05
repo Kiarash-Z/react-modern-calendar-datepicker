@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -32,6 +32,8 @@ const Calendar = ({
   disabledDays,
   colorPrimary,
   colorPrimaryLight,
+  minimumDate,
+  maximumDate,
 }) => {
   const monthYearTextWrapper = useRef(null);
   const calendarSectionWrapper = useRef(null);
@@ -39,6 +41,10 @@ const Calendar = ({
   const [mainState, setMainState] = useState({
     status: 'NEXT',
     cycleCount: 1,
+  });
+
+  useEffect(() => {
+    console.log(activeDate.current);
   });
 
   const today = getToday();
@@ -147,7 +153,13 @@ const Calendar = ({
     const allDays = getViewMonthDays(isNewMonth);
     return allDays.map(({ id, value: day, month, year, isStandard }) => {
       const dayItem = { day, month, year };
-      const isDisabled = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
+      const isInDisabledDaysRange = disabledDays.some(disabledDay =>
+        isSameDay(dayItem, disabledDay),
+      );
+      const isBeforeMinimumDate = isBeforeDate(dayItem, minimumDate);
+      const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
+      const isNotInValidRange = isStandard && (isBeforeMinimumDate || isAfterMaximumDate);
+      const isDisabled = isInDisabledDaysRange || isNotInValidRange;
       const additionalClass = getDayClassNames({ ...dayItem, isStandard, isDisabled });
       return (
         <button
@@ -206,6 +218,8 @@ const Calendar = ({
       cycleCount: mainState.cycleCount + 1,
     });
   };
+  const isNextMonthArrowDisabled = maximumDate && activeDate.current.month >= maximumDate.month;
+  const isPreviousMonthArrowDisabled = minimumDate && activeDate.current.month <= minimumDate.month;
 
   // determine the hidden animated item
   const isCycleCountEven = mainState.cycleCount % 2 === 0;
@@ -220,6 +234,7 @@ const Calendar = ({
           onClick={() => handleMonthClick('PREVIOUS')}
           aria-label="ماه قبل"
           type="button"
+          disabled={isPreviousMonthArrowDisabled}
         >
           <span className="Calendar__monthArrow" alt="فلش راست">
             &nbsp;
@@ -239,6 +254,7 @@ const Calendar = ({
           onClick={() => handleMonthClick('NEXT')}
           aria-label="ماه بعد"
           type="button"
+          disabled={isNextMonthArrowDisabled}
         >
           <span className="Calendar__monthArrow" alt="فلش چپ">
             &nbsp;
@@ -284,6 +300,8 @@ Calendar.defaultProps = {
     from: null,
     to: null,
   },
+  minimumDate: null,
+  maximumDate: null,
   disabledDays: [],
   colorPrimary: '#0eca2d',
   colorPrimaryLight: '#cff4d5',
@@ -312,6 +330,8 @@ Calendar.propTypes = {
   calendarRangeEndClassName: PropTypes.string,
   colorPrimary: PropTypes.string,
   colorPrimaryLight: PropTypes.string,
+  minimumDate: PropTypes.shape(dayShape),
+  maximumDate: PropTypes.shape(dayShape),
 };
 
 export { Calendar };

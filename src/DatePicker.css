@@ -87,6 +87,13 @@
   position: relative;
   border: none;
   z-index: 1;
+  opacity: 1;
+  transition: 0.2s;
+}
+
+.Calendar__monthArrowWrapper:disabled {
+  opacity: 0;
+  cursor: default;
 }
 
 .Calendar__monthArrowWrapper.-left { transform: rotate(-90deg); }
