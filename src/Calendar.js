@@ -36,10 +36,14 @@ const Calendar = ({
   colorPrimaryLight,
   minimumDate,
   maximumDate,
+  selectorStartingYear,
+  selectorEndingYear,
 }) => {
   const monthYearTextWrapper = useRef(null);
   const calendarSectionWrapper = useRef(null);
   const monthSelector = useRef(null);
+  const yearSelector = useRef(null);
+  const yearSelectorWrapper = useRef(null);
   const [mainState, setMainState] = useState({
     status: 'NEXT',
     cycleCount: 1,
@@ -217,20 +221,43 @@ const Calendar = ({
     });
   };
 
-  const toggleMonthSelector = () => {
+  const toggleMonthArrows = () => {
     const arrows = [...document.querySelectorAll('.Calendar__monthArrowWrapper')];
     arrows.forEach(arrow => {
       arrow.classList.toggle('-hidden');
     });
-    const monthText = document.querySelector('.Calendar__monthYear.-shown > *');
+  };
+
+  const toggleMonthSelector = () => {
+    toggleMonthArrows();
+    const monthText = document.querySelector('.Calendar__monthYear.-shown .Calendar__monthText');
     const yearText = monthText.nextSibling;
     const isClosed = yearText.classList.contains('-hidden');
     const scale = isClosed ? 1 : 1.05;
     const translateX = isClosed ? 0 : `-${yearText.offsetWidth / 2}`;
+    yearText.style.transform = '';
     monthText.style.transform = `scale(${scale}) translateX(${translateX}px)`;
     monthText.classList.toggle('-activeBackground');
     yearText.classList.toggle('-hidden');
     monthSelector.current.classList.toggle('-open');
+  };
+
+  const toggleYearSelector = () => {
+    toggleMonthArrows();
+    const yearText = document.querySelector('.Calendar__monthYear.-shown .Calendar__yearText');
+    const monthText = yearText.previousSibling;
+    const isClosed = monthText.classList.contains('-hidden');
+    const scale = isClosed ? 1 : 1.05;
+    const translateX = isClosed ? 0 : `${monthText.offsetWidth / 2}`;
+    const activeSelectorYear = document.querySelector('.Calendar__yearSelectorText.-active');
+    yearSelectorWrapper.current.classList.toggle('-faded');
+    yearSelector.current.scrollTop =
+      activeSelectorYear.offsetTop - activeSelectorYear.offsetHeight * 5.8;
+    monthText.style.transform = '';
+    yearText.style.transform = `scale(${scale}) translateX(${translateX}px)`;
+    yearText.classList.toggle('-activeBackground');
+    monthText.classList.toggle('-hidden');
+    yearSelector.current.classList.toggle('-open');
   };
 
   const handleMonthSelect = newMonthNumber => {
@@ -242,24 +269,73 @@ const Calendar = ({
   };
 
   const renderMonthSelectorItems = () =>
-    PERSIAN_MONTHS.map(persianMonth => (
-      <div key={persianMonth} className="Calendar__monthSelectorItem">
-        <button
-          onClick={() => {
-            handleMonthSelect(getMonthNumber(persianMonth));
-          }}
-          className={`Calendar__monthSelectorItemText ${
-            getMonthNumber(persianMonth) === activeDate.month ? '-active' : ''
-          }`}
-          type="button"
-        >
-          {persianMonth}
-        </button>
-      </div>
-    ));
+    PERSIAN_MONTHS.map(persianMonth => {
+      const monthNumber = getMonthNumber(persianMonth);
+      const monthDate = { day: 1, month: monthNumber, year: activeDate.year };
+      const isAfterMaximumDate =
+        maximumDate &&
+        (isBeforeDate(maximumDate, { ...monthDate, month: monthNumber - 1 }) ||
+          isSameDay({ ...monthDate, month: monthNumber - 1 }, maximumDate));
+      const isBeforeMinimumDate =
+        minimumDate &&
+        (isBeforeDate({ ...monthDate, month: monthNumber + 1 }, minimumDate) ||
+          isSameDay({ ...monthDate, month: monthNumber + 1 }, minimumDate));
+      return (
+        <div key={persianMonth} className="Calendar__monthSelectorItem">
+          <button
+            onClick={() => {
+              handleMonthSelect(monthNumber);
+            }}
+            className={`Calendar__monthSelectorItemText ${
+              monthNumber === activeDate.month ? '-active' : ''
+            }`}
+            type="button"
+            disabled={isAfterMaximumDate || isBeforeMinimumDate}
+          >
+            {persianMonth}
+          </button>
+        </div>
+      );
+    });
 
-  const isNextMonthArrowDisabled = maximumDate && activeDate.month >= maximumDate.month;
-  const isPreviousMonthArrowDisabled = minimumDate && activeDate.month <= minimumDate.month;
+  const selectYear = year => {
+    setMainState({
+      ...mainState,
+      activeDate: { ...activeDate, year },
+    });
+    toggleYearSelector();
+  };
+
+  const renderSelectorYears = () => {
+    // const items =
+    const items = [];
+    for (let i = selectorStartingYear; i <= selectorEndingYear; i += 1) {
+      items.push(i);
+    }
+    return items.map(item => {
+      const isAfterMaximumDate = maximumDate && item > maximumDate.year;
+      const isBeforeMinimumDate = minimumDate && item < minimumDate.year;
+      return (
+        <div key={item} className="Calendar__yearSelectorItem">
+          <button
+            className={`Calendar__yearSelectorText ${activeDate.year === item ? '-active' : ''}`}
+            type="button"
+            onClick={() => {
+              selectYear(item);
+            }}
+            disabled={isAfterMaximumDate || isBeforeMinimumDate}
+          >
+            {toPersianNumber(item)}
+          </button>
+        </div>
+      );
+    });
+  };
+
+  const isNextMonthArrowDisabled =
+    maximumDate && isBeforeDate(maximumDate, { ...activeDate, month: activeDate.month + 1 });
+  const isPreviousMonthArrowDisabled =
+    minimumDate && isBeforeDate({ ...activeDate, month: activeDate.month - 1 }, minimumDate);
 
   // determine the hidden animated item
   const isCycleCountEven = mainState.cycleCount % 2 === 0;
@@ -286,7 +362,7 @@ const Calendar = ({
             <button onClick={toggleMonthSelector} type="button" className="Calendar__monthText">
               {getMonthYearText(isCycleCountEven).split(' ')[0]}
             </button>
-            <button type="button" className="Calendar__yearText">
+            <button onClick={toggleYearSelector} type="button" className="Calendar__yearText">
               {getMonthYearText(isCycleCountEven).split(' ')[1]}
             </button>
           </div>
@@ -294,7 +370,7 @@ const Calendar = ({
             <button onClick={toggleMonthSelector} type="button" className="Calendar__monthText">
               {getMonthYearText(!isCycleCountEven).split(' ')[0]}
             </button>
-            <button type="button" className="Calendar__yearText">
+            <button onClick={toggleYearSelector} type="button" className="Calendar__yearText">
               {getMonthYearText(!isCycleCountEven).split(' ')[1]}
             </button>
           </div>
@@ -311,9 +387,19 @@ const Calendar = ({
           </span>
         </button>
       </div>
-      <div className="Calendar__monthSelectorWrapper">
-        <div ref={monthSelector} className="Calendar__monthSelector">
-          {renderMonthSelectorItems()}
+      <div className="Calendar__monthSelectorAnimationWrapper">
+        <div className="Calendar__monthSelectorWrapper">
+          <div ref={monthSelector} className="Calendar__monthSelector">
+            {renderMonthSelectorItems()}
+          </div>
+        </div>
+      </div>
+
+      <div className="Calendar__yearSelectorAnimationWrapper">
+        <div ref={yearSelectorWrapper} className="Calendar__yearSelectorWrapper">
+          <div ref={yearSelector} className="Calendar__yearSelector">
+            {renderSelectorYears()}
+          </div>
         </div>
       </div>
       <div className="Calendar__weekDays">{renderWeekDays()}</div>
@@ -366,6 +452,8 @@ Calendar.defaultProps = {
   calendarRangeStartClassName: '',
   calendarRangeBetweenClassName: '',
   calendarRangeEndClassName: '',
+  selectorStartingYear: 1300,
+  selectorEndingYear: 1450,
 };
 
 Calendar.propTypes = {
@@ -387,6 +475,8 @@ Calendar.propTypes = {
   colorPrimaryLight: PropTypes.string,
   minimumDate: PropTypes.shape(dayShape),
   maximumDate: PropTypes.shape(dayShape),
+  selectorStartingYear: PropTypes.number,
+  selectorEndingYear: PropTypes.number,
 };
 
 export { Calendar };
