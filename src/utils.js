@@ -51,6 +51,8 @@ const toPersianNumber = number =>
 
 const getMonthName = month => PERSIAN_MONTHS[month - 1];
 
+const getMonthNumber = monthName => PERSIAN_MONTHS.indexOf(monthName) + 1;
+
 const getMonthLength = date => jalaali.jalaaliMonthLength(date.year, date.month);
 
 const getMonthFirstWeekday = _date => {
@@ -118,6 +120,7 @@ export {
   toPersianNumber,
   createUniqueRange,
   getMonthName,
+  getMonthNumber,
   getMonthLength,
   getMonthFirstWeekday,
   getDateAccordingToMonth,
