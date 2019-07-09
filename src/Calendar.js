@@ -39,6 +39,7 @@ const Calendar = ({
   selectorStartingYear,
   selectorEndingYear,
 }) => {
+  const calendarElement = useRef(null);
   const monthYearTextWrapper = useRef(null);
   const calendarSectionWrapper = useRef(null);
   const monthSelector = useRef(null);
@@ -222,7 +223,7 @@ const Calendar = ({
   };
 
   const toggleMonthArrows = () => {
-    const arrows = [...document.querySelectorAll('.Calendar__monthArrowWrapper')];
+    const arrows = [...calendarElement.current.querySelectorAll('.Calendar__monthArrowWrapper')];
     arrows.forEach(arrow => {
       arrow.classList.toggle('-hidden');
     });
@@ -230,7 +231,9 @@ const Calendar = ({
 
   const toggleMonthSelector = () => {
     toggleMonthArrows();
-    const monthText = document.querySelector('.Calendar__monthYear.-shown .Calendar__monthText');
+    const monthText = calendarElement.current.querySelector(
+      '.Calendar__monthYear.-shown .Calendar__monthText',
+    );
     const yearText = monthText.nextSibling;
     const isClosed = yearText.classList.contains('-hidden');
     const scale = isClosed ? 1 : 1.05;
@@ -244,12 +247,16 @@ const Calendar = ({
 
   const toggleYearSelector = () => {
     toggleMonthArrows();
-    const yearText = document.querySelector('.Calendar__monthYear.-shown .Calendar__yearText');
+    const yearText = calendarElement.current.querySelector(
+      '.Calendar__monthYear.-shown .Calendar__yearText',
+    );
     const monthText = yearText.previousSibling;
     const isClosed = monthText.classList.contains('-hidden');
     const scale = isClosed ? 1 : 1.05;
     const translateX = isClosed ? 0 : `${monthText.offsetWidth / 2}`;
-    const activeSelectorYear = document.querySelector('.Calendar__yearSelectorText.-active');
+    const activeSelectorYear = calendarElement.current.querySelector(
+      '.Calendar__yearSelectorText.-active',
+    );
     yearSelectorWrapper.current.classList.toggle('-faded');
     yearSelector.current.scrollTop =
       activeSelectorYear.offsetTop - activeSelectorYear.offsetHeight * 5.8;
@@ -344,6 +351,7 @@ const Calendar = ({
     <div
       className={`Calendar ${calendarClassName}`}
       style={{ '--cl-color-primary': colorPrimary, '--cl-color-primary-light': colorPrimaryLight }}
+      ref={calendarElement}
     >
       <div className="Calendar__header">
         <button
