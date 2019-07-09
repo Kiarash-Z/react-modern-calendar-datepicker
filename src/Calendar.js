@@ -273,9 +273,7 @@ const Calendar = ({
       const monthNumber = getMonthNumber(persianMonth);
       const monthDate = { day: 1, month: monthNumber, year: activeDate.year };
       const isAfterMaximumDate =
-        maximumDate &&
-        (isBeforeDate(maximumDate, { ...monthDate, month: monthNumber - 1 }) ||
-          isSameDay({ ...monthDate, month: monthNumber - 1 }, maximumDate));
+        maximumDate && isBeforeDate(maximumDate, { ...monthDate, month: monthNumber });
       const isBeforeMinimumDate =
         minimumDate &&
         (isBeforeDate({ ...monthDate, month: monthNumber + 1 }, minimumDate) ||
@@ -333,9 +331,12 @@ const Calendar = ({
   };
 
   const isNextMonthArrowDisabled =
-    maximumDate && isBeforeDate(maximumDate, { ...activeDate, month: activeDate.month + 1 });
+    maximumDate &&
+    isBeforeDate(maximumDate, { ...activeDate, month: activeDate.month + 1, day: 1 });
   const isPreviousMonthArrowDisabled =
-    minimumDate && isBeforeDate({ ...activeDate, month: activeDate.month - 1 }, minimumDate);
+    minimumDate &&
+    (isBeforeDate({ ...activeDate, day: 1 }, minimumDate) ||
+      isSameDay(minimumDate, { ...activeDate, day: 1 }));
 
   // determine the hidden animated item
   const isCycleCountEven = mainState.cycleCount % 2 === 0;
