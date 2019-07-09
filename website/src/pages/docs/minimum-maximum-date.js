@@ -5,20 +5,14 @@ import Docs from '../../containers/docs';
 import { Code } from '../../components';
 
 const MinimumMaximumDate = () => {
-  const defaultValue1 = {
-    year: 1398,
-    month: 1,
-    day: 5,
-  };
-
-  const defaultValue2 = {
+  const defaultValue = {
     year: 1398,
     month: 2,
     day: 15,
   };
 
-  const [datePicker1Value, setDatePicker1Value] = useState(defaultValue1);
-  const [datePicker2Value, setDatePicker2Value] = useState(defaultValue2);
+  const [datePicker1Value, setDatePicker1Value] = useState(null);
+  const [datePicker2Value, setDatePicker2Value] = useState(defaultValue);
 
   const minimumDate = {
     year: 1398,
@@ -29,7 +23,7 @@ const MinimumMaximumDate = () => {
   const maximumDate = {
     year: 1398,
     month: 2,
-    day: 20
+    day: 21
   }
 
   return (
@@ -99,7 +93,7 @@ const App = () => {
   const maximumDate = {
     year: 1398,
     month: 2,
-    day: 20
+    day: 21
   }
 
   const [selectedDay, setSelectedDay] = useState(
