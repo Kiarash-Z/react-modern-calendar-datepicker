@@ -29,6 +29,8 @@ const DatePicker = ({
   colorPrimaryLight,
   minimumDate,
   maximumDate,
+  selectorStartingYear,
+  selectorEndingYear,
 }) => {
   const calendarContainer = useRef(null);
   const dateInput = useRef(null);
@@ -114,6 +116,8 @@ const DatePicker = ({
             onDisabledDayError={onDisabledDayError}
             minimumDate={minimumDate}
             maximumDate={maximumDate}
+            selectorStartingYear={selectorStartingYear}
+            selectorEndingYear={selectorEndingYear}
           />
         </div>
       )}
