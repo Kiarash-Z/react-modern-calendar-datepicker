@@ -101,8 +101,8 @@ const App = () => {
   );
   return (
     <Calendar
-      selectedDay={selectedDayRange}
-      onChange={setSelectedDayRange}
+      selectedDay={selectedDay}
+      onChange={setSelectedDay}
       minimumDate={minimumDate}
       maximumDate={maximumDate}
     />
