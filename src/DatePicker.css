@@ -93,7 +93,7 @@
 
 .Calendar__monthArrowWrapper:disabled, .Calendar__monthArrowWrapper.-hidden {
   opacity: 0;
-  cursor: default;
+  pointer-events: none;
 }
 
 .Calendar__monthArrowWrapper.-left { transform: rotate(-90deg); }
