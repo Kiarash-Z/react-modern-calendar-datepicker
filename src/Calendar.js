@@ -40,6 +40,7 @@ const Calendar = ({
   selectorEndingYear,
   selectedDays,
   isMultipleDays,
+  dayBtnProps,
 }) => {
   const calendarElement = useRef(null);
   const monthYearTextWrapper = useRef(null);
@@ -198,6 +199,7 @@ const Calendar = ({
           }}
           disabled={!isStandard}
           type="button"
+          {...dayBtnProps}
         >
           {toPersianNumber(day)}
         </button>

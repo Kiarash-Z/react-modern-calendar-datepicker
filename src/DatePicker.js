@@ -33,6 +33,7 @@ const DatePicker = ({
   selectorEndingYear,
   selectedDays,
   isMultipleDays,
+  dayBtnProps,
 }) => {
   const calendarContainer = useRef(null);
   const dateInput = useRef(null);
@@ -122,6 +123,7 @@ const DatePicker = ({
             selectorEndingYear={selectorEndingYear}
             selectedDays={selectedDays}
             isMultipleDays={isMultipleDays}
+            dayBtnProps={dayBtnProps}
           />
         </div>
       )}
