@@ -10,11 +10,13 @@ const DatePickerInput = React.forwardRef(
       onBlur,
       selectedDay,
       selectedDayRange,
+      selectedDays,
       inputPlaceholder,
       inputClassName,
       formatInputText,
       renderInput,
       isDayRange,
+      isMultipleDays,
     },
     ref,
   ) => {
@@ -37,9 +39,18 @@ const DatePickerInput = React.forwardRef(
         .slice(-2)}/${toPersianNumber(putZero(to.month))}/${toPersianNumber(putZero(to.day))}`;
       return `از ${fromText} تا ${toText}`;
     };
+
+    const getSelectedDaysValue = () => {
+      const selectLen = selectedDays.length;
+      if (!selectLen) return '';
+      return `${toPersianNumber(selectLen)} روز انتخاب شده`;
+    };
+
     const getValue = () => {
       if (formatInputText()) return formatInputText();
-      return isDayRange ? getSelectedRangeValue() : getSelectedDayValue();
+      if (isDayRange) return getSelectedRangeValue();
+      if (isMultipleDays) return getSelectedDaysValue();
+      return getSelectedDayValue();
     };
 
     const render = () => {

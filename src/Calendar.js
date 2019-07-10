@@ -38,6 +38,8 @@ const Calendar = ({
   maximumDate,
   selectorStartingYear,
   selectorEndingYear,
+  selectedDays,
+  isMultipleDays,
 }) => {
   const calendarElement = useRef(null);
   const monthYearTextWrapper = useRef(null);
@@ -56,6 +58,7 @@ const Calendar = ({
 
   const setActiveDate = () => {
     if (selectedDay) activeDate = shallowCloneObject(selectedDay);
+    else if (selectedDays.length) activeDate = shallowCloneObject(selectedDays[0]);
     else if (selectedDayRange.from) activeDate = shallowCloneObject(selectedDayRange.from);
     else activeDate = shallowCloneObject(today);
   };
@@ -111,13 +114,31 @@ const Calendar = ({
   };
 
   const handleDayClick = day => {
-    const newDayValue = isDayRange ? getDayRangeValue(day) : day;
-    onChange(newDayValue);
+    if (!isMultipleDays) {
+      const newDayValue = isDayRange ? getDayRangeValue(day) : day;
+      onChange(newDayValue);
+      return;
+    }
+    const isSelectedBefore = selectedDays.some(sd => isSameDay(sd, day));
+    if (isSelectedBefore) {
+      onChange(selectedDays.filter(sd => !isSameDay(sd, day)));
+      return;
+    }
+    onChange([...selectedDays, day]);
   };
 
   const getDayClassNames = dayItem => {
     const isToday = isSameDay(dayItem, today);
-    const isSelected = selectedDay ? isSameDay(dayItem, selectedDay) : false;
+    let isSelected = false;
+    if (isMultipleDays) {
+      selectedDays.some(sd => {
+        if (!isSameDay(dayItem, sd)) return false;
+        isSelected = true;
+        return true;
+      });
+    } else if (selectedDay) {
+      isSelected = isSameDay(dayItem, selectedDay);
+    }
     const { from: startingDay, to: endingDay } = selectedDayRange;
     const isStartedDayRange = isSameDay(dayItem, startingDay);
     const isEndingDayRange = isSameDay(dayItem, endingDay);
@@ -463,6 +484,8 @@ Calendar.defaultProps = {
   calendarRangeEndClassName: '',
   selectorStartingYear: 1300,
   selectorEndingYear: 1450,
+  selectedDays: [],
+  isMultipleDays: false,
 };
 
 Calendar.propTypes = {
@@ -486,6 +509,8 @@ Calendar.propTypes = {
   maximumDate: PropTypes.shape(dayShape),
   selectorStartingYear: PropTypes.number,
   selectorEndingYear: PropTypes.number,
+  selectedDays: PropTypes.arrayOf(PropTypes.shape(dayShape)),
+  isMultipleDays: PropTypes.bool,
 };
 
 export { Calendar };

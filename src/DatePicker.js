@@ -31,6 +31,8 @@ const DatePicker = ({
   maximumDate,
   selectorStartingYear,
   selectorEndingYear,
+  selectedDays,
+  isMultipleDays,
 }) => {
   const calendarContainer = useRef(null);
   const dateInput = useRef(null);
@@ -118,6 +120,8 @@ const DatePicker = ({
             maximumDate={maximumDate}
             selectorStartingYear={selectorStartingYear}
             selectorEndingYear={selectorEndingYear}
+            selectedDays={selectedDays}
+            isMultipleDays={isMultipleDays}
           />
         </div>
       )}
@@ -128,10 +132,12 @@ const DatePicker = ({
         formatInputText={formatInputText}
         selectedDay={selectedDay}
         selectedDayRange={selectedDayRange}
+        selectedDays={selectedDays}
         inputPlaceholder={inputPlaceholder}
         inputClassName={inputClassName}
         renderInput={renderInput}
         isDayRange={isDayRange}
+        isMultipleDays={isMultipleDays}
       />
     </div>
   );
