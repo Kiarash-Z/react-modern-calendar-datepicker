@@ -93,34 +93,54 @@ const DatePicker = ({
     if (range.from && range.to) toggleCalendar();
   };
 
+  // Keep the calendar in the screen bounds if input is near the window edges
+  const getCalendarPosition = () => {
+    if (!calendarContainer.current) return;
+    const isVisible = calendarContainer.current.style.visibility === 'visible';
+    if (isVisible) return { left: calendarContainer.current.style.left };
+    const { left, width } = calendarContainer.current.getBoundingClientRect();
+    const { clientWidth } = document.documentElement;
+    const isOverflowingFromRight = left + width > clientWidth;
+    const overflowFromRightDistance = left + width - clientWidth;
+    const isOverflowingFromLeft = left < 0;
+    const overflowFromLeftDistance = Math.abs(left);
+    const rightPosition = isOverflowingFromLeft ? overflowFromLeftDistance : 0;
+    const leftStyle = isOverflowingFromRight
+      ? `calc(50% - ${overflowFromRightDistance}px)`
+      : `calc(50% + ${rightPosition}px)`;
+    return { left: leftStyle };
+  };
+
   return (
-    <div className={`DatePicker ${wrapperClassName}`}>
-      {isCalendarOpen && (
-        <div ref={calendarContainer} className="DatePicker__calendarContainer">
-          <Calendar
-            onDaySelect={handleDaySelect}
-            selectedDay={selectedDay}
-            onChange={isDayRange ? handleDayRangeSelect : handleDaySelect}
-            selectedDayRange={selectedDayRange}
-            onDayRangeSelect={handleDayRangeSelect}
-            isDayRange={isDayRange}
-            calendarClassName={calendarClassName}
-            calendarTodayClassName={calendarTodayClassName}
-            calendarSelectedDayClassName={calendarSelectedDayClassName}
-            calendarRangeStartClassName={calendarRangeStartClassName}
-            calendarRangeBetweenClassName={calendarRangeBetweenClassName}
-            calendarRangeEndClassName={calendarRangeEndClassName}
-            disabledDays={disabledDays}
-            colorPrimary={colorPrimary}
-            colorPrimaryLight={colorPrimaryLight}
-            onDisabledDayError={onDisabledDayError}
-            minimumDate={minimumDate}
-            maximumDate={maximumDate}
-            selectorStartingYear={selectorStartingYear}
-            selectorEndingYear={selectorEndingYear}
-          />
-        </div>
-      )}
+    <div className={`DatePicker ${isCalendarOpen ? '-calendarOpen' : ''} ${wrapperClassName}`}>
+      <div
+        ref={calendarContainer}
+        className="DatePicker__calendarContainer"
+        style={getCalendarPosition()}
+      >
+        <Calendar
+          onDaySelect={handleDaySelect}
+          selectedDay={selectedDay}
+          onChange={isDayRange ? handleDayRangeSelect : handleDaySelect}
+          selectedDayRange={selectedDayRange}
+          onDayRangeSelect={handleDayRangeSelect}
+          isDayRange={isDayRange}
+          calendarClassName={calendarClassName}
+          calendarTodayClassName={calendarTodayClassName}
+          calendarSelectedDayClassName={calendarSelectedDayClassName}
+          calendarRangeStartClassName={calendarRangeStartClassName}
+          calendarRangeBetweenClassName={calendarRangeBetweenClassName}
+          calendarRangeEndClassName={calendarRangeEndClassName}
+          disabledDays={disabledDays}
+          colorPrimary={colorPrimary}
+          colorPrimaryLight={colorPrimaryLight}
+          onDisabledDayError={onDisabledDayError}
+          minimumDate={minimumDate}
+          maximumDate={maximumDate}
+          selectorStartingYear={selectorStartingYear}
+          selectorEndingYear={selectorEndingYear}
+        />
+      </div>
       <DatePickerInput
         ref={dateInput}
         onFocus={handleFocus}
