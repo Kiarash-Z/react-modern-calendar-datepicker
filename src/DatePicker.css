@@ -1,11 +1,6 @@
 .DatePicker {
   position: relative;
   display: inline-block;
-  overflow: hidden;
-}
-
-.DatePicker.-calendarOpen {
-  overflow: visible;
 }
 
 .DatePicker::after {
@@ -21,6 +16,13 @@
   z-index: 10;
   border-width: 0 1em 1em 1em;
   border-color: transparent transparent #fff transparent;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.DatePicker.-calendarOpen .DatePicker__calendarContainer, .DatePicker.-calendarOpen::after {
+  opacity: 1;
+  visibility: visible;
 }
 
 .DatePicker__input {
@@ -42,6 +44,8 @@
   top: calc(100% + 2em);
   left: 50%;
   transform: translateX(-50%);
+  visibility: hidden;
+  opacity: 0;
 }
 
 .Calendar, .Calendar * {
