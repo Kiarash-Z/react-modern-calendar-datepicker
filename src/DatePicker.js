@@ -32,8 +32,8 @@ const DatePicker = ({
   selectorStartingYear,
   selectorEndingYear,
 }) => {
-  const calendarContainer = useRef(null);
-  const dateInput = useRef(null);
+  const calendarContainerElement = useRef(null);
+  const dateInputElement = useRef(null);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
 
   const handleMouseMove = e => {
@@ -54,7 +54,7 @@ const DatePicker = ({
     const shouldCloseCalendar = !isDayRange
       ? !isCalendarOpen
       : !isCalendarOpen && selectedDayRange.from && selectedDayRange.to;
-    if (shouldCloseCalendar) dateInput.current.blur();
+    if (shouldCloseCalendar) dateInputElement.current.blur();
   }, [selectedDay, isCalendarOpen]);
 
   const toggleCalendar = () => setCalendarVisiblity(!isCalendarOpen);
@@ -62,8 +62,8 @@ const DatePicker = ({
   // keep calendar open if clicked inside the calendar
   const handleBlur = e => {
     e.persist();
-    const { current: calendar } = calendarContainer;
-    if (!calendar) return;
+    if (!isCalendarOpen) return;
+    const { current: calendar } = calendarContainerElement;
     const calendarPosition = calendar.getBoundingClientRect();
     const isInBetween = (value, start, end) => value >= start && value <= end;
     const isInsideCalendar =
@@ -95,10 +95,10 @@ const DatePicker = ({
 
   // Keep the calendar in the screen bounds if input is near the window edges
   const getCalendarPosition = () => {
-    if (!calendarContainer.current) return;
-    const isVisible = calendarContainer.current.style.visibility === 'visible';
-    if (isVisible) return { left: calendarContainer.current.style.left };
-    const { left, width } = calendarContainer.current.getBoundingClientRect();
+    if (!calendarContainerElement.current) return;
+    const previousLeft = calendarContainerElement.current.style.left;
+    if (previousLeft) return { left: previousLeft };
+    const { left, width } = calendarContainerElement.current.getBoundingClientRect();
     const { clientWidth } = document.documentElement;
     const isOverflowingFromRight = left + width > clientWidth;
     const overflowFromRightDistance = left + width - clientWidth;
@@ -114,7 +114,7 @@ const DatePicker = ({
   return (
     <div className={`DatePicker ${isCalendarOpen ? '-calendarOpen' : ''} ${wrapperClassName}`}>
       <div
-        ref={calendarContainer}
+        ref={calendarContainerElement}
         className="DatePicker__calendarContainer"
         style={getCalendarPosition()}
       >
@@ -142,7 +142,7 @@ const DatePicker = ({
         />
       </div>
       <DatePickerInput
-        ref={dateInput}
+        ref={dateInputElement}
         onFocus={handleFocus}
         onBlur={handleBlur}
         formatInputText={formatInputText}

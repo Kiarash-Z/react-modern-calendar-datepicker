@@ -4,7 +4,7 @@
   overflow: hidden;
 }
 
-.DatePicker.-calendarOpen {
+.DatePicker.-calendarOpen  {
   overflow: visible;
 }
 
