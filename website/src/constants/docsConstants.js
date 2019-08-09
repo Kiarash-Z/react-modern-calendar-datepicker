@@ -78,7 +78,6 @@ export const PROPS_TABLE_PICKER_ROWS = [
   ['inputClassName', 'String', `''`, 'Additional CSS class for the date picker input element'],
   ['inputPlaceholder', 'String', `انتخاب`, `Placeholder of the picker's input`],
   ['formatInputText', 'Function', `() => ''`, `If returns a true JavaScript value, the returned value of this function will be the input's value`],
-  ['wrapperClassName', 'String', `''`, 'Additional CSS class for the date picker wrapper element'],
   ['renderInput', 'Function', `() => null`, 'The returned value of this function will be the custom input element rendered for picker'],
 ];
 

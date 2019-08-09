@@ -1,6 +1,26 @@
 .DatePicker {
   position: relative;
   display: inline-block;
+  overflow: hidden;
+}
+
+.DatePicker.-calendarOpen {
+  overflow: visible;
+}
+
+.DatePicker::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: calc(100% + 1em);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-style: solid;
+  z-index: 10;
+  border-width: 0 1em 1em 1em;
+  border-color: transparent transparent #fff transparent;
 }
 
 .DatePicker__input {
@@ -46,6 +66,7 @@
   display: flex;
   flex-direction: column;
   width: 33em;
+  z-index: 10;
   max-width: 90vw;
   min-height: 36.7em;
 }
@@ -56,20 +77,6 @@
   outline: none;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-}
-
-.Calendar::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  bottom: 100%;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  border-style: solid;
-  border-width: 0 1em 1em 1em;
-  border-color: transparent transparent #fff transparent;
 }
 
 .Calendar__header {
