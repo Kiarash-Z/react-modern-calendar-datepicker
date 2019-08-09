@@ -1,6 +1,6 @@
 {
   "name": "react-persian-calendar-date-picker",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "A lightweight, customizable, Persian date picker for React",
   "main": "lib/index.js",
   "scripts": {
