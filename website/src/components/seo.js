@@ -82,6 +82,10 @@ function SEO({ description, lang, meta, keywords, title }) {
           content: 'https://repository-images.githubusercontent.com/182072844/5b281580-6b9a-11e9-9eed-a13ca51956f2',
         },
         {
+          name: 'keywords',
+          content: 'React,Persian,Calendar,Date Picker,React Persian Calendar Date Picker, Picker, Date'
+        },
+        {
           name: 'theme-color',
           content: "#0eca2d",
         }
