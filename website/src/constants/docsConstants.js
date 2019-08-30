@@ -45,9 +45,12 @@ export const API_ITEMS = generateConstantId([
 
 export const COMMUNITY_ITEMS = generateConstantId([
   {
-    id: 0,
     path: '/docs/contribution-guide',
     name: 'Contribution Guide'
+  },
+  {
+    path: '/docs/contributors',
+    name: 'Contributors'
   }
 ])
 
