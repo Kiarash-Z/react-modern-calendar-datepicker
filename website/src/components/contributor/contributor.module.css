@@ -1,0 +1,27 @@
+.Contributor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.05);
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid rgba(151, 151, 151, 0.1);
+  min-width: 17rem;
+  min-height: 16rem;
+}
+
+.Contributor__avatar {
+  width: 7rem;
+}
+
+.Contributor__name {
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+  font-size: 1.6rem;
+}
+
+.Contributor__username {
+  color: #0984e3;
+}

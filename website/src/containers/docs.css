@@ -35,6 +35,11 @@
   font-size: 1.6rem;
 }
 
+.Docs__list.-inline {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .Docs__list li:not(:last-child) {
   margin-bottom: 1rem;
 }
