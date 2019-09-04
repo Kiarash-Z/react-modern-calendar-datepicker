@@ -11,6 +11,10 @@
   min-height: 16rem;
 }
 
+.Contributor:not(:last-child) {
+  margin-right: 1.5rem;
+}
+
 .Contributor__avatar {
   width: 7rem;
 }

@@ -166,6 +166,7 @@ const Calendar = ({
       const additionalClass = getDayClassNames({ ...dayItem, isStandard, isDisabled });
       return (
         <button
+          tabIndex="-1"
           key={id}
           className={`Calendar__day ${additionalClass}`}
           onClick={() => {
@@ -288,6 +289,7 @@ const Calendar = ({
       return (
         <div key={persianMonth} className="Calendar__monthSelectorItem">
           <button
+            tabIndex="-1"
             onClick={() => {
               handleMonthSelect(monthNumber);
             }}
@@ -323,6 +325,7 @@ const Calendar = ({
       return (
         <div key={item} className="Calendar__yearSelectorItem">
           <button
+            tabIndex="-1"
             className={`Calendar__yearSelectorText ${activeDate.year === item ? '-active' : ''}`}
             type="button"
             onClick={() => {
@@ -355,6 +358,7 @@ const Calendar = ({
     >
       <div className="Calendar__header">
         <button
+          tabIndex="-1"
           className="Calendar__monthArrowWrapper -right"
           onClick={() => handleMonthClick('PREVIOUS')}
           aria-label="ماه قبل"
@@ -368,23 +372,44 @@ const Calendar = ({
         <div className="Calendar__monthYearContainer" ref={monthYearTextWrapper}>
           &nbsp;
           <div onAnimationEnd={handleAnimationEnd} className="Calendar__monthYear -shown">
-            <button onClick={toggleMonthSelector} type="button" className="Calendar__monthText">
+            <button
+              tabIndex="-1"
+              onClick={toggleMonthSelector}
+              type="button"
+              className="Calendar__monthText"
+            >
               {getMonthYearText(isCycleCountEven).split(' ')[0]}
             </button>
-            <button onClick={toggleYearSelector} type="button" className="Calendar__yearText">
+            <button
+              tabIndex="-1"
+              onClick={toggleYearSelector}
+              type="button"
+              className="Calendar__yearText"
+            >
               {getMonthYearText(isCycleCountEven).split(' ')[1]}
             </button>
           </div>
           <div onAnimationEnd={handleAnimationEnd} className="Calendar__monthYear -hiddenNext">
-            <button onClick={toggleMonthSelector} type="button" className="Calendar__monthText">
+            <button
+              tabIndex="-1"
+              onClick={toggleMonthSelector}
+              type="button"
+              className="Calendar__monthText"
+            >
               {getMonthYearText(!isCycleCountEven).split(' ')[0]}
             </button>
-            <button onClick={toggleYearSelector} type="button" className="Calendar__yearText">
+            <button
+              tabIndex="-1"
+              onClick={toggleYearSelector}
+              type="button"
+              className="Calendar__yearText"
+            >
               {getMonthYearText(!isCycleCountEven).split(' ')[1]}
             </button>
           </div>
         </div>
         <button
+          tabIndex="-1"
           className="Calendar__monthArrowWrapper -left"
           onClick={() => handleMonthClick('NEXT')}
           aria-label="ماه بعد"
