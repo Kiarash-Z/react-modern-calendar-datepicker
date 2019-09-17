@@ -9,6 +9,7 @@ import {
   isBeforeDate,
   checkDayInDayRange,
   putZero,
+  createDateRangeDays,
 } from '../src/utils';
 
 describe('Utility Functions', () => {
@@ -71,5 +72,35 @@ describe('Utility Functions', () => {
   test('should prepend a zero on a single-digit number', () => {
     expect(putZero('1')).toBe('01');
     expect(putZero('12')).toBe('12');
+  });
+
+  test('should create a range of days between to date', () => {
+    const startDate = { year: 1398, month: 6, day: 29 };
+    const endDate = { year: 1398, month: 7, day: 3 };
+    expect(createDateRangeDays(startDate, endDate, [])).toEqual([
+      '1398/06/29',
+      '1398/06/30',
+      '1398/06/31',
+      '1398/07/01',
+      '1398/07/02',
+      '1398/07/03',
+    ]);
+    expect(createDateRangeDays(startDate, endDate, ['1398/07/01'])).toEqual([
+      '1398/06/29',
+      '1398/06/30',
+      '1398/06/31',
+      '1398/07/02',
+      '1398/07/03',
+    ]);
+
+    // test leap year days
+    const startDateLeap = { year: 1395, month: 12, day: 29 };
+    const endDateLeap = { year: 1396, month: 1, day: 2 };
+    expect(createDateRangeDays(startDateLeap, endDateLeap, [])).toEqual([
+      '1395/12/29',
+      '1395/12/30',
+      '1396/01/01',
+      '1396/01/02',
+    ]);
   });
 });
