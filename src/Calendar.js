@@ -38,6 +38,7 @@ const Calendar = ({
   maximumDate,
   selectorStartingYear,
   selectorEndingYear,
+  allowDisabledDaysRangeSelect = false,
 }) => {
   const calendarElement = useRef(null);
   const monthYearTextWrapper = useRef(null);
@@ -102,7 +103,7 @@ const Calendar = ({
       });
     };
     const includingDisabledDay = disabledDays.find(checkIncludingDisabledDay);
-    if (includingDisabledDay) {
+    if (includingDisabledDay && !allowDisabledDaysRangeSelect) {
       onDisabledDayError(includingDisabledDay);
       return selectedDayRange;
     }
