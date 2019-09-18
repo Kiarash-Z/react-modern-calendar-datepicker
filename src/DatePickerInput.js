@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { toPersianNumber, putZero, createDateRangeDays } from './utils';
+import { toPersianNumber, putZero } from './utils';
 
 const DatePickerInput = React.forwardRef(
   (
@@ -15,7 +15,6 @@ const DatePickerInput = React.forwardRef(
       formatInputText,
       renderInput,
       isDayRange,
-      disabledDays,
     },
     ref,
   ) => {
@@ -42,20 +41,9 @@ const DatePickerInput = React.forwardRef(
       if (formatInputText()) return formatInputText();
       return isDayRange ? getSelectedRangeValue() : getSelectedDayValue();
     };
-    const getSelectedRangeAvailableDays = () => {
-      if (!selectedDayRange.from || !selectedDayRange.to) return '[]';
-      const { from, to } = selectedDayRange;
-
-      const disabledDaysArray = (disabledDays || []).map(
-        disabledDate =>
-          `${disabledDate.year}/${putZero(disabledDate.month)}/${putZero(disabledDate.day)}`,
-      );
-      const rangeDays = createDateRangeDays(from, to, disabledDaysArray);
-      return JSON.stringify(rangeDays);
-    };
 
     const render = () => {
-      return [
+      return (
         renderInput({ ref, onFocus, onBlur }) || (
           <input
             readOnly
@@ -67,13 +55,8 @@ const DatePickerInput = React.forwardRef(
             className={`DatePicker__input ${inputClassName}`}
             aria-label="انتخاب تاریخ"
           />
-        ),
-        <input
-          type="hidden"
-          className={`DatePicker__input_hidden ${inputClassName}`}
-          value={getSelectedRangeAvailableDays()}
-        />,
-      ];
+        )
+      );
     };
 
     return render();

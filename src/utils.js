@@ -113,42 +113,6 @@ const shallowCloneObject = obj => ({ ...obj });
 
 const deepCloneObject = obj => JSON.parse(JSON.stringify(obj));
 
-export const addDays = (date, days) => {
-  const dat = new Date(date);
-  dat.setDate(dat.getDate() + days);
-  return dat;
-};
-
-export const createDateRangeDays = (startDate, endDate, notInclude) => {
-  const startDateGregorian = jalaali.toGregorian(startDate.year, startDate.month, startDate.day);
-  const endDateGregorian = jalaali.toGregorian(endDate.year, endDate.month, endDate.day);
-
-  const startDateObj = new Date(
-    startDateGregorian.gy,
-    startDateGregorian.gm - 1,
-    startDateGregorian.gd,
-  );
-  const endDateObj = new Date(endDateGregorian.gy, endDateGregorian.gm - 1, endDateGregorian.gd);
-
-  const dateArray = [];
-  let currentDate = startDateObj;
-
-  while (currentDate <= endDateObj) {
-    const currentDateJalaali = jalaali.toJalaali(currentDate);
-
-    const currentDateJalaaliString = `${currentDateJalaali.jy}/${putZero(
-      currentDateJalaali.jm,
-    )}/${putZero(currentDateJalaali.jd)}`;
-
-    // if we want this day
-    if (notInclude.indexOf(currentDateJalaaliString) === -1)
-      dateArray.push(currentDateJalaaliString);
-
-    currentDate = addDays(currentDate.valueOf(), 1);
-  }
-  return dateArray;
-};
-
 export {
   WEEK_DAYS,
   PERSIAN_MONTHS,

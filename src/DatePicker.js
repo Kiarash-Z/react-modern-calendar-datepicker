@@ -31,7 +31,6 @@ const DatePicker = ({
   maximumDate,
   selectorStartingYear,
   selectorEndingYear,
-  allowDisabledDaysRangeSelect,
 }) => {
   const calendarContainerElement = useRef(null);
   const dateInputElement = useRef(null);
@@ -140,7 +139,6 @@ const DatePicker = ({
           maximumDate={maximumDate}
           selectorStartingYear={selectorStartingYear}
           selectorEndingYear={selectorEndingYear}
-          allowDisabledDaysRangeSelect={allowDisabledDaysRangeSelect}
         />
       </div>
       <DatePickerInput
@@ -154,7 +152,6 @@ const DatePicker = ({
         inputClassName={inputClassName}
         renderInput={renderInput}
         isDayRange={isDayRange}
-        disabledDays={disabledDays}
       />
     </div>
   );
