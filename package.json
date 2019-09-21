@@ -4,7 +4,7 @@
   "description": "A lightweight, customizable, Persian date picker for React",
   "main": "lib/index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
+    "start": "webpack-dev-server --open --mode development",
     "lint": "eslint src",
     "lintWrite": "prettier --write \"./src/**/*.js\"",
     "test": "jest ./test",
