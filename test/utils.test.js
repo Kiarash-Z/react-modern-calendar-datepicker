@@ -1,7 +1,6 @@
 import {
   toPersianNumber,
   getMonthName,
-  PERSIAN_MONTHS,
   getMonthLength,
   getMonthFirstWeekday,
   getDateAccordingToMonth,
@@ -9,7 +8,8 @@ import {
   isBeforeDate,
   checkDayInDayRange,
   putZero,
-} from '../src/utils';
+} from '../src/shared/utils';
+import { PERSIAN_MONTHS } from '../src/shared/constants';
 
 describe('Utility Functions', () => {
   test('should convert English numbers to Persian numbers', () => {
