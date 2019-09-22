@@ -24,6 +24,7 @@ const DaysList = ({
   calendarRangeStartClassName,
   calendarRangeEndClassName,
   calendarRangeBetweenClassName,
+  shouldHighlightWeekends,
 }) => {
   const calendarSectionWrapper = useRef(null);
 
@@ -90,7 +91,7 @@ const DaysList = ({
     const classNames = ''
       .concat(isToday && !isSelected ? ` -today ${calendarTodayClassName}` : '')
       .concat(!dayItem.isStandard ? ' -blank' : '')
-      .concat(dayItem.isWeekend ? ` -weekend ${calendarSelectedDayClassName}` : '')
+      .concat(dayItem.isWeekend && shouldHighlightWeekends ? ' -weekend' : '')
       .concat(isSelected ? ` -selected ${calendarSelectedDayClassName}` : '')
       .concat(isStartedDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
       .concat(isEndingDayRange ? ` -selectedEnd ${calendarRangeEndClassName}` : '')
@@ -190,6 +191,7 @@ DaysList.propTypes = {
   calendarRangeStartClassName: PropTypes.string,
   calendarRangeBetweenClassName: PropTypes.string,
   calendarRangeEndClassName: PropTypes.string,
+  shouldHighlightWeekends: PropTypes.bool,
 };
 
 DaysList.defaultProps = {
@@ -201,6 +203,7 @@ DaysList.defaultProps = {
   calendarRangeStartClassName: '',
   calendarRangeBetweenClassName: '',
   calendarRangeEndClassName: '',
+  shouldHighlightWeekends: false,
 };
 
 export default DaysList;

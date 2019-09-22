@@ -430,12 +430,12 @@
   transition: 0.2s;
   border: 1px solid transparent;
   margin-bottom: 0.3em;
+  color: rgba(0, 0, 0, 0.8)
 }
 
 .Calendar__day.-gregorian {
   min-height: 2.6em;
-  font-size: 1.4em;
-  color: rgba(0, 0, 0, 0.7)
+  font-size: 1.45em;
 }
 
 .Calendar__day.-persian {

@@ -32,6 +32,7 @@ const DatePicker = ({
   selectorStartingYear,
   selectorEndingYear,
   isPersian,
+  shouldHighlightWeekends,
 }) => {
   const calendarContainerElement = useRef(null);
   const dateInputElement = useRef(null);
@@ -141,6 +142,7 @@ const DatePicker = ({
           selectorStartingYear={selectorStartingYear}
           selectorEndingYear={selectorEndingYear}
           isPersian={isPersian}
+          shouldHighlightWeekends={shouldHighlightWeekends}
         />
       </div>
       <DatePickerInput

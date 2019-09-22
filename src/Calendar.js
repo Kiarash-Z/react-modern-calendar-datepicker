@@ -27,6 +27,7 @@ const Calendar = ({
   selectorStartingYear,
   selectorEndingYear,
   isPersian,
+  shouldHighlightWeekends,
 }) => {
   const calendarElement = useRef(null);
   const [mainState, setMainState] = useState({
@@ -152,6 +153,7 @@ const Calendar = ({
         calendarRangeEndClassName={calendarRangeEndClassName}
         calendarRangeBetweenClassName={calendarRangeBetweenClassName}
         isPersian={isPersian}
+        shouldHighlightWeekends={shouldHighlightWeekends}
       />
     </div>
   );
