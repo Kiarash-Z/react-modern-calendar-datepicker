@@ -31,6 +31,7 @@ const DatePicker = ({
   maximumDate,
   selectorStartingYear,
   selectorEndingYear,
+  isPersian,
 }) => {
   const calendarContainerElement = useRef(null);
   const dateInputElement = useRef(null);
@@ -139,6 +140,7 @@ const DatePicker = ({
           maximumDate={maximumDate}
           selectorStartingYear={selectorStartingYear}
           selectorEndingYear={selectorEndingYear}
+          isPersian={isPersian}
         />
       </div>
       <DatePickerInput
@@ -152,6 +154,7 @@ const DatePicker = ({
         inputClassName={inputClassName}
         renderInput={renderInput}
         isDayRange={isDayRange}
+        isPersian={isPersian}
       />
     </div>
   );

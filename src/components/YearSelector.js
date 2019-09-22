@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import { toPersianNumber } from '../shared/utils';
+import utils from '../shared/localeUtils';
+import { MINIMUM_SELECTABLE_YEAR_SUBTRACT, MAXIMUM_SELECTABLE_YEAR_SUM } from '../shared/constants';
 
 const YearSelector = ({
   isOpen,
@@ -11,9 +12,12 @@ const YearSelector = ({
   endingYear,
   maximumDate,
   minimumDate,
+  isPersian,
 }) => {
   const wrapperElement = useRef(null);
   const yearListElement = useRef(null);
+
+  const { getLanguageDigits } = useMemo(() => utils(isPersian), [isPersian]);
 
   useEffect(() => {
     const classToggleMethod = isOpen ? 'add' : 'remove';
@@ -28,7 +32,9 @@ const YearSelector = ({
 
   const renderSelectorYears = () => {
     const items = [];
-    for (let i = startingYear; i <= endingYear; i += 1) {
+    const startingYearValue = startingYear || activeDate.year - MINIMUM_SELECTABLE_YEAR_SUBTRACT;
+    const endingYearValue = endingYear || activeDate.year + MAXIMUM_SELECTABLE_YEAR_SUM;
+    for (let i = startingYearValue; i <= endingYearValue; i += 1) {
       items.push(i);
     }
     return items.map(item => {
@@ -45,7 +51,7 @@ const YearSelector = ({
             }}
             disabled={isAfterMaximumDate || isBeforeMinimumDate}
           >
-            {toPersianNumber(item)}
+            {getLanguageDigits(item)}
           </button>
         </div>
       );
@@ -69,8 +75,8 @@ YearSelector.propTypes = {
 };
 
 YearSelector.defaultProps = {
-  startingYear: 1300,
-  endingYear: 1450,
+  startingYear: 0,
+  endingYear: 0,
 };
 
 export default YearSelector;

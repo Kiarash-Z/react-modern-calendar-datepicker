@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import { toPersianNumber, putZero } from './shared/utils';
+import utils from './shared/localeUtils';
+import { putZero } from './shared/independentUtils';
 
 const DatePickerInput = React.forwardRef(
   (
@@ -15,32 +16,45 @@ const DatePickerInput = React.forwardRef(
       formatInputText,
       renderInput,
       isDayRange,
+      isPersian,
     },
     ref,
   ) => {
+    const { getLanguageDigits } = useMemo(() => utils(isPersian), [isPersian]);
+
     const getSelectedDayValue = () => {
       if (!selectedDay) return '';
-      const year = toPersianNumber(selectedDay.year);
-      const month = toPersianNumber(putZero(selectedDay.month));
-      const day = toPersianNumber(putZero(selectedDay.day));
+      const year = getLanguageDigits(selectedDay.year);
+      const month = getLanguageDigits(putZero(selectedDay.month));
+      const day = getLanguageDigits(putZero(selectedDay.day));
       return `${year}/${month}/${day}`;
     };
+
+    const fromWord = isPersian ? 'از' : 'from';
+    const toWord = isPersian ? 'تا' : 'to';
+    const yearLetterSkip = isPersian ? -2 : 0;
 
     const getSelectedRangeValue = () => {
       if (!selectedDayRange.from || !selectedDayRange.to) return '';
       const { from, to } = selectedDayRange;
-      const fromText = `${toPersianNumber(putZero(from.year))
+      const fromText = `${getLanguageDigits(putZero(from.year))
         .toString()
-        .slice(-2)}/${toPersianNumber(putZero(from.month))}/${toPersianNumber(putZero(from.day))}`;
-      const toText = `${toPersianNumber(putZero(to.year))
+        .slice(yearLetterSkip)}/${getLanguageDigits(putZero(from.month))}/${getLanguageDigits(
+        putZero(from.day),
+      )}`;
+      const toText = `${getLanguageDigits(putZero(to.year))
         .toString()
-        .slice(-2)}/${toPersianNumber(putZero(to.month))}/${toPersianNumber(putZero(to.day))}`;
-      return `از ${fromText} تا ${toText}`;
+        .slice(yearLetterSkip)}/${getLanguageDigits(putZero(to.month))}/${getLanguageDigits(
+        putZero(to.day),
+      )}`;
+      return `${fromWord} ${fromText} ${toWord} ${toText}`;
     };
     const getValue = () => {
       if (formatInputText()) return formatInputText();
       return isDayRange ? getSelectedRangeValue() : getSelectedDayValue();
     };
+
+    const placeholderValue = inputPlaceholder || (isPersian ? 'انتخاب' : 'Select');
 
     const render = () => {
       return (
@@ -51,9 +65,9 @@ const DatePickerInput = React.forwardRef(
             onFocus={onFocus}
             onBlur={onBlur}
             value={getValue()}
-            placeholder={inputPlaceholder}
+            placeholder={placeholderValue}
             className={`DatePicker__input ${inputClassName}`}
-            aria-label="انتخاب تاریخ"
+            aria-label={placeholderValue}
           />
         )
       );
@@ -66,8 +80,9 @@ const DatePickerInput = React.forwardRef(
 DatePickerInput.defaultProps = {
   formatInputText: () => '',
   renderInput: () => null,
-  inputPlaceholder: 'انتخاب',
+  inputPlaceholder: '',
   inputClassName: '',
+  isPersian: false,
 };
 
 DatePickerInput.propTypes = {
@@ -75,6 +90,7 @@ DatePickerInput.propTypes = {
   inputPlaceholder: PropTypes.string,
   inputClassName: PropTypes.string,
   renderInput: PropTypes.func,
+  isPersian: PropTypes.bool,
 };
 
 export default DatePickerInput;

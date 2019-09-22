@@ -1,18 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { getSlideDate, handleSlideAnimationEnd, animateContent } from '../shared/sliderHelpers';
-import {
-  deepCloneObject,
-  isBeforeDate,
-  checkDayInDayRange,
-  isSameDay,
-  createUniqueRange,
-  getMonthFirstWeekday,
-  getMonthLength,
-  getToday,
-  toPersianNumber,
-} from '../shared/utils';
+import utils from '../shared/localeUtils';
+import { deepCloneObject, isSameDay, createUniqueRange } from '../shared/independentUtils';
 import { DAY_SHAPE } from '../shared/constants';
 
 const DaysList = ({
@@ -27,6 +18,7 @@ const DaysList = ({
   minimumDate,
   maximumDate,
   onChange,
+  isPersian,
   calendarTodayClassName,
   calendarSelectedDayClassName,
   calendarRangeStartClassName,
@@ -34,7 +26,16 @@ const DaysList = ({
   calendarRangeBetweenClassName,
 }) => {
   const calendarSectionWrapper = useRef(null);
-  const today = useRef(getToday());
+
+  const {
+    getToday,
+    isBeforeDate,
+    checkDayInDayRange,
+    getMonthFirstWeekday,
+    getMonthLength,
+    getLanguageDigits,
+  } = useMemo(() => utils(isPersian), [isPersian]);
+  const today = getToday();
 
   useEffect(() => {
     if (!monthChangeDirection) return;
@@ -80,7 +81,7 @@ const DaysList = ({
   };
 
   const getDayClassNames = dayItem => {
-    const isToday = isSameDay(dayItem, today.current);
+    const isToday = isSameDay(dayItem, today);
     const isSelected = selectedDay ? isSameDay(dayItem, selectedDay) : false;
     const { from: startingDay, to: endingDay } = selectedDayRange;
     const isStartedDayRange = isSameDay(dayItem, startingDay);
@@ -89,6 +90,7 @@ const DaysList = ({
     const classNames = ''
       .concat(isToday && !isSelected ? ` -today ${calendarTodayClassName}` : '')
       .concat(!dayItem.isStandard ? ' -blank' : '')
+      .concat(dayItem.isWeekend ? ` -weekend ${calendarSelectedDayClassName}` : '')
       .concat(isSelected ? ` -selected ${calendarSelectedDayClassName}` : '')
       .concat(isStartedDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
       .concat(isEndingDayRange ? ` -selectedEnd ${calendarRangeEndClassName}` : '')
@@ -123,7 +125,7 @@ const DaysList = ({
       parent: calendarSectionWrapper.current,
     });
     const allDays = getViewMonthDays(date);
-    return allDays.map(({ id, value: day, month, year, isStandard }) => {
+    return allDays.map(({ id, value: day, month, year, isStandard }, index) => {
       const dayItem = { day, month, year };
       const isInDisabledDaysRange = disabledDays.some(disabledDay =>
         isSameDay(dayItem, disabledDay),
@@ -132,12 +134,13 @@ const DaysList = ({
       const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
       const isNotInValidRange = isStandard && (isBeforeMinimumDate || isAfterMaximumDate);
       const isDisabled = isInDisabledDaysRange || isNotInValidRange;
-      const additionalClass = getDayClassNames({ ...dayItem, isStandard, isDisabled });
+      const isWeekend = (!isPersian && index % 7 === 0) || index % 7 === 6;
+      const additionalClass = getDayClassNames({ ...dayItem, isWeekend, isStandard, isDisabled });
       return (
         <button
           tabIndex="-1"
           key={id}
-          className={`Calendar__day ${additionalClass}`}
+          className={`Calendar__day ${isPersian ? '-persian' : '-gregorian'} ${additionalClass}`}
           onClick={() => {
             if (isDisabled) {
               onDisabledDayError(dayItem); // good for showing error messages
@@ -148,7 +151,7 @@ const DaysList = ({
           disabled={!isStandard}
           type="button"
         >
-          {toPersianNumber(day)}
+          {getLanguageDigits(day)}
         </button>
       );
     });

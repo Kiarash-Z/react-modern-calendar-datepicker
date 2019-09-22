@@ -1,6 +1,6 @@
 
 @import './fonts/fonts.css';
-
+/* @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap'); */
 html {
   font-size: 50%;
 }
@@ -12,4 +12,6 @@ body {
   justify-content: center;
   padding-top: 10rem;
   height: 100vh;
+  /* font-family: 'Open Sans', sans-serif; */
+
 }

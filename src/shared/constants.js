@@ -17,18 +17,47 @@ export const PERSIAN_MONTHS = [
   'اسفند',
 ];
 
-export const WEEK_DAYS = {
-  saturday: 'شنبه',
-  sunday: 'یکشنبه',
-  monday: 'دوشنبه',
-  tuesday: 'سه شنبه',
-  wednesday: 'چهارشنبه',
-  thursday: 'پنجشنبه',
-  friday: 'جمعه',
-};
+export const GREGORIAN_MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+export const PERSIAN_WEEK_DAYS = [
+  'شنبه',
+  'یکشنبه',
+  'دوشنبه',
+  'سه شنبه',
+  'چهارشنبه',
+  'پنجشنبه',
+  'جمعه',
+];
+
+export const GREGORIAN_WEEK_DAYS = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
 
 export const DAY_SHAPE = {
   year: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
   day: PropTypes.number.isRequired,
 };
+
+export const MINIMUM_SELECTABLE_YEAR_SUBTRACT = 100;
+
+export const MAXIMUM_SELECTABLE_YEAR_SUM = 50;

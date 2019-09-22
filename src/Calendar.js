@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import { getToday, getDateAccordingToMonth, shallowCloneObject } from './shared/utils';
-import { DAY_SHAPE, WEEK_DAYS } from './shared/constants';
+import utils from './shared/localeUtils';
+import { getDateAccordingToMonth, shallowCloneObject } from './shared/independentUtils';
+import { DAY_SHAPE } from './shared/constants';
 
 import { Header, MonthSelector, YearSelector, DaysList } from './components';
 
@@ -25,15 +26,18 @@ const Calendar = ({
   maximumDate,
   selectorStartingYear,
   selectorEndingYear,
+  isPersian,
 }) => {
   const calendarElement = useRef(null);
-  const today = useRef(getToday());
   const [mainState, setMainState] = useState({
     activeDate: null,
     monthChangeDirection: '',
     isMonthSelectorOpen: false,
     isYearSelectorOpen: false,
   });
+
+  const { getToday, weekDaysList } = useMemo(() => utils(isPersian), [isPersian]);
+  const today = getToday();
 
   const createStateToggler = property => () => {
     setMainState({ ...mainState, [property]: !mainState[property] });
@@ -45,7 +49,7 @@ const Calendar = ({
   const getComputedActiveDate = () => {
     if (selectedDay) return shallowCloneObject(selectedDay);
     if (selectedDayRange.from) return shallowCloneObject(selectedDayRange.from);
-    return shallowCloneObject(today.current);
+    return shallowCloneObject(today);
   };
 
   const activeDate = mainState.activeDate
@@ -53,9 +57,9 @@ const Calendar = ({
     : getComputedActiveDate();
 
   const renderWeekDays = () =>
-    Object.keys(WEEK_DAYS).map(key => (
-      <span key={key} className="Calendar__weekDay">
-        {WEEK_DAYS[key][0]}
+    weekDaysList.map(weekDay => (
+      <span key={weekDay} className="Calendar__weekDay">
+        {weekDay[0]}
       </span>
     ));
 
@@ -91,7 +95,7 @@ const Calendar = ({
 
   return (
     <div
-      className={`Calendar ${calendarClassName}`}
+      className={`Calendar ${calendarClassName} ${isPersian ? '-persian' : ''}`}
       style={{ '--cl-color-primary': colorPrimary, '--cl-color-primary-light': colorPrimaryLight }}
       ref={calendarElement}
     >
@@ -105,6 +109,7 @@ const Calendar = ({
         monthChangeDirection={mainState.monthChangeDirection}
         isMonthSelectorOpen={mainState.isMonthSelectorOpen}
         isYearSelectorOpen={mainState.isYearSelectorOpen}
+        isPersian={isPersian}
       />
 
       <MonthSelector
@@ -113,6 +118,7 @@ const Calendar = ({
         onMonthSelect={selectMonth}
         maximumDate={maximumDate}
         minimumDate={minimumDate}
+        isPersian={isPersian}
       />
 
       <YearSelector
@@ -123,6 +129,7 @@ const Calendar = ({
         endingYear={selectorEndingYear}
         maximumDate={maximumDate}
         minimumDate={minimumDate}
+        isPersian={isPersian}
       />
 
       <div className="Calendar__weekDays">{renderWeekDays()}</div>
@@ -144,6 +151,7 @@ const Calendar = ({
         calendarRangeStartClassName={calendarRangeStartClassName}
         calendarRangeEndClassName={calendarRangeEndClassName}
         calendarRangeBetweenClassName={calendarRangeBetweenClassName}
+        isPersian={isPersian}
       />
     </div>
   );
@@ -161,6 +169,7 @@ Calendar.defaultProps = {
   colorPrimary: '#0eca2d',
   colorPrimaryLight: '#cff4d5',
   calendarClassName: '',
+  isPersian: false,
 };
 
 Calendar.propTypes = {
@@ -174,6 +183,7 @@ Calendar.propTypes = {
   colorPrimaryLight: PropTypes.string,
   minimumDate: PropTypes.shape(DAY_SHAPE),
   maximumDate: PropTypes.shape(DAY_SHAPE),
+  isPersian: PropTypes.bool,
 };
 
 export { Calendar };

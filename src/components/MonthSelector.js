@@ -1,9 +1,16 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 
-import { getMonthNumber, isBeforeDate, isSameDay } from '../shared/utils';
-import { PERSIAN_MONTHS } from '../shared/constants';
+import { isSameDay } from '../shared/independentUtils';
+import utils from '../shared/localeUtils';
 
-const MonthSelector = ({ activeDate, maximumDate, minimumDate, onMonthSelect, isOpen }) => {
+const MonthSelector = ({
+  activeDate,
+  maximumDate,
+  minimumDate,
+  onMonthSelect,
+  isOpen,
+  isPersian,
+}) => {
   const monthSelector = useRef(null);
 
   useEffect(() => {
@@ -11,8 +18,10 @@ const MonthSelector = ({ activeDate, maximumDate, minimumDate, onMonthSelect, is
     monthSelector.current.classList[classToggleMethod]('-open');
   }, [isOpen]);
 
+  const { getMonthNumber, isBeforeDate, monthsList } = useMemo(() => utils(isPersian), [isPersian]);
+
   const renderMonthSelectorItems = () =>
-    PERSIAN_MONTHS.map(persianMonth => {
+    monthsList.map(persianMonth => {
       const monthNumber = getMonthNumber(persianMonth);
       const monthDate = { day: 1, month: monthNumber, year: activeDate.year };
       const isAfterMaximumDate =
