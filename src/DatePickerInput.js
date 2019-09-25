@@ -2,31 +2,30 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import utils from './shared/localeUtils';
-import { putZero } from './shared/independentUtils';
+import { putZero, getValueType } from './shared/independentUtils';
+import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
 
 const DatePickerInput = React.forwardRef(
   (
     {
       onFocus,
       onBlur,
-      selectedDay,
-      selectedDayRange,
+      value,
       inputPlaceholder,
       inputClassName,
       formatInputText,
       renderInput,
-      isDayRange,
       isPersian,
     },
     ref,
   ) => {
     const { getLanguageDigits } = useMemo(() => utils(isPersian), [isPersian]);
 
-    const getSelectedDayValue = () => {
-      if (!selectedDay) return '';
-      const year = getLanguageDigits(selectedDay.year);
-      const month = getLanguageDigits(putZero(selectedDay.month));
-      const day = getLanguageDigits(putZero(selectedDay.day));
+    const getSingleDayValue = () => {
+      if (!value) return '';
+      const year = getLanguageDigits(value.year);
+      const month = getLanguageDigits(putZero(value.month));
+      const day = getLanguageDigits(putZero(value.day));
       return `${year}/${month}/${day}`;
     };
 
@@ -34,9 +33,9 @@ const DatePickerInput = React.forwardRef(
     const toWord = isPersian ? 'تا' : 'to';
     const yearLetterSkip = isPersian ? -2 : 0;
 
-    const getSelectedRangeValue = () => {
-      if (!selectedDayRange.from || !selectedDayRange.to) return '';
-      const { from, to } = selectedDayRange;
+    const getDayRangeValue = () => {
+      if (!value.from || !value.to) return '';
+      const { from, to } = value;
       const fromText = `${getLanguageDigits(putZero(from.year))
         .toString()
         .slice(yearLetterSkip)}/${getLanguageDigits(putZero(from.month))}/${getLanguageDigits(
@@ -49,9 +48,17 @@ const DatePickerInput = React.forwardRef(
       )}`;
       return `${fromWord} ${fromText} ${toWord} ${toText}`;
     };
+
+    const getMultiDateValue = () => {
+      return value.map(date => getLanguageDigits(date.day)).join(', ');
+    };
+
     const getValue = () => {
       if (formatInputText()) return formatInputText();
-      return isDayRange ? getSelectedRangeValue() : getSelectedDayValue();
+      const valueType = getValueType(value);
+      if (valueType === TYPE_SINGLE_DATE) return getSingleDayValue();
+      if (valueType === TYPE_RANGE) return getDayRangeValue();
+      if (valueType === TYPE_MUTLI_DATE) return getMultiDateValue();
     };
 
     const placeholderValue = inputPlaceholder || (isPersian ? 'انتخاب' : 'Select');

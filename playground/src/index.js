@@ -6,15 +6,8 @@ import DatePicker from '../../src';
 import * as serviceWorker from './serviceWorker';
 
 const App = () => {
-  const [selectedDay, setValue] = useState({ from: null, to: null });
-  return (
-    <DatePicker
-      selectedDayRange={selectedDay}
-      onChange={setValue}
-      shouldHighlightWeekends
-      isDayRange
-    />
-  );
+  const [selectedDay, setValue] = useState([]);
+  return <DatePicker value={selectedDay} onChange={setValue} shouldHighlightWeekends />;
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));

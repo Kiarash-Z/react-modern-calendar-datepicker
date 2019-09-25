@@ -61,3 +61,7 @@ export const DAY_SHAPE = {
 export const MINIMUM_SELECTABLE_YEAR_SUBTRACT = 100;
 
 export const MAXIMUM_SELECTABLE_YEAR_SUM = 50;
+
+export const TYPE_SINGLE_DATE = 'SINGLE_DATE';
+export const TYPE_RANGE = 'RANGE';
+export const TYPE_MUTLI_DATE = 'MUTLI_DATE';

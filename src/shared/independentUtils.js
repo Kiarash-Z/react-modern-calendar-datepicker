@@ -1,3 +1,5 @@
+import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './constants';
+
 /*
   These utility functions don't depend on locale of the date picker(Persian or Gregorian)
 */
@@ -17,7 +19,7 @@ const putZero = number => (number.toString().length === 1 ? `0${number}` : numbe
 
 const toExtendedDay = date => [date.year, date.month, date.day];
 
-const shallowCloneObject = obj => ({ ...obj });
+const deepClone = value => ({ ...value });
 
 const deepCloneObject = obj => JSON.parse(JSON.stringify(obj));
 
@@ -37,12 +39,30 @@ const getDateAccordingToMonth = (date, direction) => {
   return newDate;
 };
 
+const hasProperty = (object, propertyName) =>
+  Object.prototype.hasOwnProperty.call(object || {}, propertyName);
+
+const getValueType = value => {
+  if (Array.isArray(value)) return TYPE_MUTLI_DATE;
+  if (hasProperty(value, 'from') && hasProperty(value, 'to')) return TYPE_RANGE;
+  if (
+    !value ||
+    (hasProperty(value, 'year') && hasProperty(value, 'month') && hasProperty(value, 'day'))
+  ) {
+    return TYPE_SINGLE_DATE;
+  }
+  throw new TypeError(
+    `The passed value is malformed! Please make sure you're using one of the valid value types for date picker.`,
+  );
+};
+
 export {
   createUniqueRange,
   isSameDay,
   putZero,
   toExtendedDay,
-  shallowCloneObject,
+  deepClone,
   deepCloneObject,
   getDateAccordingToMonth,
+  getValueType,
 };

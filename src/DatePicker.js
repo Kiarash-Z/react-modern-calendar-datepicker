@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
+import { getValueType } from './shared/independentUtils';
+import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constants';
 
 let shouldPreventFocus;
 let mousePosition;
 
 const DatePicker = ({
-  isDayRange,
-  selectedDay,
+  value,
   onChange,
   formatInputText,
   inputPlaceholder,
   inputClassName,
   renderInput,
-  selectedDayRange,
   wrapperClassName,
   calendarClassName,
   calendarTodayClassName,
@@ -53,11 +53,12 @@ const DatePicker = ({
 
   // handle input focus/blur
   useEffect(() => {
-    const shouldCloseCalendar = !isDayRange
-      ? !isCalendarOpen
-      : !isCalendarOpen && selectedDayRange.from && selectedDayRange.to;
+    const valueType = getValueType(value);
+    if (valueType === TYPE_MUTLI_DATE) return; // no need to close the calendar
+    const shouldCloseCalendar =
+      valueType === TYPE_SINGLE_DATE ? !isCalendarOpen : !isCalendarOpen && value.from && value.to;
     if (shouldCloseCalendar) dateInputElement.current.blur();
-  }, [selectedDay, isCalendarOpen]);
+  }, [value, isCalendarOpen]);
 
   const toggleCalendar = () => setCalendarVisiblity(!isCalendarOpen);
 
@@ -67,7 +68,7 @@ const DatePicker = ({
     if (!isCalendarOpen) return;
     const { current: calendar } = calendarContainerElement;
     const calendarPosition = calendar.getBoundingClientRect();
-    const isInBetween = (value, start, end) => value >= start && value <= end;
+    const isInBetween = (position, start, end) => position >= start && position <= end;
     const isInsideCalendar =
       isInBetween(mousePosition.x, calendarPosition.left, calendarPosition.right) &&
       isInBetween(mousePosition.y, calendarPosition.top, calendarPosition.bottom);
@@ -113,6 +114,13 @@ const DatePicker = ({
     return { left: leftStyle };
   };
 
+  const handleCalendarChange = newValue => {
+    const valueType = getValueType(value);
+    if (valueType === TYPE_SINGLE_DATE) handleDaySelect(newValue);
+    else if (valueType === TYPE_RANGE) handleDayRangeSelect(newValue);
+    else if (valueType === TYPE_MUTLI_DATE) onChange(newValue);
+  };
+
   return (
     <div className={`DatePicker ${isCalendarOpen ? '-calendarOpen' : ''} ${wrapperClassName}`}>
       <div
@@ -121,12 +129,8 @@ const DatePicker = ({
         style={getCalendarPosition()}
       >
         <Calendar
-          onDaySelect={handleDaySelect}
-          selectedDay={selectedDay}
-          onChange={isDayRange ? handleDayRangeSelect : handleDaySelect}
-          selectedDayRange={selectedDayRange}
-          onDayRangeSelect={handleDayRangeSelect}
-          isDayRange={isDayRange}
+          value={value}
+          onChange={handleCalendarChange}
           calendarClassName={calendarClassName}
           calendarTodayClassName={calendarTodayClassName}
           calendarSelectedDayClassName={calendarSelectedDayClassName}
@@ -150,12 +154,10 @@ const DatePicker = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         formatInputText={formatInputText}
-        selectedDay={selectedDay}
-        selectedDayRange={selectedDayRange}
+        value={value}
         inputPlaceholder={inputPlaceholder}
         inputClassName={inputClassName}
         renderInput={renderInput}
-        isDayRange={isDayRange}
         isPersian={isPersian}
       />
     </div>

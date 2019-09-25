@@ -1,6 +1,17 @@
 import utils from '../src/shared/localeUtils';
-import { putZero, isSameDay, getDateAccordingToMonth } from '../src/shared/independentUtils';
-import { PERSIAN_MONTHS, GREGORIAN_MONTHS } from '../src/shared/constants';
+import {
+  putZero,
+  isSameDay,
+  getDateAccordingToMonth,
+  getValueType,
+} from '../src/shared/independentUtils';
+import {
+  PERSIAN_MONTHS,
+  GREGORIAN_MONTHS,
+  TYPE_SINGLE_DATE,
+  TYPE_RANGE,
+  TYPE_MUTLI_DATE,
+} from '../src/shared/constants';
 
 describe('Utility Functions', () => {
   describe('Independent Utilities', () => {
@@ -23,6 +34,29 @@ describe('Utility Functions', () => {
       const day3 = { year: 2000, month: 6, day: 22 };
       expect(isSameDay(day1, day2)).toBe(true);
       expect(isSameDay(day1, day3)).toBe(false);
+    });
+
+    test('should tell the value type', () => {
+      const singleDate = { year: 2001, month: 10, day: 18 };
+      const rangeDate = {
+        from: { year: 2000, month: 1, day: 1 },
+        to: { year: 2001, month: 1, day: 1 },
+      };
+      const multiDate = [
+        { year: 2000, month: 1, day: 1 },
+        { year: 2000, month: 1, day: 5 },
+        { year: 2000, month: 1, day: 10 },
+      ];
+      expect(getValueType(singleDate)).toBe(TYPE_SINGLE_DATE);
+      expect(getValueType(rangeDate)).toBe(TYPE_RANGE);
+      expect(getValueType(multiDate)).toBe(TYPE_MUTLI_DATE);
+    });
+
+    test('should throw an error for malformed value', () => {
+      const malformedDate = { name: 'Kiarash' };
+      expect(() => {
+        getValueType(malformedDate);
+      }).toThrow(TypeError);
     });
   });
 

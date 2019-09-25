@@ -3,18 +3,21 @@ import PropTypes from 'prop-types';
 
 import { getSlideDate, handleSlideAnimationEnd, animateContent } from '../shared/sliderHelpers';
 import utils from '../shared/localeUtils';
-import { deepCloneObject, isSameDay, createUniqueRange } from '../shared/independentUtils';
-import { DAY_SHAPE } from '../shared/constants';
+import {
+  deepCloneObject,
+  isSameDay,
+  createUniqueRange,
+  getValueType,
+} from '../shared/independentUtils';
+import { DAY_SHAPE, TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from '../shared/constants';
 
 const DaysList = ({
   activeDate,
+  value,
   monthChangeDirection,
   onSlideChange,
-  isDayRange,
-  selectedDayRange,
   disabledDays,
   onDisabledDayError,
-  selectedDay,
   minimumDate,
   maximumDate,
   onChange,
@@ -47,7 +50,7 @@ const DaysList = ({
   }, [monthChangeDirection]);
 
   const getDayRangeValue = day => {
-    const clonedDayRange = deepCloneObject(selectedDayRange);
+    const clonedDayRange = deepCloneObject(value);
     const dayRangeValue =
       clonedDayRange.from && clonedDayRange.to ? { from: null, to: null } : clonedDayRange;
     const dayRangeProp = !dayRangeValue.from ? 'from' : 'to';
@@ -70,21 +73,36 @@ const DaysList = ({
     const includingDisabledDay = disabledDays.find(checkIncludingDisabledDay);
     if (includingDisabledDay) {
       onDisabledDayError(includingDisabledDay);
-      return selectedDayRange;
+      return value;
     }
 
     return dayRangeValue;
   };
 
+  const getMultiDateValue = day => {
+    const isAlreadyExisting = value.some(valueDay => isSameDay(valueDay, day));
+    const addedToValue = [...value, day];
+    const removedFromValue = value.filter(valueDay => !isSameDay(valueDay, day));
+    return isAlreadyExisting ? removedFromValue : addedToValue;
+  };
+
   const handleDayClick = day => {
-    const newDayValue = isDayRange ? getDayRangeValue(day) : day;
-    onChange(newDayValue);
+    const valueType = getValueType(value);
+    if (valueType === TYPE_SINGLE_DATE) onChange(day);
+    else if (valueType === TYPE_RANGE) onChange(getDayRangeValue(day));
+    else if (valueType === TYPE_MUTLI_DATE) onChange(getMultiDateValue(day));
+  };
+
+  const isSingleDateSelected = day => {
+    const valueType = getValueType(value);
+    if (valueType === TYPE_SINGLE_DATE) return isSameDay(day, value);
+    if (valueType === TYPE_MUTLI_DATE) return value.some(valueDay => isSameDay(valueDay, day));
   };
 
   const getDayClassNames = dayItem => {
     const isToday = isSameDay(dayItem, today);
-    const isSelected = selectedDay ? isSameDay(dayItem, selectedDay) : false;
-    const { from: startingDay, to: endingDay } = selectedDayRange;
+    const isSelected = isSingleDateSelected(dayItem);
+    const { from: startingDay, to: endingDay } = value || {};
     const isStartedDayRange = isSameDay(dayItem, startingDay);
     const isEndingDayRange = isSameDay(dayItem, endingDay);
     const isWithinRange = checkDayInDayRange({ day: dayItem, from: startingDay, to: endingDay });

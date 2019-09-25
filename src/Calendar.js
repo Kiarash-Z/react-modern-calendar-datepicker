@@ -2,17 +2,15 @@ import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import utils from './shared/localeUtils';
-import { getDateAccordingToMonth, shallowCloneObject } from './shared/independentUtils';
-import { DAY_SHAPE } from './shared/constants';
+import { getDateAccordingToMonth, deepClone, getValueType } from './shared/independentUtils';
+import { DAY_SHAPE, TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
 
 import { Header, MonthSelector, YearSelector, DaysList } from './components';
 
 const Calendar = ({
-  selectedDay,
-  selectedDayRange,
+  value,
   onChange,
   onDisabledDayError,
-  isDayRange,
   calendarClassName,
   calendarTodayClassName,
   calendarSelectedDayClassName,
@@ -48,13 +46,15 @@ const Calendar = ({
   const toggleYearSelector = createStateToggler('isYearSelectorOpen');
 
   const getComputedActiveDate = () => {
-    if (selectedDay) return shallowCloneObject(selectedDay);
-    if (selectedDayRange.from) return shallowCloneObject(selectedDayRange.from);
-    return shallowCloneObject(today);
+    const valueType = getValueType(value);
+    if (valueType === TYPE_MUTLI_DATE && value.length) return deepClone(value[0]);
+    if (valueType === TYPE_SINGLE_DATE && value) return deepClone(value);
+    if (valueType === TYPE_RANGE && value.from) return deepClone(value.from);
+    return deepClone(today);
   };
 
   const activeDate = mainState.activeDate
-    ? shallowCloneObject(mainState.activeDate)
+    ? deepClone(mainState.activeDate)
     : getComputedActiveDate();
 
   const renderWeekDays = () =>
@@ -137,13 +137,11 @@ const Calendar = ({
 
       <DaysList
         activeDate={activeDate}
+        value={value}
         monthChangeDirection={mainState.monthChangeDirection}
         onSlideChange={updateDate}
-        isDayRange={isDayRange}
-        selectedDayRange={selectedDayRange}
         disabledDays={disabledDays}
         onDisabledDayError={onDisabledDayError}
-        selectedDay={selectedDay}
         minimumDate={minimumDate}
         maximumDate={maximumDate}
         onChange={onChange}
@@ -160,26 +158,21 @@ const Calendar = ({
 };
 
 Calendar.defaultProps = {
-  selectedDay: null,
-  selectedDayRange: {
-    from: null,
-    to: null,
-  },
   minimumDate: null,
   maximumDate: null,
-
   colorPrimary: '#0eca2d',
   colorPrimaryLight: '#cff4d5',
   calendarClassName: '',
   isPersian: false,
+  value: null,
 };
 
 Calendar.propTypes = {
-  selectedDay: PropTypes.shape(DAY_SHAPE),
-  selectedDayRange: PropTypes.shape({
-    from: PropTypes.shape(DAY_SHAPE),
-    to: PropTypes.shape(DAY_SHAPE),
-  }),
+  value: PropTypes.oneOfType([
+    PropTypes.shape(DAY_SHAPE),
+    PropTypes.shape({ from: PropTypes.shape(DAY_SHAPE), to: PropTypes.shape(DAY_SHAPE) }),
+    PropTypes.arrayOf(PropTypes.shape(DAY_SHAPE)),
+  ]),
   calendarClassName: PropTypes.string,
   colorPrimary: PropTypes.string,
   colorPrimaryLight: PropTypes.string,
