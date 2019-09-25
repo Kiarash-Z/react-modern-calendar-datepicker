@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 
 import utils from '../shared/localeUtils';
-import { isSameDay } from '../shared/independentUtils';
+import { isSameDay } from '../shared/generalUtils';
 import { getSlideDate, animateContent, handleSlideAnimationEnd } from '../shared/sliderHelpers';
 
 const Header = ({

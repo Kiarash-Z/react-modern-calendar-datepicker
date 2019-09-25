@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useMemo } from 'react';
 
-import { isSameDay } from '../shared/independentUtils';
+import { isSameDay } from '../shared/generalUtils';
 import utils from '../shared/localeUtils';
 
 const MonthSelector = ({

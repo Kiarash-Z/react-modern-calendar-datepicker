@@ -1,4 +1,4 @@
-import { getDateAccordingToMonth } from './independentUtils';
+import { getDateAccordingToMonth } from './generalUtils';
 
 const getSlideDate = ({ parent, isInitialActiveChild, activeDate, monthChangeDirection }) => {
   if (!parent) return activeDate;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
-import { getValueType } from './shared/independentUtils';
+import { getValueType } from './shared/generalUtils';
 import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constants';
 
 let shouldPreventFocus;

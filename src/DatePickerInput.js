@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import utils from './shared/localeUtils';
-import { putZero, getValueType } from './shared/independentUtils';
+import { putZero, getValueType } from './shared/generalUtils';
 import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
 
 const DatePickerInput = React.forwardRef(

@@ -2,7 +2,7 @@ import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import utils from './shared/localeUtils';
-import { getDateAccordingToMonth, deepClone, getValueType } from './shared/independentUtils';
+import { getDateAccordingToMonth, deepClone, getValueType } from './shared/generalUtils';
 import { DAY_SHAPE, TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
 
 import { Header, MonthSelector, YearSelector, DaysList } from './components';

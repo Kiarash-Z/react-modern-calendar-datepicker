@@ -4,7 +4,7 @@ import {
   isSameDay,
   getDateAccordingToMonth,
   getValueType,
-} from '../src/shared/independentUtils';
+} from '../src/shared/generalUtils';
 import {
   PERSIAN_MONTHS,
   GREGORIAN_MONTHS,
@@ -14,7 +14,7 @@ import {
 } from '../src/shared/constants';
 
 describe('Utility Functions', () => {
-  describe('Independent Utilities', () => {
+  describe('General Utilities', () => {
     test('should return the next or previous month according to date', () => {
       const thisMonth = { year: 2000, month: 12, day: 1 };
       const nextMonth = { year: 2001, month: 1, day: 1 };

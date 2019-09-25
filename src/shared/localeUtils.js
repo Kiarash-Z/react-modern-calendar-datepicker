@@ -11,7 +11,7 @@ import {
   PERSIAN_WEEK_DAYS,
   PERSIAN_NUMBERS,
 } from './constants';
-import { toExtendedDay } from './independentUtils';
+import { toExtendedDay } from './generalUtils';
 
 const utils = isPersian => {
   const isGregorian = !isPersian;

@@ -8,7 +8,7 @@ import {
   isSameDay,
   createUniqueRange,
   getValueType,
-} from '../shared/independentUtils';
+} from '../shared/generalUtils';
 import { DAY_SHAPE, TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from '../shared/constants';
 
 const DaysList = ({
