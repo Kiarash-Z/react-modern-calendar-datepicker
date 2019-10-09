@@ -6,9 +6,6 @@ import DatePickerInput from './DatePickerInput';
 import { getValueType } from './shared/generalUtils';
 import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constants';
 
-let shouldPreventFocus;
-let mousePosition;
-
 const DatePicker = ({
   value,
   onChange,
@@ -36,11 +33,13 @@ const DatePicker = ({
 }) => {
   const calendarContainerElement = useRef(null);
   const dateInputElement = useRef(null);
+  const mousePosition = useRef(null);
+  const shouldPreventFocus = useRef(null);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
 
   const handleMouseMove = e => {
     const { clientX: x, clientY: y } = e;
-    mousePosition = { x, y };
+    mousePosition.current = { x, y };
   };
 
   // get mouse live position
@@ -73,16 +72,16 @@ const DatePicker = ({
       isInBetween(mousePosition.x, calendarPosition.left, calendarPosition.right) &&
       isInBetween(mousePosition.y, calendarPosition.top, calendarPosition.bottom);
     if (isInsideCalendar) {
-      shouldPreventFocus = true;
+      shouldPreventFocus.current = true;
       e.target.focus();
-      shouldPreventFocus = false;
+      shouldPreventFocus.current = false;
       return;
     }
     toggleCalendar();
   };
 
   const handleFocus = () => {
-    if (shouldPreventFocus) return;
+    if (shouldPreventFocus.current) return;
     toggleCalendar();
   };
 
