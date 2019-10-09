@@ -69,8 +69,8 @@ const DatePicker = ({
     const calendarPosition = calendar.getBoundingClientRect();
     const isInBetween = (position, start, end) => position >= start && position <= end;
     const isInsideCalendar =
-      isInBetween(mousePosition.x, calendarPosition.left, calendarPosition.right) &&
-      isInBetween(mousePosition.y, calendarPosition.top, calendarPosition.bottom);
+      isInBetween(mousePosition.current.x, calendarPosition.left, calendarPosition.right) &&
+      isInBetween(mousePosition.current.y, calendarPosition.top, calendarPosition.bottom);
     if (isInsideCalendar) {
       shouldPreventFocus.current = true;
       e.target.focus();
