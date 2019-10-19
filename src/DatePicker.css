@@ -169,7 +169,7 @@
 .Calendar__monthYear.-shownAnimated { animation: var(--animation-duration) fadeTextToCenter forwards; }
 
 .Calendar__monthYear > * {
-  padding: 0.1em 0.5em;
+  padding: 0.2em 0.5em;
   border: 1px solid transparent;
   transition: var(--animation-duration);
   font-size: 1em;
@@ -196,12 +196,12 @@
 .Calendar__yearText:hover { transform: translateX(-0.2em); }
 
 .Calendar__monthYear .Calendar__yearText.-hidden {
-  transform: translate(-50%);
+  transform: translateX(-50%);
   opacity: 0;
 }
 
 .Calendar__monthYear .Calendar__monthText.-hidden {
-transform: translate(50%);
+transform: translateX(50%);
   opacity: 0;
 }
 

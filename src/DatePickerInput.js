@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { toPersianNumber, putZero } from './utils';
+import { toPersianNumber, putZero } from './shared/utils';
 
 const DatePickerInput = React.forwardRef(
   (

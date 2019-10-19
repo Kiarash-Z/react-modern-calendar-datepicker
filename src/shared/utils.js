@@ -1,30 +1,6 @@
 import jalaali from 'jalaali-js';
 
-const PERSIAN_NUMBERS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-const PERSIAN_MONTHS = [
-  'فروردین',
-  'اردیبهشت',
-  'خرداد',
-  'تیر',
-  'مرداد',
-  'شهریور',
-  'مهر',
-  'آبان',
-  'آذر',
-  'دی',
-  'بهمن',
-  'اسفند',
-];
-
-const WEEK_DAYS = {
-  saturday: 'شنبه',
-  sunday: 'یکشنبه',
-  monday: 'دوشنبه',
-  tuesday: 'سه شنبه',
-  wednesday: 'چهارشنبه',
-  thursday: 'پنجشنبه',
-  friday: 'جمعه',
-};
+import { PERSIAN_NUMBERS, PERSIAN_MONTHS } from './constants';
 
 const getToday = () => {
   const todayDate = new Date();
@@ -114,8 +90,6 @@ const shallowCloneObject = obj => ({ ...obj });
 const deepCloneObject = obj => JSON.parse(JSON.stringify(obj));
 
 export {
-  WEEK_DAYS,
-  PERSIAN_MONTHS,
   getToday,
   toPersianNumber,
   createUniqueRange,
