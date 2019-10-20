@@ -67,6 +67,7 @@ const DatePickerInput = React.forwardRef(
       return (
         renderInput({ ref, onFocus, onBlur }) || (
           <input
+            data-testid="datepicker-input"
             readOnly
             ref={ref}
             onFocus={onFocus}
