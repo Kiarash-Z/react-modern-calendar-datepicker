@@ -1,17 +1,17 @@
-import utils from '../../src/shared/localeUtils';
+import utils from '../src/shared/localeUtils';
 import {
   putZero,
   isSameDay,
   getDateAccordingToMonth,
   getValueType,
-} from '../../src/shared/generalUtils';
+} from '../src/shared/generalUtils';
 import {
   PERSIAN_MONTHS,
   GREGORIAN_MONTHS,
   TYPE_SINGLE_DATE,
   TYPE_RANGE,
   TYPE_MUTLI_DATE,
-} from '../../src/shared/constants';
+} from '../src/shared/constants';
 
 describe('Utility Functions', () => {
   describe('General Utilities', () => {

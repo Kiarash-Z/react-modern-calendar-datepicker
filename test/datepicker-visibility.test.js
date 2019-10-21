@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
-import DatePicker from '../../src/DatePicker';
+import DatePicker from '../src/DatePicker';
 
 describe('DatePicker', () => {
   test('toggles correctly on input focus/blur', () => {
@@ -30,7 +30,7 @@ describe('DatePicker', () => {
     expect(calendarContainer.getBoundingClientRect).toHaveBeenCalled();
   });
 
-  test.only('aligns according to window visible boundaries', () => {
+  test('aligns according to window visible boundaries', () => {
     const { getByTestId } = render(<DatePicker />);
     const calendarContainer = getByTestId('calendar-container');
     const input = getByTestId('datepicker-input');
