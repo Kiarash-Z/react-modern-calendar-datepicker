@@ -31,15 +31,18 @@ const MonthSelector = ({
         (isBeforeDate({ ...monthDate, month: monthNumber + 1 }, minimumDate) ||
           isSameDay({ ...monthDate, month: monthNumber + 1 }, minimumDate));
       return (
-        <div key={persianMonth} className="Calendar__monthSelectorItem">
+        <div
+          key={persianMonth}
+          className={`Calendar__monthSelectorItem ${
+            monthNumber === activeDate.month ? '-active' : ''
+          }`}
+        >
           <button
             tabIndex="-1"
             onClick={() => {
               onMonthSelect(monthNumber);
             }}
-            className={`Calendar__monthSelectorItemText ${
-              monthNumber === activeDate.month ? '-active' : ''
-            }`}
+            className="Calendar__monthSelectorItemText"
             type="button"
             disabled={isAfterMaximumDate || isBeforeMinimumDate}
           >
@@ -51,7 +54,7 @@ const MonthSelector = ({
   return (
     <div className="Calendar__monthSelectorAnimationWrapper">
       <div className="Calendar__monthSelectorWrapper">
-        <div ref={monthSelector} className="Calendar__monthSelector">
+        <div data-testid="month-selector" ref={monthSelector} className="Calendar__monthSelector">
           {renderMonthSelectorItems()}
         </div>
       </div>

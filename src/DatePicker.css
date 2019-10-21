@@ -349,14 +349,16 @@
   transition: 0.3s;
 }
 
-.Calendar__monthSelectorItemText:not(:disabled):not(.-active):hover, .Calendar__yearSelectorText:not(:disabled):not(.-active):hover { background: #f5f5f5; }
+.Calendar__monthSelectorItem:not(.-active) .Calendar__monthSelectorItemText:not(:disabled):hover, .Calendar__yearSelectorItem:not(.-active) .Calendar__yearSelectorText:not(:disabled):hover {
+  background: #f5f5f5;
+}
+
 .Calendar__monthSelectorItemText:disabled, .Calendar__yearSelectorText:disabled {
   opacity: 0.5;
   cursor: default;
 }
 
-
-.Calendar__monthSelectorItemText.-active, .Calendar__yearSelectorText.-active {
+.Calendar__monthSelectorItem.-active .Calendar__monthSelectorItemText, .Calendar__yearSelectorItem.-active .Calendar__yearSelectorText {
   background-color: var(--cl-color-primary);
   color: #fff;
 }

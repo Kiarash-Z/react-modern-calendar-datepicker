@@ -17,12 +17,12 @@ const YearSelector = ({
   const wrapperElement = useRef(null);
   const yearListElement = useRef(null);
 
-  const { getLanguageDigits } = useMemo(() => utils(isPersian), [isPersian]);
+  const { getLanguageDigits, getToday } = useMemo(() => utils(isPersian), [isPersian]);
 
   useEffect(() => {
     const classToggleMethod = isOpen ? 'add' : 'remove';
     const activeSelectorYear = wrapperElement.current.querySelector(
-      '.Calendar__yearSelectorText.-active',
+      '.Calendar__yearSelectorItem.-active',
     );
     wrapperElement.current.classList[classToggleMethod]('-faded');
     yearListElement.current.scrollTop =
@@ -32,8 +32,8 @@ const YearSelector = ({
 
   const renderSelectorYears = () => {
     const items = [];
-    const startingYearValue = startingYear || activeDate.year - MINIMUM_SELECTABLE_YEAR_SUBTRACT;
-    const endingYearValue = endingYear || activeDate.year + MAXIMUM_SELECTABLE_YEAR_SUM;
+    const startingYearValue = startingYear || getToday().year - MINIMUM_SELECTABLE_YEAR_SUBTRACT;
+    const endingYearValue = endingYear || getToday().year + MAXIMUM_SELECTABLE_YEAR_SUM;
     for (let i = startingYearValue; i <= endingYearValue; i += 1) {
       items.push(i);
     }
@@ -41,10 +41,13 @@ const YearSelector = ({
       const isAfterMaximumDate = maximumDate && item > maximumDate.year;
       const isBeforeMinimumDate = minimumDate && item < minimumDate.year;
       return (
-        <div key={item} className="Calendar__yearSelectorItem">
+        <div
+          key={item}
+          className={`Calendar__yearSelectorItem ${activeDate.year === item ? '-active' : ''}`}
+        >
           <button
             tabIndex="-1"
-            className={`Calendar__yearSelectorText ${activeDate.year === item ? '-active' : ''}`}
+            className="Calendar__yearSelectorText"
             type="button"
             onClick={() => {
               onYearSelect(item);
