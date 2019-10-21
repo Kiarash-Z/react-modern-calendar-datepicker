@@ -170,7 +170,7 @@ const DaysList = ({
           disabled={!isStandard}
           type="button"
         >
-          {getLanguageDigits(day)}
+          {!isStandard ? '' : getLanguageDigits(day)}
         </button>
       );
     });
