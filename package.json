@@ -9,6 +9,7 @@
     "lintWrite": "prettier --write \"./src/**/*.js\"",
     "test": "jest ./test",
     "test:watch": "jest ./test --watch",
+    "test:coverage": "jest ./test --coverage",
     "clean": "rimraf lib",
     "build": "yarn clean && cross-env NODE_ENV=production babel src -d lib --copy-files",
     "size": "size-limit",

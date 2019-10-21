@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
-import DatePicker from '../src/DatePicker';
+import DatePicker from '../src';
 
 describe('DatePicker Visibility', () => {
   test('toggles correctly on input focus/blur', () => {
