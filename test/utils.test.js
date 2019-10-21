@@ -20,6 +20,7 @@ describe('Utility Functions', () => {
       const nextMonth = { year: 2001, month: 1, day: 1 };
       const previousMonth = { year: 2000, month: 11, day: 1 };
       expect(getDateAccordingToMonth(thisMonth, 'NEXT')).toEqual(nextMonth);
+      expect(getDateAccordingToMonth(nextMonth, 'PREVIOUS')).toEqual(thisMonth);
       expect(getDateAccordingToMonth(thisMonth, 'PREVIOUS')).toEqual(previousMonth);
     });
 
@@ -34,6 +35,7 @@ describe('Utility Functions', () => {
       const day3 = { year: 2000, month: 6, day: 22 };
       expect(isSameDay(day1, day2)).toBe(true);
       expect(isSameDay(day1, day3)).toBe(false);
+      expect(isSameDay(null, day3)).toBe(false);
     });
 
     test('indicates the value type', () => {
