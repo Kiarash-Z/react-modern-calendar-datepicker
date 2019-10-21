@@ -2,7 +2,7 @@ import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import utils from './shared/localeUtils';
-import { getDateAccordingToMonth, deepClone, getValueType } from './shared/generalUtils';
+import { getDateAccordingToMonth, shallowClone, getValueType } from './shared/generalUtils';
 import { DAY_SHAPE, TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
 
 import { Header, MonthSelector, YearSelector, DaysList } from './components';
@@ -47,14 +47,14 @@ const Calendar = ({
 
   const getComputedActiveDate = () => {
     const valueType = getValueType(value);
-    if (valueType === TYPE_MUTLI_DATE && value.length) return deepClone(value[0]);
-    if (valueType === TYPE_SINGLE_DATE && value) return deepClone(value);
-    if (valueType === TYPE_RANGE && value.from) return deepClone(value.from);
-    return deepClone(today);
+    if (valueType === TYPE_MUTLI_DATE && value.length) return shallowClone(value[0]);
+    if (valueType === TYPE_SINGLE_DATE && value) return shallowClone(value);
+    if (valueType === TYPE_RANGE && value.from) return shallowClone(value.from);
+    return shallowClone(today);
   };
 
   const activeDate = mainState.activeDate
-    ? deepClone(mainState.activeDate)
+    ? shallowClone(mainState.activeDate)
     : getComputedActiveDate();
 
   const renderWeekDays = () =>

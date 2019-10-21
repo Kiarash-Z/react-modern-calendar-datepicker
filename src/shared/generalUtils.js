@@ -19,7 +19,7 @@ const putZero = number => (number.toString().length === 1 ? `0${number}` : numbe
 
 const toExtendedDay = date => [date.year, date.month, date.day];
 
-const deepClone = value => ({ ...value });
+const shallowClone = value => ({ ...value });
 
 const deepCloneObject = obj => JSON.parse(JSON.stringify(obj));
 
@@ -61,7 +61,7 @@ export {
   isSameDay,
   putZero,
   toExtendedDay,
-  deepClone,
+  shallowClone,
   deepCloneObject,
   getDateAccordingToMonth,
   getValueType,
