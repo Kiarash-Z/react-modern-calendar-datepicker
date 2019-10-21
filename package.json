@@ -5,8 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
-    "lint": "eslint src",
-    "lintWrite": "prettier --write \"./src/**/*.js\"",
+    "lint": "concurrently \"eslint src\" \"prettier --check \"./src/**/*.css\"\" ",
+    "lint:write": "prettier --write \"./src/**/*.js\"  \"./src/**/*.css\"",
     "test": "jest ./test",
     "test:watch": "jest ./test --watch",
     "test:coverage": "jest ./test --coverage",
@@ -60,6 +60,7 @@
     "@testing-library/react": "^9.3.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
+    "concurrently": "^5.0.0",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "eslint": "^5.16.0",
