@@ -8,8 +8,8 @@ const YearSelector = ({
   isOpen,
   activeDate,
   onYearSelect,
-  startingYear,
-  endingYear,
+  selectorStartingYear,
+  selectorEndingYear,
   maximumDate,
   minimumDate,
   isPersian,
@@ -26,14 +26,15 @@ const YearSelector = ({
     );
     wrapperElement.current.classList[classToggleMethod]('-faded');
     yearListElement.current.scrollTop =
-      activeSelectorYear.offsetTop - activeSelectorYear.offsetHeight * 5.8;
+      activeSelectorYear.offsetTop - activeSelectorYear.offsetHeight * 5;
     yearListElement.current.classList[classToggleMethod]('-open');
   }, [isOpen]);
 
   const renderSelectorYears = () => {
     const items = [];
-    const startingYearValue = startingYear || getToday().year - MINIMUM_SELECTABLE_YEAR_SUBTRACT;
-    const endingYearValue = endingYear || getToday().year + MAXIMUM_SELECTABLE_YEAR_SUM;
+    const startingYearValue =
+      selectorStartingYear || getToday().year - MINIMUM_SELECTABLE_YEAR_SUBTRACT;
+    const endingYearValue = selectorEndingYear || getToday().year + MAXIMUM_SELECTABLE_YEAR_SUM;
     for (let i = startingYearValue; i <= endingYearValue; i += 1) {
       items.push(i);
     }
@@ -64,7 +65,7 @@ const YearSelector = ({
   return (
     <div className="Calendar__yearSelectorAnimationWrapper">
       <div ref={wrapperElement} className="Calendar__yearSelectorWrapper">
-        <div ref={yearListElement} className="Calendar__yearSelector">
+        <div ref={yearListElement} className="Calendar__yearSelector" data-testid="year-selector">
           {renderSelectorYears()}
         </div>
       </div>
@@ -73,13 +74,13 @@ const YearSelector = ({
 };
 
 YearSelector.propTypes = {
-  startingYear: PropTypes.number,
-  endingYear: PropTypes.number,
+  selectorStartingYear: PropTypes.number,
+  selectorEndingYear: PropTypes.number,
 };
 
 YearSelector.defaultProps = {
-  startingYear: 0,
-  endingYear: 0,
+  selectorStartingYear: 0,
+  selectorEndingYear: 0,
 };
 
 export default YearSelector;

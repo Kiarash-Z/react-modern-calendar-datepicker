@@ -7,7 +7,7 @@ import { GREGORIAN_MONTHS, PERSIAN_MONTHS } from '../src/shared/constants';
 const renderMonthSelector = (shouldOpenSelector = true) => {
   const selectors = render(<Calendar />);
   const thisMonthText = new Date().toLocaleString('default', { month: 'long' });
-  const monthButton = selectors.getAllByText(thisMonthText)[0];
+  const [monthButton] = selectors.getAllByText(thisMonthText);
   const monthSelector = selectors.getByTestId('month-selector');
   const monthsChildren = Array.from(monthSelector.children);
   if (shouldOpenSelector) fireEvent.click(monthButton);
