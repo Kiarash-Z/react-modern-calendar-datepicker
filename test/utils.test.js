@@ -15,7 +15,7 @@ import {
 
 describe('Utility Functions', () => {
   describe('General Utilities', () => {
-    test('should return the next or previous month according to date', () => {
+    test('returns the next or previous month according to date', () => {
       const thisMonth = { year: 2000, month: 12, day: 1 };
       const nextMonth = { year: 2001, month: 1, day: 1 };
       const previousMonth = { year: 2000, month: 11, day: 1 };
@@ -23,12 +23,12 @@ describe('Utility Functions', () => {
       expect(getDateAccordingToMonth(thisMonth, 'PREVIOUS')).toEqual(previousMonth);
     });
 
-    test('should prepend a zero on a single-digit number', () => {
+    test('prepends a zero on a single-digit number', () => {
       expect(putZero('1')).toBe('01');
       expect(putZero('12')).toBe('12');
     });
 
-    test('should return whether the passed days are equal', () => {
+    test('returns whether the passed days are equal', () => {
       const day1 = { year: 2001, month: 10, day: 18 };
       const day2 = { year: 2001, month: 10, day: 18 };
       const day3 = { year: 2000, month: 6, day: 22 };
@@ -36,7 +36,7 @@ describe('Utility Functions', () => {
       expect(isSameDay(day1, day3)).toBe(false);
     });
 
-    test('should tell the value type', () => {
+    test('indicates the value type', () => {
       const singleDate = { year: 2001, month: 10, day: 18 };
       const rangeDate = {
         from: { year: 2000, month: 1, day: 1 },
@@ -52,7 +52,7 @@ describe('Utility Functions', () => {
       expect(getValueType(multiDate)).toBe(TYPE_MUTLI_DATE);
     });
 
-    test('should throw an error for malformed value', () => {
+    test('throws an error for malformed value', () => {
       const malformedDate = { name: 'Kiarash' };
       expect(() => {
         getValueType(malformedDate);
@@ -69,19 +69,19 @@ describe('Utility Functions', () => {
       persianUtils = utils(true);
     });
 
-    test('should return correct language digits', () => {
+    test('returns correct language digits', () => {
       const englishDigits = '0123';
       const persianDigits = '۰۱۲۳';
       expect(gregorianUtils.getLanguageDigits(englishDigits)).toBe(englishDigits);
       expect(persianUtils.getLanguageDigits(englishDigits)).toBe(persianDigits);
     });
 
-    test('should return month name according to its index', () => {
+    test('returns month name according to its index', () => {
       expect(persianUtils.getMonthName(7)).toBe(PERSIAN_MONTHS[6]);
       expect(gregorianUtils.getMonthName(7)).toBe(GREGORIAN_MONTHS[6]);
     });
 
-    test('should return month length', () => {
+    test('returns month length', () => {
       const persianMonthWith31Days = { year: 1398, month: 1, day: 1 };
       const persianMonthWith30Days = { year: 1398, month: 7, day: 1 };
       const persianLeapMonth = { year: 1395, month: 12, day: 1 };
@@ -96,21 +96,21 @@ describe('Utility Functions', () => {
       expect(gregorianUtils.getMonthLength(gregorianLeapMonth)).toBe(29);
     });
 
-    test('should return the first weekday of the passed month', () => {
+    test('returns the first weekday of the passed month', () => {
       const persianDate = { year: 1398, month: 1, day: 1 };
       const gregorianDate = { year: 2019, month: 9, day: 1 };
       expect(persianUtils.getMonthFirstWeekday(persianDate)).toBe(5);
       expect(gregorianUtils.getMonthFirstWeekday(gregorianDate)).toBe(0);
     });
 
-    test('should return whether a day is before another', () => {
+    test('returns whether a day is before another', () => {
       const day1 = { year: 2001, month: 1, day: 1 };
       const day2 = { year: 2001, month: 1, day: 2 };
       expect(gregorianUtils.isBeforeDate(day1, day2)).toBe(true);
       expect(gregorianUtils.isBeforeDate(day2, day1)).toBe(false);
     });
 
-    test('should return if a day is in a range', () => {
+    test('returns if a day is in a range', () => {
       const dayInRange = { year: 2001, month: 1, day: 3 };
       const dayNotInRange = { year: 2001, month: 1, day: 7 };
       const range = {
