@@ -4,8 +4,8 @@ import { render, fireEvent } from '@testing-library/react';
 import { Calendar } from '../src';
 import { GREGORIAN_MONTHS, PERSIAN_MONTHS } from '../src/shared/constants';
 
-const renderMonthSelector = (shouldOpenSelector = true) => {
-  const selectors = render(<Calendar />);
+const renderMonthSelector = (shouldOpenSelector = true, props) => {
+  const selectors = render(<Calendar {...props} />);
   const thisMonthText = new Date().toLocaleString('default', { month: 'long' });
   const [monthButton] = selectors.getAllByText(thisMonthText);
   const monthSelector = selectors.getByTestId('month-selector');
@@ -58,5 +58,39 @@ describe('Month Selection', () => {
     expect(nonSelectedMonth).toHaveClass('-active');
     expect(selectedMonth).not.toHaveClass('-active');
     expect(monthSelector).not.toHaveClass('-open');
+  });
+
+  test('disables months according to minimum & maximum dates', () => {
+    const { rerender, getByText, getAllByText } = renderMonthSelector(true, {
+      value: { year: 2019, month: 6, day: 1 },
+      minimumDate: { year: 2019, month: 3, day: 5 },
+      maximumDate: { year: 2019, month: 10, day: 10 },
+    });
+    expect(getByText('January')).toHaveAttribute('disabled');
+    expect(getByText('February')).toHaveAttribute('disabled');
+    expect(getByText('March')).not.toHaveAttribute('disabled');
+    expect(getAllByText('October')[1]).not.toHaveAttribute('disabled');
+    expect(getByText('November')).toHaveAttribute('disabled');
+    expect(getByText('December')).toHaveAttribute('disabled');
+
+    rerender(
+      <Calendar
+        value={{ year: 2019, month: 6, day: 1 }}
+        minimumDate={{ year: 2018, month: 2, day: 5 }}
+        maximumDate={{ year: 2020, month: 11, day: 10 }}
+      />,
+    );
+
+    expect(getByText('January')).not.toHaveAttribute('disabled');
+    expect(getByText('December')).not.toHaveAttribute('disabled');
+
+    const previousYearButton = getByText('2018');
+    fireEvent.click(previousYearButton);
+
+    expect(getByText('January')).toHaveAttribute('disabled');
+
+    const nextYearButton = getByText('2020');
+    fireEvent.click(nextYearButton);
+    expect(getByText('December')).toHaveAttribute('disabled');
   });
 });

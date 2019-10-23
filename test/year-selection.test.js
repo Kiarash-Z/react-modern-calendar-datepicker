@@ -7,8 +7,8 @@ import {
   MAXIMUM_SELECTABLE_YEAR_SUM,
 } from '../src/shared/constants';
 
-const renderYearSelector = (shouldOpenSelector = true) => {
-  const selectors = render(<Calendar />);
+const renderYearSelector = (shouldOpenSelector = true, props) => {
+  const selectors = render(<Calendar {...props} />);
   const thisYearText = new Date().getFullYear();
   const [yearButton] = selectors.getAllByText(String(thisYearText));
   const yearSelector = selectors.getByTestId('year-selector');
@@ -79,5 +79,20 @@ describe('Year Selection', () => {
     expect(nonSelectedYear).toHaveClass('-active');
     expect(selectedYear).not.toHaveClass('-active');
     expect(yearSelector).not.toHaveClass('-open');
+  });
+
+  test('disables years according to minimum & maximum dates', () => {
+    const { getByText } = renderYearSelector(true, {
+      value: { year: 2019, month: 1, day: 1 },
+      minimumDate: { year: 2015, month: 1, day: 1 },
+      maximumDate: { year: 2022, month: 1, day: 1 },
+    });
+
+    expect(getByText('2015')).not.toHaveAttribute('disabled');
+    expect(getByText('2014')).toHaveAttribute('disabled');
+    expect(getByText('2013')).toHaveAttribute('disabled');
+    expect(getByText('2022')).not.toHaveAttribute('disabled');
+    expect(getByText('2023')).toHaveAttribute('disabled');
+    expect(getByText('2024')).toHaveAttribute('disabled');
   });
 });
