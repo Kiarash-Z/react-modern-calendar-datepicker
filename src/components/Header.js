@@ -104,7 +104,11 @@ const Header = ({
       >
         <span className="Calendar__monthArrow">&nbsp;</span>
       </button>
-      <div className="Calendar__monthYearContainer" ref={monthYearWrapperElement}>
+      <div
+        className="Calendar__monthYearContainer"
+        ref={monthYearWrapperElement}
+        data-testid="month-year-container"
+      >
         &nbsp;
         <div onAnimationEnd={handleSlideAnimationEnd} className="Calendar__monthYear -shown">
           <button

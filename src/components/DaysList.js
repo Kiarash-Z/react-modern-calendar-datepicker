@@ -114,7 +114,7 @@ const DaysList = ({
       .concat(isStartedDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
       .concat(isEndingDayRange ? ` -selectedEnd ${calendarRangeEndClassName}` : '')
       .concat(isWithinRange ? ` -selectedBetween ${calendarRangeBetweenClassName}` : '')
-      .concat(dayItem.isDisabled ? '-disabled' : '');
+      .concat(dayItem.isDisabled ? ' -disabled' : '');
     return classNames;
   };
 
@@ -159,7 +159,7 @@ const DaysList = ({
         <button
           tabIndex="-1"
           key={id}
-          className={`Calendar__day ${isPersian ? '-persian' : '-gregorian'} ${additionalClass}`}
+          className={`Calendar__day ${isPersian ? '-persian' : '-gregorian'}${additionalClass}`}
           onClick={() => {
             if (isDisabled) {
               onDisabledDayError(dayItem); // good for showing error messages
@@ -177,7 +177,11 @@ const DaysList = ({
   };
 
   return (
-    <div ref={calendarSectionWrapper} className="Calendar__sectionWrapper">
+    <div
+      ref={calendarSectionWrapper}
+      className="Calendar__sectionWrapper"
+      data-testid="days-section-wrapper"
+    >
       <div
         onAnimationEnd={e => {
           handleSlideAnimationEnd(e);
