@@ -18,6 +18,7 @@
     "consistent-return": "off",
     "react/prop-types": "off",
     "import/prefer-default-export": "off",
+    "default-case": "off",
     "max-len": [
       "warn",
       {

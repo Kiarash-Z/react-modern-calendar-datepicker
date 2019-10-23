@@ -30,11 +30,12 @@ describe('Month Selection', () => {
   });
 
   test('renders all months', () => {
-    const { monthsChildren, rerender, monthSelector } = renderMonthSelector();
+    const { monthsChildren, rerender, monthSelector, monthButton } = renderMonthSelector();
     const gregorianMonthTexts = monthsChildren.map(child => child.textContent);
 
     expect(gregorianMonthTexts).toEqual(GREGORIAN_MONTHS);
     rerender(<Calendar isPersian />);
+    fireEvent.click(monthButton);
     const persianMonthTexts = Array.from(monthSelector.children).map(child => child.textContent);
 
     expect(persianMonthTexts).toHaveLength(12);

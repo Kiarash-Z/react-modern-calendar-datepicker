@@ -31,15 +31,21 @@ describe('DatePicker Visibility', () => {
   });
 
   test('aligns according to window visible boundaries', () => {
-    const { getByTestId } = render(<DatePicker />);
+    const { getByTestId, rerender } = render(<DatePicker />);
     const calendarContainer = getByTestId('calendar-container');
     const input = getByTestId('datepicker-input');
+    // TODO: complete test (https://github.com/testing-library/dom-testing-library/issues/387)
 
-    const elementBoundaries = { left: 50, width: 100 };
-    calendarContainer.getBoundingClientRect = jest.fn(() => elementBoundaries);
+    // overflow from right
+    calendarContainer.getBoundingClientRect = jest.fn(() => ({ left: 50, width: 100 }));
     Object.defineProperty(document.documentElement, 'clientWidth', { value: 100 });
     fireEvent.focus(input);
-    // TODO: complete test (https://github.com/testing-library/dom-testing-library/issues/387)
+
+    // overflow from left
+    fireEvent.blur(input);
+    calendarContainer.getBoundingClientRect = jest.fn(() => ({ left: -50, width: 100 }));
+    rerender(<DatePicker />);
+    fireEvent.focus(input);
   });
 
   test('closes calendar on single day selection', () => {
