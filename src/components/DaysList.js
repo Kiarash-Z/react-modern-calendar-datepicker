@@ -87,10 +87,19 @@ const DaysList = ({
   };
 
   const handleDayClick = day => {
-    const valueType = getValueType(value);
-    if (valueType === TYPE_SINGLE_DATE) onChange(day);
-    else if (valueType === TYPE_RANGE) onChange(getDayRangeValue(day));
-    else if (valueType === TYPE_MUTLI_DATE) onChange(getMultiDateValue(day));
+    const getNewValue = () => {
+      const valueType = getValueType(value);
+      switch (valueType) {
+        case TYPE_SINGLE_DATE:
+          return day;
+        case TYPE_RANGE:
+          return getDayRangeValue(day);
+        case TYPE_MUTLI_DATE:
+          return getMultiDateValue(day);
+      }
+    };
+    const newValue = getNewValue();
+    onChange(newValue);
   };
 
   const isSingleDateSelected = day => {

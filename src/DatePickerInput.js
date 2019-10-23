@@ -50,18 +50,23 @@ const DatePickerInput = React.forwardRef(
     };
 
     const getMultiDateValue = () => {
-      return value.map(date => getLanguageDigits(date.day)).join(', ');
+      return value.map(date => getLanguageDigits(date.day)).join(`${isPersian ? '،' : ','} `);
     };
 
     const getValue = () => {
       if (formatInputText()) return formatInputText();
       const valueType = getValueType(value);
-      if (valueType === TYPE_SINGLE_DATE) return getSingleDayValue();
-      if (valueType === TYPE_RANGE) return getDayRangeValue();
-      if (valueType === TYPE_MUTLI_DATE) return getMultiDateValue();
+      switch (valueType) {
+        case TYPE_SINGLE_DATE:
+          return getSingleDayValue();
+        case TYPE_RANGE:
+          return getDayRangeValue();
+        case TYPE_MUTLI_DATE:
+          return getMultiDateValue();
+      }
     };
 
-    const placeholderValue = inputPlaceholder || (isPersian ? 'انتخاب' : 'Select');
+    const placeholderValue = inputPlaceholder || (isPersian ? 'انتخاب...' : 'Select...');
 
     const render = () => {
       return (
@@ -74,7 +79,7 @@ const DatePickerInput = React.forwardRef(
             onBlur={onBlur}
             value={getValue()}
             placeholder={placeholderValue}
-            className={`DatePicker__input ${inputClassName}`}
+            className={`DatePicker__input${isPersian ? ' -persian' : ''} ${inputClassName}`}
             aria-label={placeholderValue}
           />
         )

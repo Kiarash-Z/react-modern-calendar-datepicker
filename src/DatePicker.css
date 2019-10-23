@@ -35,6 +35,10 @@
   font-size: 12px;
 }
 
+.DatePicker__input.-persian {
+  direction: rtl;
+}
+
 .DatePicker__input::placeholder {
   color: #979797;
 }
