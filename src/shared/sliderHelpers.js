@@ -10,7 +10,6 @@ const getSlideDate = ({ parent, isInitialActiveChild, activeDate, monthChangeDir
 const animateContent = ({ parent, direction }) => {
   const wrapperChildren = Array.from(parent.children);
   const shownItem = wrapperChildren.find(child => child.classList.contains('-shown'));
-  if (!shownItem) return; // prevent simultaneous animations
   const hiddenItem = wrapperChildren.find(child => child !== shownItem);
   const baseClass = shownItem.classList[0];
   const isNextMonth = direction === 'NEXT';

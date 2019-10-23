@@ -4,6 +4,7 @@ import {
   isSameDay,
   getDateAccordingToMonth,
   getValueType,
+  toExtendedDay,
 } from '../src/shared/generalUtils';
 import {
   PERSIAN_MONTHS,
@@ -36,6 +37,14 @@ describe('Utility Functions', () => {
       expect(isSameDay(day1, day2)).toBe(true);
       expect(isSameDay(day1, day3)).toBe(false);
       expect(isSameDay(null, day3)).toBe(false);
+    });
+
+    test('transforms a date object into an array', () => {
+      const date = { year: 2019, month: 10, day: 1 };
+      const extendedDate = toExtendedDay(date);
+      expect(extendedDate[0]).toBe(date.year);
+      expect(extendedDate[1]).toBe(date.month);
+      expect(extendedDate[2]).toBe(date.day);
     });
 
     test('indicates the value type', () => {
@@ -100,16 +109,24 @@ describe('Utility Functions', () => {
 
     test('returns the first weekday of the passed month', () => {
       const persianDate = { year: 1398, month: 1, day: 1 };
+      const persianMonthStartingWithSaturday = { year: 1398, month: 4, day: 1 };
       const gregorianDate = { year: 2019, month: 9, day: 1 };
       expect(persianUtils.getMonthFirstWeekday(persianDate)).toBe(5);
       expect(gregorianUtils.getMonthFirstWeekday(gregorianDate)).toBe(0);
+      expect(persianUtils.getMonthFirstWeekday(persianMonthStartingWithSaturday)).toBe(0);
     });
 
     test('returns whether a day is before another', () => {
-      const day1 = { year: 2001, month: 1, day: 1 };
-      const day2 = { year: 2001, month: 1, day: 2 };
-      expect(gregorianUtils.isBeforeDate(day1, day2)).toBe(true);
-      expect(gregorianUtils.isBeforeDate(day2, day1)).toBe(false);
+      const gregorianDay1 = { year: 2001, month: 1, day: 1 };
+      const gregorianDay2 = { year: 2001, month: 1, day: 2 };
+
+      expect(gregorianUtils.isBeforeDate(gregorianDay1, gregorianDay2)).toBe(true);
+      expect(gregorianUtils.isBeforeDate(gregorianDay2, gregorianDay1)).toBe(false);
+
+      const persianDay1 = { year: 1398, month: 8, day: 1 };
+      const persianDay2 = { year: 1398, month: 8, day: 2 };
+      expect(persianUtils.isBeforeDate(persianDay1, persianDay2)).toBe(true);
+      expect(persianUtils.isBeforeDate(persianDay2, persianDay1)).toBe(false);
     });
 
     test('returns if a day is in a range', () => {

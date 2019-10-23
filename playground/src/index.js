@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 
 const App = () => {
   const [selectedDay, setValue] = useState(null);
-  return <Calendar value={selectedDay} onChange={setValue} shouldHighlightWeekends />;
+  return <Calendar isPersian value={selectedDay} onChange={setValue} shouldHighlightWeekends />;
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));
