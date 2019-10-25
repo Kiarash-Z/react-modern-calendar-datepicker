@@ -1,5 +1,5 @@
 import React from 'react';
-import { utils } from '../../lib';
+import { utils } from 'react-modern-calendar-datepicker';
 import Docs from '../../containers/docs';
 
 import { Code } from '../../components';

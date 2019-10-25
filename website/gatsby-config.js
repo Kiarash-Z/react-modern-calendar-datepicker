@@ -5,7 +5,7 @@ module.exports = {
     author: `Kiarash Zarinmehr`,
     version: `1.0.0`,
   },
-  pathPrefix: `/react-persian-calendar-date-picker`,
+  pathPrefix: `/react-modern-calendar-datepicker`,
   plugins: [
     `gatsby-plugin-react-helmet`,
     {

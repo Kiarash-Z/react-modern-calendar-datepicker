@@ -1,4 +1,4 @@
-import { utils } from "./lib";
+import { utils } from "react-modern-calendar-datepicker";
 
 export const getRandomMonthDate = () => {
   const randomNumber = Math.floor(Math.random() * 10) + 9; // random num between 9 and 18

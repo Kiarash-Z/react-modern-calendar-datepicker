@@ -21,7 +21,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
-    "react-persian-calendar-date-picker": "1.1.5",
+    "react-modern-calendar-datepicker": "^1.0.0",
     "shortid": "^2.2.14"
   },
   "devDependencies": {
@@ -41,7 +41,8 @@
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
-    "lintWrite": "prettier --write \"./src/**/*.js\""
+    "lintWrite": "prettier --write \"./src/**/*.js\"",
+    "clean": "gatsby clean"
   },
   "repository": {
     "type": "git",
