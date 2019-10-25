@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar } from 'react-persian-calendar-date-picker';
+import { Calendar } from '../../lib';
 
 import Docs from '../../containers/docs';
 import { Code } from '../../components';
@@ -9,7 +9,7 @@ const DefaultValues = () => {
 
   return (
     <Docs title="Responsive Guide">
-      <p className="Docs__paragraph">
+      <p>
         By default, the calendar element has a fixed size. If you want to use a larger/smaller
         calendar, you need to change the <code className="custom-code">font-size</code> of it!
         Because of the usage of CSS relative units in calendar styles, all the children of it will
@@ -22,16 +22,17 @@ const DefaultValues = () => {
         <Code language="javascript">
           {`
 import React, { useState } from "react";
-import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import { Calendar } from "react-persian-calendar-date-picker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
 
 const App = () => {
   const [selectedDay, setSelectedDay] = useState(null);
   return (
     <Calendar
-      selectedDay={selectedDay}
+      value={selectedDay}
       onChange={setSelectedDay}
       calendarClassName="responsive-calendar" // added this
+      shouldHighlightWeekends
     />
   );
 };
@@ -41,13 +42,14 @@ export default App;
           `}
         </Code>
         <Calendar
-          calendarClassName="persianFontWrapper responsive-calendar"
-          selectedDay={datePicker1Value}
+          calendarClassName="fontWrapper responsive-calendar"
+          value={datePicker1Value}
           onChange={setDatePicker1Value}
+          shouldHighlightWeekends
         />
       </div>
 
-      <p className="Docs__paragraph">
+      <p>
         Keep in mind to use <code className="custom-code">px</code> as your unit for the font size.
         CSS code:
       </p>

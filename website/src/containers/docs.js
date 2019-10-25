@@ -8,7 +8,7 @@ const Docs = ({ title, children }) => {
   return (
     <Layout>
       <SEO
-        title={`${title} - react-persian-calendar-date-picker`}
+        title={`${title} - react-modern-calendar-datepicker`}
         keywords={[title]}
       />
       <div className="Docs">

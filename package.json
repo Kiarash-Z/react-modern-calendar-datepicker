@@ -1,43 +1,48 @@
 {
-  "name": "react-persian-calendar-date-picker",
-  "version": "1.1.6",
-  "description": "A lightweight, customizable, Persian date picker for React",
+  "name": "react-modern-calendar-datepicker",
+  "version": "1.0.0",
+  "description": "A modern, beautiful, customizable date picker for React",
   "main": "lib/index.js",
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
-    "lint": "eslint src",
-    "lintWrite": "prettier --write \"./src/**/*.js\"",
-    "test": "jest ./test",
+    "lint": "concurrently \"eslint src\" \"prettier --check \"./src/**/*.css\"\" ",
+    "lint:write": "prettier --write \"./src/**/*.js\"  \"./src/**/*.css\"",
+    "test": "jest ./test --coverage",
+    "test:watch": "jest ./test --watch",
     "clean": "rimraf lib",
     "build": "yarn clean && cross-env NODE_ENV=production babel src -d lib --copy-files",
-    "size": "size-limit",
+    "size": "yarn build && size-limit",
     "checkAll": "yarn size && yarn lint && yarn test"
   },
   "files": [
     "lib"
   ],
   "author": "Kiarash Zarinmehr",
-  "homepage": "https://kiarash-z.github.io/react-persian-calendar-date-picker",
+  "homepage": "https://kiarash-z.github.io/react-modern-calendar-datepicker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kiarash-Z/react-persian-calendar-date-picker.git"
+    "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker.git"
   },
   "bugs": {
-    "url": "https://github.com/Kiarash-Z/react-persian-calendar-date-picker/issues"
+    "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker/issues"
   },
   "license": "MIT",
   "keywords": [
     "react",
-    "persian",
+    "modern",
     "calendar",
     "datepicker",
-    "datepicker-range",
-    "datepicker-component"
+    "datepicker range",
+    "datepicker component",
+    "beautiful",
+    "animated",
+    "javascript",
+    "persian"
   ],
   "size-limit": [
     {
       "path": "./lib/index.js",
-      "limit": "8 KB"
+      "limit": "9 KB"
     }
   ],
   "dependencies": {
@@ -54,8 +59,11 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
+    "@testing-library/jest-dom": "^4.1.1",
+    "@testing-library/react": "^9.3.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
+    "concurrently": "^5.0.0",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "eslint": "^5.16.0",
@@ -72,8 +80,8 @@
     "jest": "^24.7.1",
     "lint-staged": ">=8",
     "prettier": "^1.16.4",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "rimraf": "^2.6.3",
     "size-limit": "^1.0.1",
     "style-loader": "^0.23.1",

@@ -31,9 +31,13 @@ button {
   font-family: inherit;
 }
 
-.persianFontWrapper {
-  font-family: 'iranyekan';
+.fontWrapper {
+  font-family: 'Open Sans';
   font-size: 10px
+}
+
+.fontWrapper.-persian {
+  font-family: 'iranyekan';
 }
 
 .responsive-calendar {
@@ -66,7 +70,7 @@ button {
 
 .-aboveAll {
   position: relative;
-  z-index: 9;
+  z-index: 11;
 }
 
 .custom-code {
@@ -88,13 +92,13 @@ button {
     font-size: 87.5%; /* 14 px */
   }
 
-  .persianFontWrapper {
+  .fontWrapper {
     font-size: 12px;
   }
 }
 
 @media (max-width: 1550px) {
-  .persianFontWrapper {
+  .fontWrapper {
     font-size: 9px;
   }
 }
@@ -105,7 +109,7 @@ button {
     font-size: 56.25%; /* 9 px */
   }
 
-  .persianFontWrapper {
+  .fontWrapper {
     font-size: 8px;
   }
 }

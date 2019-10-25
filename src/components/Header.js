@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 
-import { isBeforeDate, isSameDay, getMonthName, toPersianNumber } from '../shared/utils';
+import utils from '../shared/localeUtils';
+import { isSameDay } from '../shared/generalUtils';
 import { getSlideDate, animateContent, handleSlideAnimationEnd } from '../shared/sliderHelpers';
 
 const Header = ({
@@ -13,9 +14,14 @@ const Header = ({
   onYearSelect,
   isMonthSelectorOpen,
   isYearSelectorOpen,
+  isPersian,
 }) => {
   const headerElement = useRef(null);
   const monthYearWrapperElement = useRef(null);
+
+  const { getMonthName, isBeforeDate, getLanguageDigits } = useMemo(() => utils(isPersian), [
+    isPersian,
+  ]);
 
   useEffect(() => {
     if (!monthChangeDirection) return;
@@ -41,11 +47,14 @@ const Header = ({
     const primaryElement = hasMonthSelectorToggled ? monthText : yearText;
     const secondaryElement = hasMonthSelectorToggled ? yearText : monthText;
 
-    const translateXDirection = hasMonthSelectorToggled ? -1 : 1;
+    let translateXDirection = hasMonthSelectorToggled ? 1 : -1;
+    if (isPersian) translateXDirection *= -1;
     const scale = !isOpen ? 1 : 1.05;
     const translateX = !isOpen ? 0 : `${(translateXDirection * secondaryElement.offsetWidth) / 2}`;
     secondaryElement.style.transform = '';
-    primaryElement.style.transform = `scale(${scale}) translateX(${translateX}px)`;
+    primaryElement.style.transform = `scale(${scale}) ${
+      translateX ? `translateX(${translateX}px)` : ''
+    }`;
     primaryElement.classList.toggle('-activeBackground');
     secondaryElement.classList.toggle('-hidden');
     arrows.forEach(arrow => {
@@ -60,9 +69,9 @@ const Header = ({
       activeDate,
       parent: monthYearWrapperElement.current,
     });
-    const year = toPersianNumber(date.year);
+    const year = getLanguageDigits(date.year);
     const month = getMonthName(date.month);
-    return `${month} ${year}`;
+    return { month, year };
   };
 
   const isNextMonthArrowDisabled =
@@ -73,21 +82,33 @@ const Header = ({
     (isBeforeDate({ ...activeDate, day: 1 }, minimumDate) ||
       isSameDay(minimumDate, { ...activeDate, day: 1 }));
 
+  const onMonthChangeTrigger = direction => {
+    const isMonthChanging = Array.from(monthYearWrapperElement.current.children).some(child =>
+      child.classList.contains('-shownAnimated'),
+    );
+    if (isMonthChanging) return;
+    onMonthChange(direction);
+  };
+
   return (
     <div ref={headerElement} className="Calendar__header">
       <button
         tabIndex="-1"
         className="Calendar__monthArrowWrapper -right"
-        onClick={() => onMonthChange('PREVIOUS')}
-        aria-label="ماه قبل"
+        onClick={() => {
+          onMonthChangeTrigger('PREVIOUS');
+        }}
+        aria-label={isPersian ? 'ماه قبل' : 'previous month'}
         type="button"
         disabled={isPreviousMonthArrowDisabled}
       >
-        <span className="Calendar__monthArrow" alt="فلش راست">
-          &nbsp;
-        </span>
+        <span className="Calendar__monthArrow">&nbsp;</span>
       </button>
-      <div className="Calendar__monthYearContainer" ref={monthYearWrapperElement}>
+      <div
+        className="Calendar__monthYearContainer"
+        ref={monthYearWrapperElement}
+        data-testid="month-year-container"
+      >
         &nbsp;
         <div onAnimationEnd={handleSlideAnimationEnd} className="Calendar__monthYear -shown">
           <button
@@ -96,10 +117,10 @@ const Header = ({
             type="button"
             className="Calendar__monthText"
           >
-            {getMonthYearText(true).split(' ')[0]}
+            {getMonthYearText(true).month}
           </button>
           <button tabIndex="-1" onClick={onYearSelect} type="button" className="Calendar__yearText">
-            {getMonthYearText(true).split(' ')[1]}
+            {getMonthYearText(true).year}
           </button>
         </div>
         <div onAnimationEnd={handleSlideAnimationEnd} className="Calendar__monthYear -hiddenNext">
@@ -109,24 +130,24 @@ const Header = ({
             type="button"
             className="Calendar__monthText"
           >
-            {getMonthYearText(false).split(' ')[0]}
+            {getMonthYearText(false).month}
           </button>
           <button tabIndex="-1" onClick={onYearSelect} type="button" className="Calendar__yearText">
-            {getMonthYearText(false).split(' ')[1]}
+            {getMonthYearText(false).year}
           </button>
         </div>
       </div>
       <button
         tabIndex="-1"
         className="Calendar__monthArrowWrapper -left"
-        onClick={() => onMonthChange('NEXT')}
-        aria-label="ماه بعد"
+        onClick={() => {
+          onMonthChangeTrigger('NEXT');
+        }}
+        aria-label={isPersian ? 'ماه بعد' : 'next month'}
         type="button"
         disabled={isNextMonthArrowDisabled}
       >
-        <span className="Calendar__monthArrow" alt="فلش چپ">
-          &nbsp;
-        </span>
+        <span className="Calendar__monthArrow">&nbsp;</span>
       </button>
     </div>
   );

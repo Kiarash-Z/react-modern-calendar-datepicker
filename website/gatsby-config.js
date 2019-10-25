@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `React Persian Calendar Date Picker`,
-    description: `A lightweight, customizable, Persian date picker for React`,
+    title: `React Modern Calendar Date Picker`,
+    description: `A modern, beautiful, customizable date picker for React`,
     author: `Kiarash Zarinmehr`,
-    version: `1.1.6`,
+    version: `1.0.0`,
   },
   pathPrefix: `/react-persian-calendar-date-picker`,
   plugins: [

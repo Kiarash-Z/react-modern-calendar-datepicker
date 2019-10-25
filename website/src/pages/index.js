@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import DatePicker, { Calendar } from 'react-persian-calendar-date-picker';
 import { Link } from 'gatsby';
+import DatePicker, { Calendar } from '../lib';
 
 import { ReactComponent as Logo } from '../images/logo.svg';
 import { ReactComponent as LogoBackground } from '../images/logo-background.svg';
@@ -12,64 +12,90 @@ import { Layout, SEO } from '../components';
 
 const SELECTED_DAY_RANGE_1 = {
   from: {
-    year: 1398,
-    month: 1,
+    year: 2019,
+    month: 3,
     day: 12,
   },
   to: {
-    year: 1398,
-    month: 1,
+    year: 2019,
+    month: 3,
     day: 21,
   },
 };
 
 const SELECTED_DAY_RANGE_2 = {
   from: {
-    year: 1398,
-    month: 1,
+    year: 2019,
+    month: 3,
     day: 6,
   },
   to: {
-    year: 1398,
-    month: 1,
+    year: 2019,
+    month: 3,
     day: 15,
   },
 };
 
+const SELECTED_MULTIPLE_DAYS = [
+  {
+    year: 2019,
+    month: 10,
+    day: 2,
+  },
+  {
+    year: 2019,
+    month: 10,
+    day: 10,
+  },
+  {
+    year: 2019,
+    month: 10,
+    day: 15,
+  },
+  {
+    year: 2019,
+    month: 10,
+    day: 30,
+  },
+]
+
 const IndexPage = () => {
   const [selectedDay1, setValue1] = useState(null);
-  const [selectedDay2, setValue2] = useState({ year: 1380, month: 7, day: 26 });
-  const [selectedDayRange1, setSelectedDayRange1] = useState(
-    SELECTED_DAY_RANGE_1,
-  );
-  const [selectedDayRange2, setSelectedDayRange2] = useState(
-    SELECTED_DAY_RANGE_2,
-  );
+  const [selectedDay2, setValue2] = useState({ year: 2001, month: 10, day: 18 });
+  const [selectedDay3, setValue3] = useState(SELECTED_MULTIPLE_DAYS);
+  const [selectedDay4, setValue4] = useState(null);
+  const [selectedDayRange1, setSelectedDayRange1] = useState(SELECTED_DAY_RANGE_1);
+  const [selectedDayRange2, setSelectedDayRange2] = useState(SELECTED_DAY_RANGE_2);
   return (
     <Layout>
       <SEO
         title="Home"
         keywords={[
-          'persian date picker',
-          'datepicker',
-          'application',
-          'react',
-          'persian',
+          "react",
+          "modern",
+          "calendar",
+          "datepicker",
+          "datepicker range",
+          "datepicker component",
+          "beautiful",
+          "animated",
+          "javascript",
+          "persian"
         ]}
       />
       <div className="hero">
         <Logo className="hero__logo" />
         <LogoBackground className="hero__logoBackground" />
-        <h1 className="hero__title">react-persian-calendar-date-picker</h1>
+        <h1 className="hero__title">react-modern-calendar-datepicker</h1>
         <h2 className="hero__titleSecondary">
-          A lightweight, customizable, Persian date picker for React
+          A modern, beautiful, customizable date picker for React
         </h2>
         <div className="hero__actionContainer">
           <Link className="hero__actionButton -primary" to="/docs/getting-started">
             Get Started
           </Link>
           <a
-            href="https://github.com/Kiarash-Z/react-persian-calendar-date-picker"
+            href="https://github.com/Kiarash-Z/react-modern-calendar-datepicker"
             rel="noopener noreferrer"
             target="_blank"
             className="hero__actionButton -social"
@@ -89,10 +115,10 @@ const IndexPage = () => {
               selectable.
             </p>
             <DatePicker
-              selectedDay={selectedDay1}
+              value={selectedDay1}
               onChange={setValue1}
-              wrapperClassName="persianFontWrapper -aboveAll"
-              calendarClassName="persianFontWrapper"
+              wrapperClassName="fontWrapper -aboveAll"
+              calendarClassName="fontWrapper"
             />
           </div>
         </div>
@@ -107,8 +133,8 @@ const IndexPage = () => {
               itself.
             </p>
             <Calendar
-              calendarClassName="persianFontWrapper"
-              selectedDay={selectedDay2}
+              calendarClassName="fontWrapper"
+              value={selectedDay2}
               onChange={setValue2}
             />
           </div>
@@ -121,10 +147,9 @@ const IndexPage = () => {
               Select a range of days by specifying a starting and an ending day.
             </p>
             <Calendar
-              selectedDayRange={selectedDayRange1}
+              value={selectedDayRange1}
               onChange={setSelectedDayRange1}
-              calendarClassName="persianFontWrapper"
-              isDayRange
+              calendarClassName="fontWrapper"
             />
           </div>
         </div>
@@ -139,7 +164,7 @@ const IndexPage = () => {
               you wish.
             </p>
             <Calendar
-              selectedDayRange={selectedDayRange2}
+              value={selectedDayRange2}
               onChange={setSelectedDayRange2}
               colorPrimary="#0fbcf9"
               colorPrimaryLight="rgba(75, 207, 250, 0.4)"
@@ -147,8 +172,43 @@ const IndexPage = () => {
               calendarRangeBetweenClassName="exampleItem__customRangeCalendar"
               calendarRangeStartClassName="exampleItem__customRangeCalendar"
               calendarRangeEndClassName="exampleItem__customRangeCalendar"
-              calendarClassName="persianFontWrapper"
-              isDayRange
+              shouldHighlightWeekends
+              calendarClassName="fontWrapper"
+            />
+          </div>
+        </div>
+        <div className="exampleItem">
+          <div className="exampleItem__subContainer">
+            <span className="exampleItem__title">
+              Multiple Date Selection
+            </span>
+            <p className="exampleItem__description">
+              Select multiple dates by using the simple and rich API of the component.
+            </p>
+            <Calendar
+              value={selectedDay3}
+              onChange={setValue3}
+              shouldHighlightWeekends
+              wrapperClassName="fontWrapper"
+              calendarClassName="fontWrapper"
+            />
+          </div>
+        </div>
+
+        <div className="exampleItem">
+          <div className="exampleItem__subContainer">
+            <span className="exampleItem__title">
+              Supports Persian Calendar
+            </span>
+            <p className="exampleItem__description">
+              Use all the features of the calendar existing in Gregorian mode, in Persian!
+            </p>
+            <Calendar
+              value={selectedDay4}
+              onChange={setValue4}
+              calendarClassName="fontWrapper -persian"
+              shouldHighlightWeekends
+              isPersian
             />
           </div>
         </div>

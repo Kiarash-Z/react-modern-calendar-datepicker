@@ -55,7 +55,7 @@ function SEO({ description, lang, meta, keywords, title }) {
         },
         {
           property: `og:url`,
-          content: 'https://kiarash-z.github.io/react-persian-calendar-date-picker',
+          content: 'https://kiarash-z.github.io/react-modern-calendar-datepicker',
         },
         {
           property: `og:type`,

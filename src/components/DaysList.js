@@ -1,40 +1,45 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { getSlideDate, handleSlideAnimationEnd, animateContent } from '../shared/sliderHelpers';
+import utils from '../shared/localeUtils';
 import {
   deepCloneObject,
-  isBeforeDate,
-  checkDayInDayRange,
   isSameDay,
   createUniqueRange,
-  getMonthFirstWeekday,
-  getMonthLength,
-  getToday,
-  toPersianNumber,
-} from '../shared/utils';
-import { DAY_SHAPE } from '../shared/constants';
+  getValueType,
+} from '../shared/generalUtils';
+import { DAY_SHAPE, TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from '../shared/constants';
 
 const DaysList = ({
   activeDate,
+  value,
   monthChangeDirection,
   onSlideChange,
-  isDayRange,
-  selectedDayRange,
   disabledDays,
   onDisabledDayError,
-  selectedDay,
   minimumDate,
   maximumDate,
   onChange,
+  isPersian,
   calendarTodayClassName,
   calendarSelectedDayClassName,
   calendarRangeStartClassName,
   calendarRangeEndClassName,
   calendarRangeBetweenClassName,
+  shouldHighlightWeekends,
 }) => {
   const calendarSectionWrapper = useRef(null);
-  const today = useRef(getToday());
+
+  const {
+    getToday,
+    isBeforeDate,
+    checkDayInDayRange,
+    getMonthFirstWeekday,
+    getMonthLength,
+    getLanguageDigits,
+  } = useMemo(() => utils(isPersian), [isPersian]);
+  const today = getToday();
 
   useEffect(() => {
     if (!monthChangeDirection) return;
@@ -45,7 +50,7 @@ const DaysList = ({
   }, [monthChangeDirection]);
 
   const getDayRangeValue = day => {
-    const clonedDayRange = deepCloneObject(selectedDayRange);
+    const clonedDayRange = deepCloneObject(value);
     const dayRangeValue =
       clonedDayRange.from && clonedDayRange.to ? { from: null, to: null } : clonedDayRange;
     const dayRangeProp = !dayRangeValue.from ? 'from' : 'to';
@@ -68,32 +73,57 @@ const DaysList = ({
     const includingDisabledDay = disabledDays.find(checkIncludingDisabledDay);
     if (includingDisabledDay) {
       onDisabledDayError(includingDisabledDay);
-      return selectedDayRange;
+      return value;
     }
 
     return dayRangeValue;
   };
 
+  const getMultiDateValue = day => {
+    const isAlreadyExisting = value.some(valueDay => isSameDay(valueDay, day));
+    const addedToValue = [...value, day];
+    const removedFromValue = value.filter(valueDay => !isSameDay(valueDay, day));
+    return isAlreadyExisting ? removedFromValue : addedToValue;
+  };
+
   const handleDayClick = day => {
-    const newDayValue = isDayRange ? getDayRangeValue(day) : day;
-    onChange(newDayValue);
+    const getNewValue = () => {
+      const valueType = getValueType(value);
+      switch (valueType) {
+        case TYPE_SINGLE_DATE:
+          return day;
+        case TYPE_RANGE:
+          return getDayRangeValue(day);
+        case TYPE_MUTLI_DATE:
+          return getMultiDateValue(day);
+      }
+    };
+    const newValue = getNewValue();
+    onChange(newValue);
+  };
+
+  const isSingleDateSelected = day => {
+    const valueType = getValueType(value);
+    if (valueType === TYPE_SINGLE_DATE) return isSameDay(day, value);
+    if (valueType === TYPE_MUTLI_DATE) return value.some(valueDay => isSameDay(valueDay, day));
   };
 
   const getDayClassNames = dayItem => {
-    const isToday = isSameDay(dayItem, today.current);
-    const isSelected = selectedDay ? isSameDay(dayItem, selectedDay) : false;
-    const { from: startingDay, to: endingDay } = selectedDayRange;
+    const isToday = isSameDay(dayItem, today);
+    const isSelected = isSingleDateSelected(dayItem);
+    const { from: startingDay, to: endingDay } = value || {};
     const isStartedDayRange = isSameDay(dayItem, startingDay);
     const isEndingDayRange = isSameDay(dayItem, endingDay);
     const isWithinRange = checkDayInDayRange({ day: dayItem, from: startingDay, to: endingDay });
     const classNames = ''
       .concat(isToday && !isSelected ? ` -today ${calendarTodayClassName}` : '')
       .concat(!dayItem.isStandard ? ' -blank' : '')
+      .concat(dayItem.isWeekend && shouldHighlightWeekends ? ' -weekend' : '')
       .concat(isSelected ? ` -selected ${calendarSelectedDayClassName}` : '')
       .concat(isStartedDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
       .concat(isEndingDayRange ? ` -selectedEnd ${calendarRangeEndClassName}` : '')
       .concat(isWithinRange ? ` -selectedBetween ${calendarRangeBetweenClassName}` : '')
-      .concat(dayItem.isDisabled ? '-disabled' : '');
+      .concat(dayItem.isDisabled ? ' -disabled' : '');
     return classNames;
   };
 
@@ -123,7 +153,7 @@ const DaysList = ({
       parent: calendarSectionWrapper.current,
     });
     const allDays = getViewMonthDays(date);
-    return allDays.map(({ id, value: day, month, year, isStandard }) => {
+    return allDays.map(({ id, value: day, month, year, isStandard }, index) => {
       const dayItem = { day, month, year };
       const isInDisabledDaysRange = disabledDays.some(disabledDay =>
         isSameDay(dayItem, disabledDay),
@@ -132,12 +162,13 @@ const DaysList = ({
       const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
       const isNotInValidRange = isStandard && (isBeforeMinimumDate || isAfterMaximumDate);
       const isDisabled = isInDisabledDaysRange || isNotInValidRange;
-      const additionalClass = getDayClassNames({ ...dayItem, isStandard, isDisabled });
+      const isWeekend = (!isPersian && index % 7 === 0) || index % 7 === 6;
+      const additionalClass = getDayClassNames({ ...dayItem, isWeekend, isStandard, isDisabled });
       return (
         <button
           tabIndex="-1"
           key={id}
-          className={`Calendar__day ${additionalClass}`}
+          className={`Calendar__day ${isPersian ? '-persian' : '-gregorian'}${additionalClass}`}
           onClick={() => {
             if (isDisabled) {
               onDisabledDayError(dayItem); // good for showing error messages
@@ -148,14 +179,18 @@ const DaysList = ({
           disabled={!isStandard}
           type="button"
         >
-          {toPersianNumber(day)}
+          {!isStandard ? '' : getLanguageDigits(day)}
         </button>
       );
     });
   };
 
   return (
-    <div ref={calendarSectionWrapper} className="Calendar__sectionWrapper">
+    <div
+      ref={calendarSectionWrapper}
+      className="Calendar__sectionWrapper"
+      data-testid="days-section-wrapper"
+    >
       <div
         onAnimationEnd={e => {
           handleSlideAnimationEnd(e);
@@ -187,6 +222,7 @@ DaysList.propTypes = {
   calendarRangeStartClassName: PropTypes.string,
   calendarRangeBetweenClassName: PropTypes.string,
   calendarRangeEndClassName: PropTypes.string,
+  shouldHighlightWeekends: PropTypes.bool,
 };
 
 DaysList.defaultProps = {
@@ -198,6 +234,7 @@ DaysList.defaultProps = {
   calendarRangeStartClassName: '',
   calendarRangeBetweenClassName: '',
   calendarRangeEndClassName: '',
+  shouldHighlightWeekends: false,
 };
 
 export default DaysList;

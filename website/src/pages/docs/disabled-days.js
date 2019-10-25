@@ -1,61 +1,61 @@
 import React, { useState } from 'react';
-import { Calendar } from 'react-persian-calendar-date-picker';
+import { Calendar } from '../../lib';
 
 import Docs from '../../containers/docs';
 import { Code } from '../../components';
 
 const DisabledDays = () => {
-  const [datePicker1Value, setDatePicker1Value] = useState({ year: 1398, month: 1, day: 12 });
+  const [datePicker1Value, setDatePicker1Value] = useState({ year: 2019, month: 3, day: 12 });
   const [datePicker2Value, setDatePicker2Value] = useState({
     from: {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 12,
     },
     to: {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 15,
     }
   });
   const disabledDatePicker1Days = [
     {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 20,
     },
     {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 21,
     },
     {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 7,
     }
   ];
   const disabledDatePicker2Days = [
     {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 22,
     },
     {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 25,
     },
     {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 6,
     }
   ];
 
   return (
     <Docs title="Disabled Day(s)">
-      <p className="Docs__paragraph">
+      <p>
         Sometimes, you need to disallow user to select some specific
         days. <code className="custom-code">disabledDays</code> prop
         takes an array of desired disabled days:
@@ -70,7 +70,7 @@ PropTypes.arrayOf(PropTypes.shape({
 }))
         `}
       </Code>
-      <p className="Docs__paragraph">
+      <p>
         By passing disabled days, users won&#39;t be able to select a disabled day
         or include one in a range. At such times, <code className="custom-code">onDisabledDayError</code>
         function will get called, and you can show a message to the users.
@@ -82,30 +82,30 @@ PropTypes.arrayOf(PropTypes.shape({
         <Code language="javascript">
           {`
 import React, { useState } from "react";
-import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import { Calendar } from "react-persian-calendar-date-picker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
 
 const App = () => {
   const defaultValue = {
-    year: 1398,
-    month: 1,
+    year: 2019,
+    month: 3,
     day: 12,
   };
 
   const disabledDays = [
     {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 20,
     },
     {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 21,
     },
     {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 7,
     }
   ];
@@ -118,10 +118,11 @@ const App = () => {
 
   return (
     <Calendar
-      selectedDay={selectedDay}
+      value={selectedDay}
       onChange={setSelectedDay}
       disabledDays={disabledDays} // here we pass them
       onDisabledDayError={handleDisabledSelect} // handle error
+      shouldHighlightWeekends
     />
   );
 };
@@ -131,10 +132,11 @@ export default App;
           `}
         </Code>
         <Calendar
-          calendarClassName="persianFontWrapper"
-          selectedDay={datePicker1Value}
+          calendarClassName="fontWrapper"
+          value={datePicker1Value}
           onChange={setDatePicker1Value}
           disabledDays={disabledDatePicker1Days}
+          shouldHighlightWeekends
         />
       </div>
 
@@ -142,35 +144,35 @@ export default App;
         <Code language="javascript">
           {`
 import React, { useState } from "react";
-import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import { Calendar } from "react-persian-calendar-date-picker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
 
 const App = () => {
   const defaultFrom = {
-    year: 1398,
-    month: 1,
+    year: 2019,
+    month: 3,
     day: 12,
   };
   const defaultTo = {
-    year: 1398,
-    month: 1,
+    year: 2019,
+    month: 3,
     day: 15,
   };
 
   const disabledDays = [
     {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 22,
     },
     {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 25,
     },
     {
-      year: 1398,
-      month: 1,
+      year: 2019,
+      month: 3,
       day: 6,
     }
   ];
@@ -186,11 +188,11 @@ const App = () => {
 
   return (
     <Calendar
-      selectedDayRange={selectedDayRange}
+      value={selectedDayRange}
       onChange={setSelectedDayRange}
       disabledDays={disabledDays} // here we pass them
       onDisabledDayError={handleDisabledSelect} // handle error
-      isDayRange
+      shouldHighlightWeekends
     />
   );
 };
@@ -200,11 +202,11 @@ export default App;
           `}
         </Code>
         <Calendar
-          calendarClassName="persianFontWrapper"
-          selectedDayRange={datePicker2Value}
+          calendarClassName="fontWrapper"
+          value={datePicker2Value}
           onChange={setDatePicker2Value}
           disabledDays={disabledDatePicker2Days}
-          isDayRange
+          shouldHighlightWeekends
         />
       </div>
     </Docs>

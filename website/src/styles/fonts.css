@@ -44,6 +44,13 @@ This set of fonts are used in this project under the license: GFHUSE
 }
 
 @font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), url('../fonts/osregular.ttf') format('ttf');
+}
+
+@font-face {
   font-family: 'iranyekan';
   font-style: normal;
   font-weight: 400;
