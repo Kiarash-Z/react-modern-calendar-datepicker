@@ -12,7 +12,7 @@ const Navbar = ({ version }) => {
         <Logo className={styles.Navbar__logo} />
         <h1>
           <Link className={styles.Navbar__title} to="/">
-            react-persian-calendar-date-picker
+            react-modern-calendar-datepicker
           </Link>
         </h1>
         <span className={styles.Navbar__version}>v{version}</span>
@@ -24,8 +24,13 @@ const Navbar = ({ version }) => {
           </Link>
         </li>
         <li>
+          <Link className={styles.Navbar__listItem} to="/docs/contribution-guide">
+            Contribution
+          </Link>
+        </li>
+        <li>
           <a
-            href="https://github.com/Kiarash-Z/react-persian-calendar-date-picker"
+            href="https://github.com/Kiarash-Z/react-modern-calendar-datepicker"
             rel="noopener noreferrer"
             target="_blank"
             className={styles.Navbar__listItem}

@@ -33,6 +33,10 @@ export const TUTORIAL_ITEMS = generateConstantId([
     path: '/docs/utilities',
     name: 'Utilities'
   },
+  {
+    path: '/docs/persian-calendar',
+    name: 'Persian Calendar'
+  },
 ])
 
 
@@ -85,18 +89,20 @@ export const PROPS_TABLE_PICKER_ROWS = [
 ];
 
 export const PROPS_TABLE_CALENDAR_ROWS = [
-  ['selectedDay', 'Object', `null`, 'The primary value of the single date picker'],
-  ['isDayRange', 'Boolean', `false`, 'If true, converts the date picker to the range date picker'],
-  ['selectedDayRange', 'Object', `{ from: null, to: null }`, 'The primary value of the range date picker'],
+  ['value', 'Object', `null`, `The value of the date picker. if initial value is null, it's a single date picker. if it's an empty array,
+   then it's a multiple date picker, and if its of shape { from: null, to: null}, then it's a range date picker.`],
   ['onChange', 'Function', `newValue => null`, 'Gets called when value of the picker changes'],
+  ['isPersian', 'Boolean', 'false', `Determines to use Persian calendar`],
   ['minimumDate', 'Object', `null`, 'Specifies the minimum selectable day by user'],
   ['maximumDate', 'Object', `null`, 'Specifies the maximum selectable day by user'],
   ['disabledDays', 'Array', `[]`, `An array of disabled calendar days. Disabled days won't be selectable, and
     they can't be included in a day range. If user tries to select/include them onDisabledDayError will be called`
   ],
   ['onDisabledDayError', 'Function', 'disabledDay => null', 'Gets called when user tries to select/include a disabled day'],
-  ['selectorStartingYear', 'Number', '1300', 'The minimum selectable year when user opens the year selector'],
-  ['selectorEndingYear', 'Number', '1450', 'The maxium selectable year when user opens the year selector'],
+  ['selectorStartingYear', 'Number', 'current year - 100', 'The minimum selectable year when user opens the year selector'],
+  ['selectorEndingYear', 'Number', 'current year + 50', 'The maximum selectable year when user opens the year selector'],
+  ['shouldHighlightWeekends', 'Boolean', 'false', `Determines whether to mark weekend days with red or not. (weekend days are Saturday and Sunday
+  for Gregorian calendar and Friday for Persian calendar)`],
   ['colorPrimary', 'String', '#0eca2d', `The color of selected day in the single date picker and the color of
     range start and range end in range date picker`
   ],

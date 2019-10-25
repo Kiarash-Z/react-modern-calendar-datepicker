@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import DatePicker, { Calendar } from 'react-persian-calendar-date-picker';
 import { Link } from 'gatsby';
+import DatePicker, { Calendar } from '../../lib';
 
 import Docs from '../../containers/docs';
 import { Code } from '../../components';
@@ -12,21 +12,22 @@ const DisabledDays = () => {
   const [datePicker2Value, setDatePicker2Value] = useState(null);
   const [datePicker3Value, setDatePicker3Value] = useState({
     from: {
-      year: 1398,
-      month: 2,
+      year: 2019,
+      month: 4,
       day: 16,
     },
     to: {
-      year: 1398,
-      month: 2,
+      year: 2019,
+      month: 4,
       day: 19,
     }
   });
-  const [datePicker4Value, setDatePicker4Value] = useState(getRandomMonthDate());
+  const randomDate = getRandomMonthDate();
+  const [datePicker4Value, setDatePicker4Value] = useState(randomDate);
 
   return (
     <Docs title="Customization">
-      <p className="Docs__paragraph">
+      <p>
         This package is designed to be customizable. There are a couple of props to
         change the default styles according to your preferences. You
         can customize picker, calendar, and input. For the full list of available
@@ -35,7 +36,7 @@ const DisabledDays = () => {
 
       <h2 className="Docs__titleSecondary">Customized Input</h2>
 
-      <p className="Docs__paragraph">
+      <p>
         Placeholder and the formatted value of input can be set directly by you.
         Moreover, you can set an additional class on the input. If that&#39;s not enough,
         you can render your own input as well. Let&#39;s take a look at a few examples:
@@ -45,24 +46,25 @@ const DisabledDays = () => {
         <Code language="javascript">
           {`
 import React, { useState } from "react";
-import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import DatePicker from "react-persian-calendar-date-picker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import DatePicker from "react-modern-calendar-datepicker";
 
 const App = () => {
   const [selectedDay, setSelectedDay] = useState(null);
 
   const formatInputValue = () => {
     if (!selectedDay) return '';
-    return \`روز \${selectedDay.day}\`;
+    return \`Day: \${selectedDay.day}\`;
   };
 
   return (
     <DatePicker
       selectedDay={selectedDay}
       onChange={setSelectedDay}
-      inputPlaceholder="انتخاب تاریخ" // placeholder
+      inputPlaceholder="Select a date" // placeholder
       formatInputText={formatInputValue} // format value
       inputClassName="my-custom-input" // custom class
+      shouldHighlightWeekends
     />
   );
 };
@@ -73,19 +75,20 @@ export default App;
         </Code>
 
         <DatePicker
-          wrapperClassName="persianFontWrapper -aboveAll"
-          calendarClassName="persianFontWrapper"
-          selectedDay={datePicker1Value}
+          wrapperClassName="fontWrapper -aboveAll"
+          calendarClassName="fontWrapper"
+          value={datePicker1Value}
           onChange={setDatePicker1Value}
-          inputPlaceholder="انتخاب تاریخ"
+          inputPlaceholder="Select a date"
           formatInputText={() => {
             if (!datePicker1Value) return '';
-            return `روز ${datePicker1Value.day}`
+            return `Day: ${datePicker1Value.day}`
           }}
+          shouldHighlightWeekends
         />
       </div>
 
-      <p className="Docs__paragraph">
+      <p>
         You can render your own custom input
         using <code className="custom-code">renderInput</code> prop:
       </p>
@@ -94,8 +97,8 @@ export default App;
         <Code language="javascript">
           {`
 import React, { useState } from "react";
-import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import DatePicker from "react-persian-calendar-date-picker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import DatePicker from "react-modern-calendar-datepicker";
 
 const App = () => {
   const [selectedDay, setSelectedDay] = useState(null);
@@ -107,8 +110,8 @@ const App = () => {
       ref={ref} // necessary
       onFocus={onFocus} // necessary
       onBlur={onBlur} // necessary
-      placeholder="اینپوت کاستوم"
-      value={selectedDay ? selectedDay.day : ''}
+      placeholder="I'm a custom input"
+      value={selectedDay ? \`✅: \${selectedDay.day}\` : ''}
       style={{
         textAlign: 'center',
         padding: '1rem 1.5rem',
@@ -128,6 +131,7 @@ const App = () => {
       selectedDay={selectedDay}
       onChange={setSelectedDay}
       renderInput={renderCustomInput} // render a custom input
+      shouldHighlightWeekends
     />
   );
 };
@@ -138,19 +142,20 @@ export default App;
         </Code>
 
         <DatePicker
-          wrapperClassName="persianFontWrapper -aboveAll"
-          calendarClassName="persianFontWrapper"
-          selectedDay={datePicker2Value}
+          wrapperClassName="fontWrapper -aboveAll"
+          calendarClassName="fontWrapper"
+          value={datePicker2Value}
           onChange={setDatePicker2Value}
+          shouldHighlightWeekends
           renderInput={({ ref, onFocus, onBlur }) => (
             <input
               readOnly
               ref={ref}
               onFocus={onFocus}
               onBlur={onBlur}
-              placeholder="اینپوت کاستوم"
+              placeholder="I'm a custom input"
               className="-customPlaceholderColor"
-              value={datePicker2Value ? datePicker2Value.day : ''}
+              value={datePicker2Value ? `✅: ${datePicker2Value.day}` : ''}
               style={{
                 textAlign: 'center',
                 padding: '1rem 1.5rem',
@@ -168,7 +173,7 @@ export default App;
 
       <h2 className="Docs__titleSecondary">Customized Calendar</h2>
 
-      <p className="Docs__paragraph">
+      <p>
         The calendar has a few more props for customization. The most basic ones
         are <code className="custom-code">colorPrimary</code>, <code className="custom-code">colorPrimaryLight</code>.
         Additional classes&#39; props are available for the calendar itself,
@@ -180,18 +185,18 @@ export default App;
         <Code language="javascript">
           {`
 import React, { useState } from "react";
-import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import { Calendar } from "react-persian-calendar-date-picker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
 
 const App = () => {
   const defaultFrom = {
-    year: 1398,
-    month: 2,
+    year: 2019,
+    month: 4,
     day: 16,
   };
   const defaultTo = {
-    year: 1398,
-    month: 2,
+    year: 2019,
+    month: 4,
     day: 19,
   };
   const defaultValue = {
@@ -204,11 +209,11 @@ const App = () => {
 
   return (
     <Calendar
-      selectedDayRange={selectedDayRange}
+      value={selectedDayRange}
       onChange={setSelectedDayRange}
       colorPrimary="#0fbcf9" // added this
       colorPrimaryLight="rgba(75, 207, 250, 0.4)" // and this
-      isDayRange
+      shouldHighlightWeekends
     />
   );
 };
@@ -219,12 +224,12 @@ export default App;
         </Code>
 
         <Calendar
-          calendarClassName="persianFontWrapper"
-          selectedDayRange={datePicker3Value}
+          calendarClassName="fontWrapper"
+          value={datePicker3Value}
           onChange={setDatePicker3Value}
           colorPrimary="#0fbcf9"
           colorPrimaryLight="rgba(75, 207, 250, 0.4)"
-          isDayRange
+          shouldHighlightWeekends
         />
       </div>
 
@@ -232,24 +237,25 @@ export default App;
         <Code language="javascript">
           {`
 import React, { useState } from "react";
-import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import { Calendar } from "react-persian-calendar-date-picker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
 
 const App = () => {
   const defaultValue = {
-    year: 1398,
-    month: 2,
-    day: 9,
+    year: ${randomDate.year},
+    month: ${randomDate.month},
+    day: ${randomDate.day},
   };
   const [selectedDay, setSelectedDay] = useState(defaultValue);
 
   return (
     <Calendar
-      selectedDay={selectedDay}
+      value={selectedDay}
       onChange={setSelectedDay}
       colorPrimary="#9c88ff" // added this
       calendarClassName="custom-calendar" // and this
       calendarTodayClassName="custom-today-day" // also this
+      shouldHighlightWeekends
     />
   );
 };
@@ -260,15 +266,16 @@ export default App;
         </Code>
 
         <Calendar
-          calendarClassName="persianFontWrapper purple-shadow"
-          selectedDay={datePicker4Value}
+          calendarClassName="fontWrapper purple-shadow"
+          value={datePicker4Value}
           onChange={setDatePicker4Value}
           colorPrimary="#9c88ff"
           calendarTodayClassName="text-orange"
+          shouldHighlightWeekends
         />
       </div>
 
-      <p className="Docs__paragraph">
+      <p>
         Our CSS code for the above example is:
       </p>
 
@@ -289,14 +296,14 @@ export default App;
         `}
       </Code>
 
-      <p className="Docs__paragraph">
+      <p>
         <strong>Note:</strong> the usage of <code className="custom-code">!important</code> is because
         of <a rel="noopener noreferrer" target="_blank" className="Docs__link" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity">overriding the default styles</a>.
       </p>
 
       <h2 className="Docs__titleSecondary">Customized Wrapper</h2>
 
-      <p className="Docs__paragraph">
+      <p>
         All the calendar custom styling props can be passed
         from <code className="custom-code">{`<DatePicker />`}</code>. Furthermore, there&#39;s a
         <code className="custom-code">wrapperClassName</code> prop for the customization of

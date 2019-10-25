@@ -24,7 +24,7 @@
   margin-bottom: 1.5rem;
 }
 
-.Docs__paragraph {
+.Docs p {
   font-size: 1.6rem;
   line-height: 2;
 }
@@ -44,8 +44,8 @@
   margin-bottom: 1rem;
 }
 
-.Docs__paragraph.-marginTop { margin-top: 1.5rem; }
-.Docs__paragraph.-marginBottom { margin-bottom: 1.5rem; }
+.Docs p.-marginTop { margin-top: 1.5rem; }
+.Docs p.-marginBottom { margin-bottom: 1.5rem; }
 
 .Docs__link {
   color: #4589d6;
@@ -62,7 +62,7 @@
   max-width: 90%;
 }
 
-.Docs__sampleContainer + .Docs__paragraph {
+.Docs__sampleContainer + .Docs p {
   max-width: 55%;
 }
 
@@ -71,8 +71,9 @@
     max-width: 80%;
   }
 
-  .Docs__sampleContainer + .Docs__paragraph {
+  .Docs__sampleContainer + p {
     max-width: 55%;
+    margin-top: 2rem;
   }
 
   .Docs__content {
@@ -101,11 +102,11 @@
     max-width: 90%;
   }
 
-  .Docs__sampleContainer + .Docs__paragraph {
+  .Docs__sampleContainer + .Docs p {
     max-width: 55%;
   }
 
-  .Docs__sampleContainer .persianFontWrapper {
+  .Docs__sampleContainer .fontWrapper {
     margin-left: 6rem;
   }
 }
@@ -116,11 +117,11 @@
     flex-direction: column-reverse;
   }
 
-  .Docs__sampleContainer .persianFontWrapper {
+  .Docs__sampleContainer .fontWrapper {
     margin-left: 0;
   }
 
-  .Docs__sampleContainer .persianFontWrapper {
+  .Docs__sampleContainer .fontWrapper {
     margin-bottom: 3rem;
   }
 }

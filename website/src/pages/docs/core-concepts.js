@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import DatePicker, { Calendar } from 'react-persian-calendar-date-picker';
 import { Link } from 'gatsby';
+import DatePicker, { Calendar } from '../../lib';
 
 import Docs from '../../containers/docs';
 import { Code } from '../../components';
@@ -10,12 +10,13 @@ const CoreConcepts = () => {
   const [datePicker2Value, setDatePicker2Value] = useState(null);
   const [datePicker3Value, setDatePicker3Value] = useState({ from: null, to: null });
   const [datePicker4Value, setDatePicker4Value] = useState({ from: null, to: null });
+  const [datePicker5Value, setDatePicker5Value] = useState([]);
 
   return (
     <Docs title="Core Concepts">
-      <p className="Docs__paragraph">
+      <p>
         Now that you&#39;ve installed the package. It&#39;s the time to get familiarized with
-        the core concepts of react-persian-calendar-date-picker. In a
+        the core concepts of react-modern-calendar-datepicker. In a
         nutshell, there are two major components available
         to import:
       </p>
@@ -25,24 +26,28 @@ const CoreConcepts = () => {
         <li>2- <code className="custom-code">{`<Calendar />`}</code> component which is the calendar itself.</li>
       </ul>
 
-      <p className="Docs__paragraph">
+      <p>
         These components are similar in many cases. <code className="custom-code">{`<DatePicker />`}</code> just
         includes an extra input in comparison with <code className="custom-code">{`<Calendar />`}</code>. The simple
         rule is:
       </p>
 
-      <p className="Docs__paragraph -marginTop -marginBottom">
+      <p className="-marginTop -marginBottom">
         <strong> You can use almost every prop
           on both <code className="custom-code">{`<DatePicker />`}</code> and <code className="custom-code"> {`<Calendar />`}</code> components.</strong>
       </p>
 
-      <p className="Docs__paragraph">
+      <p className="-marginTop -marginBottom">
+        <strong> Note: </strong> To turn this calendar into a Persian one, <Link className="Docs__link" to="/docs/persian-calendar"> add this prop</Link>.
+      </p>
+
+      <p>
         By the way, all the examples provided in this document are implemented using <a rel="noopener noreferrer" target="_blank" className="Docs__link" href=" https://reactjs.org/docs/hooks-intro.html"> React hooks </a>.
       </p>
 
       <h2 className="Docs__titleSecondary">Basic Usage</h2>
 
-      <p className="Docs__paragraph">
+      <p>
         Let&#39;s kick things off by providing an example:
       </p>
 
@@ -50,16 +55,17 @@ const CoreConcepts = () => {
         <Code language="javascript">
           {`
 import React, { useState } from "react";
-import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import DatePicker from "react-persian-calendar-date-picker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import DatePicker from "react-modern-calendar-datepicker";
 
 const App = () => {
   const [selectedDay, setSelectedDay] = useState(null);
   return (
     <DatePicker
-      selectedDay={selectedDay}
+      value={selectedDay}
       onChange={setSelectedDay}
-      inputPlaceholder="انتخاب روز"
+      inputPlaceholder="Select a day"
+      shouldHighlightWeekends
     />
   );
 };
@@ -69,15 +75,16 @@ export default App;
           `}
         </Code>
         <DatePicker
-          wrapperClassName="persianFontWrapper -aboveAll"
-          calendarClassName="persianFontWrapper"
-          selectedDay={datePicker1Value}
-          inputPlaceholder="انتخاب روز"
+          wrapperClassName="fontWrapper -aboveAll"
+          calendarClassName="fontWrapper"
+          value={datePicker1Value}
+          inputPlaceholder="Select a day"
           onChange={setDatePicker1Value}
+          shouldHighlightWeekends
         />
       </div>
 
-      <p className="Docs__paragraph">
+      <p>
         Without the input:
       </p>
 
@@ -85,15 +92,16 @@ export default App;
               <Code language="javascript">
                 {`
 import React, { useState } from "react";
-import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import { Calendar } from "react-persian-calendar-date-picker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
 
 const App = () => {
   const [selectedDay, setSelectedDay] = useState(null);
   return (
     <Calendar
-      selectedDay={selectedDay}
+      value={selectedDay}
       onChange={setSelectedDay}
+      shouldHighlightWeekends
     />
   );
 };
@@ -103,18 +111,22 @@ export default App;
                 `}
               </Code>
               <Calendar
-                calendarClassName="persianFontWrapper"
-                selectedDay={datePicker2Value}
+                calendarClassName="fontWrapper"
+                value={datePicker2Value}
                 onChange={setDatePicker2Value}
+                shouldHighlightWeekends
               />
             </div>
 
-      <p className="Docs__paragraph">
-       <code className="custom-code">selectedDay</code> prop
-        is the value of the date picker, and <code className="custom-code">onChange</code> is
-        the function which
-        will take care of changing the state using the state hook modifier. All day formats
-        in the picker are like:
+      <p>
+       - <code className="custom-code">value</code> prop
+        is the value of the date picker and <strong>the shape of its initial value, defines the date picker type(single, range, multiple)</strong>
+      </p>
+      <p>
+      -<code className="custom-code">onChange</code> is
+      the function which
+      will take care of changing the state using the state hook modifier. All day formats
+      in the picker are like:
       </p>
 
       <Code language="javascript">
@@ -127,38 +139,35 @@ PropTypes.shape({
               `}
             </Code>
 
-      <p className="Docs__paragraph">
+      <p>
         For a more detailed list of props,
         visit <Link to="/docs/props-list" className="Docs__link">props list</Link>.
       </p>
 
       <h2 className="Docs__titleSecondary">Selecting a Day Range</h2>
-      <p className="Docs__paragraph">
+      <p>
         To turn out the picker into a range picker, you need to
-        add <code className="custom-code">isDayRange</code> prop and
-        replace <code className="custom-code">selectedDay</code> prop
-        with <code className="custom-code">selectedDayRange</code>. Remember to change
-        the default state. Here&#39;s an example:
+        change the initial <code className="custom-code">value</code>. Here&#39;s an example:
       </p>
 
       <div className="Docs__sampleContainer">
         <Code language="javascript">
           {`
 import React, { useState } from "react";
-import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import { Calendar } from "react-persian-calendar-date-picker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
 
 const App = () => {
-  // a change in default state
+  // ✅ a change in default state: { from: ..., to: ... }
   const [selectedDayRange, setSelectedDayRange] = useState({
     from: null,
     to: null
   });
   return (
     <Calendar
-      selectedDayRange={selectedDayRange} // this is required
+      value={selectedDayRange}
       onChange={setSelectedDayRange}
-      isDayRange // this line too!
+      shouldHighlightWeekends
     />
   );
 };
@@ -168,14 +177,14 @@ export default App;
           `}
         </Code>
         <Calendar
-          calendarClassName="persianFontWrapper"
-          selectedDayRange={datePicker3Value}
+          calendarClassName="fontWrapper"
+          value={datePicker3Value}
           onChange={setDatePicker3Value}
-          isDayRange
+          shouldHighlightWeekends
         />
       </div>
 
-      <p className="Docs__paragraph">
+      <p>
         We&#39;ve used <code className="custom-code">from</code> on the default state to indicate
         the starting point of the day range, and <code className="custom-code">to</code> for
         the ending point of the day range. Note that you can
@@ -187,8 +196,8 @@ export default App;
         <Code language="javascript">
           {`
 import React, { useState } from "react";
-import "react-persian-calendar-date-picker/lib/DatePicker.css";
-import DatePicker from "react-persian-calendar-date-picker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import DatePicker from "react-modern-calendar-datepicker";
 
 const App = () => {
   const [selectedDayRange, setSelectedDayRange] = useState({
@@ -197,10 +206,10 @@ const App = () => {
   });
   return (
     <DatePicker
-      selectedDayRange={selectedDayRange}
+      value={selectedDayRange}
       onChange={setSelectedDayRange}
-      inputPlaceholder="انتخاب روزهای نمایش"
-      isDayRange
+      inputPlaceholder="Select a day range"
+      shouldHighlightWeekends
     />
   );
 };
@@ -210,19 +219,55 @@ export default App;
           `}
         </Code>
         <DatePicker
-          wrapperClassName="persianFontWrapper -aboveAll"
-          calendarClassName="persianFontWrapper"
-          selectedDayRange={datePicker4Value}
+          wrapperClassName="fontWrapper -aboveAll"
+          calendarClassName="fontWrapper"
+          value={datePicker4Value}
           onChange={setDatePicker4Value}
-          inputPlaceholder="انتخاب روزهای نمایش"
-          isDayRange
+          inputPlaceholder="Select a day range"
+          shouldHighlightWeekends
         />
       </div>
-      <p className="Docs__paragraph">
+      <h2 className="Docs__titleSecondary">Selecting Multiple Dates</h2>
+      <p>You pass a <code className="custom-code">[]</code> as a default value, it becomes a multiple date selector.</p>
+      <div className="Docs__sampleContainer">
+              <Code language="javascript">
+                {`
+      import React, { useState } from "react";
+      import "react-modern-calendar-datepicker/lib/DatePicker.css";
+      import { Calendar } from "react-modern-calendar-datepicker";
+
+      const App = () => {
+        // ✅ a change in default state: []
+        const [selectedDays, setSelectedDays] = useState([]);
+        return (
+          <Calendar
+            value={selectedDays}
+            onChange={setSelectedDays}
+            shouldHighlightWeekends
+          />
+        );
+      };
+
+      export default App;
+
+                `}
+              </Code>
+              <Calendar
+                calendarClassName="fontWrapper"
+                value={datePicker5Value}
+                onChange={setDatePicker5Value}
+                shouldHighlightWeekends
+              />
+            </div>
+      <p>Simple as that! as mentioned above, the shape of <code className="custom-code">value</code> prop defines the date picker type. Here
+       we passed an empty array.</p>
+      <h2 className="Docs__titleSecondary">Recap</h2>
+      <p>
         So far so good. By now, you should feel pretty comfortable with this picker. In this
         part, you used <code className="custom-code">null</code> as the default value for the single date
-        picker and similarly, <code className="custom-code">{`{ from: null, to: null }`}</code> as the default
-        value for the range date picker. In the next part, you&#39;ll learn more
+        picker, <code className="custom-code">{`{ from: null, to: null }`}</code> as the default
+        value for the range date picker, and <code className="custom-code">[]</code> as the default
+        value for the mutliple date picker. In the next part, you&#39;ll learn more
         about <Link className="Docs__link" to="/docs/default-values">default values</Link>.
       </p>
     </Docs>
