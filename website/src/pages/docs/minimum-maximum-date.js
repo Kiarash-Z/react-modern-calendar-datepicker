@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, utils } from '../../lib';
+import { Calendar, utils } from 'react-modern-calendar-datepicker';
 
 import Docs from '../../containers/docs';
 import { Code } from '../../components';

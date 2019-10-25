@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'gatsby';
-import DatePicker, { Calendar } from '../lib';
+import DatePicker, { Calendar } from 'react-modern-calendar-datepicker';
 
 import { ReactComponent as Logo } from '../images/logo.svg';
 import { ReactComponent as LogoBackground } from '../images/logo-background.svg';
