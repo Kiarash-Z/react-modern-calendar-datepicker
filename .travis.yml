@@ -2,10 +2,13 @@ sudo: false
 
 language: node_js
 
+node_js:
+  - 10
+
 install:
-    - npm install
+    - yarn
 
 script:
-  - npm run checkAll
+  - yarn run checkAll
 
 after_script: npx codecov@3
