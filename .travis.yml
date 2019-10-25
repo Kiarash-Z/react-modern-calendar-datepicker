@@ -1,0 +1,14 @@
+sudo: false
+
+language: node_js
+
+node_js:
+  - 10
+
+install:
+    - yarn
+
+script:
+  - yarn run checkAll
+
+after_script: npx codecov@3
