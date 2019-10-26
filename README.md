@@ -1,4 +1,5 @@
 # react-modern-calendar-datepicker
+[![Build Status](https://travis-ci.org/Kiarash-Z/react-modern-calendar-datepicker.svg?branch=master)](https://travis-ci.org/Kiarash-Z/react-modern-calendar-datepicker) [![codecov.io](https://codecov.io/github/kiarash-z/react-modern-calendar-datepicker/coverage.svg?branch=master)](https://codecov.io/github/kiarash-z/react-modern-calendar-datepicker?branch=master)
 
 A modern, beautiful, customizable date picker for React. For more information, please visit [website](https://kiarash-z.github.io/react-modern-calendar-datepicker)
 
