@@ -107,6 +107,7 @@ export const PROPS_TABLE_CALENDAR_ROWS = [
     range start and range end in range date picker`
   ],
   ['colorPrimaryLight', 'String', '#cff4d5', `The color of range-between days`],
+  ['slideAnimationDuration', 'String', '0.4s', `Duration of month slide animation. It can be any CSS valid time value`],
   ['calendarClassName', 'String', `''`, 'Additional CSS class for the calendar element'],
   ['calendarTodayClassName', 'String', `''`, 'Additional CSS class for today day'],
   ['calendarSelectedDayClassName', 'String', `''`, 'Additional CSS class for the selected day'],

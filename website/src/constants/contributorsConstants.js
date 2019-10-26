@@ -4,6 +4,9 @@ const CONTRIBUTORS = [
   },
   {
     username: 'AmirTahani',
+  },
+  {
+    username: 'themzed'
   }
 ];
 
