@@ -23,7 +23,7 @@ const ContributionGuide = () => {
           <li>- Bundle size wouldn&#39;t exceed 9 KB</li>
         </ul>
         </li>
-        <li>5- Submit a pull request, and we will work it out!</li>
+        <li>5- Submit a pull request(to develop branch of main repository), and we will work it out!</li>
       </ul>
     </Docs>
   );

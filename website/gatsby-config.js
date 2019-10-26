@@ -3,7 +3,7 @@ module.exports = {
     title: `React Modern Calendar Date Picker`,
     description: `A modern, beautiful, customizable date picker for React`,
     author: `Kiarash Zarinmehr`,
-    version: `1.0.0`,
+    version: `1.0.1`,
   },
   pathPrefix: `/react-modern-calendar-datepicker`,
   plugins: [
