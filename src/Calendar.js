@@ -20,6 +20,7 @@ const Calendar = ({
   disabledDays,
   colorPrimary,
   colorPrimaryLight,
+  slideAnimationDuration,
   minimumDate,
   maximumDate,
   selectorStartingYear,
@@ -97,7 +98,11 @@ const Calendar = ({
   return (
     <div
       className={`Calendar ${calendarClassName} ${isPersian ? '-persian' : ''}`}
-      style={{ '--cl-color-primary': colorPrimary, '--cl-color-primary-light': colorPrimaryLight }}
+      style={{
+        '--cl-color-primary': colorPrimary,
+        '--cl-color-primary-light': colorPrimaryLight,
+        '--animation-duration': slideAnimationDuration,
+      }}
       ref={calendarElement}
     >
       <Header
@@ -162,6 +167,7 @@ Calendar.defaultProps = {
   maximumDate: null,
   colorPrimary: '#0eca2d',
   colorPrimaryLight: '#cff4d5',
+  slideAnimationDuration: '0.4s',
   calendarClassName: '',
   isPersian: false,
   value: null,
@@ -176,6 +182,7 @@ Calendar.propTypes = {
   calendarClassName: PropTypes.string,
   colorPrimary: PropTypes.string,
   colorPrimaryLight: PropTypes.string,
+  slideAnimationDuration: PropTypes.string,
   minimumDate: PropTypes.shape(DAY_SHAPE),
   maximumDate: PropTypes.shape(DAY_SHAPE),
   isPersian: PropTypes.bool,

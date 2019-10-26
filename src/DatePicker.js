@@ -24,6 +24,7 @@ const DatePicker = ({
   onDisabledDayError,
   colorPrimary,
   colorPrimaryLight,
+  slideAnimationDuration,
   minimumDate,
   maximumDate,
   selectorStartingYear,
@@ -126,6 +127,7 @@ const DatePicker = ({
           disabledDays={disabledDays}
           colorPrimary={colorPrimary}
           colorPrimaryLight={colorPrimaryLight}
+          slideAnimationDuration={slideAnimationDuration}
           onDisabledDayError={onDisabledDayError}
           minimumDate={minimumDate}
           maximumDate={maximumDate}
