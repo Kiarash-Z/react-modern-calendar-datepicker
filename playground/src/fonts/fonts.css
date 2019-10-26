@@ -35,3 +35,10 @@ This set of fonts are used in this project under the license: GFHUSE
 		 url('./woff/iranyekanwebregularfanum.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
 		 url('./ttf/iranyekanwebregularfanum.ttf') format('truetype');
 }
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: normal;
+	src: url('./ttf/OpenSans-Regular.ttf');
+}

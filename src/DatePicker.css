@@ -467,7 +467,6 @@
 .Calendar__section.-hiddenNext {
   opacity: 0.5;
   transform: translateX(90%);
-  padding: 1px solid #ddd;
 }
 
 .Calendar.-persian .Calendar__section.-hiddenNext {
