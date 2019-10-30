@@ -67,6 +67,7 @@
 .Calendar {
   --cl-color-black: #444444;
   --cl-color-disabled: #d4d4d4;
+  --cl-color-reserved: #485bc4;
   --cl-color-error: #ff2929;
   --animation-duration: 0.4s;
   font-size: 10px;
@@ -559,6 +560,10 @@
   color: var(--cl-color-disabled) !important;
   background: transparent !important;
   cursor: default !important;
+}
+.Calendar__day.-reserved{
+  background: var(--cl-color-reserved) !important;
+  color: #ffffff !important;
 }
 .Calendar__day.-selected {
   border-radius: 50%;

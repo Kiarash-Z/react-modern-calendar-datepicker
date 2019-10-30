@@ -17,6 +17,7 @@ const DaysList = ({
   monthChangeDirection,
   onSlideChange,
   disabledDays,
+  reservedDays,
   onDisabledDayError,
   minimumDate,
   maximumDate,
@@ -118,6 +119,7 @@ const DaysList = ({
     const classNames = ''
       .concat(isToday && !isSelected ? ` -today ${calendarTodayClassName}` : '')
       .concat(!dayItem.isStandard ? ' -blank' : '')
+      .concat(dayItem.isReserved ? ' -reserved' : '')
       .concat(dayItem.isWeekend && shouldHighlightWeekends ? ' -weekend' : '')
       .concat(isSelected ? ` -selected ${calendarSelectedDayClassName}` : '')
       .concat(isStartedDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
@@ -158,12 +160,22 @@ const DaysList = ({
       const isInDisabledDaysRange = disabledDays.some(disabledDay =>
         isSameDay(dayItem, disabledDay),
       );
+      const isInReservedDaysRange = reservedDays.some(reservedDays =>
+        isSameDay(dayItem, reservedDays),
+      );
       const isBeforeMinimumDate = isBeforeDate(dayItem, minimumDate);
       const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
       const isNotInValidRange = isStandard && (isBeforeMinimumDate || isAfterMaximumDate);
       const isDisabled = isInDisabledDaysRange || isNotInValidRange;
       const isWeekend = (!isPersian && index % 7 === 0) || index % 7 === 6;
-      const additionalClass = getDayClassNames({ ...dayItem, isWeekend, isStandard, isDisabled });
+      const isReserved = isStandard && (isInReservedDaysRange || isNotInValidRange);
+      const additionalClass = getDayClassNames({
+        ...dayItem,
+        isWeekend,
+        isStandard,
+        isDisabled,
+        isReserved,
+      });
       return (
         <button
           tabIndex="-1"
@@ -217,6 +229,7 @@ DaysList.propTypes = {
   onChange: PropTypes.func,
   onDisabledDayError: PropTypes.func,
   disabledDays: PropTypes.arrayOf(PropTypes.shape(DAY_SHAPE)),
+  isReserved: PropTypes.arrayOf(PropTypes.shape(DAY_SHAPE)),
   calendarTodayClassName: PropTypes.string,
   calendarSelectedDayClassName: PropTypes.string,
   calendarRangeStartClassName: PropTypes.string,
@@ -229,6 +242,7 @@ DaysList.defaultProps = {
   onChange: () => {},
   onDisabledDayError: () => {},
   disabledDays: [],
+  reservedDays: [],
   calendarTodayClassName: '',
   calendarSelectedDayClassName: '',
   calendarRangeStartClassName: '',
