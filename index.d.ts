@@ -6,9 +6,9 @@ export type Day = {
   day: number;
 };
 
-export type Range<T> = { from?: T; to?: T };
+export type DayRange = { from?: Day; to?: Day };
 
-type Value = Day | Day[] | Range<Day>;
+type Value = Day | Day[] | DayRange;
 
 export interface CalendarProps<TValue extends Value> {
   value: TValue;
@@ -33,7 +33,7 @@ export interface CalendarProps<TValue extends Value> {
 
 export function Calendar(props: Optional<CalendarProps<Day>, 'value'>): React.ReactElement;
 export function Calendar(props: CalendarProps<Day[]>): React.ReactElement;
-export function Calendar(props: CalendarProps<Range<Day>>): React.ReactElement;
+export function Calendar(props: CalendarProps<DayRange>): React.ReactElement;
 
 export type RenderInputProps = {
   ref: React.RefObject<HTMLElement>;
@@ -53,7 +53,7 @@ type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
 export function DatePicker(props: Optional<DatePickerProps<Day>, 'value'>): React.ReactElement;
 export function DatePicker(props: DatePickerProps<Day[]>): React.ReactElement;
-export function DatePicker(props: DatePickerProps<Range<Day>>): React.ReactElement;
+export function DatePicker(props: DatePickerProps<DayRange>): React.ReactElement;
 
 export default DatePicker;
 
@@ -66,7 +66,7 @@ export type Utils = {
   getMonthLength(day: Day): number;
   getMonthFirstWeekday(day: Day): number;
   isBeforeDate(a: Day, b: Day): boolean;
-  checkDayInDayRange(props: Required<Range<Day>> & { day: Day }): boolean;
+  checkDayInDayRange(props: Required<DayRange> & { day: Day }): boolean;
   getLanguageDigits(digit: string | number): string;
 };
 
