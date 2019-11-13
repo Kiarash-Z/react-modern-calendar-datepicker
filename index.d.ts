@@ -23,6 +23,7 @@ export interface CalendarProps<TValue extends Value> {
   shouldHighlightWeekends?: boolean;
   colorPrimary?: string;
   colorPrimaryLight?: string;
+  slideAnimationDuration?: string;
   calendarClassName?: string;
   calendarTodayClassName?: string;
   calendarSelectedDayClassName?: string;
