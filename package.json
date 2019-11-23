@@ -16,7 +16,8 @@
     "checkAll": "yarn size && yarn lint && yarn test"
   },
   "files": [
-    "lib"
+    "lib",
+    "index.d.ts"
   ],
   "author": "Kiarash Zarinmehr",
   "homepage": "https://kiarash-z.github.io/react-modern-calendar-datepicker",
