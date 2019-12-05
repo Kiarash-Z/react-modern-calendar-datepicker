@@ -12,7 +12,7 @@
     "test:watch": "jest ./test --watch",
     "clean": "rimraf lib",
     "build": "yarn clean && cross-env NODE_ENV=production rollup -c",
-    "size": "size-limit",
+    "size": "yarn build && size-limit",
     "checkAll": "yarn size && yarn lint && yarn test"
   },
   "files": [
