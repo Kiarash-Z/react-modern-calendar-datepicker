@@ -104,12 +104,10 @@ const App = () => {
   const [selectedDay, setSelectedDay] = useState(null);
 
   // render regular HTML input element
-  const renderCustomInput = ({ ref, onFocus, onBlur }) => (
+  const renderCustomInput = ({ ref }) => (
     <input
       readOnly
       ref={ref} // necessary
-      onFocus={onFocus} // necessary
-      onBlur={onBlur} // necessary
       placeholder="I'm a custom input"
       value={selectedDay ? \`✅: \${selectedDay.day}\` : ''}
       style={{
@@ -147,12 +145,10 @@ export default App;
           value={datePicker2Value}
           onChange={setDatePicker2Value}
           shouldHighlightWeekends
-          renderInput={({ ref, onFocus, onBlur }) => (
+          renderInput={({ ref }) => (
             <input
               readOnly
               ref={ref}
-              onFocus={onFocus}
-              onBlur={onBlur}
               placeholder="I'm a custom input"
               className="-customPlaceholderColor"
               value={datePicker2Value ? `✅: ${datePicker2Value.day}` : ''}

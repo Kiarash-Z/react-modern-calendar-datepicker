@@ -10,7 +10,7 @@ const Installation = () => {
       <p className="Docs__paragraph">
         Welcome to docs! react-modern-calendar-datepicker (a quite long name!)
         is a react date picker
-        package supporting both Gregorian and Persian calendars.
+        package supporting other languages locales(for now there are <code className="custom-code">fa</code> and <code className="custom-code">en</code> locales).
         It&#39;s lightweight, and it&#39;s easy to use.
         Before using this package, please pay attention to these two important points:
       </p>
@@ -22,7 +22,7 @@ const Installation = () => {
           sure you&#39;re running <code className="custom-code">{`react >= 16.8.0`}</code> version.
         </li>
         <li>
-          2- By default, this package inherits <code className="custom-code">font-family</code> from your project. So whatever font you use for its wrapper, it will apply to datepicker as well. (For Persian calendar usage, it&#39;s recommended
+          2- By default, this package inherits <code className="custom-code">font-family</code> from your project. So whatever font you use for its wrapper, it will apply to datepicker as well. (If you are using <code className="custom-code">fa</code> locale language, it&#39;s recommended
           to use <a rel="noopener noreferrer" target="_blank" className="Docs__link" href="https://fontiran.com/%D9%81%D9%88%D9%86%D8%AA-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%DB%8C%DA%A9%D8%A7%D9%86-iran-yekan/"> Iran Yekan (primary choice) </a>
           or <a rel="noopener noreferrer" target="_blank" className="Docs__link" href="https://fontiran.com/%D8%AE%D8%A7%D9%86%D9%88%D8%A7%D8%AF%D9%87-%D9%81%D9%88%D9%86%D8%AA-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B3%D9%86-%D8%B3%D8%B1%DB%8C%D9%81-iran-sans-%D9%BE%D9%86%D8%AC-%D9%88%D8%B2%D9%86-%D9%87%D9%85/"> Iran Sans </a>
           as your font family in order to have the best user experience)
@@ -36,7 +36,7 @@ const Installation = () => {
       </p>
 
       <Code language="bash">
-        {`yarn add react-modern-calendar-datepicker`}
+        yarn add react-modern-calendar-datepicker
       </Code>
 
       <p className="Docs__paragraph">
@@ -44,7 +44,7 @@ const Installation = () => {
       </p>
 
       <Code language="bash">
-        {`npm i react-modern-calendar-datepicker`}
+        npm i react-modern-calendar-datepicker
       </Code>
 
       <h2 className="Docs__titleSecondary">Basic Import</h2>

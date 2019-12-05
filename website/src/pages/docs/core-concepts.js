@@ -38,7 +38,7 @@ const CoreConcepts = () => {
       </p>
 
       <p className="-marginTop -marginBottom">
-        <strong> Note: </strong> To turn this calendar into a Persian one, <Link className="Docs__link" to="/docs/persian-calendar"> add this prop</Link>.
+        <strong> Note: </strong> To turn this calendar into a another language locale one, <Link className="Docs__link" to="/docs/different-locales"> add this prop</Link>.
       </p>
 
       <p>

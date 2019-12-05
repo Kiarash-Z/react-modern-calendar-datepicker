@@ -34,8 +34,8 @@ export const TUTORIAL_ITEMS = generateConstantId([
     name: 'Utilities'
   },
   {
-    path: '/docs/persian-calendar',
-    name: 'Persian Calendar'
+    path: '/docs/different-locales',
+    name: 'Different Locales'
   },
 ])
 
@@ -85,14 +85,14 @@ export const PROPS_TABLE_PICKER_ROWS = [
   ['inputClassName', 'String', `''`, 'Additional CSS class for the date picker input element'],
   ['inputPlaceholder', 'String', `انتخاب`, `Placeholder of the picker's input`],
   ['formatInputText', 'Function', `() => ''`, `If returns a true JavaScript value, the returned value of this function will be the input's value`],
-  ['renderInput', 'Function', `() => null`, 'The returned value of this function will be the custom input element rendered for picker'],
+  ['renderInput', 'Function', `({ ref }) => null`, 'The returned value of this function will be the custom input element rendered for picker'],
 ];
 
 export const PROPS_TABLE_CALENDAR_ROWS = [
   ['value', 'Object', `null`, `The value of the date picker. if initial value is null, it's a single date picker. if it's an empty array,
    then it's a multiple date picker, and if its of shape { from: null, to: null}, then it's a range date picker.`],
   ['onChange', 'Function', `newValue => null`, 'Gets called when value of the picker changes'],
-  ['isPersian', 'Boolean', 'false', `Determines to use Persian calendar`],
+  ['locale', 'String', 'en', `Locale language of the calendar. It can be one of 'fa' or 'en'`],
   ['minimumDate', 'Object', `null`, 'Specifies the minimum selectable day by user'],
   ['maximumDate', 'Object', `null`, 'Specifies the maximum selectable day by user'],
   ['disabledDays', 'Array', `[]`, `An array of disabled calendar days. Disabled days won't be selectable, and
@@ -102,7 +102,7 @@ export const PROPS_TABLE_CALENDAR_ROWS = [
   ['selectorStartingYear', 'Number', 'current year - 100', 'The minimum selectable year when user opens the year selector'],
   ['selectorEndingYear', 'Number', 'current year + 50', 'The maximum selectable year when user opens the year selector'],
   ['shouldHighlightWeekends', 'Boolean', 'false', `Determines whether to mark weekend days with red or not. (weekend days are Saturday and Sunday
-  for Gregorian calendar and Friday for Persian calendar)`],
+  for locale="en" calendar and Friday for locale="fa" calendar)`],
   ['colorPrimary', 'String', '#0eca2d', `The color of selected day in the single date picker and the color of
     range start and range end in range date picker`
   ],

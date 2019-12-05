@@ -198,17 +198,17 @@ const IndexPage = () => {
         <div className="exampleItem">
           <div className="exampleItem__subContainer">
             <span className="exampleItem__title">
-              Supports Persian Calendar
+              Supports Different Locales Calendar
             </span>
             <p className="exampleItem__description">
-              Use all the features of the calendar existing in Gregorian mode, in Persian!
+              Use all the features of the calendar existing in default mode, in your locale!
             </p>
             <Calendar
               value={selectedDay4}
               onChange={setValue4}
               calendarClassName="fontWrapper -persian"
               shouldHighlightWeekends
-              isPersian
+              locale="fa"
             />
           </div>
         </div>
