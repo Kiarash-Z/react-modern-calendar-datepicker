@@ -1,5 +1,8 @@
 const CONTRIBUTORS = [
   {
+    username: 'armanrokni',
+  },
+  {
     username: 'thebrodmann',
   },
   {
