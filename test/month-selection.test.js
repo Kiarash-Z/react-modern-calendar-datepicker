@@ -1,17 +1,28 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, within } from '@testing-library/react';
 
 import { Calendar } from '../src';
 import { GREGORIAN_MONTHS, PERSIAN_MONTHS } from '../src/shared/constants';
 
 const renderMonthSelector = (shouldOpenSelector = true, props) => {
-  const selectors = render(<Calendar {...props} />);
+  const { getAllByLabelText, getByTestId, rerender, getByText } = render(<Calendar {...props} />);
   const thisMonthText = new Date().toLocaleString('default', { month: 'long' });
-  const [monthButton] = selectors.getAllByText(thisMonthText);
-  const monthSelector = selectors.getByTestId('month-selector');
+  const [monthButton] = getAllByLabelText(/open month selector/i);
+  const monthSelector = getByTestId('month-selector');
+  const monthSelectorWrapper = getByTestId('month-selector-wrapper');
   const monthsChildren = Array.from(monthSelector.children);
+  const selectors = within(monthSelector);
   if (shouldOpenSelector) fireEvent.click(monthButton);
-  return { ...selectors, monthButton, monthSelector, thisMonthText, monthsChildren };
+  return {
+    ...selectors,
+    rerender,
+    calendarGetByText: getByText,
+    monthButton,
+    monthSelector,
+    monthSelectorWrapper,
+    thisMonthText,
+    monthsChildren,
+  };
 };
 
 describe('Month Selection', () => {
@@ -34,7 +45,7 @@ describe('Month Selection', () => {
     const gregorianMonthTexts = monthsChildren.map(child => child.textContent);
 
     expect(gregorianMonthTexts).toEqual(GREGORIAN_MONTHS);
-    rerender(<Calendar isPersian />);
+    rerender(<Calendar locale="fa" />);
     fireEvent.click(monthButton);
     const persianMonthTexts = Array.from(monthSelector.children).map(child => child.textContent);
 
@@ -62,7 +73,7 @@ describe('Month Selection', () => {
   });
 
   test('disables months according to minimum & maximum dates', () => {
-    const { rerender, getByText, getAllByText } = renderMonthSelector(true, {
+    const { rerender, getByText, calendarGetByText } = renderMonthSelector(true, {
       value: { year: 2019, month: 6, day: 1 },
       minimumDate: { year: 2019, month: 3, day: 5 },
       maximumDate: { year: 2019, month: 10, day: 10 },
@@ -70,7 +81,7 @@ describe('Month Selection', () => {
     expect(getByText('January')).toHaveAttribute('disabled');
     expect(getByText('February')).toHaveAttribute('disabled');
     expect(getByText('March')).not.toHaveAttribute('disabled');
-    expect(getAllByText('October')[1]).not.toHaveAttribute('disabled');
+    expect(getByText('October')).not.toHaveAttribute('disabled');
     expect(getByText('November')).toHaveAttribute('disabled');
     expect(getByText('December')).toHaveAttribute('disabled');
 
@@ -85,13 +96,33 @@ describe('Month Selection', () => {
     expect(getByText('January')).not.toHaveAttribute('disabled');
     expect(getByText('December')).not.toHaveAttribute('disabled');
 
-    const previousYearButton = getByText('2018');
+    const previousYearButton = calendarGetByText('2018');
     fireEvent.click(previousYearButton);
 
     expect(getByText('January')).toHaveAttribute('disabled');
 
-    const nextYearButton = getByText('2020');
+    const nextYearButton = calendarGetByText('2020');
     fireEvent.click(nextYearButton);
     expect(getByText('December')).toHaveAttribute('disabled');
+  });
+
+  test('navigates by keyboard', () => {
+    const value = { year: 2019, month: 10, day: 1 };
+    const { getByText, monthSelectorWrapper } = renderMonthSelector(true, { value });
+
+    expect(getByText('October')).toBePressed();
+    getByText('October').focus();
+    fireEvent.keyDown(monthSelectorWrapper, { key: 'ArrowLeft' });
+    expect(document.activeElement).toBe(getByText('September'));
+
+    // keeps active month reachable by keyboard
+    expect(getByText('October')).toHaveTabIndex(0);
+
+    // makes inactive month unreachable by keyboard
+    fireEvent.keyDown(monthSelectorWrapper, { key: 'ArrowLeft' });
+    expect(getByText('September')).toHaveTabIndex(-1);
+
+    fireEvent.keyDown(monthSelectorWrapper, { key: 'ArrowRight' });
+    expect(document.activeElement).toBe(getByText('September'));
   });
 });

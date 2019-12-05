@@ -4,19 +4,13 @@
 
 import jalaali from 'jalaali-js';
 
-import {
-  PERSIAN_MONTHS,
-  GREGORIAN_MONTHS,
-  GREGORIAN_WEEK_DAYS,
-  PERSIAN_WEEK_DAYS,
-  PERSIAN_NUMBERS,
-} from './constants';
+import { PERSIAN_NUMBERS } from './constants';
 import { toExtendedDay } from './generalUtils';
+import getLanguageText from './localeLanguages';
 
-const utils = isPersian => {
-  const isGregorian = !isPersian;
-  const monthsList = isGregorian ? GREGORIAN_MONTHS : PERSIAN_MONTHS;
-  const weekDaysList = isGregorian ? GREGORIAN_WEEK_DAYS : PERSIAN_WEEK_DAYS;
+const utils = (locale = 'en') => {
+  const isGregorian = locale !== 'fa';
+  const monthsList = getLanguageText(locale).months;
 
   const getToday = () => {
     const todayDate = new Date();
@@ -88,8 +82,6 @@ const utils = isPersian => {
     getMonthFirstWeekday,
     isBeforeDate,
     checkDayInDayRange,
-    monthsList,
-    weekDaysList,
     getLanguageDigits,
   };
 };

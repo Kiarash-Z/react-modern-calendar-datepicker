@@ -16,7 +16,7 @@ describe('DatePicker Input', () => {
     expect(input).toHaveValue('2019/10/01');
 
     const persianValue = { year: 1398, month: 10, day: 10 };
-    rerender(<DatePicker isPersian value={persianValue} />);
+    rerender(<DatePicker locale="fa" value={persianValue} />);
     expect(input).toHaveValue('۱۳۹۸/۱۰/۱۰');
   });
 
@@ -32,7 +32,7 @@ describe('DatePicker Input', () => {
       from: { year: 1398, month: 10, day: 1 },
       to: { year: 1398, month: 10, day: 5 },
     };
-    rerender(<DatePicker isPersian value={persianValue} />);
+    rerender(<DatePicker locale="fa" value={persianValue} />);
     expect(input).toHaveValue('از ۹۸/۱۰/۰۱ تا ۹۸/۱۰/۰۵');
   });
 
@@ -50,7 +50,7 @@ describe('DatePicker Input', () => {
       { year: 1398, month: 10, day: 5 },
       { year: 1398, month: 10, day: 12 },
     ];
-    rerender(<DatePicker isPersian value={persianValue} />);
+    rerender(<DatePicker locale="fa" value={persianValue} />);
     expect(input).toHaveValue('۱، ۵، ۱۲');
   });
 

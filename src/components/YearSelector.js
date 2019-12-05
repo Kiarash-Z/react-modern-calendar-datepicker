@@ -1,8 +1,9 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import utils from '../shared/localeUtils';
 import { MINIMUM_SELECTABLE_YEAR_SUBTRACT, MAXIMUM_SELECTABLE_YEAR_SUM } from '../shared/constants';
+import handleKeyboardNavigation from '../shared/keyboardNavigation';
+import { useLocaleUtils } from '../shared/hooks';
 
 const YearSelector = ({
   isOpen,
@@ -12,13 +13,19 @@ const YearSelector = ({
   selectorEndingYear,
   maximumDate,
   minimumDate,
-  isPersian,
+  locale,
 }) => {
   const wrapperElement = useRef(null);
   const yearListElement = useRef(null);
 
-  const { getLanguageDigits, getToday } = useMemo(() => utils(isPersian), [isPersian]);
-
+  const { getLanguageDigits, getToday } = useLocaleUtils(locale);
+  const startingYearValue =
+    selectorStartingYear || getToday().year - MINIMUM_SELECTABLE_YEAR_SUBTRACT;
+  const endingYearValue = selectorEndingYear || getToday().year + MAXIMUM_SELECTABLE_YEAR_SUM;
+  const allYears = [];
+  for (let i = startingYearValue; i <= endingYearValue; i += 1) {
+    allYears.push(i);
+  }
   useEffect(() => {
     const classToggleMethod = isOpen ? 'add' : 'remove';
     const activeSelectorYear = wrapperElement.current.querySelector(
@@ -31,43 +38,50 @@ const YearSelector = ({
   }, [isOpen]);
 
   const renderSelectorYears = () => {
-    const items = [];
-    const startingYearValue =
-      selectorStartingYear || getToday().year - MINIMUM_SELECTABLE_YEAR_SUBTRACT;
-    const endingYearValue = selectorEndingYear || getToday().year + MAXIMUM_SELECTABLE_YEAR_SUM;
-    for (let i = startingYearValue; i <= endingYearValue; i += 1) {
-      items.push(i);
-    }
-    return items.map(item => {
+    return allYears.map(item => {
       const isAfterMaximumDate = maximumDate && item > maximumDate.year;
       const isBeforeMinimumDate = minimumDate && item < minimumDate.year;
+      const isSelected = activeDate.year === item;
       return (
-        <div
-          key={item}
-          className={`Calendar__yearSelectorItem ${activeDate.year === item ? '-active' : ''}`}
-        >
+        <li key={item} className={`Calendar__yearSelectorItem ${isSelected ? '-active' : ''}`}>
           <button
-            tabIndex="-1"
+            tabIndex={isSelected && isOpen ? '0' : '-1'}
             className="Calendar__yearSelectorText"
             type="button"
             onClick={() => {
               onYearSelect(item);
             }}
             disabled={isAfterMaximumDate || isBeforeMinimumDate}
+            aria-pressed={isSelected}
+            data-is-default-selectable={isSelected}
           >
             {getLanguageDigits(item)}
           </button>
-        </div>
+        </li>
       );
     });
   };
 
+  const handleKeyDown = e => {
+    handleKeyboardNavigation(e, { allowVerticalArrows: false });
+  };
+
   return (
-    <div className="Calendar__yearSelectorAnimationWrapper">
-      <div ref={wrapperElement} className="Calendar__yearSelectorWrapper">
-        <div ref={yearListElement} className="Calendar__yearSelector" data-testid="year-selector">
+    <div
+      className="Calendar__yearSelectorAnimationWrapper"
+      role="presentation"
+      {...(isOpen ? {} : { 'aria-hidden': true })}
+    >
+      <div
+        ref={wrapperElement}
+        className="Calendar__yearSelectorWrapper"
+        role="presentation"
+        data-testid="year-selector-wrapper"
+        onKeyDown={handleKeyDown}
+      >
+        <ul ref={yearListElement} className="Calendar__yearSelector" data-testid="year-selector">
           {renderSelectorYears()}
-        </div>
+        </ul>
       </div>
     </div>
   );

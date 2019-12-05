@@ -7,17 +7,36 @@ import { Calendar } from '../src';
 import { getDateAccordingToMonth } from '../src/shared/generalUtils';
 import { Header } from '../src/components';
 
-const { getMonthLength, getToday, getMonthFirstWeekday, getMonthName, isBeforeDate } = utils();
+const { getMonthLength, getToday, getMonthFirstWeekday, getMonthName, isBeforeDate } = utils('en');
+
+const flatDays = section =>
+  Array.from(section.children).reduce((previous, next) => [...previous, ...next.children], []);
 
 const renderCalendar = props => {
   const selectors = render(<Calendar {...props} />);
-  const activeSection = Array.from(selectors.getByTestId('days-section-wrapper').children).find(
-    child => child.classList.contains('-shown'),
+  const sectionWrapper = selectors.getByTestId('days-section-wrapper');
+  const activeSection = Array.from(sectionWrapper.children).find(child =>
+    child.classList.contains('-shown'),
   );
-  const days = Array.from(activeSection.children);
+  const days = flatDays(activeSection);
   const standardDays = days.filter(day => !day.classList.contains('-blank'));
   const getDay = day => getByText(activeSection, String(day));
-  return { ...selectors, activeSection, days, standardDays, getDay };
+
+  const sections = Array.from(selectors.getByTestId('days-section-wrapper').children);
+  const monthYearItems = Array.from(selectors.getByTestId('month-year-container').children);
+  const endSlideAnimation = () => {
+    const findAnimatedChild = child => child.classList.contains('-shownAnimated');
+    const animatingMonthYearItem = monthYearItems.find(findAnimatedChild);
+    const animatingSectionItem = sections.find(findAnimatedChild);
+    fireEvent.animationEnd(animatingMonthYearItem);
+    fireEvent.animationEnd(animatingSectionItem);
+  };
+
+  const changeMonth = arrow => {
+    fireEvent.click(arrow);
+    endSlideAnimation();
+  };
+  return { ...selectors, sectionWrapper, activeSection, days, standardDays, getDay, changeMonth };
 };
 
 describe('Calendar Days', () => {
@@ -35,14 +54,6 @@ describe('Calendar Days', () => {
       const startingBlankDays = days.slice(0, 7).filter(day => day.classList.contains('-blank'));
 
       expect(startingBlankDays).toHaveLength(weekday);
-    });
-
-    test('appends blank days for additional days week', () => {
-      const monthWith5Weeks = { year: 2019, month: 10, day: 5 };
-      const { days } = renderCalendar({ value: monthWith5Weeks });
-
-      expect(days.length / 7).toBeGreaterThan(5);
-      expect(days.length / 7).toBeLessThan(6);
     });
 
     test(`shows current month and year title when there's no value`, () => {
@@ -103,12 +114,52 @@ describe('Calendar Days', () => {
 
       // Persian weekends
       const persianValue = { year: 1398, month: 8, day: 1 };
-      rerender(<Calendar isPersian value={persianValue} shouldHighlightWeekends />);
+      rerender(<Calendar locale="fa" value={persianValue} shouldHighlightWeekends />);
       const persianValueMonthWeekendDays = [3, 10, 17, 24];
       const areAllPersianWeekendsHighlighted = persianValueMonthWeekendDays
-        .map(value => getDay(utils(true).getLanguageDigits(value)))
+        .map(value => getDay(utils('fa').getLanguageDigits(value)))
         .every(day => day.classList.contains('-weekend'));
       expect(areAllPersianWeekendsHighlighted).toBe(true);
+    });
+
+    test('hides all inactive days section days', () => {
+      const {
+        sectionWrapper,
+        activeSection: initialActiveSection,
+        getByLabelText,
+        changeMonth,
+      } = renderCalendar();
+
+      const initialInactiveSection = Array.from(sectionWrapper.children).find(
+        child => !child.classList.contains('-shown'),
+      );
+
+      // first, inactive section's all days are hidden
+      expect(
+        flatDays(initialInactiveSection)
+          .filter(day => !day.classList.contains('-blank'))
+          .every(day => {
+            return day.hasAttribute('aria-hidden') && day.getAttribute('tabindex') === '-1';
+          }),
+      ).toBe(true);
+
+      // after month change, inactive section's days become visible and
+      // the initial active one's days become invisible
+      changeMonth(getByLabelText(/next month/i));
+      expect(
+        flatDays(initialInactiveSection)
+          .filter(day => !day.classList.contains('-blank'))
+          .some(day => {
+            return !day.hasAttribute('aria-hidden') && day.getAttribute('tabindex') === '0';
+          }),
+      ).toBe(true);
+      expect(
+        flatDays(initialActiveSection)
+          .filter(day => !day.classList.contains('-blank'))
+          .every(day => {
+            return day.hasAttribute('aria-hidden') && day.getAttribute('tabindex') === '-1';
+          }),
+      ).toBe(true);
     });
   });
 
@@ -125,7 +176,7 @@ describe('Calendar Days', () => {
       expect(onChange.mock.calls[0][0]).toEqual(value);
 
       rerender(<Calendar value={value} />);
-      expect(sampleDateButton).toHaveClass('-selected');
+      expect(sampleDateButton).toBeSelected();
     });
 
     test('selects multiple dates', () => {
@@ -139,7 +190,7 @@ describe('Calendar Days', () => {
       expect(onChange).toHaveBeenCalledTimes(1);
       expect(onChange.mock.calls[0][0]).toEqual(valueAfterFirstClick);
       rerender(<Calendar onChange={onChange} value={valueAfterFirstClick} />);
-      expect(day1Button).toHaveClass('-selected');
+      expect(day1Button).toBeSelected();
 
       const day2 = 5;
       const day2Button = getDay(day2);
@@ -148,7 +199,7 @@ describe('Calendar Days', () => {
       expect(onChange).toHaveBeenCalledTimes(2);
       expect(onChange.mock.calls[1][0]).toEqual(valueAfterSecondClick);
       rerender(<Calendar onChange={onChange} value={valueAfterSecondClick} />);
-      expect(day2Button).toHaveClass('-selected');
+      expect(day2Button).toBeSelected();
 
       const day3 = 12;
       const day3Button = getDay(day3);
@@ -157,7 +208,7 @@ describe('Calendar Days', () => {
       expect(onChange).toHaveBeenCalledTimes(3);
       expect(onChange.mock.calls[2][0]).toEqual(valueAfterThirdClick);
       rerender(<Calendar onChange={onChange} value={valueAfterThirdClick} />);
-      expect(day3Button).toHaveClass('-selected');
+      expect(day3Button).toBeSelected();
     });
 
     test('replaces value on new date selection', () => {
@@ -277,7 +328,10 @@ describe('Calendar Days', () => {
     test('disables specified days', () => {
       const onChange = jest.fn();
       const value = { year: 2019, month: 10, day: 1 };
-      const disabledDays = [{ year: 2019, month: 10, day: 2 }, { year: 2019, month: 10, day: 5 }];
+      const disabledDays = [
+        { year: 2019, month: 10, day: 2 },
+        { year: 2019, month: 10, day: 5 },
+      ];
       const { getDay } = renderCalendar({ value, disabledDays, onChange });
 
       fireEvent.click(getDay(2));
@@ -311,7 +365,7 @@ describe('Calendar Days', () => {
     });
   });
 
-  describe('Month Changes by Arrows', () => {
+  describe('Month Changes by Month Arrow Buttons', () => {
     test('changes month on arrow click', () => {
       const { getByLabelText, getByTestId, standardDays } = renderCalendar();
       const nextArrow = getByLabelText(/next month/i);
@@ -331,7 +385,7 @@ describe('Calendar Days', () => {
 
       // next month arrow click
       fireEvent.click(nextArrow);
-      const hiddenNextMonthDays = Array.from(hiddenNextMonthDaysSection.children).filter(
+      const hiddenNextMonthDays = flatDays(hiddenNextMonthDaysSection).filter(
         day => !day.classList.contains('-blank'),
       );
 
@@ -355,7 +409,7 @@ describe('Calendar Days', () => {
       const mockedMonthChange = jest.fn();
       const activeDate = getToday();
       const { getByLabelText, rerender } = render(
-        <Header activeDate={activeDate} onMonthChange={mockedMonthChange} />,
+        <Header activeDate={activeDate} onMonthChange={mockedMonthChange} locale="en" />,
       );
       const nextArrow = getByLabelText(/next month/i);
 
@@ -366,6 +420,7 @@ describe('Calendar Days', () => {
           activeDate={activeDate}
           monthChangeDirection="NEXT"
           onMonthChange={mockedMonthChange}
+          locale="en"
         />,
       );
 
@@ -403,29 +458,13 @@ describe('Calendar Days', () => {
     });
 
     test('disables the related month arrow', () => {
-      const { getByLabelText, getByTestId, rerender } = renderCalendar({
+      const { getByLabelText, rerender, changeMonth } = renderCalendar({
         maximumDate: { year: 2019, month: 12, day: 10 },
         value: { year: 2019, month: 10, day: 20 },
       });
 
-      const sections = Array.from(getByTestId('days-section-wrapper').children);
-      const monthYearItems = Array.from(getByTestId('month-year-container').children);
-
       const nextArrow = getByLabelText(/next month/i);
       const previousArrow = getByLabelText(/previous month/i);
-
-      const endSlideAnimation = () => {
-        const findAnimatedChild = child => child.classList.contains('-shownAnimated');
-        const animatingMonthYearItem = monthYearItems.find(findAnimatedChild);
-        const animatingSectionItem = sections.find(findAnimatedChild);
-        fireEvent.animationEnd(animatingMonthYearItem);
-        fireEvent.animationEnd(animatingSectionItem);
-      };
-
-      const changeMonth = arrow => {
-        fireEvent.click(arrow);
-        endSlideAnimation();
-      };
 
       // next arrow basic
       expect(nextArrow).not.toHaveAttribute('disabled');
@@ -449,6 +488,82 @@ describe('Calendar Days', () => {
 
       changeMonth(previousArrow);
       expect(previousArrow).toHaveAttribute('disabled');
+    });
+  });
+
+  describe('Keyboard Navigation', () => {
+    test('navigates using arrow keys', () => {
+      const { sectionWrapper, getDay } = renderCalendar();
+      const sampleDay = getDay('15');
+
+      sampleDay.focus();
+
+      fireEvent.keyDown(sectionWrapper, { key: 'ArrowLeft' });
+      expect(document.activeElement).toBe(getDay('14'));
+
+      fireEvent.keyDown(sectionWrapper, { key: 'ArrowDown' });
+      expect(document.activeElement).toBe(getDay('21'));
+
+      fireEvent.keyDown(sectionWrapper, { key: 'ArrowRight' });
+      expect(document.activeElement).toBe(getDay('22'));
+
+      fireEvent.keyDown(sectionWrapper, { key: 'ArrowUp' });
+      expect(document.activeElement).toBe(getDay('15'));
+    });
+
+    test('hides focused day on losing focus from keyboard navigation', () => {
+      const value = { year: 2019, month: 10, day: 5 };
+      const { sectionWrapper, getDay, rerender } = renderCalendar({ value });
+      const sampleDay = getDay('10');
+      const valueDay = getDay('5');
+      const firstDay = getDay('1');
+
+      sampleDay.focus();
+
+      fireEvent.keyDown(sectionWrapper, { key: 'ArrowRight' });
+      expect(sampleDay.getAttribute('tabindex')).toBe('-1');
+
+      // shouldn't make value unreachable by keyboard
+      valueDay.focus();
+      fireEvent.keyDown(sectionWrapper, { key: 'ArrowRight' });
+      expect(valueDay.getAttribute('tabindex')).toBe('0');
+
+      // shouldn't make the first day unreachable by keyboard
+      firstDay.focus();
+      fireEvent.keyDown(sectionWrapper, { key: 'ArrowRight' });
+      expect(firstDay.getAttribute('tabindex')).toBe('0');
+
+      // shouldn't make the range starting day unreachable by keyboard
+      rerender(<Calendar value={{ from: value, to: null }} />);
+      valueDay.focus();
+      fireEvent.keyDown(sectionWrapper, { key: 'ArrowRight' });
+      expect(valueDay.getAttribute('tabindex')).toBe('0');
+
+      // shouldn't make the first of multiselectable dates day unreachable by keyboard
+      rerender(<Calendar value={[value]} />);
+      valueDay.focus();
+      fireEvent.keyDown(sectionWrapper, { key: 'ArrowRight' });
+      expect(valueDay.getAttribute('tabindex')).toBe('0');
+    });
+
+    test('selects a day on enter key press', () => {
+      const onChange = jest.fn();
+      const onDisabledDayError = jest.fn();
+      const value = { year: 2019, month: 10, day: 10 };
+      const disabledDays = [{ year: 2019, month: 10, day: 9 }];
+      const { getDay } = renderCalendar({ onChange, value, disabledDays, onDisabledDayError });
+      const sampleDay = getDay(value.day);
+      const disabledDay = getDay(disabledDays[0].day);
+
+      sampleDay.focus();
+      fireEvent.keyDown(sampleDay, { key: 'Enter' });
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange.mock.calls[0][0]).toEqual(value);
+
+      disabledDay.focus();
+      fireEvent.keyDown(disabledDay, { key: 'Enter' });
+      expect(onDisabledDayError).toHaveBeenCalledTimes(1);
+      expect(onDisabledDayError.mock.calls[0][0]).toEqual(disabledDays[0]);
     });
   });
 });

@@ -16,7 +16,7 @@ export interface CalendarProps<TValue extends Value> {
   onDisabledDayError?(value: Day): void;
   selectorStartingYear?: number;
   selectorEndingYear?: number;
-  isPersian?: boolean;
+  locale?: string;
   minimumDate?: Day;
   maximumDate?: Day;
   disabledDays?: Day[];
@@ -38,8 +38,6 @@ export function Calendar(props: CalendarProps<DayRange>): React.ReactElement;
 
 export type RenderInputProps = {
   ref: React.RefObject<HTMLElement>;
-  onFocus: React.FocusEventHandler<HTMLElement>;
-  onBlur: React.FormEventHandler<HTMLElement>;
 };
 
 export interface DatePickerProps<TValue extends Value> extends CalendarProps<TValue> {
@@ -71,4 +69,4 @@ export type Utils = {
   getLanguageDigits(digit: string | number): string;
 };
 
-export function utils(isPersian: boolean): Utils;
+export function utils(locale: string): Utils;

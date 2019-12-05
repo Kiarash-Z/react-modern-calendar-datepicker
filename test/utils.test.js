@@ -76,8 +76,8 @@ describe('Utility Functions', () => {
     let persianUtils = null;
 
     beforeAll(() => {
-      gregorianUtils = utils(false);
-      persianUtils = utils(true);
+      gregorianUtils = utils();
+      persianUtils = utils('fa');
     });
 
     test('returns correct language digits', () => {
