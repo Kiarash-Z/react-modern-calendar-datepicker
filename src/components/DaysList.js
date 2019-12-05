@@ -1,8 +1,7 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { getSlideDate, handleSlideAnimationEnd, animateContent } from '../shared/sliderHelpers';
-import utils from '../shared/localeUtils';
 import {
   deepCloneObject,
   isSameDay,
@@ -10,6 +9,8 @@ import {
   getValueType,
 } from '../shared/generalUtils';
 import { DAY_SHAPE, TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from '../shared/constants';
+import handleKeyboardNavigation from '../shared/keyboardNavigation';
+import { useLocaleUtils, useLocaleLanguage } from '../shared/hooks';
 
 const DaysList = ({
   activeDate,
@@ -21,16 +22,17 @@ const DaysList = ({
   minimumDate,
   maximumDate,
   onChange,
-  isPersian,
+  locale,
   calendarTodayClassName,
   calendarSelectedDayClassName,
   calendarRangeStartClassName,
   calendarRangeEndClassName,
   calendarRangeBetweenClassName,
   shouldHighlightWeekends,
+  isQuickSelectorOpen,
 }) => {
   const calendarSectionWrapper = useRef(null);
-
+  const { isRtl, weekDays: weekDaysList } = useLocaleLanguage(locale);
   const {
     getToday,
     isBeforeDate,
@@ -38,7 +40,8 @@ const DaysList = ({
     getMonthFirstWeekday,
     getMonthLength,
     getLanguageDigits,
-  } = useMemo(() => utils(isPersian), [isPersian]);
+    getMonthName,
+  } = useLocaleUtils(locale);
   const today = getToday();
 
   useEffect(() => {
@@ -108,19 +111,30 @@ const DaysList = ({
     if (valueType === TYPE_MUTLI_DATE) return value.some(valueDay => isSameDay(valueDay, day));
   };
 
-  const getDayClassNames = dayItem => {
+  const getDayStatus = dayItem => {
     const isToday = isSameDay(dayItem, today);
     const isSelected = isSingleDateSelected(dayItem);
     const { from: startingDay, to: endingDay } = value || {};
-    const isStartedDayRange = isSameDay(dayItem, startingDay);
+    const isStartingDayRange = isSameDay(dayItem, startingDay);
     const isEndingDayRange = isSameDay(dayItem, endingDay);
     const isWithinRange = checkDayInDayRange({ day: dayItem, from: startingDay, to: endingDay });
+    return { isToday, isSelected, isStartingDayRange, isEndingDayRange, isWithinRange };
+  };
+
+  const getDayClassNames = dayItem => {
+    const {
+      isToday,
+      isSelected,
+      isStartingDayRange,
+      isEndingDayRange,
+      isWithinRange,
+    } = getDayStatus(dayItem);
     const classNames = ''
       .concat(isToday && !isSelected ? ` -today ${calendarTodayClassName}` : '')
       .concat(!dayItem.isStandard ? ' -blank' : '')
       .concat(dayItem.isWeekend && shouldHighlightWeekends ? ' -weekend' : '')
       .concat(isSelected ? ` -selected ${calendarSelectedDayClassName}` : '')
-      .concat(isStartedDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
+      .concat(isStartingDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
       .concat(isEndingDayRange ? ` -selectedEnd ${calendarRangeEndClassName}` : '')
       .concat(isWithinRange ? ` -selectedBetween ${calendarRangeBetweenClassName}` : '')
       .concat(dayItem.isDisabled ? ' -disabled' : '');
@@ -128,21 +142,78 @@ const DaysList = ({
   };
 
   const getViewMonthDays = date => {
+    // to match month starting date with the correct weekday label
     const prependingBlankDays = createUniqueRange(getMonthFirstWeekday(date), 'starting-blank');
-
-    // all months will have an additional 7 days(week) for rendering purpose
-    const appendingBlankDays = createUniqueRange(7 - getMonthFirstWeekday(date), 'ending-blank');
-    const standardDays = createUniqueRange(getMonthLength(date)).map(
-      day => ({
-        ...day,
-        isStandard: true,
-        month: date.month,
-        year: date.year,
-      }),
-      'standard',
-    );
-    const allDays = prependingBlankDays.concat(standardDays, appendingBlankDays);
+    const standardDays = createUniqueRange(getMonthLength(date)).map(day => ({
+      ...day,
+      isStandard: true,
+      month: date.month,
+      year: date.year,
+    }));
+    console.log(standardDays);
+    const allDays = [...prependingBlankDays, ...standardDays];
     return allDays;
+  };
+
+  const handleDayPress = ({ isDisabled, ...dayItem }) => {
+    if (isDisabled) {
+      onDisabledDayError(dayItem); // good for showing error messages
+    } else handleDayClick(dayItem);
+  };
+
+  const isDayReachableByKeyboard = ({
+    isOnActiveSlide,
+    isStandard,
+    isSelected,
+    isStartingDayRange,
+    isToday,
+    day,
+  }) => {
+    if (isQuickSelectorOpen || !isOnActiveSlide || !isStandard) return false;
+    if (isSelected || isStartingDayRange || isToday || day === 1) return true;
+  };
+
+  const renderEachWeekDays = ({ id, value: day, month, year, isStandard }, index) => {
+    const dayItem = { day, month, year };
+    const isInDisabledDaysRange = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
+    const isBeforeMinimumDate = isBeforeDate(dayItem, minimumDate);
+    const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
+    const isNotInValidRange = isStandard && (isBeforeMinimumDate || isAfterMaximumDate);
+    const isDisabled = isInDisabledDaysRange || isNotInValidRange;
+    const isWeekend = (!isRtl && index % 7 === 0) || index % 7 === 6;
+    const additionalClass = getDayClassNames({ ...dayItem, isWeekend, isStandard, isDisabled });
+    const dayLabel = `${weekDaysList[index]}, ${day} ${getMonthName(month)} ${year}`;
+    const isOnActiveSlide = month === activeDate.month;
+    const dayStatus = getDayStatus(dayItem);
+    const { isSelected, isStartingDayRange, isEndingDayRange, isWithinRange } = dayStatus;
+    const shouldEnableKeyboardNavigation = isDayReachableByKeyboard({
+      ...dayItem,
+      ...dayStatus,
+      isOnActiveSlide,
+      isStandard,
+    });
+    return (
+      <div
+        tabIndex={shouldEnableKeyboardNavigation ? '0' : '-1'}
+        key={id}
+        className={`Calendar__day -${locale} ${additionalClass}`}
+        onClick={() => {
+          handleDayPress({ ...dayItem, isDisabled });
+        }}
+        onKeyDown={({ key }) => {
+          /* istanbul ignore else */
+          if (key === 'Enter') handleDayPress({ ...dayItem, isDisabled });
+        }}
+        aria-disabled={isDisabled}
+        aria-label={dayLabel}
+        aria-selected={isSelected || isStartingDayRange || isEndingDayRange || isWithinRange}
+        {...(!isStandard || !isOnActiveSlide || isQuickSelectorOpen ? { 'aria-hidden': true } : {})}
+        role="gridcell"
+        data-is-default-selectable={shouldEnableKeyboardNavigation}
+      >
+        {!isStandard ? '' : getLanguageDigits(day)}
+      </div>
+    );
   };
 
   const renderMonthDays = isInitialActiveChild => {
@@ -153,43 +224,30 @@ const DaysList = ({
       parent: calendarSectionWrapper.current,
     });
     const allDays = getViewMonthDays(date);
-    return allDays.map(({ id, value: day, month, year, isStandard }, index) => {
-      const dayItem = { day, month, year };
-      const isInDisabledDaysRange = disabledDays.some(disabledDay =>
-        isSameDay(dayItem, disabledDay),
-      );
-      const isBeforeMinimumDate = isBeforeDate(dayItem, minimumDate);
-      const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
-      const isNotInValidRange = isStandard && (isBeforeMinimumDate || isAfterMaximumDate);
-      const isDisabled = isInDisabledDaysRange || isNotInValidRange;
-      const isWeekend = (!isPersian && index % 7 === 0) || index % 7 === 6;
-      const additionalClass = getDayClassNames({ ...dayItem, isWeekend, isStandard, isDisabled });
+    const renderSingleWeekRow = weekRowIndex => {
+      const eachWeekDays = allDays
+        .slice(weekRowIndex * 7, weekRowIndex * 7 + 7)
+        .map(renderEachWeekDays);
       return (
-        <button
-          tabIndex="-1"
-          key={id}
-          className={`Calendar__day ${isPersian ? '-persian' : '-gregorian'}${additionalClass}`}
-          onClick={() => {
-            if (isDisabled) {
-              onDisabledDayError(dayItem); // good for showing error messages
-              return;
-            }
-            handleDayClick({ day, month, year });
-          }}
-          disabled={!isStandard}
-          type="button"
-        >
-          {!isStandard ? '' : getLanguageDigits(day)}
-        </button>
+        <div key={String(weekRowIndex)} className="Calendar__weekRow" role="row">
+          {eachWeekDays}
+        </div>
       );
-    });
+    };
+    return Array.from(Array(6).keys()).map(renderSingleWeekRow);
+  };
+
+  const handleKeyDown = e => {
+    handleKeyboardNavigation(e, { allowVerticalArrows: true });
   };
 
   return (
     <div
       ref={calendarSectionWrapper}
       className="Calendar__sectionWrapper"
+      role="presentation"
       data-testid="days-section-wrapper"
+      onKeyDown={handleKeyDown}
     >
       <div
         onAnimationEnd={e => {
@@ -197,6 +255,7 @@ const DaysList = ({
           onSlideChange();
         }}
         className="Calendar__section -shown"
+        role="rowgroup"
       >
         {renderMonthDays(true)}
       </div>
@@ -206,6 +265,7 @@ const DaysList = ({
           onSlideChange();
         }}
         className="Calendar__section -hiddenNext"
+        role="rowgroup"
       >
         {renderMonthDays(false)}
       </div>
@@ -223,6 +283,7 @@ DaysList.propTypes = {
   calendarRangeBetweenClassName: PropTypes.string,
   calendarRangeEndClassName: PropTypes.string,
   shouldHighlightWeekends: PropTypes.bool,
+  isQuickSelectorOpen: PropTypes.bool.isRequired,
 };
 
 DaysList.defaultProps = {

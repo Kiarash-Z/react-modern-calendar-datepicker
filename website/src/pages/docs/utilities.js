@@ -1,19 +1,21 @@
 import React from 'react';
 import { utils } from 'react-modern-calendar-datepicker';
+import { Link } from 'gatsby';
 import Docs from '../../containers/docs';
 
 import { Code } from '../../components';
 
-
 const Utilities = () => {
   const gregorianToday = utils().getToday();
-  const persianToday = utils(true).getToday();
+  const persianToday = utils('fa').getToday();
   return (
     <Docs title="Utilities">
       <p className="Docs__paragraph">
-        Along with exported components, there are utility date-based functions available
-        for you to use. the first parameter of <code className="custom-code">utils</code> function, is
-        for using Persian language for utils (default to false). Here are some examples:
+        Along with exported components, there are utility date-based functions
+        available for you to use. the first parameter of{' '}
+        <code className="custom-code">utils</code> function, is the locale
+        language of utils (default to <Link className="Docs__link" to="/docs/props-list"><code className="custom-code">en</code></Link>
+        ). Here are some examples:
       </p>
 
       <h2 className="Docs__titleSecondary">Get Today</h2>
@@ -23,7 +25,7 @@ const Utilities = () => {
 import { utils } from 'react-modern-calendar-datepicker';
 
 const gregorianToday = utils().getToday(); // { year: ${gregorianToday.year}, month: ${gregorianToday.month}, day: ${gregorianToday.day} }
-const persianToday = utils(true).getToday(); // { year: ${persianToday.year}, month: ${persianToday.month}, day: ${persianToday.day} }
+const persianToday = utils('fa').getToday(); // { year: ${persianToday.year}, month: ${persianToday.month}, day: ${persianToday.day} }
         `}
       </Code>
 

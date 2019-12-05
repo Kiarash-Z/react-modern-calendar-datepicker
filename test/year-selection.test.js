@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, within } from '@testing-library/react';
 
 import { Calendar } from '../src';
 import {
@@ -8,13 +8,23 @@ import {
 } from '../src/shared/constants';
 
 const renderYearSelector = (shouldOpenSelector = true, props) => {
-  const selectors = render(<Calendar {...props} />);
+  const { getAllByText, getByTestId, rerender } = render(<Calendar {...props} />);
   const thisYearText = new Date().getFullYear();
-  const [yearButton] = selectors.getAllByText(String(thisYearText));
-  const yearSelector = selectors.getByTestId('year-selector');
+  const [yearButton] = getAllByText(String(thisYearText));
+  const yearSelector = getByTestId('year-selector');
+  const yearSelectorWrapper = getByTestId('year-selector-wrapper');
   const yearsChildren = Array.from(yearSelector.children);
+  const selectors = within(yearSelector);
   if (shouldOpenSelector) fireEvent.click(yearButton);
-  return { ...selectors, yearButton, yearSelector, thisYearText, yearsChildren };
+  return {
+    ...selectors,
+    rerender,
+    yearSelectorWrapper,
+    yearButton,
+    yearSelector,
+    thisYearText,
+    yearsChildren,
+  };
 };
 
 describe('Year Selection', () => {
@@ -94,5 +104,25 @@ describe('Year Selection', () => {
     expect(getByText('2022')).not.toHaveAttribute('disabled');
     expect(getByText('2023')).toHaveAttribute('disabled');
     expect(getByText('2024')).toHaveAttribute('disabled');
+  });
+
+  test('navigates by keyboard', () => {
+    const value = { year: 2019, month: 10, day: 1 };
+    const { getByText, yearSelectorWrapper } = renderYearSelector(true, { value });
+
+    expect(getByText('2019')).toBePressed();
+    getByText('2019').focus();
+    fireEvent.keyDown(yearSelectorWrapper, { key: 'ArrowLeft' });
+    expect(document.activeElement).toBe(getByText('2018'));
+
+    // keeps active year reachable by keyboard
+    expect(getByText('2019')).toHaveTabIndex(0);
+
+    // makes inactive year unreachable by keyboard
+    fireEvent.keyDown(yearSelectorWrapper, { key: 'ArrowLeft' });
+    expect(getByText('2018')).toHaveTabIndex(-1);
+
+    fireEvent.keyDown(yearSelectorWrapper, { key: 'ArrowRight' });
+    expect(document.activeElement).toBe(getByText('2018'));
   });
 });

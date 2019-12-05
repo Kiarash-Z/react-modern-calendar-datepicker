@@ -83,7 +83,7 @@ function SEO({ description, lang, meta, keywords, title }) {
         },
         {
           name: 'keywords',
-          content: 'React,Persian,Calendar,Date Picker,React Persian Calendar Date Picker, Picker, Date'
+          content: 'React,Modern,Calendar,Date Picker,React Modern Calendar Date Picker, Picker, Date, Persian Date Picker, Persian'
         },
         {
           name: 'theme-color',

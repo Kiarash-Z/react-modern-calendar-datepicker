@@ -1,68 +1,135 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
-import DatePicker from '../src';
+import DatePicker, { Calendar } from '../src';
+
+const renderOpenDatePicker = (renderProps = {}) => {
+  const { getByTestId, ...otherSelectors } = render(<DatePicker {...renderProps} />);
+  const input = getByTestId('datepicker-input');
+  fireEvent.focus(input);
+  return { getByTestId, ...otherSelectors, input };
+};
 
 describe('DatePicker Visibility', () => {
   test('toggles correctly on input focus/blur', () => {
-    const { container, getByTestId } = render(<DatePicker />);
-    const calendarContainer = getByTestId('calendar-container');
+    const { queryByTestId, getByTestId, getByText } = render(
+      <div>
+        <DatePicker />
+        <button type="button">out</button>
+      </div>,
+    );
     const input = getByTestId('datepicker-input');
+    const button = getByText(/out/i);
+    const getCalendarContainer = () => queryByTestId('calendar-container');
+
+    // closed by default
+    expect(getCalendarContainer()).not.toBeInTheDocument();
 
     // opens correctly
     fireEvent.focus(input);
-    expect(container.firstChild).toHaveClass('-calendarOpen');
+    expect(getCalendarContainer()).toBeInTheDocument();
 
-    const elementBoundaries = { left: 50, top: 50, right: 150, bottom: 150 };
-    calendarContainer.getBoundingClientRect = jest.fn(() => elementBoundaries);
-
-    // stays open when input blur gets fired and mouse position is in the calendar boundaries
-    const insideCalendarMousePosition = { clientX: 60, clientY: 60 };
-    fireEvent(document, new MouseEvent('mousemove', insideCalendarMousePosition));
+    // closes when clicked outside
+    fireEvent.click(button);
     fireEvent.blur(input);
-    expect(container.firstChild).toHaveClass('-calendarOpen');
+    expect(getCalendarContainer()).not.toBeInTheDocument();
 
-    // closes when input blur gets fired and mouse position is outside the calendar boundaries
-    const outsideCalendarMousePosition = { clientX: 10, clientY: 10 };
-    fireEvent(document, new MouseEvent('mousemove', outsideCalendarMousePosition));
+    // stays open when clicked inside
+    fireEvent.focus(input);
+    fireEvent.mouseDown(getCalendarContainer());
     fireEvent.blur(input);
-    expect(container.firstChild).not.toHaveClass('-calendarOpen');
-    expect(calendarContainer.getBoundingClientRect).toHaveBeenCalled();
+    expect(getCalendarContainer()).toBeInTheDocument();
+  });
+
+  test('toggles date picker by keyboard', () => {
+    const { input, queryByTestId } = renderOpenDatePicker();
+
+    fireEvent.keyUp(input, { key: 'Escape' });
+
+    expect(document.activeElement).toBe(input);
+    expect(queryByTestId('calendar-container')).not.toBeInTheDocument();
+
+    fireEvent.keyUp(input, { key: 'Enter' });
+
+    expect(queryByTestId('calendar-container')).toBeInTheDocument();
+  });
+
+  test('closes on window blur', () => {
+    const { queryByTestId } = renderOpenDatePicker();
+    fireEvent.blur(window);
+    expect(queryByTestId('calendar-container')).not.toBeInTheDocument();
   });
 
   test('aligns according to window visible boundaries', () => {
-    const { getByTestId, rerender } = render(<DatePicker />);
-    const calendarContainer = getByTestId('calendar-container');
+    // TODO: complete test (https://github.com/jsdom/jsdom/issues/1332)
+    const { rerender, queryByTestId, getByTestId } = render(<DatePicker />);
+
     const input = getByTestId('datepicker-input');
-    // TODO: complete test (https://github.com/testing-library/dom-testing-library/issues/387)
+
+    HTMLDivElement.prototype.getBoundingClientRect = jest.fn(() => ({
+      left: 50,
+      width: 100,
+    }));
+    input.focus();
 
     // overflow from right
-    calendarContainer.getBoundingClientRect = jest.fn(() => ({ left: 50, width: 100 }));
     Object.defineProperty(document.documentElement, 'clientWidth', { value: 100 });
-    fireEvent.focus(input);
+    input.blur();
 
     // overflow from left
-    fireEvent.blur(input);
-    calendarContainer.getBoundingClientRect = jest.fn(() => ({ left: -50, width: 100 }));
+    HTMLDivElement.prototype.getBoundingClientRect = jest.fn(() => ({
+      left: -50,
+      width: 100,
+    }));
+    input.focus();
+    queryByTestId('calendar-container').getBoundingClientRect = jest.fn(() => ({
+      left: -50,
+      width: 100,
+    }));
     rerender(<DatePicker />);
     fireEvent.focus(input);
   });
 
-  test('closes calendar on single day selection', () => {
-    const { container, getAllByText, getByTestId } = render(
-      <DatePicker value={null} onChange={() => {}} />,
+  test('keeps calendar open on inner element focus', () => {
+    const { getAllByText, queryByTestId, input } = renderOpenDatePicker();
+    const sampleDay = getAllByText('1')[0];
+    fireEvent.blur(input, { relatedTarget: sampleDay });
+
+    expect(queryByTestId('calendar-container')).toBeInTheDocument();
+  });
+
+  test('closes calendar on out element focus', () => {
+    const { getByTestId, getByText, queryByTestId } = render(
+      <div>
+        <DatePicker />
+        <button type="button">out</button>
+      </div>,
     );
+    const input = getByTestId('datepicker-input');
+    const button = getByText(/out/i);
+    input.focus();
+    button.focus();
+
+    expect(queryByTestId('calendar-container')).not.toBeInTheDocument();
+  });
+
+  test('closes calendar on single day selection', () => {
+    const { queryByTestId, getAllByText, getByTestId } = renderOpenDatePicker({
+      value: null,
+      onChange: () => {},
+    });
     const monthDay = getAllByText('1')[0];
     const input = getByTestId('datepicker-input');
     input.focus();
     fireEvent.click(monthDay);
-    expect(container.firstChild).not.toHaveClass('-calendarOpen');
+    expect(queryByTestId('calendar-container')).not.toBeInTheDocument();
   });
 
   test('closes calendar on day range selection', () => {
-    const { container, getAllByText, getByTestId, rerender } = render(
-      <DatePicker value={{ from: null, to: null }} onChange={() => {}} />,
-    );
+    const { getAllByText, getByTestId, queryByTestId, rerender } = renderOpenDatePicker({
+      value: { from: null, to: null },
+      onChange: () => {},
+    });
     const input = getByTestId('datepicker-input');
     const rangeStart = getAllByText('1')[0];
     const rangeEnd = getAllByText('5')[0];
@@ -77,18 +144,19 @@ describe('DatePicker Visibility', () => {
     );
 
     // calendar still open
-    expect(container.firstChild).toHaveClass('-calendarOpen');
+    expect(queryByTestId('calendar-container')).toBeInTheDocument();
 
     fireEvent.click(rangeEnd);
 
     // now closed
-    expect(container.firstChild).not.toHaveClass('-calendarOpen');
+    expect(queryByTestId('calendar-container')).not.toBeInTheDocument();
   });
 
   test('keeps calendar open on multi day selection', () => {
-    const { container, getAllByText, getByTestId } = render(
-      <DatePicker value={[]} onChange={() => {}} />,
-    );
+    const { getAllByText, getByTestId } = renderOpenDatePicker({
+      value: [],
+      onChange: () => {},
+    });
     const input = getByTestId('datepicker-input');
     const day1 = getAllByText('1')[0];
     const day2 = getAllByText('5')[0];
@@ -99,6 +167,14 @@ describe('DatePicker Visibility', () => {
     fireEvent.click(day2);
     fireEvent.click(day3);
 
-    expect(container.firstChild).toHaveClass('-calendarOpen');
+    expect(getByTestId('calendar-container')).toBeInTheDocument();
+  });
+
+  test('adds focus style on keyboard navigation', () => {
+    const { container } = render(<Calendar value={null} />);
+
+    expect(container.firstChild).toHaveClass('-noFocusOutline');
+    fireEvent.keyUp(container.firstChild, { key: 'Tab' });
+    expect(container.firstChild).not.toHaveClass('-noFocusOutline');
   });
 });

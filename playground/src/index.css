@@ -12,5 +12,5 @@ body {
   display: flex;
   justify-content: center;
   padding-top: 10rem;
-  height: 100vh;
+  height: 100%;
 }

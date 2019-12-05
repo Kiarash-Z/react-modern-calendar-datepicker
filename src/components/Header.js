@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-import utils from '../shared/localeUtils';
 import { isSameDay } from '../shared/generalUtils';
 import { getSlideDate, animateContent, handleSlideAnimationEnd } from '../shared/sliderHelpers';
+import { useLocaleUtils, useLocaleLanguage } from '../shared/hooks';
 
 const Header = ({
   maximumDate,
@@ -14,14 +14,21 @@ const Header = ({
   onYearSelect,
   isMonthSelectorOpen,
   isYearSelectorOpen,
-  isPersian,
+  locale,
 }) => {
   const headerElement = useRef(null);
   const monthYearWrapperElement = useRef(null);
 
-  const { getMonthName, isBeforeDate, getLanguageDigits } = useMemo(() => utils(isPersian), [
-    isPersian,
-  ]);
+  const { getMonthName, isBeforeDate, getLanguageDigits } = useLocaleUtils(locale);
+  const {
+    isRtl,
+    nextMonth,
+    previousMonth,
+    openMonthSelector,
+    closeMonthSelector,
+    openYearSelector,
+    closeYearSelector,
+  } = useLocaleLanguage(locale);
 
   useEffect(() => {
     if (!monthChangeDirection) return;
@@ -48,9 +55,15 @@ const Header = ({
     const secondaryElement = hasMonthSelectorToggled ? yearText : monthText;
 
     let translateXDirection = hasMonthSelectorToggled ? 1 : -1;
-    if (isPersian) translateXDirection *= -1;
-    const scale = !isOpen ? 1 : 1.05;
+    if (isRtl) translateXDirection *= -1;
+    const scale = !isOpen ? 0.95 : 1;
     const translateX = !isOpen ? 0 : `${(translateXDirection * secondaryElement.offsetWidth) / 2}`;
+    if (!isOpen) {
+      secondaryElement.removeAttribute('aria-hidden');
+    } else {
+      secondaryElement.setAttribute('aria-hidden', true);
+    }
+    secondaryElement.setAttribute('tabindex', isOpen ? '-1' : '0');
     secondaryElement.style.transform = '';
     primaryElement.style.transform = `scale(${scale}) ${
       translateX ? `translateX(${translateX}px)` : ''
@@ -58,7 +71,15 @@ const Header = ({
     primaryElement.classList.toggle('-activeBackground');
     secondaryElement.classList.toggle('-hidden');
     arrows.forEach(arrow => {
+      const isHidden = arrow.classList.contains('-hidden');
       arrow.classList.toggle('-hidden');
+      if (isHidden) {
+        arrow.removeAttribute('aria-hidden');
+        arrow.setAttribute('tabindex', '0');
+      } else {
+        arrow.setAttribute('aria-hidden', true);
+        arrow.setAttribute('tabindex', '-1');
+      }
     });
   }, [isMonthSelectorOpen, isYearSelectorOpen]);
 
@@ -90,19 +111,57 @@ const Header = ({
     onMonthChange(direction);
   };
 
+  // first button text is the one who shows the current month and year(initial active child)
+  const monthYearButtons = [true, false].map(isInitialActiveChild => {
+    const { month, year } = getMonthYearText(isInitialActiveChild);
+    const isActiveMonth = month === getMonthName(activeDate.month);
+    const hiddenStatus = {
+      ...(isActiveMonth ? {} : { 'aria-hidden': true }),
+    };
+    return (
+      <div
+        onAnimationEnd={handleSlideAnimationEnd}
+        className={`Calendar__monthYear ${isInitialActiveChild ? '-shown' : '-hiddenNext'}`}
+        role="presentation"
+        key={String(isInitialActiveChild)}
+        {...hiddenStatus}
+      >
+        <button
+          onClick={onMonthSelect}
+          type="button"
+          className="Calendar__monthText"
+          aria-label={isMonthSelectorOpen ? closeMonthSelector : openMonthSelector}
+          tabIndex={isActiveMonth ? '0' : '-1'}
+          {...hiddenStatus}
+        >
+          {month}
+        </button>
+        <button
+          onClick={onYearSelect}
+          type="button"
+          className="Calendar__yearText"
+          aria-label={isYearSelectorOpen ? closeYearSelector : openYearSelector}
+          tabIndex={isActiveMonth ? '0' : '-1'}
+          {...hiddenStatus}
+        >
+          {year}
+        </button>
+      </div>
+    );
+  });
+
   return (
     <div ref={headerElement} className="Calendar__header">
       <button
-        tabIndex="-1"
         className="Calendar__monthArrowWrapper -right"
         onClick={() => {
           onMonthChangeTrigger('PREVIOUS');
         }}
-        aria-label={isPersian ? 'ماه قبل' : 'previous month'}
+        aria-label={previousMonth}
         type="button"
         disabled={isPreviousMonthArrowDisabled}
       >
-        <span className="Calendar__monthArrow">&nbsp;</span>
+        <span className="Calendar__monthArrow" />
       </button>
       <div
         className="Calendar__monthYearContainer"
@@ -110,44 +169,18 @@ const Header = ({
         data-testid="month-year-container"
       >
         &nbsp;
-        <div onAnimationEnd={handleSlideAnimationEnd} className="Calendar__monthYear -shown">
-          <button
-            tabIndex="-1"
-            onClick={onMonthSelect}
-            type="button"
-            className="Calendar__monthText"
-          >
-            {getMonthYearText(true).month}
-          </button>
-          <button tabIndex="-1" onClick={onYearSelect} type="button" className="Calendar__yearText">
-            {getMonthYearText(true).year}
-          </button>
-        </div>
-        <div onAnimationEnd={handleSlideAnimationEnd} className="Calendar__monthYear -hiddenNext">
-          <button
-            tabIndex="-1"
-            onClick={onMonthSelect}
-            type="button"
-            className="Calendar__monthText"
-          >
-            {getMonthYearText(false).month}
-          </button>
-          <button tabIndex="-1" onClick={onYearSelect} type="button" className="Calendar__yearText">
-            {getMonthYearText(false).year}
-          </button>
-        </div>
+        {monthYearButtons}
       </div>
       <button
-        tabIndex="-1"
         className="Calendar__monthArrowWrapper -left"
         onClick={() => {
           onMonthChangeTrigger('NEXT');
         }}
-        aria-label={isPersian ? 'ماه بعد' : 'next month'}
+        aria-label={nextMonth}
         type="button"
         disabled={isNextMonthArrowDisabled}
       >
-        <span className="Calendar__monthArrow">&nbsp;</span>
+        <span className="Calendar__monthArrow" />
       </button>
     </div>
   );

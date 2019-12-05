@@ -1,16 +1,10 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 import { isSameDay } from '../shared/generalUtils';
-import utils from '../shared/localeUtils';
+import handleKeyboardNavigation from '../shared/keyboardNavigation';
+import { useLocaleUtils, useLocaleLanguage } from '../shared/hooks';
 
-const MonthSelector = ({
-  activeDate,
-  maximumDate,
-  minimumDate,
-  onMonthSelect,
-  isOpen,
-  isPersian,
-}) => {
+const MonthSelector = ({ activeDate, maximumDate, minimumDate, onMonthSelect, isOpen, locale }) => {
   const monthSelector = useRef(null);
 
   useEffect(() => {
@@ -18,7 +12,12 @@ const MonthSelector = ({
     monthSelector.current.classList[classToggleMethod]('-open');
   }, [isOpen]);
 
-  const { getMonthNumber, isBeforeDate, monthsList } = useMemo(() => utils(isPersian), [isPersian]);
+  const { getMonthNumber, isBeforeDate } = useLocaleUtils(locale);
+  const { months: monthsList } = useLocaleLanguage(locale);
+
+  const handleKeyDown = e => {
+    handleKeyboardNavigation(e, { allowVerticalArrows: false });
+  };
 
   const renderMonthSelectorItems = () =>
     monthsList.map(persianMonth => {
@@ -30,33 +29,43 @@ const MonthSelector = ({
         minimumDate &&
         (isBeforeDate({ ...monthDate, month: monthNumber + 1 }, minimumDate) ||
           isSameDay({ ...monthDate, month: monthNumber + 1 }, minimumDate));
+      const isSelected = monthNumber === activeDate.month;
       return (
-        <div
+        <li
           key={persianMonth}
-          className={`Calendar__monthSelectorItem ${
-            monthNumber === activeDate.month ? '-active' : ''
-          }`}
+          className={`Calendar__monthSelectorItem ${isSelected ? '-active' : ''}`}
         >
           <button
-            tabIndex="-1"
+            tabIndex={isSelected && isOpen ? '0' : '-1'}
             onClick={() => {
               onMonthSelect(monthNumber);
             }}
             className="Calendar__monthSelectorItemText"
             type="button"
             disabled={isAfterMaximumDate || isBeforeMinimumDate}
+            aria-pressed={isSelected}
+            data-is-default-selectable={isSelected}
           >
             {persianMonth}
           </button>
-        </div>
+        </li>
       );
     });
   return (
-    <div className="Calendar__monthSelectorAnimationWrapper">
-      <div className="Calendar__monthSelectorWrapper">
-        <div data-testid="month-selector" ref={monthSelector} className="Calendar__monthSelector">
+    <div
+      role="presentation"
+      className="Calendar__monthSelectorAnimationWrapper"
+      {...(isOpen ? {} : { 'aria-hidden': true })}
+    >
+      <div
+        role="presentation"
+        data-testid="month-selector-wrapper"
+        className="Calendar__monthSelectorWrapper"
+        onKeyDown={handleKeyDown}
+      >
+        <ul ref={monthSelector} className="Calendar__monthSelector" data-testid="month-selector">
           {renderMonthSelectorItems()}
-        </div>
+        </ul>
       </div>
     </div>
   );

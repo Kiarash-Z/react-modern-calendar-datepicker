@@ -1,9 +1,9 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import utils from './shared/localeUtils';
 import { getDateAccordingToMonth, shallowClone, getValueType } from './shared/generalUtils';
 import { DAY_SHAPE, TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
+import { useLocaleUtils, useLocaleLanguage } from './shared/hooks';
 
 import { Header, MonthSelector, YearSelector, DaysList } from './components';
 
@@ -20,11 +20,12 @@ const Calendar = ({
   disabledDays,
   colorPrimary,
   colorPrimaryLight,
+  slideAnimationDuration,
   minimumDate,
   maximumDate,
   selectorStartingYear,
   selectorEndingYear,
-  isPersian,
+  locale,
   shouldHighlightWeekends,
 }) => {
   const calendarElement = useRef(null);
@@ -35,7 +36,19 @@ const Calendar = ({
     isYearSelectorOpen: false,
   });
 
-  const { getToday, weekDaysList } = useMemo(() => utils(isPersian), [isPersian]);
+  useEffect(() => {
+    const handleKeyUp = ({ key }) => {
+      /* istanbul ignore else */
+      if (key === 'Tab') calendarElement.current.classList.remove('-noFocusOutline');
+    };
+    calendarElement.current.addEventListener('keyup', handleKeyUp, false);
+    return () => {
+      calendarElement.current.removeEventListener('keyup', handleKeyUp, false);
+    };
+  });
+
+  const { getToday } = useLocaleUtils(locale);
+  const { weekDays: weekDaysList } = useLocaleLanguage(locale);
   const today = getToday();
 
   const createStateToggler = property => () => {
@@ -57,12 +70,11 @@ const Calendar = ({
     ? shallowClone(mainState.activeDate)
     : getComputedActiveDate();
 
-  const renderWeekDays = () =>
-    weekDaysList.map(weekDay => (
-      <span key={weekDay} className="Calendar__weekDay">
-        {weekDay[0]}
-      </span>
-    ));
+  const weekdays = weekDaysList.map(weekDay => (
+    <abbr key={weekDay} title={weekDay} className="Calendar__weekDay">
+      {weekDay[0]}
+    </abbr>
+  ));
 
   const handleMonthChange = direction => {
     setMainState({
@@ -73,6 +85,7 @@ const Calendar = ({
 
   const updateDate = () => {
     setMainState({
+      ...mainState,
       activeDate: getDateAccordingToMonth(activeDate, mainState.monthChangeDirection),
       monthChangeDirection: '',
     });
@@ -96,8 +109,13 @@ const Calendar = ({
 
   return (
     <div
-      className={`Calendar ${calendarClassName} ${isPersian ? '-persian' : ''}`}
-      style={{ '--cl-color-primary': colorPrimary, '--cl-color-primary-light': colorPrimaryLight }}
+      className={`Calendar -noFocusOutline ${calendarClassName} -${locale}`}
+      role="grid"
+      style={{
+        '--cl-color-primary': colorPrimary,
+        '--cl-color-primary-light': colorPrimaryLight,
+        '--animation-duration': slideAnimationDuration,
+      }}
       ref={calendarElement}
     >
       <Header
@@ -110,7 +128,7 @@ const Calendar = ({
         monthChangeDirection={mainState.monthChangeDirection}
         isMonthSelectorOpen={mainState.isMonthSelectorOpen}
         isYearSelectorOpen={mainState.isYearSelectorOpen}
-        isPersian={isPersian}
+        locale={locale}
       />
 
       <MonthSelector
@@ -119,7 +137,7 @@ const Calendar = ({
         onMonthSelect={selectMonth}
         maximumDate={maximumDate}
         minimumDate={minimumDate}
-        isPersian={isPersian}
+        locale={locale}
       />
 
       <YearSelector
@@ -130,10 +148,10 @@ const Calendar = ({
         selectorEndingYear={selectorEndingYear}
         maximumDate={maximumDate}
         minimumDate={minimumDate}
-        isPersian={isPersian}
+        locale={locale}
       />
 
-      <div className="Calendar__weekDays">{renderWeekDays()}</div>
+      <div className="Calendar__weekDays">{weekdays}</div>
 
       <DaysList
         activeDate={activeDate}
@@ -150,8 +168,9 @@ const Calendar = ({
         calendarRangeStartClassName={calendarRangeStartClassName}
         calendarRangeEndClassName={calendarRangeEndClassName}
         calendarRangeBetweenClassName={calendarRangeBetweenClassName}
-        isPersian={isPersian}
+        locale={locale}
         shouldHighlightWeekends={shouldHighlightWeekends}
+        isQuickSelectorOpen={mainState.isYearSelectorOpen || mainState.isMonthSelectorOpen}
       />
     </div>
   );
@@ -162,8 +181,9 @@ Calendar.defaultProps = {
   maximumDate: null,
   colorPrimary: '#0eca2d',
   colorPrimaryLight: '#cff4d5',
+  slideAnimationDuration: '0.4s',
   calendarClassName: '',
-  isPersian: false,
+  locale: 'en',
   value: null,
 };
 
@@ -176,9 +196,10 @@ Calendar.propTypes = {
   calendarClassName: PropTypes.string,
   colorPrimary: PropTypes.string,
   colorPrimaryLight: PropTypes.string,
+  slideAnimationDuration: PropTypes.string,
   minimumDate: PropTypes.shape(DAY_SHAPE),
   maximumDate: PropTypes.shape(DAY_SHAPE),
-  isPersian: PropTypes.bool,
+  locale: PropTypes.oneOf(['en', 'fa']),
 };
 
 export { Calendar };

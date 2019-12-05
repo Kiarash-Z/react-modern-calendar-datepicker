@@ -9,13 +9,13 @@ const DefaultValues = () => {
   const [datePicker2Value, setDatePicker2Value] = useState(null);
 
   return (
-    <Docs title="Persian Calendar">
+    <Docs title="Different Locales">
       <p>
-        Turning this date picker into a Persian date picker is as easy as adding
-        a <code className="custom-code">isPersian</code> prop. For
-        other features like minimum and maximum dates, just use them like the gregorian calendar:
+        Turning this date picker into another locale date picker is as easy as changing
+        the <code className="custom-code">locale</code> prop. For
+        other features like minimum and maximum dates, just use them as you would normally use:
       </p>
-      <h2 className="Docs__titleSecondary"><code className="custom-code">{`<DatePicker />`}</code></h2>
+      <h2 className="Docs__titleSecondary">Persian Locale</h2>
       <div className="Docs__sampleContainer">
         <Code language="javascript">
           {`
@@ -30,7 +30,7 @@ const App = () => {
       value={selectedDay}
       onChange={setSelectedDay}
       shouldHighlightWeekends
-      isPersian // add this
+      locale="fa // add this
     />
   );
 };
@@ -44,12 +44,11 @@ export default App;
           wrapperClassName="fontWrapper -persian"
           value={datePicker1Value}
           onChange={setDatePicker1Value}
-          isPersian
+          locale="fa"
           shouldHighlightWeekends
         />
       </div>
 
-      <h2 className="Docs__titleSecondary"><code className="custom-code">{`<Calendar />`}</code></h2>
       <div className="Docs__sampleContainer">
               <Code language="javascript">
                 {`
@@ -64,7 +63,7 @@ const App = () => {
       value={selectedDay}
       onChange={setSelectedDay}
       shouldHighlightWeekends
-      isPersian // add this
+      locale="fa" // add this
     />
   );
 };
@@ -77,7 +76,7 @@ export default App;
                 calendarClassName="fontWrapper -persian responsive-calendar"
                 value={datePicker2Value}
                 onChange={setDatePicker2Value}
-                isPersian
+                locale="fa"
                 shouldHighlightWeekends
               />
             </div>
