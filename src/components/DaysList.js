@@ -150,7 +150,6 @@ const DaysList = ({
       month: date.month,
       year: date.year,
     }));
-    console.log(standardDays);
     const allDays = [...prependingBlankDays, ...standardDays];
     return allDays;
   };
