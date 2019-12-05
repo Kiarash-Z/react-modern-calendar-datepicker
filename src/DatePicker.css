@@ -374,7 +374,8 @@
   transform: translateY(0);
 }
 
-.Calendar__yearSelectorText:focus, .Calendar__monthSelectorItemText:focus {
+.Calendar__yearSelectorText:focus,
+.Calendar__monthSelectorItemText:focus {
   outline: 1px dashed rgba(0, 0, 0, 0.4);
   outline-offset: 2px;
 }
