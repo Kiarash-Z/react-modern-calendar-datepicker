@@ -50,9 +50,9 @@ export interface DatePickerProps<TValue extends Value> extends CalendarProps<TVa
 
 type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-export function DatePicker(props: Optional<DatePickerProps<Day>, 'value'>): React.ReactElement;
-export function DatePicker(props: DatePickerProps<Day[]>): React.ReactElement;
-export function DatePicker(props: DatePickerProps<DayRange>): React.ReactElement;
+function DatePicker(props: Optional<DatePickerProps<Day>, 'value'>): React.ReactElement;
+function DatePicker(props: DatePickerProps<Day[]>): React.ReactElement;
+function DatePicker(props: DatePickerProps<DayRange>): React.ReactElement;
 
 export default DatePicker;
 
