@@ -5,7 +5,6 @@ import {
   getDateAccordingToMonth,
   getValueType,
   toExtendedDay,
-  deepCloneObject,
 } from '../src/shared/generalUtils';
 import {
   PERSIAN_MONTHS,
@@ -69,13 +68,6 @@ describe('Utility Functions', () => {
       expect(() => {
         getValueType(malformedDate);
       }).toThrow(TypeError);
-    });
-
-    test('includes undefined values in deep cloning object', () => {
-      expect(deepCloneObject({ from: undefined, to: undefined })).toEqual({
-        from: null,
-        to: null,
-      });
     });
   });
 
