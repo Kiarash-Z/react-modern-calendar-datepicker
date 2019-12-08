@@ -21,7 +21,8 @@ const toExtendedDay = date => [date.year, date.month, date.day];
 
 const shallowClone = value => ({ ...value });
 
-const deepCloneObject = obj => JSON.parse(JSON.stringify(obj));
+const deepCloneObject = obj =>
+  JSON.parse(JSON.stringify(obj, (key, value) => (typeof value === 'undefined' ? null : value)));
 
 const getDateAccordingToMonth = (date, direction) => {
   const toSum = direction === 'NEXT' ? 1 : -1;
