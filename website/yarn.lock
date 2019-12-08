@@ -6162,6 +6162,7 @@ iterall@^1.2.2:
 jalaali-js@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/jalaali-js/-/jalaali-js-1.1.0.tgz#f0e942049273d11f7298a992356fc36ce2784863"
+  integrity sha512-eznOFGRtHb0ttHkHf8pVYPVfKJdbOqutTwcQYACbv91Q2NiYgnM5Z6+NN/8FMAhuMDAXAmeAG9+UBzqVKdA4cg==
 
 jest-worker@^24.9.0:
   version "24.9.0"
@@ -8499,10 +8500,10 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-modern-calendar-datepicker@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/react-modern-calendar-datepicker/-/react-modern-calendar-datepicker-1.1.1.tgz#c4ddeeba9f6f95ec93c58cf0ab705e28e9825615"
-  integrity sha512-8Ks3aqjyEWobM3O9iVqu0e8aStaOkV0/gSOmNjI5qSUSYxtvTyjUGEjvfvQpme2OsINvb8epIkwU8qE+qTN/Nw==
+react-modern-calendar-datepicker@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-modern-calendar-datepicker/-/react-modern-calendar-datepicker-1.1.2.tgz#ebc2f59bc58649663340d3a4f617dab1b7c276a5"
+  integrity sha512-xJ03yODVbJNIOhMuxibL9q6uYZQA1/t+8Nbh/SAwrBCXB7WX3QIs9l8/oEyv+heXQ7gC1JXIsjyM5g86yRUumQ==
   dependencies:
     jalaali-js "^1.1.0"
     prop-types "^15.7.2"
