@@ -21,6 +21,20 @@
   color: #979797;
 }
 
+.DatePicker__calendarArrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-style: solid;
+  z-index: 10;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #fff transparent;
+}
+
 .DatePicker__calendarContainer {
   position: absolute;
   top: calc(100% + 20px);
@@ -62,21 +76,6 @@
 
 .Calendar.-noFocusOutline *:focus {
   outline: none !important;
-}
-
-.Calendar::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0;
-  top: -1em;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  border-style: solid;
-  z-index: 10;
-  border-width: 0 1em 1em 1em;
-  border-color: transparent transparent #fff transparent;
 }
 
 .Calendar button {

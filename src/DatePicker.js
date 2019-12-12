@@ -134,6 +134,7 @@ const DatePicker = ({
         renderInput={renderInput}
         locale={locale}
       />
+      {isCalendarOpen && <div className="DatePicker__calendarArrow" />}
       {isCalendarOpen && (
         <div
           ref={calendarContainerElement}
