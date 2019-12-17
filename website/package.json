@@ -21,7 +21,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
-    "react-modern-calendar-datepicker": "^1.1.4",
+    "react-modern-calendar-datepicker": "^2.0.0",
     "shortid": "^2.2.14"
   },
   "devDependencies": {
