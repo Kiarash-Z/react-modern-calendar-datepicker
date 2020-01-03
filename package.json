@@ -13,7 +13,8 @@
     "clean": "rimraf lib",
     "build": "yarn clean && cross-env NODE_ENV=production rollup -c",
     "size": "yarn build && size-limit",
-    "checkAll": "yarn size && yarn lint && yarn test"
+    "checkAll": "yarn size && yarn lint && yarn test",
+    "contributors:generate": "yarn all-contributors generate"
   },
   "files": [
     "lib",

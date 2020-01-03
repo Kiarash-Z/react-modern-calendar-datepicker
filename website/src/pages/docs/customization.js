@@ -59,7 +59,7 @@ const App = () => {
 
   return (
     <DatePicker
-      selectedDay={selectedDay}
+      value={selectedDay}
       onChange={setSelectedDay}
       inputPlaceholder="Select a date" // placeholder
       formatInputText={formatInputValue} // format value
@@ -126,7 +126,7 @@ const App = () => {
 
   return (
     <DatePicker
-      selectedDay={selectedDay}
+      value={selectedDay}
       onChange={setSelectedDay}
       renderInput={renderCustomInput} // render a custom input
       shouldHighlightWeekends

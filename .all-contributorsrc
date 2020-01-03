@@ -45,6 +45,8 @@
       "contributions": [
         "code",
         "bug",
+        "doc",
+        "tutorial",
         "ideas",
         "question",
         "review"
