@@ -7,9 +7,9 @@ import {
   MAXIMUM_SELECTABLE_YEAR_SUM,
 } from '../src/shared/constants';
 
-const renderYearSelector = (shouldOpenSelector = true, props) => {
+const renderYearSelector = (shouldOpenSelector = true, props = { value: null }) => {
   const { getAllByText, getByTestId, rerender } = render(<Calendar {...props} />);
-  const thisYearText = new Date().getFullYear();
+  const thisYearText = props.value ? props.value.year : new Date().getFullYear();
   const [yearButton] = getAllByText(String(thisYearText));
   const yearSelector = getByTestId('year-selector');
   const yearSelectorWrapper = getByTestId('year-selector-wrapper');
@@ -109,7 +109,6 @@ describe('Year Selection', () => {
   test('navigates by keyboard', () => {
     const value = { year: 2019, month: 10, day: 1 };
     const { getByText, yearSelectorWrapper } = renderYearSelector(true, { value });
-
     expect(getByText('2019')).toBePressed();
     getByText('2019').focus();
     fireEvent.keyDown(yearSelectorWrapper, { key: 'ArrowLeft' });

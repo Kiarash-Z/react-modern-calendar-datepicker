@@ -127,22 +127,24 @@ describe('DatePicker Visibility', () => {
 
   test('closes calendar on day range selection', () => {
     const { getAllByText, getByTestId, queryByTestId, rerender } = renderOpenDatePicker({
-      value: { from: null, to: null },
+      value: { from: { year: 2019, month: 10, day: 1 }, to: null },
       onChange: () => {},
     });
     const input = getByTestId('datepicker-input');
     const rangeStart = getAllByText('1')[0];
-    const rangeEnd = getAllByText('5')[0];
     input.focus();
 
     fireEvent.click(rangeStart);
     rerender(
       <DatePicker
-        value={{ from: { year: 2019, month: 10, day: 21 }, to: null }}
+        value={{ from: { year: 2019, month: 10, day: 1 }, to: null }}
         onChange={() => {}}
       />,
     );
 
+    input.focus();
+
+    const rangeEnd = getAllByText('5')[0];
     // calendar still open
     expect(queryByTestId('calendar-container')).toBeInTheDocument();
 
