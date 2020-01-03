@@ -37,6 +37,10 @@ export const TUTORIAL_ITEMS = generateConstantId([
     path: '/docs/different-locales',
     name: 'Different Locales'
   },
+  {
+    path: '/docs/typescript',
+    name: 'TypeScript'
+  }
 ])
 
 
