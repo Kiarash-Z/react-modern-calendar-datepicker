@@ -11,6 +11,15 @@ const renderOpenDatePicker = (renderProps = {}) => {
 };
 
 describe('DatePicker Visibility', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {}); // hide errors on console for toThrow passing tests
+  });
+
+  afterEach(() => {
+    // eslint-disable-next-line no-console
+    console.error.mockRestore();
+  });
+
   test('toggles correctly on input focus/blur', () => {
     const { queryByTestId, getByTestId, getByText } = render(
       <div>
@@ -178,5 +187,21 @@ describe('DatePicker Visibility', () => {
     expect(container.firstChild).toHaveClass('-noFocusOutline');
     fireEvent.keyUp(container.firstChild, { key: 'Tab' });
     expect(container.firstChild).not.toHaveClass('-noFocusOutline');
+  });
+
+  test('throws an error when year is out of valid bounds', () => {
+    expect(() => {
+      renderOpenDatePicker({
+        value: { year: 1999, month: 1, day: 1 },
+        selectorStartingYear: 2000,
+      });
+    }).toThrow(RangeError);
+
+    expect(() => {
+      renderOpenDatePicker({
+        value: { year: 2051, month: 1, day: 1 },
+        selectorEndingYear: 2050,
+      });
+    }).toThrow(RangeError);
   });
 });
