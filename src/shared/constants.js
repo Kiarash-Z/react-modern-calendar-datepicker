@@ -65,3 +65,25 @@ export const MAXIMUM_SELECTABLE_YEAR_SUM = 50;
 export const TYPE_SINGLE_DATE = 'SINGLE_DATE';
 export const TYPE_RANGE = 'RANGE';
 export const TYPE_MUTLI_DATE = 'MUTLI_DATE';
+
+export const LOCALE_SHAPE = PropTypes.shape({
+  months: PropTypes.arrayOf(PropTypes.string),
+  weekDays: PropTypes.arrayOf(PropTypes.string),
+  weekStartingIndex: PropTypes.number,
+  getToday: PropTypes.func,
+  toNativeDate: PropTypes.func,
+  getMonthLength: PropTypes.func,
+  transformDigit: PropTypes.func,
+  nextMonth: PropTypes.string,
+  previousMonth: PropTypes.string,
+  openMonthSelector: PropTypes.string,
+  openYearSelector: PropTypes.string,
+  closeMonthSelector: PropTypes.string,
+  closeYearSelector: PropTypes.string,
+  from: PropTypes.string,
+  to: PropTypes.string,
+  defaultPlaceholder: PropTypes.string,
+  digitSeparator: PropTypes.string,
+  yearLetterSkip: PropTypes.number,
+  isRtl: PropTypes.bool,
+});

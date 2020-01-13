@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import DatePicker, { Calendar } from '../src';
+import { localeLanguages } from '../src/shared/localeLanguages';
 
 const renderOpenDatePicker = (renderProps = {}) => {
   const { getByTestId, ...otherSelectors } = render(<DatePicker {...renderProps} />);
@@ -178,5 +179,21 @@ describe('DatePicker Visibility', () => {
     expect(container.firstChild).toHaveClass('-noFocusOutline');
     fireEvent.keyUp(container.firstChild, { key: 'Tab' });
     expect(container.firstChild).not.toHaveClass('-noFocusOutline');
+  });
+
+  test('renders the datepicker with custom locale prop', () => {
+    // ltr language
+    expect(
+      render(<DatePicker value={null} onChange={() => {}} locale="en" />).container,
+    ).toStrictEqual(
+      render(<DatePicker value={null} onChange={() => {}} locale={localeLanguages.en} />).container,
+    );
+
+    // rtl language
+    expect(
+      render(<DatePicker value={null} onChange={() => {}} locale="fa" />).container,
+    ).toStrictEqual(
+      render(<DatePicker value={null} onChange={() => {}} locale={localeLanguages.fa} />).container,
+    );
   });
 });

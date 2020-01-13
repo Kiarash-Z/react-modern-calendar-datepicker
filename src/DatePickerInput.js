@@ -14,6 +14,7 @@ const DatePickerInput = React.forwardRef(
       yearLetterSkip,
       digitSeparator,
       defaultPlaceholder,
+      isRtl,
     } = useLocaleLanguage(locale);
 
     const getSingleDayValue = () => {
@@ -58,7 +59,6 @@ const DatePickerInput = React.forwardRef(
     };
 
     const placeholderValue = inputPlaceholder || defaultPlaceholder;
-
     const render = () => {
       return (
         renderInput({ ref }) || (
@@ -68,7 +68,7 @@ const DatePickerInput = React.forwardRef(
             ref={ref}
             value={getValue()}
             placeholder={placeholderValue}
-            className={`DatePicker__input -${locale} ${inputClassName}`}
+            className={`DatePicker__input -${isRtl ? 'rtl' : 'ltr'} ${inputClassName}`}
             aria-label={placeholderValue}
           />
         )

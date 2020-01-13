@@ -28,6 +28,15 @@ const renderYearSelector = (shouldOpenSelector = true, props = { value: null }) 
 };
 
 describe('Year Selection', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {}); // hide errors on console for toThrow passing tests
+  });
+
+  afterEach(() => {
+    // eslint-disable-next-line no-console
+    console.error.mockRestore();
+  });
+
   test('toggles on year click', () => {
     const { yearSelector, yearButton } = renderYearSelector(false);
 
@@ -123,5 +132,21 @@ describe('Year Selection', () => {
 
     fireEvent.keyDown(yearSelectorWrapper, { key: 'ArrowRight' });
     expect(document.activeElement).toBe(getByText('2018'));
+  });
+
+  test('throws an error when year is out of valid bounds', () => {
+    expect(() => {
+      renderYearSelector(false, {
+        value: { year: 1999, month: 1, day: 1 },
+        selectorStartingYear: 2000,
+      });
+    }).toThrow(RangeError);
+
+    expect(() => {
+      renderYearSelector(false, {
+        value: { year: 2051, month: 1, day: 1 },
+        selectorEndingYear: 2050,
+      });
+    }).toThrow(RangeError);
   });
 });
