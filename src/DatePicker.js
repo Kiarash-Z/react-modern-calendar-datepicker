@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
 import { getValueType } from './shared/generalUtils';
-import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constants';
+import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE, LOCALE_SHAPE } from './shared/constants';
 
 const DatePicker = ({
   value,
@@ -179,7 +179,7 @@ DatePicker.defaultProps = {
 
 DatePicker.propTypes = {
   wrapperClassName: PropTypes.string,
-  locale: PropTypes.oneOf(['en', 'fa']),
+  locale: PropTypes.oneOfType([PropTypes.oneOf(['en', 'fa']), LOCALE_SHAPE]),
 };
 
 export default DatePicker;

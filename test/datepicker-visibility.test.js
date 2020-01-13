@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import DatePicker, { Calendar } from '../src';
+import { localeLanguages } from '../src/shared/localeLanguages';
 
 const renderOpenDatePicker = (renderProps = {}) => {
   const { getByTestId, ...otherSelectors } = render(<DatePicker {...renderProps} />);
@@ -11,15 +12,6 @@ const renderOpenDatePicker = (renderProps = {}) => {
 };
 
 describe('DatePicker Visibility', () => {
-  beforeEach(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => {}); // hide errors on console for toThrow passing tests
-  });
-
-  afterEach(() => {
-    // eslint-disable-next-line no-console
-    console.error.mockRestore();
-  });
-
   test('toggles correctly on input focus/blur', () => {
     const { queryByTestId, getByTestId, getByText } = render(
       <div>
@@ -189,19 +181,19 @@ describe('DatePicker Visibility', () => {
     expect(container.firstChild).not.toHaveClass('-noFocusOutline');
   });
 
-  test('throws an error when year is out of valid bounds', () => {
-    expect(() => {
-      renderOpenDatePicker({
-        value: { year: 1999, month: 1, day: 1 },
-        selectorStartingYear: 2000,
-      });
-    }).toThrow(RangeError);
+  test('renders the datepicker with custom locale prop', () => {
+    // ltr language
+    expect(
+      render(<DatePicker value={null} onChange={() => {}} locale="en" />).container,
+    ).toStrictEqual(
+      render(<DatePicker value={null} onChange={() => {}} locale={localeLanguages.en} />).container,
+    );
 
-    expect(() => {
-      renderOpenDatePicker({
-        value: { year: 2051, month: 1, day: 1 },
-        selectorEndingYear: 2050,
-      });
-    }).toThrow(RangeError);
+    // rtl language
+    expect(
+      render(<DatePicker value={null} onChange={() => {}} locale="fa" />).container,
+    ).toStrictEqual(
+      render(<DatePicker value={null} onChange={() => {}} locale={localeLanguages.fa} />).container,
+    );
   });
 });

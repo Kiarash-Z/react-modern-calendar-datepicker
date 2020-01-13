@@ -195,7 +195,7 @@ const DaysList = ({
       <div
         tabIndex={shouldEnableKeyboardNavigation ? '0' : '-1'}
         key={id}
-        className={`Calendar__day -${locale} ${additionalClass}`}
+        className={`Calendar__day -${isRtl ? 'rtl' : 'ltr'} ${additionalClass}`}
         onClick={() => {
           handleDayPress({ ...dayItem, isDisabled });
         }}

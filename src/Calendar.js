@@ -2,7 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { getDateAccordingToMonth, shallowClone, getValueType } from './shared/generalUtils';
-import { DAY_SHAPE, TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
+import {
+  DAY_SHAPE,
+  TYPE_SINGLE_DATE,
+  TYPE_RANGE,
+  TYPE_MUTLI_DATE,
+  LOCALE_SHAPE,
+} from './shared/constants';
 import { useLocaleUtils, useLocaleLanguage } from './shared/hooks';
 
 import { Header, MonthSelector, YearSelector, DaysList } from './components';
@@ -48,7 +54,7 @@ const Calendar = ({
   });
 
   const { getToday } = useLocaleUtils(locale);
-  const { weekDays: weekDaysList } = useLocaleLanguage(locale);
+  const { weekDays: weekDaysList, isRtl } = useLocaleLanguage(locale);
   const today = getToday();
 
   const createStateToggler = property => () => {
@@ -109,7 +115,7 @@ const Calendar = ({
 
   return (
     <div
-      className={`Calendar -noFocusOutline ${calendarClassName} -${locale}`}
+      className={`Calendar -noFocusOutline ${calendarClassName} -${isRtl ? 'rtl' : 'ltr'}`}
       role="grid"
       style={{
         '--cl-color-primary': colorPrimary,
@@ -199,7 +205,7 @@ Calendar.propTypes = {
   slideAnimationDuration: PropTypes.string,
   minimumDate: PropTypes.shape(DAY_SHAPE),
   maximumDate: PropTypes.shape(DAY_SHAPE),
-  locale: PropTypes.oneOf(['en', 'fa']),
+  locale: PropTypes.oneOfType([PropTypes.oneOf(['en', 'fa']), LOCALE_SHAPE]),
 };
 
 export { Calendar };

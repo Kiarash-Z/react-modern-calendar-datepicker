@@ -54,8 +54,6 @@ declare function DatePicker(props: Optional<DatePickerProps<Day>, 'value'>): Rea
 declare function DatePicker(props: DatePickerProps<Day[]>): React.ReactElement;
 declare function DatePicker(props: DatePickerProps<DayRange>): React.ReactElement;
 
-export default DatePicker;
-
 export type Utils = {
   monthsList: string[];
   weekDaysList: string[];
@@ -70,3 +68,27 @@ export type Utils = {
 };
 
 export function utils(locale: string): Utils;
+
+export interface Locale {
+  months: string[];
+  weekDays: string[];
+  weekStartingIndex: number;
+  getToday: () => Day;
+  toNativeDate: () => Date;
+  getMonthLength: () => number;
+  transformDigit: () => (number | string);
+  nextMonth: string;
+  previousMonth: string;
+  openMonthSelector: string;
+  openYearSelector: string;
+  closeMonthSelector: string;
+  closeYearSelector: string;
+  from: string;
+  to: string;
+  defaultPlaceholder: string;
+  digitSeparator: string;
+  yearLetterSkip: number;
+  isRtl: boolean;
+}
+
+export default DatePicker;
