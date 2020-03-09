@@ -33,23 +33,68 @@ export const GREGORIAN_MONTHS = [
 ];
 
 export const PERSIAN_WEEK_DAYS = [
-  'شنبه',
-  'یکشنبه',
-  'دوشنبه',
-  'سه شنبه',
-  'چهارشنبه',
-  'پنجشنبه',
-  'جمعه',
+  {
+    name: 'شنبه',
+    short: 'ش',
+  },
+  {
+    name: 'یکشنبه',
+    short: 'ی',
+  },
+  {
+    name: 'دوشنبه',
+    short: 'د',
+  },
+  {
+    name: 'سه شنبه',
+    short: 'س',
+  },
+  {
+    name: 'چهارشنبه',
+    short: 'چ',
+  },
+  {
+    name: 'پنجشنبه',
+    short: 'پ',
+  },
+  {
+    name: 'جمعه',
+    short: 'ج',
+    isWeekend: true,
+  },
 ];
 
 export const GREGORIAN_WEEK_DAYS = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
+  {
+    name: 'Sunday',
+    short: 'S',
+    isWeekend: true,
+  },
+  {
+    name: 'Monday',
+    short: 'M',
+  },
+  {
+    name: 'Tuesday',
+    short: 'T',
+  },
+  {
+    name: 'Wednesday',
+    short: 'W',
+  },
+  {
+    name: 'Thursday',
+    short: 'T',
+  },
+  {
+    name: 'Friday',
+    short: 'F',
+  },
+  {
+    name: 'Saturday',
+    short: 'S',
+    isWeekend: true,
+  },
 ];
 
 export const DAY_SHAPE = {
@@ -68,7 +113,13 @@ export const TYPE_MUTLI_DATE = 'MUTLI_DATE';
 
 export const LOCALE_SHAPE = PropTypes.shape({
   months: PropTypes.arrayOf(PropTypes.string),
-  weekDays: PropTypes.arrayOf(PropTypes.string),
+  weekDays: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      short: PropTypes.string,
+      isWeekend: PropTypes.bool,
+    }),
+  ),
   weekStartingIndex: PropTypes.number,
   getToday: PropTypes.func,
   toNativeDate: PropTypes.func,

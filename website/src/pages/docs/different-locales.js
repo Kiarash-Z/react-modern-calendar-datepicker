@@ -20,13 +20,36 @@ const myCustomLocale = {
     'December',
   ],
   weekDays: [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
+    {
+      name: 'Sunday',
+      short: 'S',
+      isWeekend: true,
+    },
+    {
+      name: 'Monday',
+      short: 'M',
+    },
+    {
+      name: 'Tuesday',
+      short: 'T',
+    },
+    {
+      name: 'Wednesday',
+      short: 'W',
+    },
+    {
+      name: 'Thursday',
+      short: 'T',
+    },
+    {
+      name: 'Friday',
+      short: 'F',
+    },
+    {
+      name: 'Saturday',
+      short: 'S',
+      isWeekend: true,
+    },
   ],
   weekStartingIndex: 0,
   getToday(gregorainTodayObject) {
@@ -170,13 +193,36 @@ const myCustomLocale = {
 
   // week days by order
   weekDays: [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
+    {
+      name: 'Sunday', // used for accessibility 
+      short: 'S', // displayed at the top of days' rows
+      isWeekend: true, // is it a formal weekend or not?
+    },
+    {
+      name: 'Monday',
+      short: 'M',
+    },
+    {
+      name: 'Tuesday',
+      short: 'T',
+    },
+    {
+      name: 'Wednesday',
+      short: 'W',
+    },
+    {
+      name: 'Thursday',
+      short: 'T',
+    },
+    {
+      name: 'Friday',
+      short: 'F',
+    },
+    {
+      name: 'Saturday',
+      short: 'S',
+      isWeekend: true,
+    },
   ],
 
   // just play around with this number between 0 and 6

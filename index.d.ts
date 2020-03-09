@@ -54,9 +54,15 @@ declare function DatePicker(props: Optional<DatePickerProps<Day>, 'value'>): Rea
 declare function DatePicker(props: DatePickerProps<Day[]>): React.ReactElement;
 declare function DatePicker(props: DatePickerProps<DayRange>): React.ReactElement;
 
+type WeekDay = {
+  name: string;
+  short: string;
+  isWeekend?: boolean;
+}
+
 export type Utils = {
   monthsList: string[];
-  weekDaysList: string[];
+  weekDaysList: WeekDay[];
   getToday(): Day;
   getMonthName(number: number): string;
   getMonthNumber(name: string): number;
@@ -71,7 +77,7 @@ export function utils(locale: string): Utils;
 
 export interface Locale {
   months: string[];
-  weekDays: string[];
+  weekDays: WeekDay[];
   weekStartingIndex: number;
   getToday: () => Day;
   toNativeDate: () => Date;
