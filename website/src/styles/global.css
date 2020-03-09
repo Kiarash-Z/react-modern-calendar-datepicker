@@ -88,22 +88,11 @@ button {
 .text-orange::after { visibility: hidden; }
 .purple-shadow { box-shadow: 0 1em 3em rgba(156, 136, 255,0.2); }
 
-@media (min-width: 2560px) {
-  html {
-    font-size: 87.5%; /* 14 px */
-  }
-
-  .fontWrapper {
-    font-size: 12px;
-  }
-}
-
 @media (max-width: 1550px) {
   .fontWrapper {
     font-size: 9px;
   }
 }
-
 
 @media (max-width: 1199.98px) {
   html {
