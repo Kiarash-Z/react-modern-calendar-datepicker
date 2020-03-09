@@ -51,7 +51,7 @@ function SEO({ description, lang, meta, keywords, title }) {
         },
         {
           property: `og:image`,
-          content: 'https://user-images.githubusercontent.com/20098648/67585012-9d05d300-f75b-11e9-82f1-cf3f03ab5a83.png',
+          content: 'https://user-images.githubusercontent.com/20098648/76241893-f6722880-624a-11ea-9a80-eace8a4a27f0.png',
         },
         {
           property: `og:url`,
@@ -79,7 +79,7 @@ function SEO({ description, lang, meta, keywords, title }) {
         },
         {
           name: `twitter:image:src`,
-          content: 'https://user-images.githubusercontent.com/20098648/67585012-9d05d300-f75b-11e9-82f1-cf3f03ab5a83.png',
+          content: 'https://user-images.githubusercontent.com/20098648/76241893-f6722880-624a-11ea-9a80-eace8a4a27f0.png',
         },
         {
           name: 'keywords',
