@@ -77,18 +77,27 @@ const DatePicker = ({
   // Keep the calendar in the screen bounds if input is near the window edges
   useLayoutEffect(() => {
     if (!isCalendarOpen) return;
-    const { left, width } = calendarContainerElement.current.getBoundingClientRect();
-    const { clientWidth } = document.documentElement;
+    const { left, width, height, top } = calendarContainerElement.current.getBoundingClientRect();
+    const { clientWidth, clientHeight } = document.documentElement;
     const isOverflowingFromRight = left + width > clientWidth;
-    const overflowFromRightDistance = left + width - clientWidth;
     const isOverflowingFromLeft = left < 0;
-    if (!isOverflowingFromRight && !isOverflowingFromLeft) return;
-    const overflowFromLeftDistance = Math.abs(left);
-    const rightPosition = isOverflowingFromLeft ? overflowFromLeftDistance : 0;
-    const leftStyle = isOverflowingFromRight
-      ? `calc(50% - ${overflowFromRightDistance}px)`
-      : `calc(50% + ${rightPosition}px)`;
-    calendarContainerElement.current.style.left = leftStyle;
+    const isOverflowingFromBottom = top + height > clientHeight;
+
+    const getLeftStyle = () => {
+      const overflowFromRightDistance = left + width - clientWidth;
+
+      if (!isOverflowingFromRight && !isOverflowingFromLeft) return;
+      const overflowFromLeftDistance = Math.abs(left);
+      const rightPosition = isOverflowingFromLeft ? overflowFromLeftDistance : 0;
+
+      const leftStyle = isOverflowingFromRight
+        ? `calc(50% - ${overflowFromRightDistance}px)`
+        : `calc(50% + ${rightPosition}px)`;
+      return leftStyle;
+    };
+
+    calendarContainerElement.current.style.left = getLeftStyle();
+    if (isOverflowingFromBottom) calendarContainerElement.current.classList.add('-top');
   }, [isCalendarOpen]);
 
   const handleCalendarChange = newValue => {
@@ -134,39 +143,41 @@ const DatePicker = ({
         renderInput={renderInput}
         locale={locale}
       />
-      {isCalendarOpen && <div className="DatePicker__calendarArrow" />}
       {isCalendarOpen && (
-        <div
-          ref={calendarContainerElement}
-          className="DatePicker__calendarContainer"
-          data-testid="calendar-container"
-          role="presentation"
-          onMouseDown={() => {
-            shouldPreventToggle.current = true;
-          }}
-        >
-          <Calendar
-            value={value}
-            onChange={handleCalendarChange}
-            calendarClassName={calendarClassName}
-            calendarTodayClassName={calendarTodayClassName}
-            calendarSelectedDayClassName={calendarSelectedDayClassName}
-            calendarRangeStartClassName={calendarRangeStartClassName}
-            calendarRangeBetweenClassName={calendarRangeBetweenClassName}
-            calendarRangeEndClassName={calendarRangeEndClassName}
-            disabledDays={disabledDays}
-            colorPrimary={colorPrimary}
-            colorPrimaryLight={colorPrimaryLight}
-            slideAnimationDuration={slideAnimationDuration}
-            onDisabledDayError={onDisabledDayError}
-            minimumDate={minimumDate}
-            maximumDate={maximumDate}
-            selectorStartingYear={selectorStartingYear}
-            selectorEndingYear={selectorEndingYear}
-            locale={locale}
-            shouldHighlightWeekends={shouldHighlightWeekends}
-          />
-        </div>
+        <>
+          <div
+            ref={calendarContainerElement}
+            className="DatePicker__calendarContainer"
+            data-testid="calendar-container"
+            role="presentation"
+            onMouseDown={() => {
+              shouldPreventToggle.current = true;
+            }}
+          >
+            <Calendar
+              value={value}
+              onChange={handleCalendarChange}
+              calendarClassName={calendarClassName}
+              calendarTodayClassName={calendarTodayClassName}
+              calendarSelectedDayClassName={calendarSelectedDayClassName}
+              calendarRangeStartClassName={calendarRangeStartClassName}
+              calendarRangeBetweenClassName={calendarRangeBetweenClassName}
+              calendarRangeEndClassName={calendarRangeEndClassName}
+              disabledDays={disabledDays}
+              colorPrimary={colorPrimary}
+              colorPrimaryLight={colorPrimaryLight}
+              slideAnimationDuration={slideAnimationDuration}
+              onDisabledDayError={onDisabledDayError}
+              minimumDate={minimumDate}
+              maximumDate={maximumDate}
+              selectorStartingYear={selectorStartingYear}
+              selectorEndingYear={selectorEndingYear}
+              locale={locale}
+              shouldHighlightWeekends={shouldHighlightWeekends}
+            />
+          </div>
+          <div className="DatePicker__calendarArrow" />
+        </>
       )}
     </div>
   );

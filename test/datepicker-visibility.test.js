@@ -88,7 +88,17 @@ describe('DatePicker Visibility', () => {
       width: 100,
     }));
     rerender(<DatePicker />);
-    fireEvent.focus(input);
+    input.focus();
+    input.blur();
+
+    // overflow from bottom
+    Object.defineProperty(document.documentElement, 'clientHeight', { value: 100 });
+    HTMLDivElement.prototype.getBoundingClientRect = jest.fn(() => ({
+      left: 0,
+      top: 100,
+      width: 100,
+      height: 100,
+    }));
   });
 
   test('keeps calendar open on inner element focus', () => {

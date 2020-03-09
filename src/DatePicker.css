@@ -35,11 +35,22 @@
   border-color: transparent transparent #fff transparent;
 }
 
+.DatePicker__calendarContainer.-top + .DatePicker__calendarArrow {
+  top: auto;
+  bottom: calc(100% + 10px);
+  transform: rotate(180deg);
+}
+
 .DatePicker__calendarContainer {
   position: absolute;
   top: calc(100% + 20px);
   left: 50%;
   transform: translateX(-50%);
+}
+
+.DatePicker__calendarContainer.-top {
+  top: auto;
+  bottom: calc(100% + 20px);
 }
 
 .Calendar,
