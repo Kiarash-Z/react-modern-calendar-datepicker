@@ -135,7 +135,7 @@ const DaysList = ({
       .concat(isToday && !isSelected ? ` -today ${calendarTodayClassName}` : '')
       .concat(!dayItem.isStandard ? ' -blank' : '')
       .concat(dayItem.isWeekend && shouldHighlightWeekends ? ' -weekend' : '')
-      .concat(customDayItemClassName ? customDayItemClassName.className : '')
+      .concat(customDayItemClassName ? ` ${customDayItemClassName.className}` : '')
       .concat(isSelected ? ` -selected ${calendarSelectedDayClassName}` : '')
       .concat(isStartingDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
       .concat(isEndingDayRange ? ` -selectedEnd ${calendarRangeEndClassName}` : '')
