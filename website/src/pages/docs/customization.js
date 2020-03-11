@@ -20,26 +20,38 @@ const DisabledDays = () => {
       year: 2019,
       month: 4,
       day: 19,
-    }
+    },
   });
   const randomDate = getRandomMonthDate();
+  const randomDate2 = getRandomMonthDate();
   const [datePicker4Value, setDatePicker4Value] = useState(randomDate);
+  const [datePicker5Value, setDatePicker5Value] = useState(randomDate2);
+  const [datePicker6Value, setDatePicker6Value] = useState({
+    year: 2019,
+    month: 3,
+    day: 1,
+  });
 
   return (
     <Docs title="Customization">
       <p>
-        This package is designed to be customizable. There are a couple of props to
-        change the default styles according to your preferences. You
-        can customize picker, calendar, and input. For the full list of available
-        props, you can visit <Link className="Docs__link" to="/docs/props-list">props list</Link>.
+        This package is designed to be customizable. There are a couple of props
+        to change the default styles according to your preferences. You can
+        customize picker, calendar, and input. For the full list of available
+        props, you can visit{' '}
+        <Link className="Docs__link" to="/docs/props-list">
+          props list
+        </Link>
+        .
       </p>
 
       <h2 className="Docs__titleSecondary">Customized Input</h2>
 
       <p>
         Placeholder and the formatted value of input can be set directly by you.
-        Moreover, you can set an additional class on the input. If that&#39;s not enough,
-        you can render your own input as well. Let&#39;s take a look at a few examples:
+        Moreover, you can set an additional class on the input. If that&#39;s
+        not enough, you can render your own input as well. Let&#39;s take a look
+        at a few examples:
       </p>
 
       <div className="Docs__sampleContainer">
@@ -82,15 +94,15 @@ export default App;
           inputPlaceholder="Select a date"
           formatInputText={() => {
             if (!datePicker1Value) return '';
-            return `Day: ${datePicker1Value.day}`
+            return `Day: ${datePicker1Value.day}`;
           }}
           shouldHighlightWeekends
         />
       </div>
 
       <p>
-        You can render your own custom input
-        using <code className="custom-code">renderInput</code> prop:
+        You can render your own custom input using{' '}
+        <code className="custom-code">renderInput</code> prop:
       </p>
 
       <div className="Docs__sampleContainer">
@@ -171,10 +183,11 @@ export default App;
 
       <p>
         The calendar has a few more props for customization. The most basic ones
-        are <code className="custom-code">colorPrimary</code>, <code className="custom-code">colorPrimaryLight</code>.
-        Additional classes&#39; props are available for the calendar itself,
-        selected day, disabled days, range start day, range end day, and more.
-        Here are some examples:
+        are <code className="custom-code">colorPrimary</code>,{' '}
+        <code className="custom-code">colorPrimaryLight</code>. Additional
+        classes&#39; props are available for the calendar itself, selected day,
+        disabled days, range start day, range end day, and more. Here are some
+        examples:
       </p>
 
       <div className="Docs__sampleContainer">
@@ -271,9 +284,7 @@ export default App;
         />
       </div>
 
-      <p>
-        Our CSS code for the above example is:
-      </p>
+      <p>Our CSS code for the above example is:</p>
 
       <Code language="css">
         {`
@@ -293,17 +304,198 @@ export default App;
       </Code>
 
       <p>
-        <strong>Note:</strong> the usage of <code className="custom-code">!important</code> is because
-        of <a rel="noopener noreferrer" target="_blank" className="Docs__link" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity">overriding the default styles</a>.
+        <strong>Note:</strong> the usage of{' '}
+        <code className="custom-code">!important</code> is because of{' '}
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
+          className="Docs__link"
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity"
+        >
+          overriding the default styles
+        </a>
+        .
       </p>
+
+      <h2 className="Docs__titleSecondary">Customized Array of Days</h2>
+      <p>
+        If any of the above customizable options for days is not enough for you,
+        you can provide an array for some days to have a certain CSS class:
+      </p>
+
+<div className="Docs__sampleContainer">
+        <Code language="javascript">
+          {`
+import React, { useState } from "react";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
+
+const App = () => {
+  const defaultValue = {
+    year: 2019,
+    month: 3,
+    day: 1,
+  };
+  const [selectedDay, setSelectedDay] = useState(defaultValue);
+
+  return (
+    <Calendar
+      value={selectedDay}
+      onChange={setSelectedDay}
+      shouldHighlightWeekends
+      customDaysClassName={[
+        // here we add some CSS classes
+        { year: 2019, month: 3, day: 4, className: 'purpleDay' },
+        { year: 2019, month: 3, day: 12, className: 'orangeDay' },
+        { year: 2019, month: 3, day: 18, className: 'yellowDay' },
+        { year: 2019, month: 3, day: 26, className: 'navyBlueDay' },
+      ]}
+    />
+  );
+};
+
+export default App;
+
+          `}
+        </Code>
+
+        <Calendar
+          calendarClassName="fontWrapper"
+          value={datePicker6Value}
+          onChange={setDatePicker6Value}
+          shouldHighlightWeekends
+          customDaysClassName={[
+            { year: 2019, month: 3, day: 4, className: 'purpleDay' },
+            { year: 2019, month: 3, day: 12, className: 'orangeDay' },
+            { year: 2019, month: 3, day: 18, className: 'yellowDay' },
+            { year: 2019, month: 3, day: 26, className: 'navyBlueDay' },
+          ]}
+        />
+      </div>
+
+      <p>Our CSS code for the above example is:</p>
+
+      <Code language="css">
+        {`
+/*
+  These :not() selectors are for preventing
+  style conflicts with a selected date. You can remove them if you wish!
+*/
+
+.purpleDay:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(156, 136, 255, 0.7) !important;
+}
+
+.orangeDay:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(219, 145, 60, 0.7) !important;
+}
+
+.yellowDay:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(228, 231, 36, 0.7) !important;
+}
+
+.navyBlueDay:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(52, 73, 94, 0.7) !important;
+}
+        `}
+      </Code>
+
+      <h2 className="Docs__titleSecondary">Calendar Footer</h2>
+
+      <p>
+        You can render a custom footer in the calendar below the days list by{' '}
+        <code className="custom-code">renderFooter</code> prop. This can be
+        useful for rendering a button for selecting today or reseting the value.
+        This is an example:
+      </p>
+
+      <div className="Docs__sampleContainer">
+        <Code language="javascript">
+          {`
+import React, { useState } from "react";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
+
+const App = () => {
+  const defaultValue = {
+    year: ${randomDate2.year},
+    month: ${randomDate2.month},
+    day: ${randomDate2.day},
+  };
+  const [selectedDay, setSelectedDay] = useState(defaultValue);
+
+  return (
+    <Calendar
+      value={selectedDay}
+      onChange={setSelectedDay}
+      shouldHighlightWeekends
+      // here we go
+      renderFooter={() => (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '1rem 2rem' }}>
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedDay(null)
+            }}
+            style={{
+              border: '#0fbcf9',
+              color: '#fff',
+              borderRadius: '0.5rem',
+              padding: '1rem 2rem',
+            }}
+          >
+            Reset Value!
+          </button>
+        </div>
+      )}
+    />
+  );
+};
+
+export default App;
+
+          `}
+        </Code>
+
+        <Calendar
+          calendarClassName="fontWrapper"
+          value={datePicker5Value}
+          onChange={setDatePicker5Value}
+          shouldHighlightWeekends
+          renderFooter={() => (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                padding: '1rem 2rem',
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => {
+                  setDatePicker5Value(null);
+                }}
+                style={{
+                  background: '#0fbcf9',
+                  color: '#fff',
+                  borderRadius: '0.5rem',
+                  padding: '1rem 2rem',
+                }}
+              >
+                Reset Value!
+              </button>
+            </div>
+          )}
+        />
+      </div>
 
       <h2 className="Docs__titleSecondary">Customized Wrapper</h2>
 
       <p>
-        All the calendar custom styling props can be passed
-        from <code className="custom-code">{`<DatePicker />`}</code>. Furthermore, there&#39;s a
-        <code className="custom-code">wrapperClassName</code> prop for the customization of
-        the picker&#39;s container element itself.
+        All the calendar custom styling props can be passed from{' '}
+        <code className="custom-code">{`<DatePicker />`}</code>. Furthermore,
+        there&#39;s a<code className="custom-code">wrapperClassName</code> prop
+        for the customization of the picker&#39;s container element itself.
       </p>
     </Docs>
   );

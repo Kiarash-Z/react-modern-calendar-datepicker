@@ -33,6 +33,8 @@ const Calendar = ({
   selectorEndingYear,
   locale,
   shouldHighlightWeekends,
+  renderFooter,
+  customDaysClassName,
 }) => {
   const calendarElement = useRef(null);
   const [mainState, setMainState] = useState({
@@ -77,8 +79,8 @@ const Calendar = ({
     : getComputedActiveDate();
 
   const weekdays = weekDaysList.map(weekDay => (
-    <abbr key={weekDay} title={weekDay} className="Calendar__weekDay">
-      {weekDay[0]}
+    <abbr key={weekDay.name} title={weekDay} className="Calendar__weekDay">
+      {weekDay.short}
     </abbr>
   ));
 
@@ -176,8 +178,10 @@ const Calendar = ({
         calendarRangeBetweenClassName={calendarRangeBetweenClassName}
         locale={locale}
         shouldHighlightWeekends={shouldHighlightWeekends}
+        customDaysClassName={customDaysClassName}
         isQuickSelectorOpen={mainState.isYearSelectorOpen || mainState.isMonthSelectorOpen}
       />
+      <div className="Calendar__footer">{renderFooter()}</div>
     </div>
   );
 };
@@ -191,6 +195,8 @@ Calendar.defaultProps = {
   calendarClassName: '',
   locale: 'en',
   value: null,
+  renderFooter: () => null,
+  customDaysClassName: [],
 };
 
 Calendar.propTypes = {
@@ -206,6 +212,10 @@ Calendar.propTypes = {
   minimumDate: PropTypes.shape(DAY_SHAPE),
   maximumDate: PropTypes.shape(DAY_SHAPE),
   locale: PropTypes.oneOfType([PropTypes.oneOf(['en', 'fa']), LOCALE_SHAPE]),
+  renderFooter: PropTypes.func,
+  customDaysClassName: PropTypes.arrayOf(
+    PropTypes.shape({ ...DAY_SHAPE, className: PropTypes.string }),
+  ),
 };
 
 export { Calendar };

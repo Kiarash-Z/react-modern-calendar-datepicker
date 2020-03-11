@@ -35,11 +35,22 @@
   border-color: transparent transparent #fff transparent;
 }
 
+.DatePicker__calendarContainer.-top + .DatePicker__calendarArrow {
+  top: auto;
+  bottom: calc(100% + 10px);
+  transform: rotate(180deg);
+}
+
 .DatePicker__calendarContainer {
   position: absolute;
   top: calc(100% + 20px);
   left: 50%;
   transform: translateX(-50%);
+}
+
+.DatePicker__calendarContainer.-top {
+  top: auto;
+  bottom: calc(100% + 20px);
 }
 
 .Calendar,
@@ -285,7 +296,7 @@
 }
 
 .Calendar__monthSelector {
-  width: 85%;
+  padding: 0 2.5em;
   align-content: center;
   padding-bottom: 2em;
 }
@@ -306,7 +317,6 @@
 .Calendar__yearSelectorWrapper {
   width: 100%;
   height: 100%;
-  padding: 0 2em;
 }
 
 .Calendar__yearSelectorWrapper::after,
@@ -343,7 +353,7 @@
   overflow: scroll;
   position: relative;
   width: 100%;
-  padding: 5em 0;
+  padding: 5em 2em;
   -ms-overflow-style: none;
 }
 
@@ -435,7 +445,7 @@
 
 .Calendar__sectionWrapper {
   position: relative;
-  flex: 1;
+  min-height: 25.8em;
   overflow: hidden;
 }
 
@@ -606,6 +616,11 @@
   color: transparent;
   cursor: default;
   pointer-events: none;
+}
+
+.Calendar__footer {
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes fadeTextToCenter {

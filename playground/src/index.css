@@ -1,8 +1,15 @@
 
 @import './fonts/fonts.css';
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
   font-size: 50%;
+  height: 100%;
 }
 
 body {
@@ -11,6 +18,7 @@ body {
   font-family: 'Open Sans';
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   padding-top: 10rem;
   height: 100%;
 }

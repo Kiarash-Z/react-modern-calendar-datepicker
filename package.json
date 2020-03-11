@@ -1,6 +1,6 @@
 {
   "name": "react-modern-calendar-datepicker",
-  "version": "2.1.0",
+  "version": "3.0.1",
   "description": "A modern, beautiful, customizable date picker for React",
   "main": "lib/index.js",
   "types": "index.d.ts",
@@ -11,10 +11,10 @@
     "test": "jest ./test --coverage",
     "test:watch": "jest ./test --watch",
     "clean": "rimraf lib",
-    "build": "yarn clean && cross-env NODE_ENV=production rollup -c",
-    "size": "yarn build && size-limit",
-    "checkAll": "yarn size && yarn lint && yarn test",
-    "contributors:generate": "yarn all-contributors generate"
+    "build": "cross-env NODE_ENV=production rollup -c",
+    "size": "npm run build && size-limit",
+    "checkAll": "npm run size && npm run lint && npm run test",
+    "contributors:generate": "npm all-contributors generate"
   },
   "files": [
     "lib",
@@ -45,7 +45,7 @@
   "size-limit": [
     {
       "path": "./lib/index.js",
-      "limit": "10 KB"
+      "limit": "11 KB"
     }
   ],
   "dependencies": {

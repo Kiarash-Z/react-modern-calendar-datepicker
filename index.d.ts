@@ -10,6 +10,8 @@ export type DayRange = { from?: Day; to?: Day };
 
 type Value = Day | Day[] | DayRange;
 
+type CustomDayClassNameItem = Day & { className: string };
+
 export interface CalendarProps<TValue extends Value> {
   value: TValue;
   onChange?(value: TValue): void;
@@ -30,6 +32,8 @@ export interface CalendarProps<TValue extends Value> {
   calendarRangeStartClassName?: string;
   calendarRangeBetweenClassName?: string;
   calendarRangeEndClassName?: string;
+  renderFooter?: React.FC;
+  customDaysClassName?: CustomDayClassNameItem[];
 }
 
 export function Calendar(props: Optional<CalendarProps<Day>, 'value'>): React.ReactElement;
@@ -54,9 +58,15 @@ declare function DatePicker(props: Optional<DatePickerProps<Day>, 'value'>): Rea
 declare function DatePicker(props: DatePickerProps<Day[]>): React.ReactElement;
 declare function DatePicker(props: DatePickerProps<DayRange>): React.ReactElement;
 
+type WeekDay = {
+  name: string;
+  short: string;
+  isWeekend?: boolean;
+}
+
 export type Utils = {
   monthsList: string[];
-  weekDaysList: string[];
+  weekDaysList: WeekDay[];
   getToday(): Day;
   getMonthName(number: number): string;
   getMonthNumber(name: string): number;
@@ -71,7 +81,7 @@ export function utils(locale: string): Utils;
 
 export interface Locale {
   months: string[];
-  weekDays: string[];
+  weekDays: WeekDay[];
   weekStartingIndex: number;
   getToday: () => Day;
   toNativeDate: () => Date;

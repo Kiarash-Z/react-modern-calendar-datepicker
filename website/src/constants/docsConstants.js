@@ -107,6 +107,10 @@ export const PROPS_TABLE_CALENDAR_ROWS = [
   ['selectorEndingYear', 'Number', 'current year + 50', 'The maximum selectable year when user opens the year selector'],
   ['shouldHighlightWeekends', 'Boolean', 'false', `Determines whether to mark weekend days with red or not. (weekend days are Saturday and Sunday
   for locale="en" calendar and Friday for locale="fa" calendar)`],
+  ['renderFooter', 'Function', '() => null', `Renders a footer for the calendar below the days list. You can use this prop to render
+    a "Go to Today" button or anything you'd like to add there.`],
+  ['customDaysClassName', 'Array', `[]`, `An array of custom class names for your days. Each item is an object which
+  contains day(number), month(number), year(number), and className(string) properties. There are samples for this in Customization page of this document.`],
   ['colorPrimary', 'String', '#0eca2d', `The color of selected day in the single date picker and the color of
     range start and range end in range date picker`
   ],
