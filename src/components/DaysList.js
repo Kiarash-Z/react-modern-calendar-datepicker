@@ -30,6 +30,7 @@ const DaysList = ({
   calendarRangeBetweenClassName,
   shouldHighlightWeekends,
   isQuickSelectorOpen,
+  customDaysClassName,
 }) => {
   const calendarSectionWrapper = useRef(null);
   const { isRtl, weekDays: weekDaysList } = useLocaleLanguage(locale);
@@ -129,10 +130,12 @@ const DaysList = ({
       isEndingDayRange,
       isWithinRange,
     } = getDayStatus(dayItem);
+    const customDayItemClassName = customDaysClassName.find(day => isSameDay(dayItem, day));
     const classNames = ''
       .concat(isToday && !isSelected ? ` -today ${calendarTodayClassName}` : '')
       .concat(!dayItem.isStandard ? ' -blank' : '')
       .concat(dayItem.isWeekend && shouldHighlightWeekends ? ' -weekend' : '')
+      .concat(customDayItemClassName ? customDayItemClassName.className : '')
       .concat(isSelected ? ` -selected ${calendarSelectedDayClassName}` : '')
       .concat(isStartingDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
       .concat(isEndingDayRange ? ` -selectedEnd ${calendarRangeEndClassName}` : '')

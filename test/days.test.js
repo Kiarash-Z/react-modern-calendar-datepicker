@@ -4,7 +4,7 @@ import { render, fireEvent, getByText } from '@testing-library/react';
 import utils from '../src/shared/localeUtils';
 
 import { Calendar } from '../src';
-import { getDateAccordingToMonth } from '../src/shared/generalUtils';
+import { getDateAccordingToMonth, isSameDay } from '../src/shared/generalUtils';
 import { Header } from '../src/components';
 
 const { getMonthLength, getToday, getMonthFirstWeekday, getMonthName, isBeforeDate } = utils('en');
@@ -362,6 +362,24 @@ describe('Calendar Days', () => {
 
       expect(onDisabledDayError).toHaveBeenCalledTimes(1);
       expect(onDisabledDayError.mock.calls[0][0]).toEqual(disabledDays[0]);
+    });
+  });
+
+  describe('Custom Days Class Names', () => {
+    test('Adds a custom class name to preferred days', () => {
+      const customClassName = 'myCustomDayClassName';
+      const customDayToAddClass = { year: 2020, month: 3, day: 5 };
+      const { getDay, standardDays } = renderCalendar({
+        value: { year: 2020, month: 3, day: 1 },
+        customDaysClassName: [{ ...customDayToAddClass, className: customClassName }],
+      });
+
+      expect(getDay(customDayToAddClass.day)).toHaveClass(customClassName);
+      expect(
+        standardDays
+          .filter(day => !isSameDay(day, customClassName))
+          .every(day => !day.classList.includes(customDayToAddClass)),
+      ).toBe(true);
     });
   });
 

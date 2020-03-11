@@ -10,6 +10,8 @@ export type DayRange = { from?: Day; to?: Day };
 
 type Value = Day | Day[] | DayRange;
 
+type CustomDayClassNameItem = Day & { className: string };
+
 export interface CalendarProps<TValue extends Value> {
   value: TValue;
   onChange?(value: TValue): void;
@@ -30,6 +32,8 @@ export interface CalendarProps<TValue extends Value> {
   calendarRangeStartClassName?: string;
   calendarRangeBetweenClassName?: string;
   calendarRangeEndClassName?: string;
+  renderFooter?: React.FC;
+  customDaysClassName?: CustomDayClassNameItem[];
 }
 
 export function Calendar(props: Optional<CalendarProps<Day>, 'value'>): React.ReactElement;

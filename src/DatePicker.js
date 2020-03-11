@@ -31,6 +31,8 @@ const DatePicker = ({
   selectorEndingYear,
   locale,
   shouldHighlightWeekends,
+  renderFooter,
+  customDaysClassName,
 }) => {
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
@@ -174,6 +176,8 @@ const DatePicker = ({
               selectorEndingYear={selectorEndingYear}
               locale={locale}
               shouldHighlightWeekends={shouldHighlightWeekends}
+              renderFooter={renderFooter}
+              customDaysClassName={customDaysClassName}
             />
           </div>
           <div className="DatePicker__calendarArrow" />
