@@ -88,6 +88,22 @@ button {
 .text-orange::after { visibility: hidden; }
 .purple-shadow { box-shadow: 0 1em 3em rgba(156, 136, 255,0.2); }
 
+.purpleDay:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(156, 136, 255, 0.7) !important;
+}
+
+.orangeDay:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(219, 145, 60, 0.7) !important;
+}
+
+.yellowDay:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(228, 231, 36, 0.7) !important;
+}
+
+.navyBlueDay:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
+  border: 2px solid rgba(52, 73, 94, 0.7) !important;
+}
+
 @media (max-width: 1550px) {
   .fontWrapper {
     font-size: 9px;
