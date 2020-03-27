@@ -6,9 +6,11 @@ export type Day = {
   day: number;
 };
 
-export type DayRange = { from?: Day; to?: Day };
+export type DayValue = Day | null;
 
-type Value = Day | Day[] | DayRange;
+export type DayRange = { from: DayValue; to: DayValue };
+
+type Value = DayValue | Day[] | DayRange;
 
 type CustomDayClassNameItem = Day & { className: string };
 
@@ -79,14 +81,16 @@ export type Utils = {
 
 export function utils(locale: string): Utils;
 
+export type CalendarDigit = string | number;
+
 export interface Locale {
   months: string[];
   weekDays: WeekDay[];
   weekStartingIndex: number;
-  getToday: () => Day;
-  toNativeDate: () => Date;
-  getMonthLength: () => number;
-  transformDigit: () => (number | string);
+  getToday: (gregorainTodayObject: Day) => Day;
+  toNativeDate: (date: Day) => Date;
+  getMonthLength: (date: Day) => number;
+  transformDigit: (digit: CalendarDigit) => CalendarDigit;
   nextMonth: string;
   previousMonth: string;
   openMonthSelector: string;
