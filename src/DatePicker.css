@@ -89,7 +89,7 @@
   outline: none !important;
 }
 
-.Calendar button {
+.Calendar *:not(.Calendar__footer) button {
   font-family: inherit;
   background: transparent;
   cursor: pointer;
