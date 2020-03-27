@@ -79,7 +79,7 @@ const Calendar = ({
     : getComputedActiveDate();
 
   const weekdays = weekDaysList.map(weekDay => (
-    <abbr key={weekDay.name} title={weekDay} className="Calendar__weekDay">
+    <abbr key={weekDay.name} title={weekDay.name} className="Calendar__weekDay">
       {weekDay.short}
     </abbr>
   ));
