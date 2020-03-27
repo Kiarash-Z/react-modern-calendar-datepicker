@@ -38,7 +38,7 @@ export interface CalendarProps<TValue extends Value> {
   customDaysClassName?: CustomDayClassNameItem[];
 }
 
-export function Calendar(props: Optional<CalendarProps<Day>, 'value'>): React.ReactElement;
+export function Calendar(props: Optional<CalendarProps<DayValue>, 'value'>): React.ReactElement;
 export function Calendar(props: CalendarProps<Day[]>): React.ReactElement;
 export function Calendar(props: CalendarProps<DayRange>): React.ReactElement;
 
