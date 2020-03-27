@@ -152,7 +152,7 @@ export default App;
         </Code>
 
         <DatePicker
-          wrapperClassName="fontWrapper -aboveAll"
+          wrapperClassName="fontWrapper"
           calendarClassName="fontWrapper"
           value={datePicker2Value}
           onChange={setDatePicker2Value}

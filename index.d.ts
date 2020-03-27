@@ -18,7 +18,7 @@ export interface CalendarProps<TValue extends Value> {
   onDisabledDayError?(value: Day): void;
   selectorStartingYear?: number;
   selectorEndingYear?: number;
-  locale?: string;
+  locale?: string | Locale;
   minimumDate?: Day;
   maximumDate?: Day;
   disabledDays?: Day[];
