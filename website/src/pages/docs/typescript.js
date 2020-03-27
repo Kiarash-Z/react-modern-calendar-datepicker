@@ -12,7 +12,7 @@ const Installation = () => {
         typings out of the box.
         As TypeScript is a typed superset of JavaScript,
         you can use this package as you used to in JavaScript
-        but there are some pitfalls that you should notice. 
+        but there are some pitfalls that you should notice.
       </p>
 
       <h2 className="Docs__titleSecondary">Type-safety with React Hooks</h2>
@@ -29,10 +29,10 @@ const Installation = () => {
 
       <Code language="javascript">{`
 import React from 'react'
-import DatePicker, { Day, DayRange } from 'react-modern-calendar-datepicker'
+import DatePicker, { DayValue, DayRange, Day } from 'react-modern-calendar-datepicker'
 
 function App() {
-  const [day, setDay] = React.useState<Day>(null);
+  const [day, setDay] = React.useState<DayValue>(null);
   const [dayRange, setDayRange] = React.useState<DayRange>({
     from: null,
     to: null
