@@ -21,24 +21,11 @@
   color: #979797;
 }
 
-.DatePicker__calendarArrow {
-  position: absolute;
-  width: 0;
-  height: 0;
-  top: calc(100% + 10px);
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  border-style: solid;
-  z-index: 10;
-  border-width: 0 10px 10px 10px;
-  border-color: transparent transparent #fff transparent;
-}
-
 .DatePicker__calendarContainer.-top + .DatePicker__calendarArrow {
   top: auto;
   bottom: calc(100% + 10px);
-  transform: rotate(180deg);
+  transform: translateY(-2.5rem) rotate(180deg);
+  animation: fadeArrowFlipped 0.3s forwards;
 }
 
 .DatePicker__calendarContainer {
@@ -66,6 +53,20 @@
   direction: rtl;
 }
 
+.DatePicker__calendarArrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-style: solid;
+  z-index: 10;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #fff transparent;
+}
+
 .Calendar {
   --cl-color-black: #444444;
   --cl-color-disabled: #d4d4d4;
@@ -83,6 +84,16 @@
   z-index: 10;
   max-width: 90vw;
   min-height: 36.7em;
+}
+
+.Calendar, .DatePicker__calendarArrow {
+  transform: translateY(2.5em);
+  opacity: 0;
+  animation: fadeCalendar 0.3s forwards;
+}
+
+.DatePicker__calendarContainer.-top .Calendar {
+  transform: translateY(-2.5em);
 }
 
 .Calendar.-noFocusOutline *:focus {
@@ -621,6 +632,28 @@
 .Calendar__footer {
   position: relative;
   z-index: 1;
+}
+
+@keyframes fadeCalendar {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeArrowFlipped {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(180deg);
+  }
 }
 
 @keyframes fadeTextToCenter {
