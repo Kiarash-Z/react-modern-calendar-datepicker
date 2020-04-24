@@ -21,6 +21,7 @@ const DatePicker = ({
   calendarRangeStartClassName,
   calendarRangeBetweenClassName,
   calendarRangeEndClassName,
+  calendarPopperPosition,
   disabledDays,
   onDisabledDayError,
   colorPrimary,
@@ -100,7 +101,12 @@ const DatePicker = ({
     };
 
     calendarContainerElement.current.style.left = getLeftStyle();
-    if (isOverflowingFromBottom) calendarContainerElement.current.classList.add('-top');
+    if (
+      (calendarPopperPosition === 'auto' && isOverflowingFromBottom) ||
+      calendarPopperPosition === 'top'
+    ) {
+      calendarContainerElement.current.classList.add('-top');
+    }
   }, [isCalendarOpen]);
 
   const handleCalendarChange = newValue => {
@@ -192,11 +198,13 @@ const DatePicker = ({
 DatePicker.defaultProps = {
   wrapperClassName: '',
   locale: 'en',
+  calendarPopperPosition: 'auto',
 };
 
 DatePicker.propTypes = {
   wrapperClassName: PropTypes.string,
   locale: PropTypes.oneOfType([PropTypes.oneOf(['en', 'fa']), LOCALE_SHAPE]),
+  calendarPopperPosition: PropTypes.oneOf(['auto', 'top', 'bottom']),
 };
 
 export default DatePicker;

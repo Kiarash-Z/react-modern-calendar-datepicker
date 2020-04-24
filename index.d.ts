@@ -50,6 +50,7 @@ export interface DatePickerProps<TValue extends Value> extends CalendarProps<TVa
   wrapperClassName?: string;
   inputClassName?: string;
   inputName?: string;
+  calendarPopperPosition?: 'auto' | 'top' | 'bottom';
   inputPlaceholder?: string;
   formatInputText?: () => string;
   renderInput?: React.FC<RenderInputProps>;
