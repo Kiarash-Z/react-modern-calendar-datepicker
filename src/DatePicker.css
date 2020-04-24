@@ -86,7 +86,7 @@
   min-height: 36.7em;
 }
 
-.Calendar,
+.DatePicker .Calendar,
 .DatePicker__calendarArrow {
   transform: translateY(2.5em);
   opacity: 0;
