@@ -86,7 +86,8 @@
   min-height: 36.7em;
 }
 
-.Calendar, .DatePicker__calendarArrow {
+.Calendar,
+.DatePicker__calendarArrow {
   transform: translateY(2.5em);
   opacity: 0;
   animation: fadeCalendar 0.3s forwards;
