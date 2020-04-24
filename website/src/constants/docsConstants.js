@@ -85,9 +85,13 @@ export const PROPS_TABLE_HEADERS = [
 ];
 
 export const PROPS_TABLE_PICKER_ROWS = [
+  ['calendarPopperPosition', 'String', `'auto'`, `Calendar pooper position when clicked on the input, it can be
+  one of 'auto' or 'top' or 'bottom'. Left/right position of the calendar will always be automatic due to
+  screen boundaries`],
   ['wrapperClassName', 'String', `''`, 'Additional CSS class for the date picker wrapper element'],
   ['inputClassName', 'String', `''`, 'Additional CSS class for the date picker input element'],
   ['inputPlaceholder', 'String', `انتخاب`, `Placeholder of the picker's input`],
+  ['inputName', 'String', `''`, 'name of the date picker input'],
   ['formatInputText', 'Function', `() => ''`, `If returns a true JavaScript value, the returned value of this function will be the input's value`],
   ['renderInput', 'Function', `({ ref }) => null`, 'The returned value of this function will be the custom input element rendered for picker'],
 ];
