@@ -6,7 +6,7 @@ export type Day = {
   day: number;
 };
 
-export type DayValue = Day | null;
+export type DayValue = Day | undefined;
 
 export type DayRange = { from: DayValue; to: DayValue };
 
@@ -66,7 +66,7 @@ type WeekDay = {
   name: string;
   short: string;
   isWeekend?: boolean;
-}
+};
 
 export type Utils = {
   monthsList: string[];

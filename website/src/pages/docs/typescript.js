@@ -24,7 +24,7 @@ const Installation = () => {
       </p>
 
       <p className="Docs__paragraph">
-         You can use <code className="custom-code">Day</code> and <code className="custom-code">DayRange</code> types that has been exported by this package to define generic type variable.
+        You can use <code className="custom-code">Day</code> and <code className="custom-code">DayRange</code> types that has been exported by this package to define generic type variable.
       </p>
 
       <Code language="javascript">{`
@@ -32,10 +32,10 @@ import React from 'react'
 import DatePicker, { DayValue, DayRange, Day } from 'react-modern-calendar-datepicker'
 
 function App() {
-  const [day, setDay] = React.useState<DayValue>(null);
+  const [day, setDay] = React.useState<DayValue>(undefined);
   const [dayRange, setDayRange] = React.useState<DayRange>({
-    from: null,
-    to: null
+    from: undefined,
+    to: undefined
   });
   const [days, setDays] = React.useState<Day[]>([]);
 
