@@ -6,7 +6,7 @@ export type Day = {
   day: number;
 };
 
-export type DayValue = Day | null;
+export type DayValue = Day | null | undefined;
 
 export type DayRange = { from: DayValue; to: DayValue };
 
@@ -58,7 +58,7 @@ export interface DatePickerProps<TValue extends Value> extends CalendarProps<TVa
 
 type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-declare function DatePicker(props: Optional<DatePickerProps<Day>, 'value'>): React.ReactElement;
+declare function DatePicker(props: Optional<DatePickerProps<DayValue>, 'value'>): React.ReactElement;
 declare function DatePicker(props: DatePickerProps<Day[]>): React.ReactElement;
 declare function DatePicker(props: DatePickerProps<DayRange>): React.ReactElement;
 
