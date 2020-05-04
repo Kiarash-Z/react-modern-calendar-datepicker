@@ -5,13 +5,13 @@
 
 2- After approval, fork this repository
 
-3- Switch to the `develop` branch
+3- Switch to the `develop` branch using `git checkout develop`.
 
 4- Start working! please remember to write tests for your changes.
 
-5- Run `yarn build`and make sure everything is OK when
+5- Run `npm run build`and make sure everything is OK when
 
-running `yarn checkAll`. checkAll script checks the following items:
+running `npm run checkAll`. checkAll script checks the following items:
 
 - Code formatting and styles using Eslint and Prettier
 
