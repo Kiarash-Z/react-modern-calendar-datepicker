@@ -6,9 +6,9 @@ node_js:
   - 12
 
 install:
-    - yarn
+    - npm i
 
 script:
-  - yarn run checkAll
+  - npm run checkAll
 
 after_script: npx codecov@3
