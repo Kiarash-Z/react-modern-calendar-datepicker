@@ -1,7 +1,6 @@
-
 # Contribution Guide
 
-1- Submit [an issue](https://github.com/Kiarash-Z/react-modern-calendar-datepicker/issues/new/choose)  for what you want to work on
+1- Submit [an issue](https://github.com/Kiarash-Z/react-modern-calendar-datepicker/issues/new/choose) for what you want to work on
 
 2- After approval, fork this repository
 
@@ -21,4 +20,4 @@ running `npm run checkAll`. checkAll script checks the following items:
 
 - Bundle size wouldn&#39;t exceed 9 KB
 
-5- Submit a pull request (to develop branch of main repository), and we will work it out!
+6- Submit a pull request (to develop branch of main repository), and we will work it out!
