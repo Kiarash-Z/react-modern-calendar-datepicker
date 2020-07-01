@@ -68,11 +68,8 @@
 }
 
 .Calendar {
-  --cl-color-black: #444444;
-  --cl-color-disabled: #d4d4d4;
-  --cl-color-error: #ff2929;
   font-size: 10px;
-  background: #fff;
+  background: var(--cl-color-background);
   box-shadow: 0 1em 4em rgba(0, 0, 0, 0.07);
   border-radius: 1em;
   position: relative;
@@ -104,6 +101,7 @@
 .Calendar *:not(.Calendar__footer) button {
   font-family: inherit;
   background: transparent;
+  color: inherit;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   outline: none;
@@ -111,7 +109,7 @@
 
 .Calendar__header {
   display: flex;
-  color: var(--cl-color-black);
+  color: var(--cl-color-ink-on-background);
   padding: 2em 2.9em;
   align-items: center;
   overflow: hidden;
@@ -165,7 +163,7 @@
   display: block;
   width: 1.7em;
   height: 1.7em;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg class='nc-icon-wrapper' fill='%23000000'%3E%3Cdefs stroke='none'%3E%3C/defs%3E%3Cpath class='cls-1' d='M12 23.25V.75' fill='none' stroke='%23000000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5px'%3E%3C/path%3E%3Cpath class='cls-2' d='M22.5 11.25L12 .75 1.5 11.25' fill='none' stroke='%23000000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5px' fill-rule='evenodd'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+  background-image: var(--cl-arrow);
   background-size: 100% 100%;
 }
 
@@ -344,12 +342,22 @@
 }
 
 .Calendar__yearSelectorWrapper::after {
-  background-image: linear-gradient(to bottom, #fff, #fff 10%, rgba(245, 245, 245, 0));
+  background-image: linear-gradient(
+    to bottom,
+    var(--cl-color-background),
+    var(--cl-color-background) 10%,
+    var(--cl-color-background-transparent)
+  );
   top: -0.1em;
 }
 
 .Calendar__yearSelectorWrapper::before {
-  background-image: linear-gradient(to top, #fff, #fff 10%, rgba(245, 245, 245, 0));
+  background-image: linear-gradient(
+    to top,
+    var(--cl-color-background),
+    var(--cl-color-background) 10%,
+    var(--cl-color-background-transparent)
+  );
   bottom: 0;
 }
 
@@ -435,7 +443,7 @@
 .Calendar__monthSelectorItem.-active .Calendar__monthSelectorItemText,
 .Calendar__yearSelectorItem.-active .Calendar__yearSelectorText {
   background-color: var(--cl-color-primary);
-  color: #fff;
+  color: var(--cl-color-ink-on-primary);
 }
 
 .Calendar__weekDays {
@@ -466,7 +474,7 @@
   flex-direction: column;
   padding: 0 3.2em;
   position: absolute;
-  color: var(--cl-color-black);
+  color: var(--cl-color-ink-on-background);
   top: 0;
   padding-top: 0.5em;
   left: 0;
@@ -544,7 +552,7 @@
 .Calendar__day:not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween):not(.-selected):hover {
   background: #eaeaea;
   border-radius: 50%;
-  color: var(--cl-color-black);
+  color: var(--cl-color-ink-on-background);
   border-color: transparent;
 }
 
@@ -552,7 +560,7 @@
 .Calendar__day.-selectedStart,
 .Calendar__day.-selectedEnd {
   background: var(--cl-color-primary);
-  color: #fff;
+  color: var(--cl-color-ink-on-primary);
 }
 
 .Calendar__day.-ltr.-selectedStart {
@@ -584,11 +592,11 @@
 }
 
 .Calendar__day.-weekend:not(.-selected):not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween) {
-  color: var(--cl-color-error);
+  color: var(--cl-color-weekend);
 }
 
 .Calendar__day.-weekend.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween)::after {
-  background: var(--cl-color-error);
+  background: var(--cl-color-weekend);
 }
 
 .Calendar__day.-disabled {
@@ -601,8 +609,7 @@
 }
 .Calendar__day.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween) {
   font-weight: 600;
-  color: var(--cl-color-black);
-  color: #000;
+  color: var(--cl-color-deep-ink-on-background);
   position: relative;
 }
 
@@ -613,7 +620,7 @@
   display: block;
   width: 0.6em;
   height: 1px;
-  background: #000;
+  background: var(--cl-color-deep-ink-on-background);
   left: 50%;
   opacity: 0.5;
   transform: translateX(-50%);
