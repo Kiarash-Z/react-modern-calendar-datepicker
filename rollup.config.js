@@ -1,6 +1,6 @@
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
+import commonjs from '@rollup/plugin-commonjs';
 import copy from 'rollup-plugin-copy';
 import { terser } from 'rollup-plugin-terser';
 
@@ -11,12 +11,12 @@ const config = {
     format: 'cjs',
     exports: 'named',
   },
-  external: ['react', 'react-dom'],
+  external: ['react', 'react-dom', 'prop-types'],
   plugins: [
-    babel({
-      exclude: 'node_modules/**',
-    }),
     resolve(),
+    babel({
+      exclude: /node_modules/,
+    }),
     commonjs(),
     copy({
       targets: [{ src: 'src/DatePicker.css', dest: 'lib' }],

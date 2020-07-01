@@ -26,6 +26,7 @@
     "type": "git",
     "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker.git"
   },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "bugs": {
     "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker/issues"
   },
@@ -62,6 +63,8 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
+    "@rollup/plugin-babel": "^5.0.4",
+    "@rollup/plugin-commonjs": "^13.0.0",
     "@rollup/plugin-node-resolve": "^6.0.0",
     "@size-limit/preset-small-lib": "^2.2.1",
     "@testing-library/jest-dom": "^4.1.1",
@@ -90,8 +93,6 @@
     "react-dom": "^16.9.0",
     "rimraf": "^2.6.3",
     "rollup": "^1.27.8",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.1.0",
     "rollup-plugin-terser": "^5.1.2",
     "style-loader": "^0.23.1",
