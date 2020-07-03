@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 import { getSlideDate, handleSlideAnimationEnd, animateContent } from '../shared/sliderHelpers';
 import {
@@ -8,7 +7,7 @@ import {
   createUniqueRange,
   getValueType,
 } from '../shared/generalUtils';
-import { DAY_SHAPE, TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from '../shared/constants';
+import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from '../shared/constants';
 import handleKeyboardNavigation from '../shared/keyboardNavigation';
 import { useLocaleUtils, useLocaleLanguage } from '../shared/hooks';
 
@@ -275,19 +274,6 @@ const DaysList = ({
       </div>
     </div>
   );
-};
-
-DaysList.propTypes = {
-  onChange: PropTypes.func,
-  onDisabledDayError: PropTypes.func,
-  disabledDays: PropTypes.arrayOf(PropTypes.shape(DAY_SHAPE)),
-  calendarTodayClassName: PropTypes.string,
-  calendarSelectedDayClassName: PropTypes.string,
-  calendarRangeStartClassName: PropTypes.string,
-  calendarRangeBetweenClassName: PropTypes.string,
-  calendarRangeEndClassName: PropTypes.string,
-  shouldHighlightWeekends: PropTypes.bool,
-  isQuickSelectorOpen: PropTypes.bool.isRequired,
 };
 
 DaysList.defaultProps = {

@@ -49,8 +49,7 @@
     }
   ],
   "dependencies": {
-    "jalaali-js": "^1.1.0",
-    "prop-types": "^15.7.2"
+    "jalaali-js": "^1.1.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

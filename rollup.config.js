@@ -11,7 +11,7 @@ const config = {
     format: 'cjs',
     exports: 'named',
   },
-  external: ['react', 'react-dom', 'prop-types'],
+  external: ['react', 'react-dom'],
   plugins: [
     resolve(),
     babel({

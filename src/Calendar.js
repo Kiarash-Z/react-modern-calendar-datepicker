@@ -1,14 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 import { getDateAccordingToMonth, shallowClone, getValueType } from './shared/generalUtils';
-import {
-  DAY_SHAPE,
-  TYPE_SINGLE_DATE,
-  TYPE_RANGE,
-  TYPE_MUTLI_DATE,
-  LOCALE_SHAPE,
-} from './shared/constants';
+import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
 import { useLocaleUtils, useLocaleLanguage } from './shared/hooks';
 
 import { Header, MonthSelector, YearSelector, DaysList } from './components';
@@ -197,25 +190,6 @@ Calendar.defaultProps = {
   value: null,
   renderFooter: () => null,
   customDaysClassName: [],
-};
-
-Calendar.propTypes = {
-  value: PropTypes.oneOfType([
-    PropTypes.shape(DAY_SHAPE),
-    PropTypes.shape({ from: PropTypes.shape(DAY_SHAPE), to: PropTypes.shape(DAY_SHAPE) }),
-    PropTypes.arrayOf(PropTypes.shape(DAY_SHAPE)),
-  ]),
-  calendarClassName: PropTypes.string,
-  colorPrimary: PropTypes.string,
-  colorPrimaryLight: PropTypes.string,
-  slideAnimationDuration: PropTypes.string,
-  minimumDate: PropTypes.shape(DAY_SHAPE),
-  maximumDate: PropTypes.shape(DAY_SHAPE),
-  locale: PropTypes.oneOfType([PropTypes.oneOf(['en', 'fa']), LOCALE_SHAPE]),
-  renderFooter: PropTypes.func,
-  customDaysClassName: PropTypes.arrayOf(
-    PropTypes.shape({ ...DAY_SHAPE, className: PropTypes.string }),
-  ),
 };
 
 export { Calendar };

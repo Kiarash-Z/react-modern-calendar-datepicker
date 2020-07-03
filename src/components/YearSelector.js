@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 import { MINIMUM_SELECTABLE_YEAR_SUBTRACT, MAXIMUM_SELECTABLE_YEAR_SUM } from '../shared/constants';
 import handleKeyboardNavigation from '../shared/keyboardNavigation';
@@ -90,11 +89,6 @@ const YearSelector = ({
       </div>
     </div>
   );
-};
-
-YearSelector.propTypes = {
-  selectorStartingYear: PropTypes.number,
-  selectorEndingYear: PropTypes.number,
 };
 
 YearSelector.defaultProps = {
