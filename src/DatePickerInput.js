@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { useLocaleUtils, useLocaleLanguage } from './shared/hooks';
 import { putZero, getValueType } from './shared/generalUtils';
@@ -89,14 +88,6 @@ DatePickerInput.defaultProps = {
   inputPlaceholder: '',
   inputClassName: '',
   inputName: '',
-};
-
-DatePickerInput.propTypes = {
-  formatInputText: PropTypes.func,
-  inputPlaceholder: PropTypes.string,
-  inputClassName: PropTypes.string,
-  inputName: PropTypes.string,
-  renderInput: PropTypes.func,
 };
 
 export default DatePickerInput;

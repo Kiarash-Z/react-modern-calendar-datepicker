@@ -9,7 +9,7 @@ const Installation = () => {
     <Docs title="Getting Started">
       <p className="Docs__paragraph">
         Welcome to docs! react-modern-calendar-datepicker (a quite long name!)
-        is a react date picker
+        is a React date picker
         package supporting other languages locales(for now there are <code className="custom-code">fa</code> and <code className="custom-code">en</code> locales).
         It&#39;s lightweight, and it&#39;s easy to use.
         Before using this package, please pay attention to these two important points:

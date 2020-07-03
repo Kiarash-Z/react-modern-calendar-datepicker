@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import PropTypes from 'prop-types';
 
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
 import { getValueType } from './shared/generalUtils';
-import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE, LOCALE_SHAPE } from './shared/constants';
+import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constants';
 
 const DatePicker = ({
   value,
@@ -199,12 +198,6 @@ DatePicker.defaultProps = {
   wrapperClassName: '',
   locale: 'en',
   calendarPopperPosition: 'auto',
-};
-
-DatePicker.propTypes = {
-  wrapperClassName: PropTypes.string,
-  locale: PropTypes.oneOfType([PropTypes.oneOf(['en', 'fa']), LOCALE_SHAPE]),
-  calendarPopperPosition: PropTypes.oneOf(['auto', 'top', 'bottom']),
 };
 
 export default DatePicker;
