@@ -82,17 +82,21 @@ describe('Utility Functions', () => {
   describe('Language Dependent Utilities', () => {
     let gregorianUtils = null;
     let persianUtils = null;
+    let brazilianUtils = null;
 
     beforeAll(() => {
       gregorianUtils = utils();
       persianUtils = utils('fa');
+      brazilianUtils = utils('pt-BR');
     });
 
     test('returns correct language digits', () => {
       const englishDigits = '0123';
       const persianDigits = '۰۱۲۳';
+      const brazilianDigits = '0123';
       expect(gregorianUtils.getLanguageDigits(englishDigits)).toBe(englishDigits);
       expect(persianUtils.getLanguageDigits(englishDigits)).toBe(persianDigits);
+      expect(brazilianUtils.getLanguageDigits(brazilianDigits)).toBe(brazilianDigits);
     });
 
     test('returns month name according to its index', () => {

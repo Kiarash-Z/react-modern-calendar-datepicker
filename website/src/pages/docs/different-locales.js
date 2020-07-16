@@ -92,9 +92,10 @@ const DefaultValues = () => {
       </p>
       <h2 className="Docs__titleSecondary">Using Predefined Locales</h2>
       <p>
-        For now, there are two predefined locales;{' '}
-        <code className="custom-code">en</code> and{' '}
-        <code className="custom-code">fa</code>. You can use them by passing
+        For now, there are three predefined locales;{' '}
+        <code className="custom-code">en</code>,
+        <code className="custom-code">fa</code> and{' '}
+        <code className="custom-code">pt-BR</code>. You can use them by passing
         them to <code className="custom-code">locale</code> prop as a string.
       </p>
       <div className="Docs__sampleContainer">
@@ -157,6 +158,75 @@ export default App;
           value={datePicker2Value}
           onChange={setDatePicker2Value}
           locale="fa"
+          shouldHighlightWeekends
+        />
+      </div>
+      <h2 className="Docs__titleSecondary">Another example</h2>
+      <p>
+        This is the Brazilian portuguese predefined locale{' '}
+        <code className="custom-code">pt-BR</code>. You can use this by passing
+        it to <code className="custom-code">locale</code> prop as a string.
+      </p>
+      <div className="Docs__sampleContainer">
+        <Code language="javascript">
+          {`
+import React, { useState } from "react";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import DatePicker from "react-modern-calendar-datepicker";
+
+const App = () => {
+  const [selectedDay, setSelectedDay] = useState(null);
+  return (
+    <DatePicker
+      value={selectedDay}
+      onChange={setSelectedDay}
+      shouldHighlightWeekends
+      locale="pt-BR" // add this
+    />
+  );
+};
+
+export default App;
+
+          `}
+        </Code>
+        <DatePicker
+          calendarClassName="responsive-calendar"
+          wrapperClassName="fontWrapper"
+          value={datePicker1Value}
+          onChange={setDatePicker1Value}
+          locale="pt-BR"
+          shouldHighlightWeekends
+        />
+      </div>
+      <div className="Docs__sampleContainer">
+        <Code language="javascript">
+          {`
+import React, { useState } from "react";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
+
+const App = () => {
+  const [selectedDay, setSelectedDay] = useState(null);
+  return (
+    <Calendar
+      value={selectedDay}
+      onChange={setSelectedDay}
+      shouldHighlightWeekends
+      locale="pt-BR" // add this
+    />
+  );
+};
+
+export default App;
+
+                `}
+        </Code>
+        <Calendar
+          calendarClassName="fontWrapper responsive-calendar"
+          value={datePicker2Value}
+          onChange={setDatePicker2Value}
+          locale="pt-BR"
           shouldHighlightWeekends
         />
       </div>
