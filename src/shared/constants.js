@@ -30,6 +30,21 @@ export const GREGORIAN_MONTHS = [
   'December',
 ];
 
+export const BRAZILIAN_MONTHS = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
+];
+
 export const PERSIAN_WEEK_DAYS = [
   {
     name: 'شنبه',
@@ -90,6 +105,39 @@ export const GREGORIAN_WEEK_DAYS = [
   },
   {
     name: 'Saturday',
+    short: 'S',
+    isWeekend: true,
+  },
+];
+
+export const BRAZILIAN_WEEK_DAYS = [
+  {
+    name: 'Domingo',
+    short: 'D',
+    isWeekend: true,
+  },
+  {
+    name: 'Segunda',
+    short: 'S',
+  },
+  {
+    name: 'Terça',
+    short: 'T',
+  },
+  {
+    name: 'Quarta',
+    short: 'Q',
+  },
+  {
+    name: 'Quinta',
+    short: 'Q',
+  },
+  {
+    name: 'Sexta',
+    short: 'S',
+  },
+  {
+    name: 'Sábado',
     short: 'S',
     isWeekend: true,
   },

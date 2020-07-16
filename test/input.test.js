@@ -18,6 +18,10 @@ describe('DatePicker Input', () => {
     const persianValue = { year: 1398, month: 10, day: 10 };
     rerender(<DatePicker locale="fa" value={persianValue} />);
     expect(input).toHaveValue('۱۳۹۸/۱۰/۱۰');
+
+    const brazilianValue = { year: 1964, month: 6, day: 13 };
+    rerender(<DatePicker locale="pt-BR" value={brazilianValue} />);
+    expect(input).toHaveValue('13/06/1964');
   });
 
   test('shows range selection value', () => {
@@ -34,6 +38,13 @@ describe('DatePicker Input', () => {
     };
     rerender(<DatePicker locale="fa" value={persianValue} />);
     expect(input).toHaveValue('از ۹۸/۱۰/۰۱ تا ۹۸/۱۰/۰۵');
+
+    const brazilianValue = {
+      from: { year: 1964, month: 6, day: 1 },
+      to: { year: 1964, month: 6, day: 5 },
+    };
+    rerender(<DatePicker locale="pt-BR" value={brazilianValue} />);
+    expect(input).toHaveValue('de 01/06/1964 até 05/06/1964');
   });
 
   test('shows multiple date value', () => {
@@ -52,6 +63,14 @@ describe('DatePicker Input', () => {
     ];
     rerender(<DatePicker locale="fa" value={persianValue} />);
     expect(input).toHaveValue('۱، ۵، ۱۲');
+
+    const brazilianValue = [
+      { year: 1964, month: 6, day: 1 },
+      { year: 1964, month: 6, day: 5 },
+      { year: 1964, month: 6, day: 12 },
+    ];
+    rerender(<DatePicker locale="pt-BR" value={brazilianValue} />);
+    expect(input).toHaveValue('1, 5, 12');
   });
 
   test('overrides input format by formatInputText prop', () => {

@@ -24,22 +24,33 @@ const DatePickerInput = React.forwardRef(
       const year = getLanguageDigits(value.year);
       const month = getLanguageDigits(putZero(value.month));
       const day = getLanguageDigits(putZero(value.day));
-      return `${year}/${month}/${day}`;
+      return locale === 'pt-BR' ? `${day}/${month}/${year}` : `${year}/${month}/${day}`;
     };
 
     const getDayRangeValue = () => {
       if (!value.from || !value.to) return '';
       const { from, to } = value;
-      const fromText = `${getLanguageDigits(putZero(from.year))
+
+      const fromYear = getLanguageDigits(putZero(from.year))
         .toString()
-        .slice(yearLetterSkip)}/${getLanguageDigits(putZero(from.month))}/${getLanguageDigits(
-        putZero(from.day),
-      )}`;
-      const toText = `${getLanguageDigits(putZero(to.year))
+        .slice(yearLetterSkip);
+      const fromMonth = getLanguageDigits(putZero(from.month));
+      const fromDay = getLanguageDigits(putZero(from.day));
+
+      const toYear = getLanguageDigits(putZero(to.year))
         .toString()
-        .slice(yearLetterSkip)}/${getLanguageDigits(putZero(to.month))}/${getLanguageDigits(
-        putZero(to.day),
-      )}`;
+        .slice(yearLetterSkip);
+      const toMonth = getLanguageDigits(putZero(to.month));
+      const toDay = getLanguageDigits(putZero(to.day));
+
+      const fromText =
+        locale === 'pt-BR'
+          ? `${fromDay}/${fromMonth}/${fromYear}`
+          : `${fromYear}/${fromMonth}/${fromDay}`;
+
+      const toText =
+        locale === 'pt-BR' ? `${toDay}/${toMonth}/${toYear}` : `${toYear}/${toMonth}/${toDay}`;
+
       return `${fromWord} ${fromText} ${toWord} ${toText}`;
     };
 

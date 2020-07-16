@@ -6,6 +6,8 @@ import {
   GREGORIAN_WEEK_DAYS,
   PERSIAN_WEEK_DAYS,
   PERSIAN_NUMBERS,
+  BRAZILIAN_MONTHS,
+  BRAZILIAN_WEEK_DAYS,
 } from './constants';
 import { toExtendedDay } from './generalUtils';
 
@@ -35,6 +37,35 @@ const localeLanguages = {
     from: 'from',
     to: 'to',
     defaultPlaceholder: 'Select...',
+    digitSeparator: ',',
+    yearLetterSkip: 0,
+    isRtl: false,
+  },
+  'pt-BR': {
+    months: BRAZILIAN_MONTHS,
+    weekDays: BRAZILIAN_WEEK_DAYS,
+    weekStartingIndex: 0,
+    getToday(gregorainTodayObject) {
+      return gregorainTodayObject;
+    },
+    toNativeDate(date) {
+      return new Date(date.year, date.month - 1, date.day);
+    },
+    getMonthLength(date) {
+      return new Date(date.year, date.month, 0).getDate();
+    },
+    transformDigit(digit) {
+      return digit;
+    },
+    nextMonth: 'Próximo Mês',
+    previousMonth: 'Mês Anterior',
+    openMonthSelector: 'Abrir seletor de mês',
+    openYearSelector: 'Abrir seletor de ano',
+    closeMonthSelector: 'Fechar seletor de mês',
+    closeYearSelector: 'Fechar seletor de ano',
+    from: 'de',
+    to: 'até',
+    defaultPlaceholder: 'Selecione...',
     digitSeparator: ',',
     yearLetterSkip: 0,
     isRtl: false,

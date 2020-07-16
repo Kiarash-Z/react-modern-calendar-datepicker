@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, within } from '@testing-library/react';
 
 import { Calendar } from '../src';
-import { GREGORIAN_MONTHS, PERSIAN_MONTHS } from '../src/shared/constants';
+import { GREGORIAN_MONTHS, PERSIAN_MONTHS, BRAZILIAN_MONTHS } from '../src/shared/constants';
 
 const renderMonthSelector = (shouldOpenSelector = true, props) => {
   const { getAllByLabelText, getByTestId, rerender, getByText } = render(<Calendar {...props} />);
@@ -45,12 +45,20 @@ describe('Month Selection', () => {
     const gregorianMonthTexts = monthsChildren.map(child => child.textContent);
 
     expect(gregorianMonthTexts).toEqual(GREGORIAN_MONTHS);
+
     rerender(<Calendar locale="fa" />);
     fireEvent.click(monthButton);
     const persianMonthTexts = Array.from(monthSelector.children).map(child => child.textContent);
 
     expect(persianMonthTexts).toHaveLength(12);
     expect(persianMonthTexts).toEqual(PERSIAN_MONTHS);
+
+    rerender(<Calendar locale="pt-BR" />);
+    fireEvent.click(monthButton);
+    const brazilianMonthTexts = Array.from(monthSelector.children).map(child => child.textContent);
+
+    expect(brazilianMonthTexts).toHaveLength(12);
+    expect(brazilianMonthTexts).toEqual(BRAZILIAN_MONTHS);
   });
 
   test('highlights the initial active month', () => {
