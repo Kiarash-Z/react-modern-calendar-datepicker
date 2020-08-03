@@ -21,6 +21,7 @@ const Calendar = ({
   colorPrimary,
   colorPrimaryLight,
   slideAnimationDuration,
+  initialActiveDate,
   minimumDate,
   maximumDate,
   selectorStartingYear,
@@ -61,6 +62,9 @@ const Calendar = ({
   const toggleYearSelector = createStateToggler('isYearSelectorOpen');
 
   const getComputedActiveDate = () => {
+    if (initialActiveDate) {
+      return shallowClone(initialActiveDate);
+    }
     const valueType = getValueType(value);
     if (valueType === TYPE_MUTLI_DATE && value.length) return shallowClone(value[0]);
     if (valueType === TYPE_SINGLE_DATE && value) return shallowClone(value);
@@ -189,6 +193,7 @@ const Calendar = ({
 };
 
 Calendar.defaultProps = {
+  initialActiveDate: null,
   minimumDate: null,
   maximumDate: null,
   colorPrimary: '#0eca2d',

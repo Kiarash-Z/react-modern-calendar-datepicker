@@ -22,6 +22,7 @@ export interface CalendarProps<TValue extends Value> {
   selectorStartingYear?: number;
   selectorEndingYear?: number;
   locale?: string | Locale;
+  initialActiveDate?: Day;
   minimumDate?: Day;
   maximumDate?: Day;
   disabledDays?: Day[];
