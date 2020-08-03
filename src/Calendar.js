@@ -9,6 +9,7 @@ import { Header, MonthSelector, YearSelector, DaysList } from './components';
 const Calendar = ({
   value,
   onChange,
+  onChangeActiveDate,
   onDisabledDayError,
   calendarClassName,
   calendarTodayClassName,
@@ -20,6 +21,7 @@ const Calendar = ({
   colorPrimary,
   colorPrimaryLight,
   slideAnimationDuration,
+  initialActiveDate,
   minimumDate,
   maximumDate,
   selectorStartingYear,
@@ -60,6 +62,9 @@ const Calendar = ({
   const toggleYearSelector = createStateToggler('isYearSelectorOpen');
 
   const getComputedActiveDate = () => {
+    if (initialActiveDate) {
+      return shallowClone(initialActiveDate);
+    }
     const valueType = getValueType(value);
     if (valueType === TYPE_MUTLI_DATE && value.length) return shallowClone(value[0]);
     if (valueType === TYPE_SINGLE_DATE && value) return shallowClone(value);
@@ -85,27 +90,35 @@ const Calendar = ({
   };
 
   const updateDate = () => {
+    const newActiveDate = getDateAccordingToMonth(activeDate, mainState.monthChangeDirection);
     setMainState({
       ...mainState,
-      activeDate: getDateAccordingToMonth(activeDate, mainState.monthChangeDirection),
+      activeDate: newActiveDate,
       monthChangeDirection: '',
     });
+
+    onChangeActiveDate(newActiveDate);
   };
 
   const selectMonth = newMonthNumber => {
+    const newActiveDate = { ...activeDate, month: newMonthNumber };
     setMainState({
       ...mainState,
-      activeDate: { ...activeDate, month: newMonthNumber },
+      activeDate: newActiveDate,
       isMonthSelectorOpen: false,
     });
+
+    onChangeActiveDate(newActiveDate);
   };
 
   const selectYear = year => {
+    const newActiveDate = { ...activeDate, year };
     setMainState({
       ...mainState,
-      activeDate: { ...activeDate, year },
+      activeDate: newActiveDate,
       isYearSelectorOpen: false,
     });
+    onChangeActiveDate(newActiveDate);
   };
 
   return (
@@ -180,6 +193,7 @@ const Calendar = ({
 };
 
 Calendar.defaultProps = {
+  initialActiveDate: null,
   minimumDate: null,
   maximumDate: null,
   colorPrimary: '#0eca2d',
@@ -190,6 +204,7 @@ Calendar.defaultProps = {
   value: null,
   renderFooter: () => null,
   customDaysClassName: [],
+  onChangeActiveDate: () => {},
 };
 
 export { Calendar };

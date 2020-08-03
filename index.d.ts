@@ -17,10 +17,12 @@ type CustomDayClassNameItem = Day & { className: string };
 export interface CalendarProps<TValue extends Value> {
   value: TValue;
   onChange?(value: TValue): void;
+  onChangeActiveDate?(value: Day): void;
   onDisabledDayError?(value: Day): void;
   selectorStartingYear?: number;
   selectorEndingYear?: number;
   locale?: string | Locale;
+  initialActiveDate?: Day;
   minimumDate?: Day;
   maximumDate?: Day;
   disabledDays?: Day[];
