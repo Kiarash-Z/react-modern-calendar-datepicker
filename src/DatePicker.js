@@ -11,6 +11,7 @@ const DatePicker = ({
   formatInputText,
   inputPlaceholder,
   inputClassName,
+  inputId,
   inputName,
   renderInput,
   wrapperClassName,
@@ -149,6 +150,7 @@ const DatePicker = ({
         inputPlaceholder={inputPlaceholder}
         inputClassName={inputClassName}
         renderInput={renderInput}
+        inputId={inputId}
         inputName={inputName}
         locale={locale}
       />

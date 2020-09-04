@@ -49,6 +49,7 @@ export type RenderInputProps = {
 export interface DatePickerProps<TValue extends Value> extends CalendarProps<TValue> {
   wrapperClassName?: string;
   inputClassName?: string;
+  inputId?: string;
   inputName?: string;
   calendarPopperPosition?: 'auto' | 'top' | 'bottom';
   inputPlaceholder?: string;
