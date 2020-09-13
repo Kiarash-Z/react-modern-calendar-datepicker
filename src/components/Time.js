@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Time = ({ activeDate, onHourSelect, onMinuetsSelect }) => {
+const Time = ({ activeDate, onHourSelect, onMinutesSelect }) => {
   console.log('from Time');
   console.log(activeDate);
   return (
@@ -15,7 +15,7 @@ const Time = ({ activeDate, onHourSelect, onMinuetsSelect }) => {
       <input
         type="number"
         value={activeDate.minutes}
-        onChange={e => onMinuetsSelect(+e.target.value)}
+        onChange={e => onMinutesSelect(+e.target.value)}
         min="0"
         max="60"
       />

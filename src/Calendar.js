@@ -122,7 +122,24 @@ const Calendar = ({
       activeDate: { ...activeDate, minutes },
     });
   };
-
+  const RenderTime = () => {
+    if (!activeTime) return null;
+    const type = getValueType(value);
+    if (type === 'SINGLE_DATE') {
+      return (
+        <Time activeDate={activeDate} onHourSelect={selectHour} onMinutesSelect={selectMinuets} />
+      );
+    }
+    if (type === 'RANGE') {
+      return (
+        <>
+          {JSON.stringify(activeDate)}
+          <Time activeDate={value.from} onHourSelect={selectHour} onMinutesSelect={selectMinuets} />
+          <Time activeDate={value.to} onHourSelect={selectHour} onMinutesSelect={selectMinuets} />
+        </>
+      );
+    }
+  };
   return (
     <div
       className={`Calendar -noFocusOutline ${calendarClassName} -${isRtl ? 'rtl' : 'ltr'}`}
@@ -189,15 +206,13 @@ const Calendar = ({
         customDaysClassName={customDaysClassName}
         isQuickSelectorOpen={mainState.isYearSelectorOpen || mainState.isMonthSelectorOpen}
       />
-      {activeTime && (
-        <Time activeDate={activeDate} onHourSelect={selectHour} onMinuetsSelect={selectMinuets} />
-      )}
+      <RenderTime />
+      {getValueType(value)}
 
       <div className="Calendar__footer">{renderFooter()}</div>
     </div>
   );
 };
-
 Calendar.defaultProps = {
   minimumDate: null,
   maximumDate: null,
