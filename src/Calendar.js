@@ -116,10 +116,10 @@ const Calendar = ({
     });
   };
 
-  const selectMinuets = minuets => {
+  const selectMinuets = minutes => {
     setMainState({
       ...mainState,
-      activeDate: { ...activeDate, minuets },
+      activeDate: { ...activeDate, minutes },
     });
   };
 

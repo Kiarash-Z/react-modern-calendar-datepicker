@@ -8,14 +8,14 @@ const Time = ({ activeDate, onHourSelect, onMinuetsSelect }) => {
       <input
         type="number"
         value={activeDate.hour}
-        onChange={e => onHourSelect(e.target.value)}
+        onChange={e => onHourSelect(+e.target.value)}
         min="0"
         max="24"
       />
       <input
         type="number"
         value={activeDate.minutes}
-        onChange={e => onMinuetsSelect(e.target.value)}
+        onChange={e => onMinuetsSelect(+e.target.value)}
         min="0"
         max="60"
       />
