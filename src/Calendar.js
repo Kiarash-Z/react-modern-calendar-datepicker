@@ -109,6 +109,20 @@ const Calendar = ({
     });
   };
 
+  const selectHour = hour => {
+    setMainState({
+      ...mainState,
+      activeDate: { ...activeDate, hour },
+    });
+  };
+
+  const selectMinuets = minuets => {
+    setMainState({
+      ...mainState,
+      activeDate: { ...activeDate, minuets },
+    });
+  };
+
   return (
     <div
       className={`Calendar -noFocusOutline ${calendarClassName} -${isRtl ? 'rtl' : 'ltr'}`}
@@ -175,7 +189,9 @@ const Calendar = ({
         customDaysClassName={customDaysClassName}
         isQuickSelectorOpen={mainState.isYearSelectorOpen || mainState.isMonthSelectorOpen}
       />
-      {isTime && <Time value={value} />}
+      {isTime && (
+        <Time activeDate={activeDate} onHourSelect={selectHour} onMinuetsSelect={selectMinuets} />
+      )}
 
       <div className="Calendar__footer">{renderFooter()}</div>
     </div>
