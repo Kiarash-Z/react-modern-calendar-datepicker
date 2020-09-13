@@ -25,7 +25,7 @@ const DatePickerInput = React.forwardRef(
       const month = getLanguageDigits(putZero(value.month));
       const day = getLanguageDigits(putZero(value.day));
       const hour = getLanguageDigits(value.hour);
-      const minutes = getLanguageDigits(value.minuets);
+      const minutes = getLanguageDigits(value.minutes);
       return `${year}/${month}/${day} ${hour}:${minutes}`;
     };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Time = ({ activeDate, onHourSelect, onMinuetsSelect }) => {
+  console.log('from Time');
   console.log(activeDate);
   return (
     <div className="Calendar__weekDays">

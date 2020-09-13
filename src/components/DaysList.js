@@ -151,6 +151,8 @@ const DaysList = ({
       isStandard: true,
       month: date.month,
       year: date.year,
+      hour: date.hour,
+      minutes: date.minutes,
     }));
     const allDays = [...prependingBlankDays, ...standardDays];
     return allDays;
@@ -174,8 +176,11 @@ const DaysList = ({
     if (isSelected || isStartingDayRange || isToday || day === 1) return true;
   };
 
-  const renderEachWeekDays = ({ id, value: day, month, year, isStandard }, index) => {
-    const dayItem = { day, month, year };
+  const renderEachWeekDays = (
+    { id, value: day, month, year, hour, minutes, isStandard },
+    index,
+  ) => {
+    const dayItem = { day, month, year, hour, minutes };
     const isInDisabledDaysRange = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
     const isBeforeMinimumDate = isBeforeDate(dayItem, minimumDate);
     const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
