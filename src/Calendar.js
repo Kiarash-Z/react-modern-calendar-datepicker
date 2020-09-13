@@ -126,14 +126,11 @@ const Calendar = ({
     if (!activeTime) return null;
     const type = getValueType(value);
     if (type === 'SINGLE_DATE') {
-      return (
-        <Time activeDate={activeDate} onHourSelect={selectHour} onMinutesSelect={selectMinuets} />
-      );
+      return <Time activeDate={value} onHourSelect={selectHour} onMinutesSelect={selectMinuets} />;
     }
     if (type === 'RANGE') {
       return (
         <>
-          {JSON.stringify(activeDate)}
           <Time activeDate={value.from} onHourSelect={selectHour} onMinutesSelect={selectMinuets} />
           <Time activeDate={value.to} onHourSelect={selectHour} onMinutesSelect={selectMinuets} />
         </>
