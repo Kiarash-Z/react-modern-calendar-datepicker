@@ -4,7 +4,7 @@ import { getDateAccordingToMonth, shallowClone, getValueType } from './shared/ge
 import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
 import { useLocaleUtils, useLocaleLanguage } from './shared/hooks';
 
-import { Header, MonthSelector, YearSelector, DaysList } from './components';
+import { Header, MonthSelector, YearSelector, DaysList, Time } from './components';
 
 const Calendar = ({
   value,
@@ -28,6 +28,7 @@ const Calendar = ({
   shouldHighlightWeekends,
   renderFooter,
   customDaysClassName,
+  isTime,
 }) => {
   const calendarElement = useRef(null);
   const [mainState, setMainState] = useState({
@@ -174,6 +175,8 @@ const Calendar = ({
         customDaysClassName={customDaysClassName}
         isQuickSelectorOpen={mainState.isYearSelectorOpen || mainState.isMonthSelectorOpen}
       />
+      {isTime && <Time value={value} />}
+
       <div className="Calendar__footer">{renderFooter()}</div>
     </div>
   );
