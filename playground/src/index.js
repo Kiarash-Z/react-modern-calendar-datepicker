@@ -37,7 +37,7 @@ const App = () => {
     <>
       <h1>{JSON.stringify(selectedDay)}</h1>
       <div>
-        <DatePicker value={selectedDay} onChange={setValue} shouldHighlightWeekends />
+        <DatePicker value={selectedDay} onChange={setValue} shouldHighlightWeekends activeTime />
       </div>
       <br />
       <br />
@@ -47,7 +47,7 @@ const App = () => {
 
       <h1>{JSON.stringify(selectedDay1)}</h1>
       <div>
-        <DatePicker value={selectedDay1} onChange={setValue1} shouldHighlightWeekends />
+        <DatePicker value={selectedDay1} onChange={setValue1} shouldHighlightWeekends activeTime />
       </div>
     </>
   );

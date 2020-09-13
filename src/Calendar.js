@@ -202,9 +202,10 @@ const Calendar = ({
         shouldHighlightWeekends={shouldHighlightWeekends}
         customDaysClassName={customDaysClassName}
         isQuickSelectorOpen={mainState.isYearSelectorOpen || mainState.isMonthSelectorOpen}
+        activeTime={activeTime}
       />
+
       <RenderTime />
-      {getValueType(value)}
 
       <div className="Calendar__footer">{renderFooter()}</div>
     </div>

@@ -30,6 +30,7 @@ const DaysList = ({
   shouldHighlightWeekends,
   isQuickSelectorOpen,
   customDaysClassName,
+  activeTime,
 }) => {
   const calendarSectionWrapper = useRef(null);
   const { isRtl, weekDays: weekDaysList } = useLocaleLanguage(locale);
@@ -180,7 +181,12 @@ const DaysList = ({
     { id, value: day, month, year, hour, minutes, isStandard },
     index,
   ) => {
-    const dayItem = { day, month, year, hour, minutes };
+    let dayItem = {};
+    if (activeTime) {
+      dayItem = { day, month, year, hour, minutes };
+    } else {
+      dayItem = { day, month, year };
+    }
     const isInDisabledDaysRange = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
     const isBeforeMinimumDate = isBeforeDate(dayItem, minimumDate);
     const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
