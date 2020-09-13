@@ -17,7 +17,7 @@ const isSameDay = (day1, day2) => {
 
 const putZero = number => (number.toString().length === 1 ? `0${number}` : number);
 
-const toExtendedDay = date => [date.year, date.month, date.day];
+const toExtendedDay = date => [date.year, date.month, date.day, date.hour, date.minutes];
 
 const shallowClone = value => ({ ...value });
 
@@ -36,7 +36,13 @@ const getDateAccordingToMonth = (date, direction) => {
     newMonthIndex = 1;
     newYear += 1;
   }
-  const newDate = { year: newYear, month: newMonthIndex, day: 1 };
+  const newDate = {
+    year: newYear,
+    month: newMonthIndex,
+    day: 1,
+    hour: date.hour,
+    minutes: date.minutes,
+  };
   return newDate;
 };
 
