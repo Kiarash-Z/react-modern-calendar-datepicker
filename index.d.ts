@@ -38,6 +38,7 @@ export interface CalendarProps<TValue extends Value> {
   calendarRangeEndClassName?: string;
   renderFooter?: React.FC;
   customDaysClassName?: CustomDayClassNameItem[];
+  activeTime: boolean;
 }
 
 export function Calendar(props: Optional<CalendarProps<DayValue>, 'value'>): React.ReactElement;

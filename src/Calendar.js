@@ -28,7 +28,7 @@ const Calendar = ({
   shouldHighlightWeekends,
   renderFooter,
   customDaysClassName,
-  isTime,
+  activeTime,
 }) => {
   const calendarElement = useRef(null);
   const [mainState, setMainState] = useState({
@@ -189,7 +189,7 @@ const Calendar = ({
         customDaysClassName={customDaysClassName}
         isQuickSelectorOpen={mainState.isYearSelectorOpen || mainState.isMonthSelectorOpen}
       />
-      {isTime && (
+      {activeTime && (
         <Time activeDate={activeDate} onHourSelect={selectHour} onMinuetsSelect={selectMinuets} />
       )}
 

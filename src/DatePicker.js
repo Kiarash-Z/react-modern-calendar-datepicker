@@ -34,7 +34,7 @@ const DatePicker = ({
   shouldHighlightWeekends,
   renderFooter,
   customDaysClassName,
-  isTime,
+  activeTime,
 }) => {
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
@@ -186,7 +186,7 @@ const DatePicker = ({
               shouldHighlightWeekends={shouldHighlightWeekends}
               renderFooter={renderFooter}
               customDaysClassName={customDaysClassName}
-              isTime={isTime}
+              activeTime={activeTime}
             />
           </div>
           <div className="DatePicker__calendarArrow" />
