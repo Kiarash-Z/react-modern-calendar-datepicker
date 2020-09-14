@@ -114,6 +114,7 @@ const Calendar = ({
   useEffect(() => {
     handleCalendarTimeChange(timeDate);
   }, [timeDate]);
+
   const selectHour = (hour, target) => {
     const type = getValueType(value);
     if (type === 'SINGLE_DATE') {
