@@ -110,71 +110,6 @@ const Calendar = ({
     });
   };
 
-  const [timeDate, setTimeDate] = useState(value);
-  useEffect(() => {
-    handleCalendarTimeChange(timeDate);
-  }, [timeDate]);
-
-  const selectHour = (hour, target) => {
-    const type = getValueType(value);
-    if (type === 'SINGLE_DATE') {
-      setTimeDate({
-        ...value,
-        hour,
-      });
-    }
-    if (type === 'RANGE') {
-      setTimeDate({
-        ...value,
-        [target]: { ...value[target], hour },
-      });
-    }
-  };
-  const selectMinuets = (minutes, target) => {
-    const type = getValueType(value);
-    if (type === 'SINGLE_DATE') {
-      setTimeDate({
-        ...value,
-        minutes,
-      });
-    }
-    if (type === 'RANGE') {
-      setTimeDate({
-        ...value,
-        [target]: { ...value[target], minutes },
-      });
-    }
-  };
-
-  const RenderTime = () => {
-    if (!activeTime) return null;
-    const type = getValueType(value);
-    if (type === 'SINGLE_DATE') {
-      return (
-        <Time activeDate={timeDate} onHourSelect={selectHour} onMinutesSelect={selectMinuets} />
-      );
-    }
-    if (type === 'RANGE') {
-      return (
-        <>
-          <Time
-            target="from"
-            activeDate={timeDate.from}
-            onHourSelect={selectHour}
-            onMinutesSelect={selectMinuets}
-            disabled={!value.to || !value.to}
-          />
-          <Time
-            target="to"
-            activeDate={timeDate.to}
-            onHourSelect={selectHour}
-            onMinutesSelect={selectMinuets}
-            disabled={!value.to || !value.to}
-          />
-        </>
-      );
-    }
-  };
   return (
     <div
       className={`Calendar -noFocusOutline ${calendarClassName} -${isRtl ? 'rtl' : 'ltr'}`}
@@ -198,7 +133,6 @@ const Calendar = ({
         isYearSelectorOpen={mainState.isYearSelectorOpen}
         locale={locale}
       />
-
       <MonthSelector
         isOpen={mainState.isMonthSelectorOpen}
         activeDate={activeDate}
@@ -207,7 +141,6 @@ const Calendar = ({
         minimumDate={minimumDate}
         locale={locale}
       />
-
       <YearSelector
         isOpen={mainState.isYearSelectorOpen}
         activeDate={activeDate}
@@ -218,9 +151,7 @@ const Calendar = ({
         minimumDate={minimumDate}
         locale={locale}
       />
-
       <div className="Calendar__weekDays">{weekdays}</div>
-
       <DaysList
         activeDate={activeDate}
         value={value}
@@ -242,8 +173,7 @@ const Calendar = ({
         isQuickSelectorOpen={mainState.isYearSelectorOpen || mainState.isMonthSelectorOpen}
         activeTime={activeTime}
       />
-
-      <RenderTime />
+      {activeTime && <Time value={value} handleCalendarTimeChange={handleCalendarTimeChange} />}
 
       <div className="Calendar__footer">{renderFooter()}</div>
     </div>
