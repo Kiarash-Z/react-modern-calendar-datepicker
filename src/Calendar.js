@@ -109,30 +109,61 @@ const Calendar = ({
     });
   };
 
-  const selectHour = hour => {
-    setMainState({
-      ...mainState,
-      activeDate: { ...activeDate, hour },
-    });
+  const [timeDate, setTimeDate] = useState(value);
+  const selectHour = (hour, target) => {
+    const type = getValueType(value);
+    if (type === 'SINGLE_DATE') {
+      setTimeDate({
+        ...timeDate,
+        hour,
+      });
+    }
+    if (type === 'RANGE') {
+      setTimeDate({
+        ...timeDate,
+        [target]: { ...timeDate[target], hour },
+      });
+    }
+  };
+  const selectMinuets = (minutes, target) => {
+    const type = getValueType(value);
+    if (type === 'SINGLE_DATE') {
+      setTimeDate({
+        ...timeDate,
+        minutes,
+      });
+    }
+    if (type === 'RANGE') {
+      setTimeDate({
+        ...timeDate,
+        [target]: { ...timeDate[target], minutes },
+      });
+    }
   };
 
-  const selectMinuets = minutes => {
-    setMainState({
-      ...mainState,
-      activeDate: { ...activeDate, minutes },
-    });
-  };
   const RenderTime = () => {
     if (!activeTime) return null;
     const type = getValueType(value);
     if (type === 'SINGLE_DATE') {
-      return <Time activeDate={value} onHourSelect={selectHour} onMinutesSelect={selectMinuets} />;
+      return (
+        <Time activeDate={timeDate} onHourSelect={selectHour} onMinutesSelect={selectMinuets} />
+      );
     }
     if (type === 'RANGE') {
       return (
         <>
-          <Time activeDate={value.from} onHourSelect={selectHour} onMinutesSelect={selectMinuets} />
-          <Time activeDate={value.to} onHourSelect={selectHour} onMinutesSelect={selectMinuets} />
+          <Time
+            target="from"
+            activeDate={timeDate.from}
+            onHourSelect={selectHour}
+            onMinutesSelect={selectMinuets}
+          />
+          <Time
+            target="to"
+            activeDate={timeDate.to}
+            onHourSelect={selectHour}
+            onMinutesSelect={selectMinuets}
+          />
         </>
       );
     }
