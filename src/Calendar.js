@@ -162,12 +162,14 @@ const Calendar = ({
             activeDate={timeDate.from}
             onHourSelect={selectHour}
             onMinutesSelect={selectMinuets}
+            disabled={!value.to || !value.to}
           />
           <Time
             target="to"
             activeDate={timeDate.to}
             onHourSelect={selectHour}
             onMinutesSelect={selectMinuets}
+            disabled={!value.to || !value.to}
           />
         </>
       );

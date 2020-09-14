@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Time = ({ activeDate, onHourSelect, onMinutesSelect, target }) => {
-  const newActiveDate = activeDate || { hour: 12, minutes: 0 };
+const Time = ({ activeDate, onHourSelect, onMinutesSelect, target, disabled }) => {
+  const newActiveDate = activeDate || { hour: 24, minutes: 0 };
   return (
     <div className="Calendar__weekDays">
       <input
@@ -10,6 +10,7 @@ const Time = ({ activeDate, onHourSelect, onMinutesSelect, target }) => {
         onChange={e => onHourSelect(+e.target.value, target)}
         min="0"
         max="24"
+        disabled={disabled}
       />
       <input
         type="number"
@@ -17,6 +18,7 @@ const Time = ({ activeDate, onHourSelect, onMinutesSelect, target }) => {
         onChange={e => onMinutesSelect(+e.target.value, target)}
         min="0"
         max="60"
+        disabled={disabled}
       />
     </div>
   );
