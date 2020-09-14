@@ -103,6 +103,7 @@ const DaysList = ({
       }
     };
     const newValue = getNewValue();
+    console.log(newValue);
     onChange(newValue);
   };
 

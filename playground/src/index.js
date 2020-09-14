@@ -10,14 +10,14 @@ const App = () => {
     year: 2019,
     month: 4,
     day: 16,
-    hour: 12,
+    hour: 24,
     minutes: 0,
   };
   const defaultTo = {
     year: 2019,
     month: 4,
     day: 19,
-    hour: 12,
+    hour: 24,
     minutes: 0,
   };
   const defaultValue = {

@@ -115,6 +115,9 @@ const DatePicker = ({
     if (valueType === TYPE_SINGLE_DATE) setCalendarVisiblity(false);
     else if (valueType === TYPE_RANGE && newValue.from && newValue.to) setCalendarVisiblity(false);
   };
+  const handleCalendarTimeChange = newValue => {
+    onChange(newValue);
+  };
 
   const handleKeyUp = ({ key }) => {
     switch (key) {
@@ -168,6 +171,7 @@ const DatePicker = ({
             <Calendar
               value={value}
               onChange={handleCalendarChange}
+              handleCalendarTimeChange={handleCalendarTimeChange}
               calendarClassName={calendarClassName}
               calendarTodayClassName={calendarTodayClassName}
               calendarSelectedDayClassName={calendarSelectedDayClassName}

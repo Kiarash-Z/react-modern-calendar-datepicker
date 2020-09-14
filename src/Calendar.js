@@ -9,6 +9,7 @@ import { Header, MonthSelector, YearSelector, DaysList, Time } from './component
 const Calendar = ({
   value,
   onChange,
+  handleCalendarTimeChange,
   onDisabledDayError,
   calendarClassName,
   calendarTodayClassName,
@@ -110,18 +111,21 @@ const Calendar = ({
   };
 
   const [timeDate, setTimeDate] = useState(value);
+  useEffect(() => {
+    handleCalendarTimeChange(timeDate);
+  }, [timeDate]);
   const selectHour = (hour, target) => {
     const type = getValueType(value);
     if (type === 'SINGLE_DATE') {
       setTimeDate({
-        ...timeDate,
+        ...value,
         hour,
       });
     }
     if (type === 'RANGE') {
       setTimeDate({
-        ...timeDate,
-        [target]: { ...timeDate[target], hour },
+        ...value,
+        [target]: { ...value[target], hour },
       });
     }
   };
@@ -129,14 +133,14 @@ const Calendar = ({
     const type = getValueType(value);
     if (type === 'SINGLE_DATE') {
       setTimeDate({
-        ...timeDate,
+        ...value,
         minutes,
       });
     }
     if (type === 'RANGE') {
       setTimeDate({
-        ...timeDate,
-        [target]: { ...timeDate[target], minutes },
+        ...value,
+        [target]: { ...value[target], minutes },
       });
     }
   };
@@ -242,6 +246,7 @@ const Calendar = ({
     </div>
   );
 };
+
 Calendar.defaultProps = {
   minimumDate: null,
   maximumDate: null,
