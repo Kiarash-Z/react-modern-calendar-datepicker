@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { useEffect } from 'react';
 import { getValueType } from '../shared/generalUtils';
 
@@ -6,6 +7,8 @@ const Time = ({ value, handleCalendarTimeChange, time, onSetTime }) => {
     handleCalendarTimeChange(value);
   }, [time]);
   const selectHour = (hour, target) => {
+    if (hour > 24) hour = 24;
+    if (hour < 0) hour = 0;
     const type = getValueType(value);
     if (type === 'SINGLE_DATE') {
       onSetTime({
@@ -21,6 +24,8 @@ const Time = ({ value, handleCalendarTimeChange, time, onSetTime }) => {
     }
   };
   const selectMinuets = (minutes, target) => {
+    if (minutes > 60) minutes = 60;
+    if (minutes < 0) minutes = 0;
     const type = getValueType(value);
     if (type === 'SINGLE_DATE') {
       onSetTime({
