@@ -270,6 +270,7 @@ const DatePicker = ({
               activeTime={activeTime}
               time={time}
               onSetTime={setTime}
+              type
             />
           </div>
           <div className="DatePicker__calendarArrow" />

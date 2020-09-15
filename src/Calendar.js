@@ -40,6 +40,7 @@ const Calendar = ({
     isMonthSelectorOpen: false,
     isYearSelectorOpen: false,
   });
+  const valueType = getValueType(value);
 
   useEffect(() => {
     const handleKeyUp = ({ key }) => {
@@ -64,7 +65,6 @@ const Calendar = ({
   const toggleYearSelector = createStateToggler('isYearSelectorOpen');
 
   const getComputedActiveDate = () => {
-    const valueType = getValueType(value);
     if (valueType === TYPE_MUTLI_DATE && value.length) return shallowClone(value[0]);
     if (valueType === TYPE_SINGLE_DATE && value) return shallowClone(value);
     if (valueType === TYPE_RANGE && value.from) return shallowClone(value.from);
@@ -176,7 +176,7 @@ const Calendar = ({
         isQuickSelectorOpen={mainState.isYearSelectorOpen || mainState.isMonthSelectorOpen}
         activeTime={activeTime}
       />
-      {activeTime && (
+      {activeTime && valueType !== 'MUTLI_DATE' && (
         <Time
           value={value}
           time={time}
