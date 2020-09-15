@@ -46,8 +46,10 @@ const Time = ({ value, handleCalendarTimeChange, time, onSetTime, locale }) => {
   return (
     <>
       {type === 'SINGLE_DATE' && (
-        <div className="Calendar__time Calendar__weekDays">
-          <span>{getLocaleDetails(locale).clock}</span>
+        <div className="Calendar__time">
+          <span className={`Calendar__time--title is-single-${locale}`}>
+            {getLocaleDetails(locale).clock}
+          </span>
           <input
             className="Calendar__time--input x"
             value={time.hour}
@@ -69,8 +71,10 @@ const Time = ({ value, handleCalendarTimeChange, time, onSetTime, locale }) => {
       )}
       {type === 'RANGE' && (
         <>
-          <div className="Calendar__time Calendar__weekDays">
-            <span>{getLocaleDetails(locale).clock}</span>
+          <div className="Calendar__time">
+            <span className={`Calendar__time--title is-range-${locale}`}>
+              {getLocaleDetails(locale).clockFrom}
+            </span>
             <input
               className="Calendar__time--input x"
               value={time.from.hour}
@@ -91,7 +95,10 @@ const Time = ({ value, handleCalendarTimeChange, time, onSetTime, locale }) => {
               disabled={!value.to || !value.to}
             />
           </div>
-          <div className="Calendar__time Calendar__weekDays">
+          <div className="Calendar__time">
+            <span className={`Calendar__time--title is-range-${locale}`}>
+              {getLocaleDetails(locale).clockTo}
+            </span>
             <input
               className="Calendar__time--input x"
               value={time.to.hour}

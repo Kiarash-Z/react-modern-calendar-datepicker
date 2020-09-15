@@ -660,6 +660,7 @@
   margin-bottom: 0.7em;
   padding: 0 2.6em;
   position: relative;
+  direction: ltr !important;
 }
 
 .Calendar__time--label {
@@ -667,6 +668,32 @@
   font-size: 1em;
   line-height: 1.8em;
   margin: auto 0.6em;
+}
+
+.Calendar__time--title {
+  color: var(--cl-color-black);
+  font-size: 1em;
+  line-height: 2em;
+  position: absolute;
+  font-size: 0.8em
+}
+
+.Calendar__time--title.is-single-fa {
+  right: 1.8em;
+  top: .1em
+}
+
+.Calendar__time--title.is-single-en {
+  left: 1.8em;
+  top: .1em
+}
+
+.Calendar__time--title.is-range-fa {
+  right: 1.8em;
+}
+
+.Calendar__time--title.is-range-en {
+  left: .6em;
 }
 
 .Calendar__time--input {
@@ -680,6 +707,7 @@
   text-align: center;
   border-radius: 8px;
   padding-left: 12px;
+  direction: ltr !important;
 }
 
 @keyframes fadeCalendar {
