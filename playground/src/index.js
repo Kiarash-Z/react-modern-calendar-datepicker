@@ -17,8 +17,8 @@ const App = () => {
     year: 2019,
     month: 4,
     day: 19,
-    hour: 24,
-    minutes: 0,
+    hour: 12,
+    minutes: 10,
   };
   const defaultValue = {
     from: defaultFrom,

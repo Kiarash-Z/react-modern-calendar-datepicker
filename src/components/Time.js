@@ -1,75 +1,109 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { getValueType } from '../shared/generalUtils';
 
-const Time = ({ value, handleCalendarTimeChange }) => {
-  const [timeDate, setTimeDate] = useState(value);
+const Time = ({ value, handleCalendarTimeChange, time, onSetTime }) => {
   useEffect(() => {
-    handleCalendarTimeChange(timeDate);
-  }, [timeDate]);
-
+    handleCalendarTimeChange(value);
+  }, [time]);
   const selectHour = (hour, target) => {
     const type = getValueType(value);
     if (type === 'SINGLE_DATE') {
-      setTimeDate({
-        ...value,
+      onSetTime({
+        ...time,
         hour,
       });
     }
     if (type === 'RANGE') {
-      setTimeDate({
-        ...value,
-        [target]: { ...value[target], hour },
+      onSetTime({
+        ...time,
+        [target]: { ...time[target], hour },
       });
     }
   };
   const selectMinuets = (minutes, target) => {
     const type = getValueType(value);
     if (type === 'SINGLE_DATE') {
-      setTimeDate({
-        ...value,
+      onSetTime({
+        ...time,
         minutes,
       });
     }
     if (type === 'RANGE') {
-      setTimeDate({
-        ...value,
-        [target]: { ...value[target], minutes },
+      onSetTime({
+        ...time,
+        [target]: { ...time[target], minutes },
       });
     }
-  };
-
-  const TimerInput = ({ target, disabled, date }) => {
-    const newActiveDate = date || { hour: 24, minutes: 0 };
-    return (
-      <div className="Calendar__weekDays">
-        <input
-          type="number"
-          value={newActiveDate.hour}
-          onChange={e => selectHour(+e.target.value, target)}
-          min="0"
-          max="24"
-          disabled={disabled}
-        />
-        <input
-          type="number"
-          value={newActiveDate.minutes}
-          onChange={e => selectMinuets(+e.target.value, target)}
-          min="0"
-          max="60"
-          disabled={disabled}
-        />
-      </div>
-    );
   };
 
   const type = getValueType(value);
   return (
     <>
-      {type === 'SINGLE_DATE' && <TimerInput date={timeDate} />}
+      {type === 'SINGLE_DATE' && (
+        <div className="Calendar__time Calendar__weekDays">
+          <input
+            className="Calendar__time--input x"
+            value={time.hour}
+            onChange={e => selectHour(+e.target.value)}
+            min="0"
+            max="24"
+            type="number"
+          />
+          <span className="Calendar__time--label">:</span>
+          <input
+            className="Calendar__time--input"
+            value={time.minutes}
+            onChange={e => selectMinuets(+e.target.value)}
+            min="0"
+            max="60"
+            type="number"
+          />
+        </div>
+      )}
       {type === 'RANGE' && (
         <>
-          <TimerInput target="from" disabled={!value.to || !value.to} date={timeDate.from} />
-          <TimerInput target="to" disabled={!value.to || !value.to} date={timeDate.to} />
+          <div className="Calendar__time Calendar__weekDays">
+            <input
+              className="Calendar__time--input x"
+              value={time.from.hour}
+              onChange={e => selectHour(+e.target.value, 'from')}
+              min="0"
+              max="24"
+              type="number"
+              disabled={!value.to || !value.to}
+            />
+            <span className="Calendar__time--label">:</span>
+            <input
+              className="Calendar__time--input"
+              value={time.from.minutes}
+              onChange={e => selectMinuets(+e.target.value, 'from')}
+              min="0"
+              max="60"
+              type="number"
+              disabled={!value.to || !value.to}
+            />
+          </div>
+          <div className="Calendar__time Calendar__weekDays">
+            <input
+              className="Calendar__time--input x"
+              value={time.to.hour}
+              onChange={e => selectHour(+e.target.value, 'to')}
+              min="0"
+              max="24"
+              type="number"
+              disabled={!value.to || !value.to}
+            />
+            <span className="Calendar__time--label">:</span>
+            <input
+              className="Calendar__time--input"
+              value={time.to.minutes}
+              onChange={e => selectMinuets(+e.target.value, 'to')}
+              min="0"
+              max="60"
+              type="number"
+              disabled={!value.to || !value.to}
+            />
+          </div>
         </>
       )}
     </>

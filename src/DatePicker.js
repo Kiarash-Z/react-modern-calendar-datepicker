@@ -36,6 +36,17 @@ const DatePicker = ({
   customDaysClassName,
   activeTime,
 }) => {
+  const valueType = getValueType(value);
+  let timeDate;
+  if (valueType === 'SINGLE_DATE') {
+    timeDate = { hour: value.hour, minutes: value.minutes };
+  } else if (valueType === 'RANGE' && value.from && value.to) {
+    timeDate = {
+      from: { hour: value.from.hour, minutes: value.from.minutes },
+      to: { hour: value.to.hour, minutes: value.to.minutes },
+    };
+  }
+  const [time, setTime] = useState(timeDate);
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
   const shouldPreventToggle = useRef(false);
@@ -53,7 +64,6 @@ const DatePicker = ({
 
   // handle input focus/blur
   useEffect(() => {
-    const valueType = getValueType(value);
     if (valueType === TYPE_MUTLI_DATE) return; // no need to close the calendar
     const shouldCloseCalendar =
       valueType === TYPE_SINGLE_DATE ? !isCalendarOpen : !isCalendarOpen && value.from && value.to;
@@ -66,7 +76,7 @@ const DatePicker = ({
     const isInnerElementFocused = calendarContainerElement.current.contains(e.relatedTarget);
     if (shouldPreventToggle.current) {
       shouldPreventToggle.current = false;
-      inputElement.current.focus();
+      // inputElement.current.focus();
     } else if (isInnerElementFocused && e.relatedTarget) {
       e.relatedTarget.focus();
     } else {
@@ -110,13 +120,38 @@ const DatePicker = ({
   }, [isCalendarOpen]);
 
   const handleCalendarChange = newValue => {
-    const valueType = getValueType(value);
-    onChange(newValue);
+    if (valueType === 'SINGLE_DATE') {
+      onChange({ ...newValue, ...time });
+    } else if (valueType === 'RANGE') {
+      /* eslint-disable no-param-reassign */
+      if (newValue.from) {
+        newValue.from.hour = time.from.hour;
+        newValue.from.minutes = time.from.minutes;
+      }
+      if (newValue.to) {
+        newValue.to.hour = time.to.hour;
+        newValue.to.minutes = time.to.minutes;
+      }
+      onChange(newValue);
+    }
     if (valueType === TYPE_SINGLE_DATE) setCalendarVisiblity(false);
     else if (valueType === TYPE_RANGE && newValue.from && newValue.to) setCalendarVisiblity(false);
   };
   const handleCalendarTimeChange = newValue => {
-    onChange(newValue);
+    if (valueType === 'SINGLE_DATE') {
+      onChange({ ...newValue, ...time });
+    } else if (valueType === 'RANGE') {
+      /* eslint-disable no-param-reassign */
+      if (newValue.from) {
+        newValue.from.hour = time.from.hour;
+        newValue.from.minutes = time.from.minutes;
+      }
+      if (newValue.to) {
+        newValue.to.hour = time.to.hour;
+        newValue.to.minutes = time.to.minutes;
+      }
+      onChange({ ...newValue });
+    }
   };
 
   const handleKeyUp = ({ key }) => {
@@ -192,6 +227,8 @@ const DatePicker = ({
               renderFooter={renderFooter}
               customDaysClassName={customDaysClassName}
               activeTime={activeTime}
+              time={time}
+              onSetTime={setTime}
             />
           </div>
           <div className="DatePicker__calendarArrow" />

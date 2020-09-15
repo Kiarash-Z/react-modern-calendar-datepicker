@@ -30,6 +30,8 @@ const Calendar = ({
   renderFooter,
   customDaysClassName,
   activeTime,
+  time,
+  onSetTime,
 }) => {
   const calendarElement = useRef(null);
   const [mainState, setMainState] = useState({
@@ -173,7 +175,14 @@ const Calendar = ({
         isQuickSelectorOpen={mainState.isYearSelectorOpen || mainState.isMonthSelectorOpen}
         activeTime={activeTime}
       />
-      {activeTime && <Time value={value} handleCalendarTimeChange={handleCalendarTimeChange} />}
+      {activeTime && (
+        <Time
+          value={value}
+          time={time}
+          onSetTime={onSetTime}
+          handleCalendarTimeChange={handleCalendarTimeChange}
+        />
+      )}
 
       <div className="Calendar__footer">{renderFooter()}</div>
     </div>
