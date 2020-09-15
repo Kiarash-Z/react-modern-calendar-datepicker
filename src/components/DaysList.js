@@ -34,6 +34,7 @@ const DaysList = ({
   activeTime,
 }) => {
   const calendarSectionWrapper = useRef(null);
+  const valueType = getValueType(value);
   const { isRtl, weekDays: weekDaysList } = useLocaleLanguage(locale);
   const {
     getToday,
@@ -105,7 +106,6 @@ const DaysList = ({
 
   const handleDayClick = day => {
     const getNewValue = () => {
-      const valueType = getValueType(value);
       switch (valueType) {
         case TYPE_SINGLE_DATE:
           return day;
@@ -120,7 +120,6 @@ const DaysList = ({
   };
 
   const isSingleDateSelected = day => {
-    const valueType = getValueType(value);
     if (valueType === TYPE_SINGLE_DATE) return isSameDay(day, value);
     if (valueType === TYPE_MUTLI_DATE) return value.some(valueDay => isSameDay(valueDay, day));
   };
