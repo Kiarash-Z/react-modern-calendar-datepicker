@@ -25,12 +25,16 @@ const App = () => {
     to: defaultTo,
   };
   const singleValue = {
-    year: 2019,
-    month: 4,
+    year: 2009,
+    month: 6,
     day: 19,
     hour: 14,
     minutes: 23,
   };
+  // const nullVall = {
+  //   from: null,
+  //   to: null,
+  // };
   const [selectedDay, setValue] = useState(defaultValue);
   const [selectedDay1, setValue1] = useState(singleValue);
   return (
@@ -64,6 +68,5 @@ const App = () => {
     </>
   );
 };
-
 ReactDOM.render(<App />, document.getElementById('root'));
 serviceWorker.unregister();

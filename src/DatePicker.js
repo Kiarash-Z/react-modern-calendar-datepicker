@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import jalaali from 'jalaali-js';
 
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
@@ -38,52 +39,53 @@ const DatePicker = ({
   type,
 }) => {
   let timeDate;
-  const today = new Date();
+  let today;
+  const enToday = new Date();
+  if (locale === 'fa') {
+    const prToday = jalaali.toJalaali(enToday);
+    today = {
+      year: prToday.jy,
+      month: prToday.jm,
+      day: prToday.jd,
+      hour: enToday.getHours(),
+      minutes: enToday.getMinutes(),
+    };
+  } else {
+    today = {
+      year: enToday.getFullYear(),
+      month: enToday.getMonth(),
+      day: enToday.getDate(),
+      hour: enToday.getHours(),
+      minutes: enToday.getMinutes(),
+    };
+  }
   if (type === 'single') {
     timeDate = {
-      hour: value ? value.hour : today.getHours(),
-      minutes: value ? value.minutes : today.getMinutes(),
+      hour: value ? value.hour : enToday.getHours(),
+      minutes: value ? value.minutes : enToday.getMinutes(),
     };
     if (!value) {
-      onChange({
-        year: today.getFullYear(),
-        month: today.getMonth(),
-        day: today.getDate(),
-        hour: today.getHours(),
-        minutes: today.getMinutes(),
-      });
+      onChange(today);
     }
   } else if (type === 'range' && (!(value.from && value.to) || (value.from && value.to))) {
     timeDate = {
       from: {
-        hour: value.from ? value.from.hour : today.getHours(),
-        minutes: value.from ? value.from.minutes : today.getMinutes(),
+        hour: value.from ? value.from.hour : enToday.getHours(),
+        minutes: value.from ? value.from.minutes : enToday.getMinutes(),
       },
       to: {
-        hour: value.to ? value.to.hour : today.getHours(),
-        minutes: value.to ? value.to.minutes : today.getMinutes(),
+        hour: value.to ? value.to.hour : enToday.getHours(),
+        minutes: value.to ? value.to.minutes : enToday.getMinutes(),
       },
     };
-
     if (!value.from && !value.to) {
       onChange({
-        from: {
-          year: today.getFullYear(),
-          month: today.getMonth(),
-          day: today.getDate(),
-          hour: today.getHours(),
-          minutes: today.getMinutes(),
-        },
-        to: {
-          year: today.getFullYear(),
-          month: today.getMonth(),
-          day: today.getDate() + 2,
-          hour: today.getHours(),
-          minutes: today.getMinutes(),
-        },
+        from: { ...today },
+        to: { ...today, day: today.day + 2 },
       });
     }
   }
+
   const [time, setTime] = useState(timeDate);
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
@@ -115,7 +117,7 @@ const DatePicker = ({
     const isInnerElementFocused = calendarContainerElement.current.contains(e.relatedTarget);
     if (shouldPreventToggle.current) {
       shouldPreventToggle.current = false;
-      // inputElement.current.focus();
+      inputElement.current.focus();
     } else if (isInnerElementFocused && e.relatedTarget) {
       e.relatedTarget.focus();
     } else {
@@ -279,7 +281,6 @@ const DatePicker = ({
     </div>
   );
 };
-
 DatePicker.defaultProps = {
   wrapperClassName: '',
   locale: 'en',
