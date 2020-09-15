@@ -38,6 +38,7 @@ const localeLanguages = {
     digitSeparator: ',',
     yearLetterSkip: 0,
     isRtl: false,
+    clock: 'clock',
   },
   fa: {
     months: PERSIAN_MONTHS,
@@ -73,6 +74,7 @@ const localeLanguages = {
     digitSeparator: '،',
     yearLetterSkip: -2,
     isRtl: true,
+    clock: 'ساعت',
   },
 };
 

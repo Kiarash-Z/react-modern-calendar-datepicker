@@ -181,6 +181,7 @@ const Calendar = ({
           value={value}
           time={time}
           onSetTime={onSetTime}
+          locale={locale}
           handleCalendarTimeChange={handleCalendarTimeChange}
         />
       )}

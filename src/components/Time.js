@@ -1,8 +1,9 @@
 /* eslint-disable no-param-reassign */
 import React, { useEffect } from 'react';
 import { getValueType } from '../shared/generalUtils';
+import getLocaleDetails from '../shared/localeLanguages';
 
-const Time = ({ value, handleCalendarTimeChange, time, onSetTime }) => {
+const Time = ({ value, handleCalendarTimeChange, time, onSetTime, locale }) => {
   useEffect(() => {
     handleCalendarTimeChange(value);
   }, [time]);
@@ -46,6 +47,7 @@ const Time = ({ value, handleCalendarTimeChange, time, onSetTime }) => {
     <>
       {type === 'SINGLE_DATE' && (
         <div className="Calendar__time Calendar__weekDays">
+          <span>{getLocaleDetails(locale).clock}</span>
           <input
             className="Calendar__time--input x"
             value={time.hour}
@@ -68,6 +70,7 @@ const Time = ({ value, handleCalendarTimeChange, time, onSetTime }) => {
       {type === 'RANGE' && (
         <>
           <div className="Calendar__time Calendar__weekDays">
+            <span>{getLocaleDetails(locale).clock}</span>
             <input
               className="Calendar__time--input x"
               value={time.from.hour}
