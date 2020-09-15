@@ -35,16 +35,54 @@ const DatePicker = ({
   renderFooter,
   customDaysClassName,
   activeTime,
+  type,
 }) => {
-  const valueType = getValueType(value);
   let timeDate;
-  if (valueType === 'SINGLE_DATE') {
-    timeDate = { hour: value.hour, minutes: value.minutes };
-  } else if (valueType === 'RANGE' && value.from && value.to) {
+  const today = new Date();
+  if (type === 'single') {
     timeDate = {
-      from: { hour: value.from.hour, minutes: value.from.minutes },
-      to: { hour: value.to.hour, minutes: value.to.minutes },
+      hour: value ? value.hour : today.getHours(),
+      minutes: value ? value.minutes : today.getMinutes(),
     };
+    if (!value) {
+      onChange({
+        year: today.getFullYear(),
+        month: today.getMonth(),
+        day: today.getDate(),
+        hour: today.getHours(),
+        minutes: today.getMinutes(),
+      });
+    }
+  } else if (type === 'range' && (!(value.from && value.to) || (value.from && value.to))) {
+    timeDate = {
+      from: {
+        hour: value.from ? value.from.hour : today.getHours(),
+        minutes: value.from ? value.from.minutes : today.getMinutes(),
+      },
+      to: {
+        hour: value.to ? value.to.hour : today.getHours(),
+        minutes: value.to ? value.to.minutes : today.getMinutes(),
+      },
+    };
+
+    if (!value.from && !value.to) {
+      onChange({
+        from: {
+          year: today.getFullYear(),
+          month: today.getMonth(),
+          day: today.getDate(),
+          hour: today.getHours(),
+          minutes: today.getMinutes(),
+        },
+        to: {
+          year: today.getFullYear(),
+          month: today.getMonth(),
+          day: today.getDate() + 2,
+          hour: today.getHours(),
+          minutes: today.getMinutes(),
+        },
+      });
+    }
   }
   const [time, setTime] = useState(timeDate);
   const calendarContainerElement = useRef(null);
@@ -64,6 +102,7 @@ const DatePicker = ({
 
   // handle input focus/blur
   useEffect(() => {
+    const valueType = getValueType(value);
     if (valueType === TYPE_MUTLI_DATE) return; // no need to close the calendar
     const shouldCloseCalendar =
       valueType === TYPE_SINGLE_DATE ? !isCalendarOpen : !isCalendarOpen && value.from && value.to;
@@ -120,6 +159,7 @@ const DatePicker = ({
   }, [isCalendarOpen]);
 
   const handleCalendarChange = newValue => {
+    const valueType = getValueType(value);
     if (valueType === 'SINGLE_DATE') {
       onChange({ ...newValue, ...time });
     } else if (valueType === 'RANGE') {
@@ -138,6 +178,7 @@ const DatePicker = ({
     else if (valueType === TYPE_RANGE && newValue.from && newValue.to) setCalendarVisiblity(false);
   };
   const handleCalendarTimeChange = newValue => {
+    const valueType = getValueType(value);
     if (valueType === 'SINGLE_DATE') {
       onChange({ ...newValue, ...time });
     } else if (valueType === 'RANGE') {

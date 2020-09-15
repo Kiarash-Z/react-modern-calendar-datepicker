@@ -157,6 +157,7 @@ const Calendar = ({
       <DaysList
         activeDate={activeDate}
         value={value}
+        time={time}
         monthChangeDirection={mainState.monthChangeDirection}
         onSlideChange={updateDate}
         disabledDays={disabledDays}
