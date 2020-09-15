@@ -1,3 +1,4 @@
+import jalaali from 'jalaali-js';
 import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './constants';
 
 /*
@@ -62,6 +63,29 @@ const getValueType = value => {
     `The passed value is malformed! Please make sure you're using one of the valid value types for date picker.`,
   );
 };
+const todayPerLang = locale => {
+  let today;
+  const enToday = new Date();
+  if (locale === 'fa') {
+    const prToday = jalaali.toJalaali(enToday);
+    today = {
+      year: prToday.jy,
+      month: prToday.jm,
+      day: prToday.jd,
+      hour: enToday.getHours(),
+      minutes: enToday.getMinutes(),
+    };
+  } else {
+    today = {
+      year: enToday.getFullYear(),
+      month: enToday.getMonth(),
+      day: enToday.getDate(),
+      hour: enToday.getHours(),
+      minutes: enToday.getMinutes(),
+    };
+  }
+  return today;
+};
 
 export {
   createUniqueRange,
@@ -72,4 +96,5 @@ export {
   deepCloneObject,
   getDateAccordingToMonth,
   getValueType,
+  todayPerLang,
 };

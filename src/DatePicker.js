@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import jalaali from 'jalaali-js';
 
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
-import { getValueType } from './shared/generalUtils';
+import { getValueType, todayPerLang } from './shared/generalUtils';
 import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constants';
 
 const DatePicker = ({
@@ -39,30 +38,11 @@ const DatePicker = ({
   type,
 }) => {
   let timeDate;
-  let today;
-  const enToday = new Date();
-  if (locale === 'fa') {
-    const prToday = jalaali.toJalaali(enToday);
-    today = {
-      year: prToday.jy,
-      month: prToday.jm,
-      day: prToday.jd,
-      hour: enToday.getHours(),
-      minutes: enToday.getMinutes(),
-    };
-  } else {
-    today = {
-      year: enToday.getFullYear(),
-      month: enToday.getMonth(),
-      day: enToday.getDate(),
-      hour: enToday.getHours(),
-      minutes: enToday.getMinutes(),
-    };
-  }
+  const today = todayPerLang(locale);
   if (type === 'single') {
     timeDate = {
-      hour: value ? value.hour : enToday.getHours(),
-      minutes: value ? value.minutes : enToday.getMinutes(),
+      hour: value ? value.hour : today.hour,
+      minutes: value ? value.minutes : today.minutes,
     };
     if (!value) {
       onChange(today);
@@ -70,12 +50,12 @@ const DatePicker = ({
   } else if (type === 'range' && (!(value.from && value.to) || (value.from && value.to))) {
     timeDate = {
       from: {
-        hour: value.from ? value.from.hour : enToday.getHours(),
-        minutes: value.from ? value.from.minutes : enToday.getMinutes(),
+        hour: value.from ? value.from.hour : today.hour,
+        minutes: value.from ? value.from.minutes : today.minutes,
       },
       to: {
-        hour: value.to ? value.to.hour : enToday.getHours(),
-        minutes: value.to ? value.to.minutes : enToday.getMinutes(),
+        hour: value.to ? value.to.hour : today.hour,
+        minutes: value.to ? value.to.minutes : today.minutes,
       },
     };
     if (!value.from && !value.to) {
