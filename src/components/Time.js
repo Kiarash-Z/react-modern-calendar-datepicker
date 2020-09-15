@@ -1,10 +1,11 @@
 /* eslint-disable no-param-reassign */
-import React, { useEffect } from 'react';
+import React from 'react';
+import useDidMountEffect from '../shared/useDidMountEffect';
 import { getValueType } from '../shared/generalUtils';
 import getLocaleDetails from '../shared/localeLanguages';
 
 const Time = ({ value, handleCalendarTimeChange, time, onSetTime, locale }) => {
-  useEffect(() => {
+  useDidMountEffect(() => {
     handleCalendarTimeChange(value);
   }, [time]);
   const selectHour = (hour, target) => {
