@@ -69,8 +69,25 @@ const DatePicker = ({
   const [time, setTime] = useState(timeDate);
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
+  const mainElement = useRef(false);
   const shouldPreventToggle = useRef(false);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
+
+  useEffect(() => {
+    const listener = event => {
+      if (!mainElement.current || mainElement.current.contains(event.target)) {
+        return;
+      }
+      setCalendarVisiblity(false);
+    };
+
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
+    return () => {
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
+    };
+  });
 
   useEffect(() => {
     const handleBlur = () => {
@@ -88,21 +105,15 @@ const DatePicker = ({
     if (valueType === TYPE_MUTLI_DATE) return; // no need to close the calendar
     const shouldCloseCalendar =
       valueType === TYPE_SINGLE_DATE ? !isCalendarOpen : !isCalendarOpen && value.from && value.to;
-    if (shouldCloseCalendar) inputElement.current.blur();
+    if (shouldCloseCalendar) {
+      setCalendarVisiblity(false);
+      inputElement.current.blur();
+    }
   }, [value, isCalendarOpen]);
 
   const handleBlur = e => {
     e.persist();
-    if (!isCalendarOpen) return;
-    const isInnerElementFocused = calendarContainerElement.current.contains(e.relatedTarget);
-    if (shouldPreventToggle.current) {
-      shouldPreventToggle.current = false;
-      inputElement.current.focus();
-    } else if (isInnerElementFocused && e.relatedTarget) {
-      e.relatedTarget.focus();
-    } else {
-      setCalendarVisiblity(false);
-    }
+    if (!isCalendarOpen) setCalendarVisiblity(true);
   };
 
   const openCalendar = () => {
@@ -199,8 +210,9 @@ const DatePicker = ({
   return (
     <div
       onFocus={openCalendar}
-      onBlur={handleBlur}
+      onClick={handleBlur}
       onKeyUp={handleKeyUp}
+      ref={mainElement}
       className={`DatePicker ${wrapperClassName}`}
       role="presentation"
     >

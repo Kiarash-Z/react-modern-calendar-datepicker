@@ -39,7 +39,7 @@ const App = () => {
   const [selectedDay1, setValue1] = useState(singleValue);
   return (
     <>
-      <h1>{JSON.stringify(selectedDay)}</h1>
+      {/* <h1>{JSON.stringify(selectedDay)}</h1> */}
       <div>
         <DatePicker
           value={selectedDay}

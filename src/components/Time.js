@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-import useDidMountEffect from '../shared/useDidMountEffect';
+import useDidMountEffect from '../hooks/useDidMountEffect';
 import { getValueType } from '../shared/generalUtils';
 import getLocaleDetails from '../shared/localeLanguages';
 
