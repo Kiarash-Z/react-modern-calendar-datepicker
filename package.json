@@ -62,7 +62,7 @@
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.0.0",
     "@rollup/plugin-babel": "^5.0.4",
-    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-node-resolve": "^6.0.0",
     "@size-limit/preset-small-lib": "^2.2.1",
     "@testing-library/jest-dom": "^4.1.1",
