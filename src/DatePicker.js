@@ -37,9 +37,9 @@ const DatePicker = ({
   activeTime,
   type,
 }) => {
-  let timeDate;
+  let timeDate = null;
   const today = todayPerLang(locale);
-  if (type === 'single') {
+  if (type === 'single' && activeTime) {
     timeDate = {
       hour: value ? value.hour : today.hour,
       minutes: value ? value.minutes : today.minutes,
@@ -47,7 +47,11 @@ const DatePicker = ({
     if (!value) {
       onChange(today);
     }
-  } else if (type === 'range' && (!(value.from && value.to) || (value.from && value.to))) {
+  } else if (
+    type === 'range' &&
+    activeTime &&
+    (!(value.from && value.to) || (value.from && value.to))
+  ) {
     timeDate = {
       from: {
         hour: value.from ? value.from.hour : today.hour,
@@ -154,14 +158,18 @@ const DatePicker = ({
   const handleCalendarChange = newValue => {
     const valueType = getValueType(value);
     if (valueType === 'SINGLE_DATE') {
-      onChange({ ...newValue, ...time });
+      if (activeTime) {
+        onChange({ ...newValue, ...time });
+      } else {
+        onChange({ ...newValue });
+      }
     } else if (valueType === 'RANGE') {
       /* eslint-disable no-param-reassign */
-      if (newValue.from) {
+      if (newValue.from && activeTime) {
         newValue.from.hour = time.from.hour;
         newValue.from.minutes = time.from.minutes;
       }
-      if (newValue.to) {
+      if (newValue.to && activeTime) {
         newValue.to.hour = time.to.hour;
         newValue.to.minutes = time.to.minutes;
       }
@@ -173,14 +181,16 @@ const DatePicker = ({
   const handleCalendarTimeChange = newValue => {
     const valueType = getValueType(value);
     if (valueType === 'SINGLE_DATE') {
-      onChange({ ...newValue, ...time });
+      if (activeTime) {
+        onChange({ ...newValue, ...time });
+      }
     } else if (valueType === 'RANGE') {
       /* eslint-disable no-param-reassign */
-      if (newValue.from) {
+      if (newValue.from && activeTime) {
         newValue.from.hour = time.from.hour;
         newValue.from.minutes = time.from.minutes;
       }
-      if (newValue.to) {
+      if (newValue.to && activeTime) {
         newValue.to.hour = time.to.hour;
         newValue.to.minutes = time.to.minutes;
       }
