@@ -66,11 +66,11 @@ const DaysList = ({
 
     dayRangeValue[dayRangeProp] = day;
     const { from, to } = dayRangeValue;
-    if (from) {
+    if (from && activeTime) {
       from.hour = initValue.from.hour;
       from.minutes = initValue.from.minutes;
     }
-    if (to) {
+    if (to && activeTime) {
       to.hour = initValue.to.hour;
       to.minutes = initValue.to.minutes;
     }

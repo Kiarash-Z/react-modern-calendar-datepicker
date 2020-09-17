@@ -45,7 +45,8 @@ const DatePicker = ({
       minutes: value ? value.minutes : today.minutes,
     };
     if (!value) {
-      onChange(today);
+      // eslint-disable-next-line no-param-reassign
+      value = { ...today };
     }
   } else if (
     type === 'range' &&
@@ -63,10 +64,11 @@ const DatePicker = ({
       },
     };
     if (!value.from && !value.to) {
-      onChange({
+      // eslint-disable-next-line no-param-reassign
+      value = {
         from: { ...today },
         to: { ...today, day: today.day + 2 },
-      });
+      };
     }
   }
 

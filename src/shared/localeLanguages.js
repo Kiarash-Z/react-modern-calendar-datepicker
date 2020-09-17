@@ -58,11 +58,12 @@ const localeLanguages = {
       return jalaali.jalaaliMonthLength(date.year, date.month);
     },
     transformDigit(digit) {
-      return digit
-        .toString()
-        .split('')
-        .map(letter => PERSIAN_NUMBERS[Number(letter)])
-        .join('');
+      if (digit)
+        return digit
+          .toString()
+          .split('')
+          .map(letter => PERSIAN_NUMBERS[Number(letter)])
+          .join('');
     },
     nextMonth: 'ماه بعد',
     previousMonth: 'ماه قبل',
