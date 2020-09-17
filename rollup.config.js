@@ -33,6 +33,7 @@
 import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import copy from 'rollup-plugin-copy';
 
 // const isProd = process.env.NODE_ENV === 'production';
 
@@ -61,6 +62,9 @@ export default {
       extensions,
       include: ['src/**/*'],
       exclude: 'node_modules/**',
+    }),
+    copy({
+      targets: [{ src: 'src/DatePicker.css', dest: 'lib' }],
     }),
     commonjs({
       include: '**/node_modules/**',
