@@ -1,7 +1,6 @@
 .DatePicker {
   position: relative;
   display: inline-block;
-  z-index: 100;
 }
 
 .DatePicker__input {
@@ -33,6 +32,7 @@
   top: calc(100% + 20px);
   left: 50%;
   transform: translateX(-50%);
+  z-index: 100;
 }
 
 .DatePicker__calendarContainer.-top {
