@@ -42,16 +42,20 @@ const DatePickerInput = React.forwardRef(
     const getDayRangeValue = () => {
       if (!value.from || !value.to) return '';
       const { from, to } = value;
-      const fromText = `${getLanguageDigits(putZero(from.year))
+      let fromText = `${getLanguageDigits(putZero(from.year))
         .toString()
         .slice(yearLetterSkip)}/${getLanguageDigits(putZero(from.month))}/${getLanguageDigits(
         putZero(from.day),
       )}`;
-      const toText = `${getLanguageDigits(putZero(to.year))
+      let toText = `${getLanguageDigits(putZero(to.year))
         .toString()
         .slice(yearLetterSkip)}/${getLanguageDigits(putZero(to.month))}/${getLanguageDigits(
         putZero(to.day),
       )}`;
+      if (activeTime) {
+        fromText = `${fromText} ${from.hour}:${from.minutes}`;
+        toText = `${toText} ${to.hour}:${to.minutes}`;
+      }
       return `${fromWord} ${fromText} ${toWord} ${toText}`;
     };
 
