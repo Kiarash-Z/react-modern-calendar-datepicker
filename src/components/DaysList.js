@@ -11,7 +11,6 @@ import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from '../shared/constan
 import handleKeyboardNavigation from '../shared/keyboardNavigation';
 import { useLocaleUtils, useLocaleLanguage } from '../shared/hooks';
 
-let initValue = {};
 const DaysList = ({
   activeDate,
   value,
@@ -56,9 +55,6 @@ const DaysList = ({
   }, [monthChangeDirection]);
 
   const getDayRangeValue = day => {
-    if (value.to && value.from) {
-      initValue = { ...value };
-    }
     const clonedDayRange = deepCloneObject(value);
     const dayRangeValue =
       clonedDayRange.from && clonedDayRange.to ? { from: null, to: null } : clonedDayRange;
@@ -66,14 +62,6 @@ const DaysList = ({
 
     dayRangeValue[dayRangeProp] = day;
     const { from, to } = dayRangeValue;
-    if (from && activeTime) {
-      from.hour = initValue.from.hour;
-      from.minutes = initValue.from.minutes;
-    }
-    if (to && activeTime) {
-      to.hour = initValue.to.hour;
-      to.minutes = initValue.to.minutes;
-    }
 
     // swap from and to values if from is later than to
     if (isBeforeDate(dayRangeValue.to, dayRangeValue.from)) {

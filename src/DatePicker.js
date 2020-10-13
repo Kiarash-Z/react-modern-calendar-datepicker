@@ -44,10 +44,6 @@ const DatePicker = ({
       hour: value ? value.hour : today.hour,
       minutes: value ? value.minutes : today.minutes,
     };
-    if (!value) {
-      // eslint-disable-next-line no-param-reassign
-      value = { ...today };
-    }
   } else if (
     type === 'range' &&
     activeTime &&
@@ -63,13 +59,6 @@ const DatePicker = ({
         minutes: value.to ? value.to.minutes : today.minutes,
       },
     };
-    if (!value.from && !value.to) {
-      // eslint-disable-next-line no-param-reassign
-      value = {
-        from: { ...today },
-        to: { ...today, day: today.day + 2 },
-      };
-    }
   }
 
   const [time, setTime] = useState(timeDate);
