@@ -36,6 +36,7 @@ const DatePicker = ({
   customDaysClassName,
   activeTime,
   type,
+  notAutoClose,
 }) => {
   let timeDate = null;
   const today = todayPerLang(locale);
@@ -166,8 +167,9 @@ const DatePicker = ({
       }
       onChange(newValue);
     }
-    if (valueType === TYPE_SINGLE_DATE) setCalendarVisiblity(false);
-    else if (valueType === TYPE_RANGE && newValue.from && newValue.to) setCalendarVisiblity(false);
+    if (valueType === TYPE_SINGLE_DATE && !notAutoClose) setCalendarVisiblity(false);
+    else if (valueType === TYPE_RANGE && newValue.from && newValue.to && !notAutoClose)
+      setCalendarVisiblity(false);
   };
   const handleCalendarTimeChange = newValue => {
     const valueType = getValueType(value);
@@ -279,5 +281,4 @@ DatePicker.defaultProps = {
   locale: 'en',
   calendarPopperPosition: 'auto',
 };
-
 export default DatePicker;
