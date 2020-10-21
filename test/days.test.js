@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, getByText } from '@testing-library/react';
+import { render, fireEvent, getByText, act } from '@testing-library/react';
 
 import utils from '../src/shared/localeUtils';
 
@@ -28,15 +28,24 @@ const renderCalendar = props => {
     const findAnimatedChild = child => child.classList.contains('-shownAnimated');
     const animatingMonthYearItem = monthYearItems.find(findAnimatedChild);
     const animatingSectionItem = sections.find(findAnimatedChild);
-    fireEvent.animationEnd(animatingMonthYearItem);
-    fireEvent.animationEnd(animatingSectionItem);
+    if (animatingMonthYearItem) fireEvent.animationEnd(animatingMonthYearItem);
+    if (animatingSectionItem) fireEvent.animationEnd(animatingSectionItem);
   };
 
   const changeMonth = arrow => {
     fireEvent.click(arrow);
     endSlideAnimation();
   };
-  return { ...selectors, sectionWrapper, activeSection, days, standardDays, getDay, changeMonth };
+  return {
+    ...selectors,
+    endSlideAnimation,
+    sectionWrapper,
+    activeSection,
+    days,
+    standardDays,
+    getDay,
+    changeMonth,
+  };
 };
 
 describe('Calendar Days', () => {
@@ -445,6 +454,87 @@ describe('Calendar Days', () => {
       fireEvent.click(nextArrow);
 
       expect(mockedMonthChange).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('DysplayedDateChange Callbacks', () => {
+    test('calls onDisplayedDateChangeStart when changing month by arrows', () => {
+      const onDisplayedDateChangeStart = jest.fn();
+      const { getByLabelText } = renderCalendar({ onDisplayedDateChangeStart });
+
+      const nextArrow = getByLabelText(/next month/i);
+      const previousArrow = getByLabelText(/previous month/i);
+      fireEvent.click(nextArrow);
+
+      expect(onDisplayedDateChangeStart).toHaveBeenCalledTimes(1);
+
+      fireEvent.click(previousArrow);
+      expect(onDisplayedDateChangeStart).toHaveBeenCalledTimes(1);
+    });
+
+    test('calls onDisplayedDateChangeEnd when changing month by arrows', () => {
+      const onDisplayedDateChangeEnd = jest.fn();
+      const { getByLabelText, changeMonth } = renderCalendar({
+        onDisplayedDateChangeEnd,
+      });
+
+      const nextArrow = getByLabelText(/next month/i);
+      changeMonth(nextArrow);
+
+      expect(onDisplayedDateChangeEnd).toHaveBeenCalledTimes(1);
+    });
+
+    test('calls onDisplayedDateChangeEnd when selecting new month', done => {
+      const onDisplayedDateChangeEnd = jest.fn();
+      const ref = { current: null };
+      const { endSlideAnimation } = renderCalendar({
+        onDisplayedDateChangeEnd,
+        ref,
+      });
+
+      act(() => {
+        ref.current.selectMonth(1);
+        endSlideAnimation();
+
+        expect(onDisplayedDateChangeEnd).toHaveBeenCalledTimes(1);
+        done();
+      });
+    });
+
+    test('calls onDisplayedDateChangeEnd when selecting next or previous month', done => {
+      const onDisplayedDateChangeEnd = jest.fn();
+      const ref = { current: null };
+      const { endSlideAnimation } = renderCalendar({
+        onDisplayedDateChangeEnd,
+        ref,
+      });
+
+      act(() => {
+        ref.current.selectMonth('NEXT');
+        setImmediate(() => {
+          endSlideAnimation();
+
+          expect(onDisplayedDateChangeEnd).toHaveBeenCalledTimes(1);
+          done();
+        });
+      });
+    });
+
+    test('calls onDisplayedDateChangeEnd when selecting new year', done => {
+      const onDisplayedDateChangeEnd = jest.fn();
+      const ref = { current: null };
+      const { endSlideAnimation } = renderCalendar({
+        onDisplayedDateChangeEnd,
+        ref,
+      });
+
+      act(() => {
+        ref.current.selectYear(2020);
+        endSlideAnimation();
+
+        expect(onDisplayedDateChangeEnd).toHaveBeenCalledTimes(1);
+        done();
+      });
     });
   });
 

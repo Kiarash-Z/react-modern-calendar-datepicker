@@ -8,6 +8,8 @@ import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constant
 const DatePicker = ({
   value,
   onChange,
+  onDisplayedDateChangeEnd,
+  onDisplayedDateChangeStart,
   formatInputText,
   inputPlaceholder,
   inputClassName,
@@ -34,6 +36,7 @@ const DatePicker = ({
   shouldHighlightWeekends,
   renderFooter,
   customDaysClassName,
+  calendarRef,
 }) => {
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
@@ -164,8 +167,11 @@ const DatePicker = ({
             }}
           >
             <Calendar
+              ref={calendarRef}
               value={value}
               onChange={handleCalendarChange}
+              onDisplayedDateChangeEnd={onDisplayedDateChangeEnd}
+              onDisplayedDateChangeStart={onDisplayedDateChangeStart}
               calendarClassName={calendarClassName}
               calendarTodayClassName={calendarTodayClassName}
               calendarSelectedDayClassName={calendarSelectedDayClassName}
