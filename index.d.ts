@@ -14,9 +14,20 @@ type Value = DayValue | Day[] | DayRange;
 
 type CustomDayClassNameItem = Day & { className: string };
 
+type Direction = "PREVIOUS" | "NEXT";
+
+export interface CalendarRef {
+  selectMonth(value: Direction | number): void;
+  selectYear(value: number): void;
+}
+
+type CalendarRefProp = React.RefAttributes<CalendarRef>;
+
 export interface CalendarProps<TValue extends Value> {
   value: TValue;
   onChange?(value: TValue): void;
+  onDisplayedDateChangeEnd?(valye: Day): void;
+  onDisplayedDateChangeStart?(info: { direction: Direction; currentDate: Day; nextDate: Day; }): void;
   onDisabledDayError?(value: Day): void;
   selectorStartingYear?: number;
   selectorEndingYear?: number;
@@ -38,9 +49,9 @@ export interface CalendarProps<TValue extends Value> {
   customDaysClassName?: CustomDayClassNameItem[];
 }
 
-export function Calendar(props: Optional<CalendarProps<DayValue>, 'value'>): React.ReactElement;
-export function Calendar(props: CalendarProps<Day[]>): React.ReactElement;
-export function Calendar(props: CalendarProps<DayRange>): React.ReactElement;
+export function Calendar(props: Optional<CalendarProps<DayValue>, 'value'> & CalendarRefProp): React.ReactElement;
+export function Calendar(props: CalendarProps<Day[]> & CalendarRefProp): React.ReactElement;
+export function Calendar(props: CalendarProps<DayRange> & CalendarRefProp): React.ReactElement;
 
 export type RenderInputProps = {
   ref: React.RefObject<HTMLElement>;
@@ -54,6 +65,7 @@ export interface DatePickerProps<TValue extends Value> extends CalendarProps<TVa
   inputPlaceholder?: string;
   formatInputText?: () => string;
   renderInput?: React.FC<RenderInputProps>;
+  calendarRef?: CalendarRefProp;
 }
 
 type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
