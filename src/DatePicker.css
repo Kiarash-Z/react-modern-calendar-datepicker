@@ -20,7 +20,7 @@
   color: #979797;
 }
 
-.DatePicker__calendarContainer.-top+.DatePicker__calendarArrow {
+.DatePicker__calendarContainer.-top + .DatePicker__calendarArrow {
   top: auto;
   bottom: calc(100% + 10px);
   transform: translateY(-2.5rem) rotate(180deg);
@@ -101,7 +101,7 @@
   outline: none !important;
 }
 
-.Calendar> :not(.Calendar__footer) button {
+.Calendar > :not(.Calendar__footer) button {
   font-family: inherit;
   background: transparent;
   cursor: pointer;
@@ -221,7 +221,7 @@
   animation: var(--animation-duration) fadeTextToCenter forwards;
 }
 
-.Calendar__monthYear>* {
+.Calendar__monthYear > * {
   padding: 0.2em 0.5em;
   border: 1px solid transparent;
   transition: var(--animation-duration);
@@ -234,8 +234,8 @@
   border-radius: 5px;
 }
 
-.Calendar__monthYear:not(.-shown)>*,
-.Calendar__monthYear>*.-hidden {
+.Calendar__monthYear:not(.-shown) > *,
+.Calendar__monthYear > *.-hidden {
   cursor: default;
   pointer-events: none;
 }
@@ -248,9 +248,9 @@
   margin-right: -0.3em;
 }
 
-.Calendar__monthYear.-shown>*:hover,
-.Calendar:not(.-noFocusOutline) .Calendar__monthYear.-shown>*:focus,
-.Calendar__monthYear>*.-activeBackground {
+.Calendar__monthYear.-shown > *:hover,
+.Calendar:not(.-noFocusOutline) .Calendar__monthYear.-shown > *:focus,
+.Calendar__monthYear > *.-activeBackground {
   background: #f5f5f5;
 }
 
@@ -288,7 +288,7 @@
   transform: translateX(50%);
 }
 
-.Calendar__monthYear:not(.-shown)>* {
+.Calendar__monthYear:not(.-shown) > * {
   pointer-events: none;
 }
 
@@ -666,7 +666,7 @@
 .Calendar__time--label {
   color: var(--cl-color-black);
   font-size: 1em;
-  line-height: 1.8em;
+  line-height: 2em;
   margin: auto 0.6em;
 }
 
@@ -675,17 +675,17 @@
   font-size: 1em;
   line-height: 2em;
   position: absolute;
-  font-size: 0.8em
+  font-size: 0.8em;
 }
 
 .Calendar__time--title.is-single-fa {
   right: 1.8em;
-  top: .1em
+  top: 0.1em;
 }
 
 .Calendar__time--title.is-single-en {
   left: 1.8em;
-  top: .1em
+  top: 0.1em;
 }
 
 .Calendar__time--title.is-range-fa {
@@ -693,19 +693,19 @@
 }
 
 .Calendar__time--title.is-range-en {
-  left: .6em;
+  left: 0.6em;
 }
 
 .Calendar__time--input {
-  width: 2.9em;
-  height: 1.8em;
+  width: 3.4em;
+  height: 2.2em;
   line-height: 1.8em;
-  font-size: 1em;
+  font-size: 0.8em;
   background: #fff;
   border: 1px solid #ddd;
   font-family: inherit;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 4px;
   padding-left: 12px;
   direction: ltr !important;
 }
