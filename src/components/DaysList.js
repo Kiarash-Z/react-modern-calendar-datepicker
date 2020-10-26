@@ -30,8 +30,10 @@ const DaysList = ({
   shouldHighlightWeekends,
   isQuickSelectorOpen,
   customDaysClassName,
+  activeTime,
 }) => {
   const calendarSectionWrapper = useRef(null);
+  const valueType = getValueType(value);
   const { isRtl, weekDays: weekDaysList } = useLocaleLanguage(locale);
   const {
     getToday,
@@ -57,6 +59,7 @@ const DaysList = ({
     const dayRangeValue =
       clonedDayRange.from && clonedDayRange.to ? { from: null, to: null } : clonedDayRange;
     const dayRangeProp = !dayRangeValue.from ? 'from' : 'to';
+
     dayRangeValue[dayRangeProp] = day;
     const { from, to } = dayRangeValue;
 
@@ -91,7 +94,6 @@ const DaysList = ({
 
   const handleDayClick = day => {
     const getNewValue = () => {
-      const valueType = getValueType(value);
       switch (valueType) {
         case TYPE_SINGLE_DATE:
           return day;
@@ -106,7 +108,6 @@ const DaysList = ({
   };
 
   const isSingleDateSelected = day => {
-    const valueType = getValueType(value);
     if (valueType === TYPE_SINGLE_DATE) return isSameDay(day, value);
     if (valueType === TYPE_MUTLI_DATE) return value.some(valueDay => isSameDay(valueDay, day));
   };
@@ -151,6 +152,8 @@ const DaysList = ({
       isStandard: true,
       month: date.month,
       year: date.year,
+      hour: date.hour,
+      minutes: date.minutes,
     }));
     const allDays = [...prependingBlankDays, ...standardDays];
     return allDays;
@@ -174,8 +177,16 @@ const DaysList = ({
     if (isSelected || isStartingDayRange || isToday || day === 1) return true;
   };
 
-  const renderEachWeekDays = ({ id, value: day, month, year, isStandard }, index) => {
-    const dayItem = { day, month, year };
+  const renderEachWeekDays = (
+    { id, value: day, month, year, hour, minutes, isStandard },
+    index,
+  ) => {
+    let dayItem = {};
+    if (activeTime) {
+      dayItem = { day, month, year, hour, minutes };
+    } else {
+      dayItem = { day, month, year };
+    }
     const isInDisabledDaysRange = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
     const isBeforeMinimumDate = isBeforeDate(dayItem, minimumDate);
     const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
@@ -275,7 +286,6 @@ const DaysList = ({
     </div>
   );
 };
-
 DaysList.defaultProps = {
   onChange: () => {},
   onDisabledDayError: () => {},
@@ -287,5 +297,4 @@ DaysList.defaultProps = {
   calendarRangeEndClassName: '',
   shouldHighlightWeekends: false,
 };
-
 export default DaysList;

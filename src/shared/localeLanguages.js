@@ -38,6 +38,9 @@ const localeLanguages = {
     digitSeparator: ',',
     yearLetterSkip: 0,
     isRtl: false,
+    clock: 'clock',
+    clockFrom: 'from clock',
+    clockTo: ' till clock',
   },
   fa: {
     months: PERSIAN_MONTHS,
@@ -55,11 +58,12 @@ const localeLanguages = {
       return jalaali.jalaaliMonthLength(date.year, date.month);
     },
     transformDigit(digit) {
-      return digit
-        .toString()
-        .split('')
-        .map(letter => PERSIAN_NUMBERS[Number(letter)])
-        .join('');
+      if (digit)
+        return digit
+          .toString()
+          .split('')
+          .map(letter => PERSIAN_NUMBERS[Number(letter)])
+          .join('');
     },
     nextMonth: 'ماه بعد',
     previousMonth: 'ماه قبل',
@@ -73,6 +77,9 @@ const localeLanguages = {
     digitSeparator: '،',
     yearLetterSkip: -2,
     isRtl: true,
+    clock: 'ساعت',
+    clockFrom: 'از ساعت',
+    clockTo: 'تا ساعت',
   },
 };
 

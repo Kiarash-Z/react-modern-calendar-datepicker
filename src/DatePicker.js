@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
-import { getValueType } from './shared/generalUtils';
+import { getValueType, todayPerLang } from './shared/generalUtils';
 import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constants';
 
 const DatePicker = ({
@@ -34,11 +34,56 @@ const DatePicker = ({
   shouldHighlightWeekends,
   renderFooter,
   customDaysClassName,
+  activeTime,
+  type,
+  notAutoClose,
 }) => {
+  let timeDate = null;
+  const today = todayPerLang(locale);
+  if (type === 'single' && activeTime) {
+    timeDate = {
+      hour: value ? value.hour : today.hour,
+      minutes: value ? value.minutes : today.minutes,
+    };
+  } else if (
+    type === 'range' &&
+    activeTime &&
+    (!(value.from && value.to) || (value.from && value.to))
+  ) {
+    timeDate = {
+      from: {
+        hour: value.from ? value.from.hour : today.hour,
+        minutes: value.from ? value.from.minutes : today.minutes,
+      },
+      to: {
+        hour: value.to ? value.to.hour : today.hour,
+        minutes: value.to ? value.to.minutes : today.minutes,
+      },
+    };
+  }
+
+  const [time, setTime] = useState(timeDate);
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
+  const mainElement = useRef(false);
   const shouldPreventToggle = useRef(false);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
+
+  useEffect(() => {
+    const listener = event => {
+      if (!mainElement.current || mainElement.current.contains(event.target)) {
+        return;
+      }
+      setCalendarVisiblity(false);
+    };
+
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
+    return () => {
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
+    };
+  });
 
   useEffect(() => {
     const handleBlur = () => {
@@ -56,21 +101,15 @@ const DatePicker = ({
     if (valueType === TYPE_MUTLI_DATE) return; // no need to close the calendar
     const shouldCloseCalendar =
       valueType === TYPE_SINGLE_DATE ? !isCalendarOpen : !isCalendarOpen && value.from && value.to;
-    if (shouldCloseCalendar) inputElement.current.blur();
+    if (shouldCloseCalendar) {
+      setCalendarVisiblity(false);
+      inputElement.current.blur();
+    }
   }, [value, isCalendarOpen]);
 
   const handleBlur = e => {
     e.persist();
-    if (!isCalendarOpen) return;
-    const isInnerElementFocused = calendarContainerElement.current.contains(e.relatedTarget);
-    if (shouldPreventToggle.current) {
-      shouldPreventToggle.current = false;
-      inputElement.current.focus();
-    } else if (isInnerElementFocused && e.relatedTarget) {
-      e.relatedTarget.focus();
-    } else {
-      setCalendarVisiblity(false);
-    }
+    if (!isCalendarOpen) setCalendarVisiblity(true);
   };
 
   const openCalendar = () => {
@@ -110,9 +149,46 @@ const DatePicker = ({
 
   const handleCalendarChange = newValue => {
     const valueType = getValueType(value);
-    onChange(newValue);
-    if (valueType === TYPE_SINGLE_DATE) setCalendarVisiblity(false);
-    else if (valueType === TYPE_RANGE && newValue.from && newValue.to) setCalendarVisiblity(false);
+    if (valueType === 'SINGLE_DATE') {
+      if (activeTime) {
+        onChange({ ...newValue, ...time });
+      } else {
+        onChange({ ...newValue });
+      }
+    } else if (valueType === 'RANGE') {
+      /* eslint-disable no-param-reassign */
+      if (newValue.from && activeTime) {
+        newValue.from.hour = time.from.hour;
+        newValue.from.minutes = time.from.minutes;
+      }
+      if (newValue.to && activeTime) {
+        newValue.to.hour = time.to.hour;
+        newValue.to.minutes = time.to.minutes;
+      }
+      onChange(newValue);
+    }
+    if (valueType === TYPE_SINGLE_DATE && !notAutoClose) setCalendarVisiblity(false);
+    else if (valueType === TYPE_RANGE && newValue.from && newValue.to && !notAutoClose)
+      setCalendarVisiblity(false);
+  };
+  const handleCalendarTimeChange = newValue => {
+    const valueType = getValueType(value);
+    if (valueType === 'SINGLE_DATE') {
+      if (activeTime) {
+        onChange({ ...newValue, ...time });
+      }
+    } else if (valueType === 'RANGE') {
+      /* eslint-disable no-param-reassign */
+      if (newValue.from && activeTime) {
+        newValue.from.hour = time.from.hour;
+        newValue.from.minutes = time.from.minutes;
+      }
+      if (newValue.to && activeTime) {
+        newValue.to.hour = time.to.hour;
+        newValue.to.minutes = time.to.minutes;
+      }
+      onChange({ ...newValue });
+    }
   };
 
   const handleKeyUp = ({ key }) => {
@@ -137,8 +213,9 @@ const DatePicker = ({
   return (
     <div
       onFocus={openCalendar}
-      onBlur={handleBlur}
+      onClick={handleBlur}
       onKeyUp={handleKeyUp}
+      ref={mainElement}
       className={`DatePicker ${wrapperClassName}`}
       role="presentation"
     >
@@ -151,6 +228,7 @@ const DatePicker = ({
         renderInput={renderInput}
         inputName={inputName}
         locale={locale}
+        activeTime={activeTime}
       />
       {isCalendarOpen && (
         <>
@@ -166,6 +244,7 @@ const DatePicker = ({
             <Calendar
               value={value}
               onChange={handleCalendarChange}
+              handleCalendarTimeChange={handleCalendarTimeChange}
               calendarClassName={calendarClassName}
               calendarTodayClassName={calendarTodayClassName}
               calendarSelectedDayClassName={calendarSelectedDayClassName}
@@ -185,6 +264,10 @@ const DatePicker = ({
               shouldHighlightWeekends={shouldHighlightWeekends}
               renderFooter={renderFooter}
               customDaysClassName={customDaysClassName}
+              activeTime={activeTime}
+              time={time}
+              onSetTime={setTime}
+              type
             />
           </div>
           <div className="DatePicker__calendarArrow" />
@@ -193,11 +276,9 @@ const DatePicker = ({
     </div>
   );
 };
-
 DatePicker.defaultProps = {
   wrapperClassName: '',
   locale: 'en',
   calendarPopperPosition: 'auto',
 };
-
 export default DatePicker;

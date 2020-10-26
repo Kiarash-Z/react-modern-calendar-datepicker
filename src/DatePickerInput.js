@@ -6,7 +6,16 @@ import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constant
 
 const DatePickerInput = React.forwardRef(
   (
-    { value, inputPlaceholder, inputClassName, inputName, formatInputText, renderInput, locale },
+    {
+      value,
+      inputPlaceholder,
+      inputClassName,
+      inputName,
+      formatInputText,
+      renderInput,
+      locale,
+      activeTime,
+    },
     ref,
   ) => {
     const { getLanguageDigits } = useLocaleUtils(locale);
@@ -24,22 +33,29 @@ const DatePickerInput = React.forwardRef(
       const year = getLanguageDigits(value.year);
       const month = getLanguageDigits(putZero(value.month));
       const day = getLanguageDigits(putZero(value.day));
+      const hour = getLanguageDigits(value.hour);
+      const minutes = getLanguageDigits(value.minutes);
+      if (activeTime) return `${year}/${month}/${day} ${hour}:${minutes}`;
       return `${year}/${month}/${day}`;
     };
 
     const getDayRangeValue = () => {
       if (!value.from || !value.to) return '';
       const { from, to } = value;
-      const fromText = `${getLanguageDigits(putZero(from.year))
+      let fromText = `${getLanguageDigits(putZero(from.year))
         .toString()
         .slice(yearLetterSkip)}/${getLanguageDigits(putZero(from.month))}/${getLanguageDigits(
         putZero(from.day),
       )}`;
-      const toText = `${getLanguageDigits(putZero(to.year))
+      let toText = `${getLanguageDigits(putZero(to.year))
         .toString()
         .slice(yearLetterSkip)}/${getLanguageDigits(putZero(to.month))}/${getLanguageDigits(
         putZero(to.day),
       )}`;
+      if (activeTime) {
+        fromText = `${fromText} ${from.hour}:${from.minutes}`;
+        toText = `${toText} ${to.hour}:${to.minutes}`;
+      }
       return `${fromWord} ${fromText} ${toWord} ${toText}`;
     };
 

@@ -1,3 +1,4 @@
+import jalaali from 'jalaali-js';
 import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './constants';
 
 /*
@@ -17,7 +18,7 @@ const isSameDay = (day1, day2) => {
 
 const putZero = number => (number.toString().length === 1 ? `0${number}` : number);
 
-const toExtendedDay = date => [date.year, date.month, date.day];
+const toExtendedDay = date => [date.year, date.month, date.day, date.hour, date.minutes];
 
 const shallowClone = value => ({ ...value });
 
@@ -36,7 +37,13 @@ const getDateAccordingToMonth = (date, direction) => {
     newMonthIndex = 1;
     newYear += 1;
   }
-  const newDate = { year: newYear, month: newMonthIndex, day: 1 };
+  const newDate = {
+    year: newYear,
+    month: newMonthIndex,
+    day: 1,
+    hour: date.hour,
+    minutes: date.minutes,
+  };
   return newDate;
 };
 
@@ -56,6 +63,29 @@ const getValueType = value => {
     `The passed value is malformed! Please make sure you're using one of the valid value types for date picker.`,
   );
 };
+const todayPerLang = locale => {
+  let today;
+  const enToday = new Date();
+  if (locale === 'fa') {
+    const prToday = jalaali.toJalaali(enToday);
+    today = {
+      year: prToday.jy,
+      month: prToday.jm,
+      day: prToday.jd,
+      hour: enToday.getHours(),
+      minutes: enToday.getMinutes(),
+    };
+  } else {
+    today = {
+      year: enToday.getFullYear(),
+      month: enToday.getMonth(),
+      day: enToday.getDate(),
+      hour: enToday.getHours(),
+      minutes: enToday.getMinutes(),
+    };
+  }
+  return today;
+};
 
 export {
   createUniqueRange,
@@ -66,4 +96,5 @@ export {
   deepCloneObject,
   getDateAccordingToMonth,
   getValueType,
+  todayPerLang,
 };

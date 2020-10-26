@@ -4,11 +4,12 @@ import { getDateAccordingToMonth, shallowClone, getValueType } from './shared/ge
 import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
 import { useLocaleUtils, useLocaleLanguage } from './shared/hooks';
 
-import { Header, MonthSelector, YearSelector, DaysList } from './components';
+import { Header, MonthSelector, YearSelector, DaysList, Time } from './components';
 
 const Calendar = ({
   value,
   onChange,
+  handleCalendarTimeChange,
   onDisabledDayError,
   calendarClassName,
   calendarTodayClassName,
@@ -28,6 +29,9 @@ const Calendar = ({
   shouldHighlightWeekends,
   renderFooter,
   customDaysClassName,
+  activeTime,
+  time,
+  onSetTime,
 }) => {
   const calendarElement = useRef(null);
   const [mainState, setMainState] = useState({
@@ -36,6 +40,7 @@ const Calendar = ({
     isMonthSelectorOpen: false,
     isYearSelectorOpen: false,
   });
+  const valueType = getValueType(value);
 
   useEffect(() => {
     const handleKeyUp = ({ key }) => {
@@ -60,7 +65,6 @@ const Calendar = ({
   const toggleYearSelector = createStateToggler('isYearSelectorOpen');
 
   const getComputedActiveDate = () => {
-    const valueType = getValueType(value);
     if (valueType === TYPE_MUTLI_DATE && value.length) return shallowClone(value[0]);
     if (valueType === TYPE_SINGLE_DATE && value) return shallowClone(value);
     if (valueType === TYPE_RANGE && value.from) return shallowClone(value.from);
@@ -131,7 +135,6 @@ const Calendar = ({
         isYearSelectorOpen={mainState.isYearSelectorOpen}
         locale={locale}
       />
-
       <MonthSelector
         isOpen={mainState.isMonthSelectorOpen}
         activeDate={activeDate}
@@ -140,7 +143,6 @@ const Calendar = ({
         minimumDate={minimumDate}
         locale={locale}
       />
-
       <YearSelector
         isOpen={mainState.isYearSelectorOpen}
         activeDate={activeDate}
@@ -151,12 +153,11 @@ const Calendar = ({
         minimumDate={minimumDate}
         locale={locale}
       />
-
       <div className="Calendar__weekDays">{weekdays}</div>
-
       <DaysList
         activeDate={activeDate}
         value={value}
+        time={time}
         monthChangeDirection={mainState.monthChangeDirection}
         onSlideChange={updateDate}
         disabledDays={disabledDays}
@@ -173,7 +174,18 @@ const Calendar = ({
         shouldHighlightWeekends={shouldHighlightWeekends}
         customDaysClassName={customDaysClassName}
         isQuickSelectorOpen={mainState.isYearSelectorOpen || mainState.isMonthSelectorOpen}
+        activeTime={activeTime}
       />
+      {activeTime && valueType !== 'MUTLI_DATE' && (
+        <Time
+          value={value}
+          time={time}
+          onSetTime={onSetTime}
+          locale={locale}
+          handleCalendarTimeChange={handleCalendarTimeChange}
+        />
+      )}
+
       <div className="Calendar__footer">{renderFooter()}</div>
     </div>
   );
