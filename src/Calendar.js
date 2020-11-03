@@ -38,6 +38,10 @@ const Calendar = ({
   });
 
   useEffect(() => {
+    if (calendarElement === null) {
+      return;
+    }
+
     const handleKeyUp = ({ key }) => {
       /* istanbul ignore else */
       if (key === 'Tab') calendarElement.current.classList.remove('-noFocusOutline');
@@ -46,7 +50,7 @@ const Calendar = ({
     return () => {
       calendarElement.current.removeEventListener('keyup', handleKeyUp, false);
     };
-  });
+  }, [calendarElement]);
 
   const { getToday } = useLocaleUtils(locale);
   const { weekDays: weekDaysList, isRtl } = useLocaleLanguage(locale);
