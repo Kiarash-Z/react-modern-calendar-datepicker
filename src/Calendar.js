@@ -38,7 +38,7 @@ const Calendar = ({
   });
 
   useEffect(() => {
-    if (calendarElement === null) {
+    if (calendarElement.current === null) {
       return;
     }
 
