@@ -29,10 +29,13 @@
 }
 
 .DatePicker__calendarContainer {
-  position: absolute;
-  top: calc(100% + 20px);
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;
+  top:null;
+  left:null;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: auto;
+  box-shadow: 0 1em 4em rgba(0, 0, 0, 0.07);
 }
 
 .DatePicker__calendarContainer.-top {
@@ -73,7 +76,6 @@
   --cl-color-error: #ff2929;
   font-size: 10px;
   background: #fff;
-  box-shadow: 0 1em 4em rgba(0, 0, 0, 0.07);
   border-radius: 1em;
   position: relative;
   user-select: none;
@@ -646,7 +648,7 @@
   }
 }
 
-@keyframes fadeArrowFlipped {
+@keyframes fadeArrowFlippedTop {
   from {
     opacity: 0;
   }
@@ -654,6 +656,28 @@
   to {
     opacity: 1;
     transform: translateY(0) rotate(180deg);
+  }
+}
+
+@keyframes fadeArrowFlippedLeft {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(90deg);
+  }
+}
+
+@keyframes fadeArrowFlippedRight {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(270deg);
   }
 }
 
