@@ -38,20 +38,17 @@ const Calendar = ({
   });
 
   useEffect(() => {
-    if (calendarElement.current === null) {
-      return;
-    }
-
-    const handleKeyUp = ({ key }) => {
-      /* istanbul ignore else */
-      if (key === 'Tab') calendarElement.current.classList.remove('-noFocusOutline');
-    };
-    calendarElement.current.addEventListener('keyup', handleKeyUp, false);
-    return () => {
-      if (calendarElement.current !== null) {
+    /* istanbul ignore else */
+    if (calendarElement.current !== null) {
+      const handleKeyUp = ({ key }) => {
+        /* istanbul ignore else */
+        if (key === 'Tab') calendarElement.current.classList.remove('-noFocusOutline');
+      };
+      calendarElement.current.addEventListener('keyup', handleKeyUp, false);
+      return () => {
         calendarElement.current.removeEventListener('keyup', handleKeyUp, false);
-      }
-    };
+      };
+    }
   }, [calendarElement]);
 
   const { getToday } = useLocaleUtils(locale);
