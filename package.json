@@ -1,5 +1,5 @@
 {
-  "name": "react-modern-calendar-datepicker",
+  "name": "@hassanmojab/react-modern-calendar-datepicker",
   "version": "3.1.6",
   "description": "A modern, beautiful, customizable date picker for React",
   "main": "lib/index.js",
