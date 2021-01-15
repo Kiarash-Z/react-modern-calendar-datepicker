@@ -24,6 +24,7 @@ export interface CalendarProps<TValue extends Value> {
   minimumDate?: Day;
   maximumDate?: Day;
   disabledDays?: Day[];
+  disabledWeekDays?: number[];
   shouldHighlightWeekends?: boolean;
   colorPrimary?: string;
   colorPrimaryLight?: string;
