@@ -14,8 +14,11 @@ type Value = DayValue | Day[] | DayRange;
 
 type CustomDayClassNameItem = Day & { className: string };
 
+type PickerType = "month" | "date";
+
 export interface CalendarProps<TValue extends Value> {
   value: TValue;
+  picker?: PickerType;
   onChange?(value: TValue): void;
   onDisabledDayError?(value: Day): void;
   selectorStartingYear?: number;
