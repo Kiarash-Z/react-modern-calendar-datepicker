@@ -188,6 +188,7 @@ const Calendar = ({
 };
 
 Calendar.defaultProps = {
+  onChange: () => {},
   minimumDate: null,
   maximumDate: null,
   colorPrimary: '#0eca2d',
