@@ -7,6 +7,7 @@ import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constant
 
 const DatePicker = ({
   value,
+  picker,
   onChange,
   formatInputText,
   inputPlaceholder,
@@ -165,6 +166,7 @@ const DatePicker = ({
           >
             <Calendar
               value={value}
+              picker={picker}
               onChange={handleCalendarChange}
               calendarClassName={calendarClassName}
               calendarTodayClassName={calendarTodayClassName}
