@@ -126,6 +126,12 @@ const DatePicker = ({
         break;
     }
   };
+  const onChangeMonth = (valueDate, directionArrow) => {
+    return {
+      date: valueDate,
+      direction: directionArrow,
+    };
+  };
 
   useEffect(() => {
     if (!isCalendarOpen && shouldPreventToggle.current) {
@@ -185,6 +191,7 @@ const DatePicker = ({
               shouldHighlightWeekends={shouldHighlightWeekends}
               renderFooter={renderFooter}
               customDaysClassName={customDaysClassName}
+              onChangeMonth={onChangeMonth}
             />
           </div>
           <div className="DatePicker__calendarArrow" />
