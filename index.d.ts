@@ -54,6 +54,7 @@ export interface DatePickerProps<TValue extends Value> extends CalendarProps<TVa
   inputPlaceholder?: string;
   formatInputText?: () => string;
   renderInput?: React.FC<RenderInputProps>;
+  onChangeMonth?: () => object;
 }
 
 type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
