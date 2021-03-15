@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { isSameDay } from '../shared/generalUtils';
 import { getSlideDate, animateContent, handleSlideAnimationEnd } from '../shared/sliderHelpers';
@@ -15,11 +15,14 @@ const Header = ({
   isMonthSelectorOpen,
   isYearSelectorOpen,
   locale,
+  onChangeMonth,
 }) => {
   const headerElement = useRef(null);
   const monthYearWrapperElement = useRef(null);
 
   const { getMonthName, isBeforeDate, getLanguageDigits } = useLocaleUtils(locale);
+  const [directionArrow, setDirectionArrow] = useState(null);
+
   const {
     isRtl,
     nextMonth,
@@ -104,13 +107,13 @@ const Header = ({
       isSameDay(minimumDate, { ...activeDate, day: 1 }));
 
   const onMonthChangeTrigger = direction => {
+    setDirectionArrow(direction);
     const isMonthChanging = Array.from(monthYearWrapperElement.current.children).some(child =>
       child.classList.contains('-shownAnimated'),
     );
     if (isMonthChanging) return;
     onMonthChange(direction);
   };
-
   // first button text is the one who shows the current month and year(initial active child)
   const monthYearButtons = [true, false].map(isInitialActiveChild => {
     const { month, year } = getMonthYearText(isInitialActiveChild);
@@ -149,13 +152,13 @@ const Header = ({
       </div>
     );
   });
-
   return (
     <div ref={headerElement} className="Calendar__header">
       <button
         className="Calendar__monthArrowWrapper -right"
         onClick={() => {
           onMonthChangeTrigger('PREVIOUS');
+          onChangeMonth(activeDate, directionArrow);
         }}
         aria-label={previousMonth}
         type="button"
@@ -175,6 +178,7 @@ const Header = ({
         className="Calendar__monthArrowWrapper -left"
         onClick={() => {
           onMonthChangeTrigger('NEXT');
+          onChangeMonth(activeDate, directionArrow);
         }}
         aria-label={nextMonth}
         type="button"
