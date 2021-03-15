@@ -34,6 +34,7 @@ const DatePicker = ({
   shouldHighlightWeekends,
   renderFooter,
   customDaysClassName,
+  onChangeMonth,
 }) => {
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
@@ -125,12 +126,6 @@ const DatePicker = ({
         shouldPreventToggle.current = true;
         break;
     }
-  };
-  const onChangeMonth = (valueDate, directionArrow) => {
-    return {
-      date: valueDate,
-      direction: directionArrow,
-    };
   };
 
   useEffect(() => {

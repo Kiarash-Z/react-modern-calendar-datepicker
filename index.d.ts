@@ -36,6 +36,7 @@ export interface CalendarProps<TValue extends Value> {
   calendarRangeEndClassName?: string;
   renderFooter?: React.FC;
   customDaysClassName?: CustomDayClassNameItem[];
+  onChangeMonth?: void
 }
 
 export function Calendar(props: Optional<CalendarProps<DayValue>, 'value'>): React.ReactElement;
@@ -54,7 +55,8 @@ export interface DatePickerProps<TValue extends Value> extends CalendarProps<TVa
   inputPlaceholder?: string;
   formatInputText?: () => string;
   renderInput?: React.FC<RenderInputProps>;
-  onChangeMonth?: () => object;
+  onChangeMonth?: void
+
 }
 
 type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
