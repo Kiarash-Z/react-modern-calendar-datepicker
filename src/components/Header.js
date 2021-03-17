@@ -21,7 +21,7 @@ const Header = ({
   const monthYearWrapperElement = useRef(null);
 
   const { getMonthName, isBeforeDate, getLanguageDigits } = useLocaleUtils(locale);
-  const [directionArrow, setDirectionArrow] = useState(null);
+  const [directionArrow, setDirectionArrow] = useState('NEXT');
 
   const {
     isRtl,
@@ -152,13 +152,15 @@ const Header = ({
       </div>
     );
   });
+  useEffect(() => {
+    onChangeMonth(activeDate, directionArrow);
+  }, [activeDate]);
   return (
     <div ref={headerElement} className="Calendar__header">
       <button
         className="Calendar__monthArrowWrapper -right"
         onClick={() => {
           onMonthChangeTrigger('PREVIOUS');
-          onChangeMonth(activeDate, directionArrow);
         }}
         aria-label={previousMonth}
         type="button"
@@ -178,7 +180,6 @@ const Header = ({
         className="Calendar__monthArrowWrapper -left"
         onClick={() => {
           onMonthChangeTrigger('NEXT');
-          onChangeMonth(activeDate, directionArrow);
         }}
         aria-label={nextMonth}
         type="button"
