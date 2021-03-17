@@ -6,6 +6,11 @@ export type Day = {
   day: number;
 };
 
+export type MonthdDirection = {
+  month: object;
+  direction: string;
+};
+
 export type DayValue = Day | null | undefined;
 
 export type DayRange = { from: DayValue; to: DayValue };
@@ -36,7 +41,7 @@ export interface CalendarProps<TValue extends Value> {
   calendarRangeEndClassName?: string;
   renderFooter?: React.FC;
   customDaysClassName?: CustomDayClassNameItem[];
-  onChangeMonth?: () => void
+  onChangeMonth?(value: MonthdDirection): void;
 }
 
 export function Calendar(props: Optional<CalendarProps<DayValue>, 'value'>): React.ReactElement;
@@ -55,7 +60,7 @@ export interface DatePickerProps<TValue extends Value> extends CalendarProps<TVa
   inputPlaceholder?: string;
   formatInputText?: () => string;
   renderInput?: React.FC<RenderInputProps>;
-  onChangeMonth?: () => void
+  onChangeMonth?(value: MonthdDirection): void;
 }
 
 type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
