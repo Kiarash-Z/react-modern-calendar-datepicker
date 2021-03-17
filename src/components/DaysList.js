@@ -56,7 +56,7 @@ const DaysList = ({
     const clonedDayRange = deepCloneObject(value);
     const dayRangeValue =
       clonedDayRange.from && clonedDayRange.to ? { from: null, to: null } : clonedDayRange;
-    const dayRangeProp = !dayRangeValue.from ? 'From' : 'to';
+    const dayRangeProp = !dayRangeValue.from ? 'from' : 'to';
     dayRangeValue[dayRangeProp] = day;
     const { from, to } = dayRangeValue;
 
