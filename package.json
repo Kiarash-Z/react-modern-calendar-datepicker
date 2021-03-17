@@ -1,5 +1,5 @@
 {
-  "name": "react-modern-calendar-datepicker",
+  "name": "@doananh234/react-modern-calendar-datepicker",
   "version": "3.1.6",
   "description": "A modern, beautiful, customizable date picker for React",
   "main": "lib/index.js",
@@ -20,14 +20,14 @@
     "lib",
     "index.d.ts"
   ],
-  "author": "Kiarash Zarinmehr",
-  "homepage": "https://kiarash-z.github.io/react-modern-calendar-datepicker",
+  "author": "Anh Doan",
+  "homepage": "https://github.com/doananh234/react-modern-calendar-datepicker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker.git"
+    "url": "git+https://github.com/doananh234/react-modern-calendar-datepicker.git"
   },
   "bugs": {
-    "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker/issues"
+    "url": "https://github.com/doananh234/react-modern-calendar-datepicker/issues"
   },
   "license": "MIT",
   "keywords": [
@@ -108,5 +108,9 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
   }
 }
