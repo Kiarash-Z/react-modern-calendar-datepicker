@@ -130,7 +130,10 @@ const Header = ({
         {...hiddenStatus}
       >
         <button
-          onClick={onMonthSelect}
+          onClick={() => {
+            onMonthSelect();
+            onChangeMonth(activeDate, directionArrow);
+          }}
           type="button"
           className="Calendar__monthText"
           aria-label={isMonthSelectorOpen ? closeMonthSelector : openMonthSelector}
@@ -140,7 +143,10 @@ const Header = ({
           {month}
         </button>
         <button
-          onClick={onYearSelect}
+          onClick={() => {
+            onYearSelect();
+            onChangeMonth(activeDate, directionArrow);
+          }}
           type="button"
           className="Calendar__yearText"
           aria-label={isYearSelectorOpen ? closeYearSelector : openYearSelector}
