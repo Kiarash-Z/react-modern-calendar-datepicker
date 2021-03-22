@@ -11,7 +11,7 @@ const DatePickerInput = React.forwardRef(
   ) => {
     const { getLanguageDigits } = useLocaleUtils(locale);
     const {
-      from: fromWord,
+      From: fromWord,
       to: toWord,
       yearLetterSkip,
       digitSeparator,
@@ -30,16 +30,16 @@ const DatePickerInput = React.forwardRef(
     const getDayRangeValue = () => {
       if (!value.from || !value.to) return '';
       const { from, to } = value;
-      const fromText = `${getLanguageDigits(putZero(from.year))
+      const fromText = `${getLanguageDigits(putZero(from.day))}/${getLanguageDigits(
+        putZero(from.month),
+      )}/${getLanguageDigits(putZero(from.year))
         .toString()
-        .slice(yearLetterSkip)}/${getLanguageDigits(putZero(from.month))}/${getLanguageDigits(
-        putZero(from.day),
-      )}`;
-      const toText = `${getLanguageDigits(putZero(to.year))
+        .slice(yearLetterSkip)}`;
+      const toText = `${getLanguageDigits(putZero(to.day))}/${getLanguageDigits(
+        putZero(to.month),
+      )}/${getLanguageDigits(putZero(to.year))
         .toString()
-        .slice(yearLetterSkip)}/${getLanguageDigits(putZero(to.month))}/${getLanguageDigits(
-        putZero(to.day),
-      )}`;
+        .slice(yearLetterSkip)}`;
       return `${fromWord} ${fromText} ${toWord} ${toText}`;
     };
 
