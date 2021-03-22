@@ -184,8 +184,8 @@ const Calendar = ({
 Calendar.defaultProps = {
   minimumDate: null,
   maximumDate: null,
-  colorPrimary: '#0eca2d',
-  colorPrimaryLight: '#cff4d5',
+  colorPrimary: 'rgba(0, 0, 0, 0.87)',
+  colorPrimaryLight: '#e0e0e0',
   slideAnimationDuration: '0.4s',
   calendarClassName: '',
   locale: 'en',
