@@ -15,7 +15,7 @@ const Header = ({
   isMonthSelectorOpen,
   isYearSelectorOpen,
   locale,
-  onChangeMonth,
+  onChangeMonth = () => {},
 }) => {
   const headerElement = useRef(null);
   const monthYearWrapperElement = useRef(null);

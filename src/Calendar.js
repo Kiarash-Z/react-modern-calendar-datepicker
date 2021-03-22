@@ -28,7 +28,7 @@ const Calendar = ({
   shouldHighlightWeekends,
   renderFooter,
   customDaysClassName,
-  onChangeMonth,
+  onChangeMonth = () => {},
 }) => {
   const calendarElement = useRef(null);
   const [mainState, setMainState] = useState({
