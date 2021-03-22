@@ -19,7 +19,6 @@ const Header = ({
 }) => {
   const headerElement = useRef(null);
   const monthYearWrapperElement = useRef(null);
-
   const { getMonthName, isBeforeDate, getLanguageDigits } = useLocaleUtils(locale);
   const [directionArrow, setDirectionArrow] = useState('NEXT');
 
@@ -130,7 +129,10 @@ const Header = ({
         {...hiddenStatus}
       >
         <button
-          onClick={onMonthSelect}
+          onClick={() => {
+            onMonthSelect();
+            onChangeMonth(activeDate, directionArrow);
+          }}
           type="button"
           className="Calendar__monthText"
           aria-label={isMonthSelectorOpen ? closeMonthSelector : openMonthSelector}
@@ -140,7 +142,10 @@ const Header = ({
           {month}
         </button>
         <button
-          onClick={onYearSelect}
+          onClick={() => {
+            onYearSelect();
+            onChangeMonth(activeDate, directionArrow);
+          }}
           type="button"
           className="Calendar__yearText"
           aria-label={isYearSelectorOpen ? closeYearSelector : openYearSelector}
@@ -152,15 +157,13 @@ const Header = ({
       </div>
     );
   });
-  useEffect(() => {
-    onChangeMonth(activeDate, directionArrow);
-  }, [activeDate]);
   return (
     <div ref={headerElement} className="Calendar__header">
       <button
         className="Calendar__monthArrowWrapper -right"
         onClick={() => {
           onMonthChangeTrigger('PREVIOUS');
+          onChangeMonth(activeDate, directionArrow);
         }}
         aria-label={previousMonth}
         type="button"
@@ -180,6 +183,7 @@ const Header = ({
         className="Calendar__monthArrowWrapper -left"
         onClick={() => {
           onMonthChangeTrigger('NEXT');
+          onChangeMonth(activeDate, directionArrow);
         }}
         aria-label={nextMonth}
         type="button"
