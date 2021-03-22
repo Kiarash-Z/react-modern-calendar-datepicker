@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
 import { getValueType } from './shared/generalUtils';
-import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constants';
+import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE } from './shared/constants';
 
 const DatePicker = ({
   value,
@@ -110,10 +110,7 @@ const DatePicker = ({
   }, [isCalendarOpen]);
 
   const handleCalendarChange = newValue => {
-    const valueType = getValueType(value);
     onChange(newValue);
-    if (valueType === TYPE_SINGLE_DATE) setCalendarVisiblity(false);
-    else if (valueType === TYPE_RANGE && newValue.from && newValue.to) setCalendarVisiblity(false);
   };
 
   const handleKeyUp = ({ key }) => {
