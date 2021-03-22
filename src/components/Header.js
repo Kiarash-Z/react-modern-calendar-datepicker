@@ -19,7 +19,6 @@ const Header = ({
 }) => {
   const headerElement = useRef(null);
   const monthYearWrapperElement = useRef(null);
-
   const { getMonthName, isBeforeDate, getLanguageDigits } = useLocaleUtils(locale);
   const [directionArrow, setDirectionArrow] = useState('NEXT');
 
@@ -158,9 +157,6 @@ const Header = ({
       </div>
     );
   });
-  useEffect(() => {
-    onChangeMonth(activeDate, directionArrow);
-  }, [activeDate]);
   return (
     <div ref={headerElement} className="Calendar__header">
       <button
