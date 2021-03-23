@@ -11,7 +11,6 @@ const DatePickerInput = React.forwardRef(
   ) => {
     const { getLanguageDigits } = useLocaleUtils(locale);
     const {
-      From: fromWord,
       to: toWord,
       yearLetterSkip,
       digitSeparator,
@@ -40,7 +39,7 @@ const DatePickerInput = React.forwardRef(
       )}/${getLanguageDigits(putZero(to.year))
         .toString()
         .slice(yearLetterSkip)}`;
-      return `${fromWord} ${fromText} ${toWord} ${toText}`;
+      return `From ${fromText} ${toWord} ${toText}`;
     };
 
     const getMultiDateValue = () => {
