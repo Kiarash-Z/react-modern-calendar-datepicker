@@ -9,14 +9,14 @@
   border: 1px solid #ddd;
   padding: 0.4em 0.8em;
   font-family: inherit;
-  text-align: center;
+  text-align: left;
   font-size: 12px;
 }
 .icon-DatePicker {
   font-size: 20px!important;
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 12px;
+  right: -10px;
   cursor: pointer;
 }
 
@@ -76,7 +76,7 @@
 
 .Calendar {
   --cl-color-black: #444444;
-  --cl-color-disabled: #fff;
+  --cl-color-disabled: #d4d4d4;
   --cl-color-error: #ff2929;
   --cl-color-green: #388e3c;
   font-size: 10px;
