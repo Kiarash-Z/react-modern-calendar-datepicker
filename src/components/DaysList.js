@@ -213,7 +213,6 @@ const DaysList = ({
           if (key === 'Enter') handleDayPress({ ...dayItem, isDisabled });
         }}
         aria-disabled={isDisabled}
-        aria-booked= {isInDisabledDaysRange}
         aria-label={dayLabel}
         aria-selected={isSelected || isStartingDayRange || isEndingDayRange || isWithinRange}
         {...(!isStandard || !isOnActiveSlide || isQuickSelectorOpen ? { 'aria-hidden': true } : {})}
