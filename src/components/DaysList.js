@@ -130,6 +130,9 @@ const DaysList = ({
       isWithinRange,
     } = getDayStatus(dayItem);
     const customDayItemClassName = customDaysClassName.find(day => isSameDay(dayItem, day));
+    const disableDayBooked = disabledDays?.map(item => {
+      (item?.year === dayItem?.year && item?.month === dayItem?.month && item?.day === dayItem?.day) && Object.assign(dayItem, {isBooked: true})
+    });
     const classNames = ''
       .concat(isToday && !isSelected ? ` -today ${calendarTodayClassName}` : '')
       .concat(!dayItem.isStandard ? ' -blank' : '')
@@ -139,7 +142,8 @@ const DaysList = ({
       .concat(isStartingDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
       .concat(isEndingDayRange ? ` -selectedEnd ${calendarRangeEndClassName}` : '')
       .concat(isWithinRange ? ` -selectedBetween ${calendarRangeBetweenClassName}` : '')
-      .concat(dayItem.isDisabled ? ' -disabled' : '');
+      .concat(dayItem.isDisabled ? ' -disabled' : '')
+      .concat(dayItem.isBooked ? ' -booked' : '')
     return classNames;
   };
 
@@ -180,7 +184,8 @@ const DaysList = ({
     const isBeforeMinimumDate = isBeforeDate(dayItem, minimumDate);
     const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
     const isNotInValidRange = isStandard && (isBeforeMinimumDate || isAfterMaximumDate);
-    const isDisabled = isInDisabledDaysRange || isNotInValidRange;
+    const isDisabled = isNotInValidRange;
+    const isBooked = isInDisabledDaysRange;
     const isWeekend = weekDaysList.some(
       (weekDayItem, weekDayItemIndex) => weekDayItem.isWeekend && weekDayItemIndex === index,
     );
@@ -208,6 +213,7 @@ const DaysList = ({
           if (key === 'Enter') handleDayPress({ ...dayItem, isDisabled });
         }}
         aria-disabled={isDisabled}
+        aria-booked= {isInDisabledDaysRange}
         aria-label={dayLabel}
         aria-selected={isSelected || isStartingDayRange || isEndingDayRange || isWithinRange}
         {...(!isStandard || !isOnActiveSlide || isQuickSelectorOpen ? { 'aria-hidden': true } : {})}

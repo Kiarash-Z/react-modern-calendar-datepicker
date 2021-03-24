@@ -12,15 +12,21 @@
   text-align: center;
   font-size: 12px;
 }
+.icon-DatePicker {
+  font-size: 20px!important;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
 
 .DatePicker__input.-rtl {
   direction: rtl;
 }
 
 .DatePicker__input::placeholder {
-  color: #979797;
+  color: #999999;
+  font-weight: bold
 }
-
 .DatePicker__calendarContainer.-top + .DatePicker__calendarArrow {
   top: auto;
   bottom: calc(100% + 10px);
@@ -69,8 +75,9 @@
 
 .Calendar {
   --cl-color-black: #444444;
-  --cl-color-disabled: #d4d4d4;
+  --cl-color-disabled: #fff;
   --cl-color-error: #ff2929;
+  --cl-color-green: #388e3c;
   font-size: 10px;
   background: #fff;
   box-shadow: 0 1em 4em rgba(0, 0, 0, 0.07);
@@ -519,7 +526,7 @@
   transition: 0.2s;
   border: 1px solid transparent;
   margin-bottom: 0.3em;
-  color: rgba(0, 0, 0, 0.8);
+  color: var(--cl-color-green);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -527,7 +534,7 @@
 }
 
 .Calendar__day:focus {
-  outline: 1px dashed rgba(0, 0, 0, 0.4);
+  outline: 1px dashed var(--cl-color-green);
   outline-offset: 2px;
 }
 
@@ -569,7 +576,7 @@
 
 .Calendar__day.-selectedBetween {
   background: var(--cl-color-primary-light);
-  color: var(--cl-color-primary);
+  color: var(--cl-color-green);
   border-radius: 0;
 }
 
@@ -596,13 +603,18 @@
   background: transparent !important;
   cursor: default !important;
 }
+
+.Calendar__day.-booked {
+  color: var(--cl-color-error);
+  background: transparent !important;
+  cursor: default !important;
+}
 .Calendar__day.-selected {
   border-radius: 50%;
 }
 .Calendar__day.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween) {
   font-weight: 600;
-  color: var(--cl-color-black);
-  color: #000;
+  color: var(--cl-color-green);
   position: relative;
 }
 
