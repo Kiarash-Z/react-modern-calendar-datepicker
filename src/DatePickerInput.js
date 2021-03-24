@@ -3,7 +3,7 @@ import React from 'react';
 import { useLocaleUtils, useLocaleLanguage } from './shared/hooks';
 import { putZero, getValueType } from './shared/generalUtils';
 import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
-
+import EventIcon from '@material-ui/icons/Event';
 const DatePickerInput = React.forwardRef(
   (
     { value, inputPlaceholder, inputClassName, inputName, formatInputText, renderInput, locale },
@@ -58,11 +58,11 @@ const DatePickerInput = React.forwardRef(
           return getMultiDateValue();
       }
     };
-
     const placeholderValue = inputPlaceholder || defaultPlaceholder;
     const render = () => {
       return (
         renderInput({ ref }) || (
+          <>
           <input
             data-testid="datepicker-input"
             readOnly
@@ -73,6 +73,8 @@ const DatePickerInput = React.forwardRef(
             className={`DatePicker__input -${isRtl ? 'rtl' : 'ltr'} ${inputClassName}`}
             aria-label={placeholderValue}
           />
+          <EventIcon className="icon-DatePicker" />
+          </>
         )
       );
     };
