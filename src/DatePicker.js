@@ -149,6 +149,7 @@ const DatePicker = ({
         renderInput={renderInput}
         inputName={inputName}
         locale={locale}
+        openCalendar={openCalendar}
       />
       {isCalendarOpen && (
         <>
