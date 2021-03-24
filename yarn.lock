@@ -6353,7 +6353,7 @@ isurl@^1.0.0-alpha5:
     has-to-string-tag-x "^1.2.0"
     is-object "^1.0.1"
 
-jalaali-js@^1.1.0:
+jalaali-js@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/jalaali-js/-/jalaali-js-1.1.5.tgz#a2cd4627c3c61588a81877df1d3098869213e985"
   integrity sha512-eS+zDRtz2JcGnVPWeng53rzlKU8tX2RWbJ1cqu1+eZHPEh1QL5ydB+pXD4RCf/zE3eKDN2bLQEjY0u/WIewMVQ==
