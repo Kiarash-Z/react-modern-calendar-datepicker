@@ -150,6 +150,7 @@ const DatePicker = ({
         inputName={inputName}
         locale={locale}
         openCalendar={openCalendar}
+        onBlur={handleBlur}
       />
       {isCalendarOpen && (
         <>
