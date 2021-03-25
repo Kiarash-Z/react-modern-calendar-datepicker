@@ -77,6 +77,9 @@ const DatePicker = ({
   const openCalendar = () => {
     if (!shouldPreventToggle.current) setCalendarVisiblity(true);
   };
+  const closeCalendar = () => {
+    setCalendarVisiblity(false);
+  };
 
   // Keep the calendar in the screen bounds if input is near the window edges
   useLayoutEffect(() => {
@@ -150,7 +153,7 @@ const DatePicker = ({
         inputName={inputName}
         locale={locale}
         openCalendar={openCalendar}
-        onBlur={handleBlur}
+        closeCalendar={closeCalendar}
       />
       {isCalendarOpen && (
         <>
