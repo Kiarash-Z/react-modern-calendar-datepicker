@@ -552,7 +552,7 @@
 .Calendar__day:not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween):not(.-selected):hover {
   background: #eaeaea;
   border-radius: 50%;
-  color: var(--cl-color-black);
+  color: var(--cl-color-green);
   border-color: transparent;
 }
 
@@ -606,7 +606,7 @@
 }
 
 .Calendar__day.-booked {
-  color: var(--cl-color-error);
+  color: var(--cl-color-error)!important;;
   background: transparent !important;
   cursor: default !important;
 }
