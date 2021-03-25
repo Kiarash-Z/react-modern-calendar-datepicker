@@ -6,7 +6,7 @@ import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constant
 import EventIcon from '@material-ui/icons/Event';
 const DatePickerInput = React.forwardRef(
   (
-    { value, inputPlaceholder, inputClassName, inputName, formatInputText, renderInput, locale, openCalendar, onBlur },
+    { value, inputPlaceholder, inputClassName, inputName, formatInputText, renderInput, locale, openCalendar, closeCalendar },
     ref,
   ) => {
     const { getLanguageDigits } = useLocaleUtils(locale);
@@ -18,10 +18,10 @@ const DatePickerInput = React.forwardRef(
       isRtl,
     } = useLocaleLanguage(locale);
     useEffect(() => {
-      onBlur
-      window.addEventListener('blur', onBlur, false);
+      closeCalendar
+      window.addEventListener('blur', closeCalendar, false);
       return () => {
-        window.removeEventListener('blur', onBlur, false);
+        window.removeEventListener('blur', closeCalendar, false);
       };
     }, []);
     const getSingleDayValue = () => {
