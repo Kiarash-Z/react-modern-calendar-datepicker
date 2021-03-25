@@ -249,9 +249,7 @@
 .Calendar__monthText {
   margin-left: -0.3em;
 }
-.Calendar__yearText:last-child {
-  margin-right: -0.3em;
-}
+
 
 .Calendar__monthYear.-shown > *:hover,
 .Calendar:not(.-noFocusOutline) .Calendar__monthYear.-shown > *:focus,
@@ -259,16 +257,10 @@
   background: #f5f5f5;
 }
 
-.Calendar__monthText:hover {
-  transform: translateX(-0.2em) scale(0.95);
-}
 .Calendar.-rtl .Calendar__monthText:hover {
   transform: translateX(0.2em) scale(0.95);
 }
 
-.Calendar__yearText:hover {
-  transform: translateX(0.2em) scale(0.95);
-}
 .Calendar.-rtl .Calendar__yearText:hover {
   transform: translateX(-0.2em) scale(0.95);
 }
