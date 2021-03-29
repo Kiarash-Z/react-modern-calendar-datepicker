@@ -43,12 +43,12 @@ const DatePicker = ({
 
   useEffect(() => {
     const handleBlur = () => {
-      // setCalendarVisiblity(false);
+      setCalendarVisiblity(false);
     };
-    // window.addEventListener('blur', handleBlur, false);
-    // return () => {
-    //   window.removeEventListener('blur', handleBlur, false);
-    // };
+    window.addEventListener('blur', handleBlur, false);
+    return () => {
+      window.removeEventListener('blur', handleBlur, false);
+    };
   }, []);
 
   // handle input focus/blur
@@ -70,7 +70,7 @@ const DatePicker = ({
     } else if (isInnerElementFocused && e.relatedTarget) {
       e.relatedTarget.focus();
     } else {
-      // setCalendarVisiblity(false);
+      setCalendarVisiblity(false);
     }
   };
 
@@ -120,7 +120,7 @@ const DatePicker = ({
         setCalendarVisiblity(true);
         break;
       case 'Escape':
-        // setCalendarVisiblity(false);
+        setCalendarVisiblity(false);
         shouldPreventToggle.current = true;
         break;
     }
@@ -198,7 +198,7 @@ const DatePicker = ({
 DatePicker.defaultProps = {
   wrapperClassName: '',
   locale: 'en',
-  calendarPopperPosition: 'auto',
+  calendarPopperPosition: 'top',
 };
 
 export default DatePicker;
