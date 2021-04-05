@@ -184,7 +184,7 @@ const DaysList = ({
     const isBeforeMinimumDate = isBeforeDate(dayItem, minimumDate);
     const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
     const isNotInValidRange = isStandard && (isBeforeMinimumDate || isAfterMaximumDate);
-    const isDisabled = isNotInValidRange;
+    const isDisabled = isNotInValidRange || isInDisabledDaysRange;
     const isBooked = isInDisabledDaysRange;
     const isWeekend = weekDaysList.some(
       (weekDayItem, weekDayItemIndex) => weekDayItem.isWeekend && weekDayItemIndex === index,
