@@ -99,7 +99,7 @@ const Calendar = ({
       activeDate: { ...activeDate, month: newMonthNumber },
       isMonthSelectorOpen: false,
     });
-    onChange({ year: activeDate.year, month: newMonthNumber, day: 1 });
+    if (picker === PICKER_MONTH) onChange({ year: activeDate.year, month: newMonthNumber, day: 1 });
   };
 
   const selectYear = year => {

@@ -1,6 +1,6 @@
 {
-  "name": "react-modern-calendar-datepicker",
-  "version": "3.1.6",
+  "name": "react-modern-calendar-datepicker-monthpicker-fork",
+  "version": "3.2.2",
   "description": "A modern, beautiful, customizable date picker for React",
   "main": "lib/index.js",
   "types": "index.d.ts",
@@ -24,7 +24,7 @@
   "homepage": "https://kiarash-z.github.io/react-modern-calendar-datepicker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker.git"
+    "url": "https://github.com/kianoosh76/react-modern-calendar-datepicker.git"
   },
   "bugs": {
     "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker/issues"
