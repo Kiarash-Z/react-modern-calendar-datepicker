@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { isSameDay } from '../shared/generalUtils';
 import { getSlideDate, animateContent, handleSlideAnimationEnd } from '../shared/sliderHelpers';
 import { useLocaleUtils, useLocaleLanguage } from '../shared/hooks';
+import { PICKER_MONTH } from '../shared/constants';
 
 const Header = ({
   maximumDate,
@@ -15,6 +16,7 @@ const Header = ({
   isMonthSelectorOpen,
   isYearSelectorOpen,
   locale,
+  picker,
 }) => {
   const headerElement = useRef(null);
   const monthYearWrapperElement = useRef(null);
@@ -39,6 +41,8 @@ const Header = ({
   }, [monthChangeDirection]);
 
   useEffect(() => {
+    if (picker === PICKER_MONTH) return;
+
     const isOpen = isMonthSelectorOpen || isYearSelectorOpen;
     const monthText = headerElement.current.querySelector(
       '.Calendar__monthYear.-shown .Calendar__monthText',
@@ -152,17 +156,21 @@ const Header = ({
 
   return (
     <div ref={headerElement} className="Calendar__header">
-      <button
-        className="Calendar__monthArrowWrapper -right"
-        onClick={() => {
-          onMonthChangeTrigger('PREVIOUS');
-        }}
-        aria-label={previousMonth}
-        type="button"
-        disabled={isPreviousMonthArrowDisabled}
-      >
-        <span className="Calendar__monthArrow" />
-      </button>
+      {picker !== PICKER_MONTH ? (
+        <button
+          className="Calendar__monthArrowWrapper -right"
+          onClick={() => {
+            onMonthChangeTrigger('PREVIOUS');
+          }}
+          aria-label={previousMonth}
+          type="button"
+          disabled={isPreviousMonthArrowDisabled}
+        >
+          <span className="Calendar__monthArrow" />
+        </button>
+      ) : (
+        <></>
+      )}
       <div
         className="Calendar__monthYearContainer"
         ref={monthYearWrapperElement}
@@ -171,17 +179,21 @@ const Header = ({
         &nbsp;
         {monthYearButtons}
       </div>
-      <button
-        className="Calendar__monthArrowWrapper -left"
-        onClick={() => {
-          onMonthChangeTrigger('NEXT');
-        }}
-        aria-label={nextMonth}
-        type="button"
-        disabled={isNextMonthArrowDisabled}
-      >
-        <span className="Calendar__monthArrow" />
-      </button>
+      {picker !== PICKER_MONTH ? (
+        <button
+          className="Calendar__monthArrowWrapper -left"
+          onClick={() => {
+            onMonthChangeTrigger('NEXT');
+          }}
+          aria-label={nextMonth}
+          type="button"
+          disabled={isNextMonthArrowDisabled}
+        >
+          <span className="Calendar__monthArrow" />
+        </button>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
