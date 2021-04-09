@@ -599,7 +599,6 @@
 .Calendar__day.-booked {
   color: var(--cl-color-error)!important;;
   background: transparent !important;
-  cursor: default !important;
 }
 .Calendar__day.-selected {
   border-radius: 50%;
