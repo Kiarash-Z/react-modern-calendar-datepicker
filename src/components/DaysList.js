@@ -120,7 +120,6 @@ const DaysList = ({
     const isWithinRange = checkDayInDayRange({ day: dayItem, from: startingDay, to: endingDay });
     return { isToday, isSelected, isStartingDayRange, isEndingDayRange, isWithinRange };
   };
-
   const getDayClassNames = dayItem => {
     const {
       isToday,
@@ -214,7 +213,7 @@ const DaysList = ({
         }}
         aria-disabled={isDisabled}
         aria-label={dayLabel}
-        aria-selected={isSelected || isStartingDayRange || isEndingDayRange || isWithinRange}
+        aria-selected={isSelected || isStartingDayRange || isEndingDayRange || isWithinRange || isBooked}
         {...(!isStandard || !isOnActiveSlide || isQuickSelectorOpen ? { 'aria-hidden': true } : {})}
         role="gridcell"
         data-is-default-selectable={shouldEnableKeyboardNavigation}
