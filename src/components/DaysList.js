@@ -180,11 +180,12 @@ const DaysList = ({
   const renderEachWeekDays = ({ id, value: day, month, year, isStandard }, index) => {
     const dayItem = { day, month, year };
     const isInDisabledDaysRange = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
+    const isBooked = isInDisabledDaysRange;
     const isBeforeMinimumDate = isBeforeDate(dayItem, minimumDate);
     const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
     const isNotInValidRange = isStandard && (isBeforeMinimumDate || isAfterMaximumDate);
     const isDisabled = isNotInValidRange;
-    const isBooked = isInDisabledDaysRange;
+  
     const isWeekend = weekDaysList.some(
       (weekDayItem, weekDayItemIndex) => weekDayItem.isWeekend && weekDayItemIndex === index,
     );
@@ -198,6 +199,7 @@ const DaysList = ({
       ...dayStatus,
       isOnActiveSlide,
       isStandard,
+      isBooked,
     });
     return (
       <div
