@@ -592,7 +592,6 @@
 
 .Calendar__day.-booked {
   color: var(--cl-color-error)!important;
-  background: transparent !important;
 }
 .Calendar__day.-disabled {
   color: var(--cl-color-disabled) !important;
