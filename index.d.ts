@@ -15,7 +15,7 @@ type Value = DayValue | Day[] | DayRange;
 type CustomDayClassNameItem = Day & { className: string };
 
 export interface CalendarProps<TValue extends Value> {
-  value: TValue;
+  value?: TValue;
   onChange?(value: TValue): void;
   onDisabledDayError?(value: Day): void;
   selectorStartingYear?: number;
