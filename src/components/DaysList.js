@@ -17,6 +17,7 @@ const DaysList = ({
   monthChangeDirection,
   onSlideChange,
   disabledDays,
+  bookedDays,
   onDisabledDayError,
   minimumDate,
   maximumDate,
@@ -129,7 +130,7 @@ const DaysList = ({
       isWithinRange,
     } = getDayStatus(dayItem);
     const customDayItemClassName = customDaysClassName.find(day => isSameDay(dayItem, day));
-    const disableDayBooked = disabledDays?.map(item => {
+    const disableDayBooked = bookedDays?.map(item => {
       (item?.year === dayItem?.year && item?.month === dayItem?.month && item?.day === dayItem?.day) && Object.assign(dayItem, {isBooked: true})
     });
     const classNames = ''
@@ -179,7 +180,7 @@ const DaysList = ({
 
   const renderEachWeekDays = ({ id, value: day, month, year, isStandard }, index) => {
     const dayItem = { day, month, year };
-    const isInDisabledDaysRange = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
+    const isInDisabledDaysRange = bookedDays.some(bookedDay => isSameDay(dayItem, bookedDay));
     const isBooked = isInDisabledDaysRange;
     const isBeforeMinimumDate = isBeforeDate(dayItem, minimumDate);
     const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
@@ -189,7 +190,7 @@ const DaysList = ({
     const isWeekend = weekDaysList.some(
       (weekDayItem, weekDayItemIndex) => weekDayItem.isWeekend && weekDayItemIndex === index,
     );
-    const additionalClass = getDayClassNames({ ...dayItem, isWeekend, isStandard, isDisabled });
+    const additionalClass = getDayClassNames({ ...dayItem, isWeekend, isStandard, isDisabled, isBooked });
     const dayLabel = `${weekDaysList[index].name}, ${day} ${getMonthName(month)} ${year}`;
     const isOnActiveSlide = month === activeDate.month;
     const dayStatus = getDayStatus(dayItem);
@@ -286,6 +287,7 @@ DaysList.defaultProps = {
   onChange: () => {},
   onDisabledDayError: () => {},
   disabledDays: [],
+  bookedDays: [],
   calendarTodayClassName: '',
   calendarSelectedDayClassName: '',
   calendarRangeStartClassName: '',
