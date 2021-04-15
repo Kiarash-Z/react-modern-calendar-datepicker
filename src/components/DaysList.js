@@ -120,7 +120,6 @@ const DaysList = ({
     const isWithinRange = checkDayInDayRange({ day: dayItem, from: startingDay, to: endingDay });
     return { isToday, isSelected, isStartingDayRange, isEndingDayRange, isWithinRange };
   };
-  console.log("disabledDays:", disabledDays);
   const getDayClassNames = dayItem => {
     const {
       isToday,
