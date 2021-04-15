@@ -22,6 +22,7 @@ const DatePicker = ({
   calendarRangeEndClassName,
   calendarPopperPosition,
   disabledDays,
+  bookedDays,
   onDisabledDayError,
   colorPrimary,
   colorPrimaryLight,
@@ -50,7 +51,6 @@ const DatePicker = ({
       window.removeEventListener('blur', handleBlur, false);
     };
   }, []);
-
   // handle input focus/blur
   useEffect(() => {
     const valueType = getValueType(value);
@@ -173,6 +173,7 @@ const DatePicker = ({
               calendarRangeBetweenClassName={calendarRangeBetweenClassName}
               calendarRangeEndClassName={calendarRangeEndClassName}
               disabledDays={disabledDays}
+              bookedDays={bookedDays}
               colorPrimary={colorPrimary}
               colorPrimaryLight={colorPrimaryLight}
               slideAnimationDuration={slideAnimationDuration}

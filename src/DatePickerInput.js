@@ -1,12 +1,22 @@
 import React from 'react';
 
+import EventIcon from '@material-ui/icons/Event';
 import { useLocaleUtils, useLocaleLanguage } from './shared/hooks';
 import { putZero, getValueType } from './shared/generalUtils';
 import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
-import EventIcon from '@material-ui/icons/Event';
+
 const DatePickerInput = React.forwardRef(
   (
-    { value, inputPlaceholder, inputClassName, inputName, formatInputText, renderInput, locale, openCalendar },
+    {
+      value,
+      inputPlaceholder,
+      inputClassName,
+      inputName,
+      formatInputText,
+      renderInput,
+      locale,
+      openCalendar,
+    },
     ref,
   ) => {
     const { getLanguageDigits } = useLocaleUtils(locale);
@@ -62,17 +72,17 @@ const DatePickerInput = React.forwardRef(
       return (
         renderInput({ ref }) || (
           <>
-          <input
-            data-testid="datepicker-input"
-            readOnly
-            ref={ref}
-            value={getValue()}
-            name={inputName}
-            placeholder={placeholderValue}
-            className={`DatePicker__input -${isRtl ? 'rtl' : 'ltr'} ${inputClassName}`}
-            aria-label={placeholderValue}
-          />
-          <EventIcon className="icon-DatePicker" onClick={openCalendar} />
+            <input
+              data-testid="datepicker-input"
+              readOnly
+              ref={ref}
+              value={getValue()}
+              name={inputName}
+              placeholder={placeholderValue}
+              className={`DatePicker__input -${isRtl ? 'rtl' : 'ltr'} ${inputClassName}`}
+              aria-label={placeholderValue}
+            />
+            <EventIcon className="icon-DatePicker" onClick={openCalendar} />
           </>
         )
       );
