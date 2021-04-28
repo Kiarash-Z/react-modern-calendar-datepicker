@@ -8,6 +8,7 @@ import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE } from './shared/constants';
 const DatePicker = ({
   value,
   onChange,
+  isOpenCalendar,
   formatInputText,
   inputPlaceholder,
   inputClassName,
@@ -40,7 +41,7 @@ const DatePicker = ({
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
   const shouldPreventToggle = useRef(false);
-  const [isCalendarOpen, setCalendarVisiblity] = useState(false);
+  const [isCalendarOpen, setCalendarVisiblity] = useState(isOpenCalendar);
 
   useEffect(() => {
     const handleBlur = () => {
@@ -166,6 +167,7 @@ const DatePicker = ({
             <Calendar
               value={value}
               onChange={handleCalendarChange}
+              isOpenCalendar={isOpenCalendar}
               calendarClassName={calendarClassName}
               calendarTodayClassName={calendarTodayClassName}
               calendarSelectedDayClassName={calendarSelectedDayClassName}
