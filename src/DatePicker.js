@@ -8,7 +8,6 @@ import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE } from './shared/constants';
 const DatePicker = ({
   value,
   onChange,
-  isOpenCalendar,
   formatInputText,
   inputPlaceholder,
   inputClassName,
@@ -41,15 +40,15 @@ const DatePicker = ({
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
   const shouldPreventToggle = useRef(false);
-  const [isCalendarOpen, setCalendarVisiblity] = useState(isOpenCalendar);
+  const [isCalendarOpen, setCalendarVisiblity] = useState(false);
 
   useEffect(() => {
     const handleBlur = () => {
-      // setCalendarVisiblity(false);
+      setCalendarVisiblity(false);
     };
-    // window.addEventListener('blur', handleBlur, false);
+    window.addEventListener('blur', handleBlur, false);
     return () => {
-      // window.removeEventListener('blur', handleBlur, false);
+      window.removeEventListener('blur', handleBlur, false);
     };
   }, []);
   // handle input focus/blur
@@ -71,7 +70,7 @@ const DatePicker = ({
     } else if (isInnerElementFocused && e.relatedTarget) {
       e.relatedTarget.focus();
     } else {
-      // setCalendarVisiblity(false);
+      setCalendarVisiblity(false);
     }
   };
 
@@ -121,7 +120,7 @@ const DatePicker = ({
         setCalendarVisiblity(true);
         break;
       case 'Escape':
-        // setCalendarVisiblity(false);
+        setCalendarVisiblity(false);
         shouldPreventToggle.current = true;
         break;
     }
@@ -167,7 +166,6 @@ const DatePicker = ({
             <Calendar
               value={value}
               onChange={handleCalendarChange}
-              isOpenCalendar={isOpenCalendar}
               calendarClassName={calendarClassName}
               calendarTodayClassName={calendarTodayClassName}
               calendarSelectedDayClassName={calendarSelectedDayClassName}
