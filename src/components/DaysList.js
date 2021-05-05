@@ -22,7 +22,6 @@ const DaysList = ({
   minimumDate,
   maximumDate,
   onChange,
-  isOpenCalendar,
   locale,
   calendarTodayClassName,
   calendarSelectedDayClassName,
@@ -295,7 +294,6 @@ DaysList.defaultProps = {
   calendarRangeBetweenClassName: '',
   calendarRangeEndClassName: '',
   shouldHighlightWeekends: false,
-  isOpenCalendar: false
 };
 
 export default DaysList;

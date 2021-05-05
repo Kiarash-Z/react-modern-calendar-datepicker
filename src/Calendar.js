@@ -9,7 +9,6 @@ import { Header, MonthSelector, YearSelector, DaysList } from './components';
 const Calendar = ({
   value,
   onChange,
-  isOpenCalendar,
   onDisabledDayError,
   calendarClassName,
   calendarTodayClassName,
@@ -169,7 +168,6 @@ const Calendar = ({
         minimumDate={minimumDate}
         maximumDate={maximumDate}
         onChange={onChange}
-        isOpenCalendar={isOpenCalendar}
         calendarTodayClassName={calendarTodayClassName}
         calendarSelectedDayClassName={calendarSelectedDayClassName}
         calendarRangeStartClassName={calendarRangeStartClassName}
