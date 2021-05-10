@@ -35,7 +35,7 @@ const DatePicker = ({
   selectorEndingYear,
   locale,
   shouldHighlightWeekends,
-  // renderFooter,
+  renderFooter,
   customDaysClassName,
   onChangeMonth,
 }) => {
@@ -43,7 +43,13 @@ const DatePicker = ({
   const inputElement = useRef(null);
   const shouldPreventToggle = useRef(false);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
-  const [valueDayRange, setDayRange] = useState(value);
+  const renderFooterDefault = () => (
+    <Grid container justify="flex-end">
+      <Button variant="contained" className="button-reset" onClick={handleReset}>
+        Reset
+      </Button>
+    </Grid>
+  );
 
   useEffect(() => {
     const handleBlur = () => {
@@ -56,14 +62,12 @@ const DatePicker = ({
   }, []);
   // handle input focus/blur
   useEffect(() => {
-    const valueType = getValueType(valueDayRange);
+    const valueType = getValueType(value);
     if (valueType === TYPE_MUTLI_DATE) return; // no need to close the calendar
     const shouldCloseCalendar =
-      valueType === TYPE_SINGLE_DATE
-        ? !isCalendarOpen
-        : !isCalendarOpen && valueDayRange.from && valueDayRange.to;
+      valueType === TYPE_SINGLE_DATE ? !isCalendarOpen : !isCalendarOpen && value.from && value.to;
     if (shouldCloseCalendar) inputElement.current.blur();
-  }, [valueDayRange, isCalendarOpen]);
+  }, [value, isCalendarOpen]);
 
   const handleBlur = e => {
     e.persist();
@@ -132,12 +136,12 @@ const DatePicker = ({
   };
 
   const handleReset = () => {
-    const valueTypeData = getValueType(valueDayRange);
+    const valueTypeData = getValueType(value);
     if (valueTypeData === TYPE_SINGLE_DATE) {
-      setDayRange(null);
+      handleCalendarChange(null);
     }
     if (valueTypeData === TYPE_RANGE) {
-      setDayRange({
+      handleCalendarChange({
         from: null,
         to: null,
       });
@@ -163,7 +167,7 @@ const DatePicker = ({
       <DatePickerInput
         ref={inputElement}
         formatInputText={formatInputText}
-        value={valueDayRange}
+        value={value}
         inputPlaceholder={inputPlaceholder}
         inputClassName={inputClassName}
         renderInput={renderInput}
@@ -183,7 +187,7 @@ const DatePicker = ({
             }}
           >
             <Calendar
-              value={valueDayRange}
+              value={value}
               onChange={handleCalendarChange}
               calendarClassName={calendarClassName}
               calendarTodayClassName={calendarTodayClassName}
@@ -204,13 +208,7 @@ const DatePicker = ({
               selectorEndingYear={selectorEndingYear}
               locale={locale}
               shouldHighlightWeekends={shouldHighlightWeekends}
-              renderFooter={() => (
-                <Grid container justify="flex-end">
-                  <Button variant="contained" className="button-reset" onClick={handleReset}>
-                    Reset
-                  </Button>
-                </Grid>
-              )}
+              renderFooter={renderFooter || renderFooterDefault}
               customDaysClassName={customDaysClassName}
               onChangeMonth={onChangeMonth}
             />
