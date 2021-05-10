@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 
+import { Button, Grid } from '@material-ui/core';
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
 import { getValueType } from './shared/generalUtils';
-import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE } from './shared/constants';
+import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constants';
 
 const DatePicker = ({
   value,
@@ -34,7 +35,7 @@ const DatePicker = ({
   selectorEndingYear,
   locale,
   shouldHighlightWeekends,
-  renderFooter,
+  // renderFooter,
   customDaysClassName,
   onChangeMonth,
 }) => {
@@ -42,6 +43,7 @@ const DatePicker = ({
   const inputElement = useRef(null);
   const shouldPreventToggle = useRef(false);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
+  const [valueDayRange, setDayRange] = useState(value);
 
   useEffect(() => {
     const handleBlur = () => {
@@ -54,12 +56,14 @@ const DatePicker = ({
   }, []);
   // handle input focus/blur
   useEffect(() => {
-    const valueType = getValueType(value);
+    const valueType = getValueType(valueDayRange);
     if (valueType === TYPE_MUTLI_DATE) return; // no need to close the calendar
     const shouldCloseCalendar =
-      valueType === TYPE_SINGLE_DATE ? !isCalendarOpen : !isCalendarOpen && value.from && value.to;
+      valueType === TYPE_SINGLE_DATE
+        ? !isCalendarOpen
+        : !isCalendarOpen && valueDayRange.from && valueDayRange.to;
     if (shouldCloseCalendar) inputElement.current.blur();
-  }, [value, isCalendarOpen]);
+  }, [valueDayRange, isCalendarOpen]);
 
   const handleBlur = e => {
     e.persist();
@@ -127,6 +131,20 @@ const DatePicker = ({
     }
   };
 
+  const handleReset = () => {
+    const valueTypeData = getValueType(valueDayRange);
+    if (valueTypeData === TYPE_SINGLE_DATE) {
+      setDayRange(null);
+    }
+    if (valueTypeData === TYPE_RANGE) {
+      setDayRange({
+        from: null,
+        to: null,
+      });
+    }
+    setCalendarVisiblity(false);
+  };
+
   useEffect(() => {
     if (!isCalendarOpen && shouldPreventToggle.current) {
       inputElement.current.focus();
@@ -145,7 +163,7 @@ const DatePicker = ({
       <DatePickerInput
         ref={inputElement}
         formatInputText={formatInputText}
-        value={value}
+        value={valueDayRange}
         inputPlaceholder={inputPlaceholder}
         inputClassName={inputClassName}
         renderInput={renderInput}
@@ -165,7 +183,7 @@ const DatePicker = ({
             }}
           >
             <Calendar
-              value={value}
+              value={valueDayRange}
               onChange={handleCalendarChange}
               calendarClassName={calendarClassName}
               calendarTodayClassName={calendarTodayClassName}
@@ -186,7 +204,13 @@ const DatePicker = ({
               selectorEndingYear={selectorEndingYear}
               locale={locale}
               shouldHighlightWeekends={shouldHighlightWeekends}
-              renderFooter={renderFooter}
+              renderFooter={() => (
+                <Grid container justify="flex-end">
+                  <Button variant="contained" className="button-reset" onClick={handleReset}>
+                    Reset
+                  </Button>
+                </Grid>
+              )}
               customDaysClassName={customDaysClassName}
               onChangeMonth={onChangeMonth}
             />
