@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-
-import { Button, Grid } from '@material-ui/core';
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
 import { getValueType } from './shared/generalUtils';
@@ -43,14 +41,6 @@ const DatePicker = ({
   const inputElement = useRef(null);
   const shouldPreventToggle = useRef(false);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
-  const renderFooterDefault = () => (
-    <Grid container justify="flex-end">
-      <Button variant="contained" className="button-reset" onClick={handleReset}>
-        Reset
-      </Button>
-    </Grid>
-  );
-
   useEffect(() => {
     const handleBlur = () => {
       setCalendarVisiblity(false);
@@ -148,7 +138,20 @@ const DatePicker = ({
     }
     setCalendarVisiblity(false);
   };
+  const handleApply = () => {
+    setCalendarVisiblity(false);
+  };
 
+  const renderFooterDefault = () => (
+    <div className="footer-canlendar">
+      <button type="button" onClick={handleApply}>
+        Apply
+      </button>
+      <button type="button" onClick={handleReset}>
+        Reset
+      </button>
+    </div>
+  );
   useEffect(() => {
     if (!isCalendarOpen && shouldPreventToggle.current) {
       inputElement.current.focus();

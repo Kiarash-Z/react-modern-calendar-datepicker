@@ -16,8 +16,9 @@
   font-size: 20px!important;
   position: absolute;
   top: 12px;
-  right: -10px;
+  right: -15px;
   cursor: pointer;
+  background: #fff;
 }
 
 .DatePicker__input.-rtl {
@@ -638,6 +639,18 @@
   position: relative;
   z-index: 1;
 }
+.footer-canlendar {
+  display: flex;
+  justify-content: flex-end;
+}
+.footer-canlendar button {
+  padding: 15px 20px;
+  border: none;
+  border-radius: 8px;
+  margin: 10px 5px;
+  cursor: pointer;
+}
+
 
 @keyframes fadeCalendar {
   from {
