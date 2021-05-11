@@ -17,6 +17,8 @@ const DaysList = ({
   monthChangeDirection,
   onSlideChange,
   disabledDays,
+  bookedDays,
+  pendingDays,
   onDisabledDayError,
   minimumDate,
   maximumDate,
@@ -120,7 +122,6 @@ const DaysList = ({
     const isWithinRange = checkDayInDayRange({ day: dayItem, from: startingDay, to: endingDay });
     return { isToday, isSelected, isStartingDayRange, isEndingDayRange, isWithinRange };
   };
-
   const getDayClassNames = dayItem => {
     const {
       isToday,
@@ -130,6 +131,12 @@ const DaysList = ({
       isWithinRange,
     } = getDayStatus(dayItem);
     const customDayItemClassName = customDaysClassName.find(day => isSameDay(dayItem, day));
+    const disableDayBooked = bookedDays?.map(item => {
+      (item?.year === dayItem?.year && item?.month === dayItem?.month && item?.day === dayItem?.day) && Object.assign(dayItem, {isBooked: true})
+    });
+    const disableDayPending = pendingDays?.map(item => {
+      (item?.year === dayItem?.year && item?.month === dayItem?.month && item?.day === dayItem?.day) && Object.assign(dayItem, {isPending: true})
+    });
     const classNames = ''
       .concat(isToday && !isSelected ? ` -today ${calendarTodayClassName}` : '')
       .concat(!dayItem.isStandard ? ' -blank' : '')
@@ -139,7 +146,10 @@ const DaysList = ({
       .concat(isStartingDayRange ? ` -selectedStart ${calendarRangeStartClassName}` : '')
       .concat(isEndingDayRange ? ` -selectedEnd ${calendarRangeEndClassName}` : '')
       .concat(isWithinRange ? ` -selectedBetween ${calendarRangeBetweenClassName}` : '')
-      .concat(dayItem.isDisabled ? ' -disabled' : '');
+      .concat(dayItem.isDisabled ? ' -disabled' : '')
+      .concat(dayItem.isBooked ? ' -booked' : '')
+      .concat(dayItem.isPending ? ' -pending' : '')
+
     return classNames;
   };
 
@@ -176,15 +186,20 @@ const DaysList = ({
 
   const renderEachWeekDays = ({ id, value: day, month, year, isStandard }, index) => {
     const dayItem = { day, month, year };
-    const isInDisabledDaysRange = disabledDays.some(disabledDay => isSameDay(dayItem, disabledDay));
+    const isInDisabledDaysRange = bookedDays.some(bookedDay => isSameDay(dayItem, bookedDay));
+    const isInPendingDaysRange = pendingDays.some(pendingDay => isSameDay(dayItem, pendingDay));
+
+    const isBooked = isInDisabledDaysRange;
+    const isPending = isInPendingDaysRange;
     const isBeforeMinimumDate = isBeforeDate(dayItem, minimumDate);
     const isAfterMaximumDate = isBeforeDate(maximumDate, dayItem);
     const isNotInValidRange = isStandard && (isBeforeMinimumDate || isAfterMaximumDate);
-    const isDisabled = isInDisabledDaysRange || isNotInValidRange;
+    const isDisabled = isNotInValidRange;
+  
     const isWeekend = weekDaysList.some(
       (weekDayItem, weekDayItemIndex) => weekDayItem.isWeekend && weekDayItemIndex === index,
     );
-    const additionalClass = getDayClassNames({ ...dayItem, isWeekend, isStandard, isDisabled });
+    const additionalClass = getDayClassNames({ ...dayItem, isWeekend, isStandard, isDisabled, isBooked, isPending });
     const dayLabel = `${weekDaysList[index].name}, ${day} ${getMonthName(month)} ${year}`;
     const isOnActiveSlide = month === activeDate.month;
     const dayStatus = getDayStatus(dayItem);
@@ -194,6 +209,8 @@ const DaysList = ({
       ...dayStatus,
       isOnActiveSlide,
       isStandard,
+      isBooked,
+      isPending
     });
     return (
       <div
@@ -209,7 +226,7 @@ const DaysList = ({
         }}
         aria-disabled={isDisabled}
         aria-label={dayLabel}
-        aria-selected={isSelected || isStartingDayRange || isEndingDayRange || isWithinRange}
+        aria-selected={isSelected || isStartingDayRange || isEndingDayRange || isWithinRange || isBooked || isPending}
         {...(!isStandard || !isOnActiveSlide || isQuickSelectorOpen ? { 'aria-hidden': true } : {})}
         role="gridcell"
         data-is-default-selectable={shouldEnableKeyboardNavigation}
@@ -280,6 +297,8 @@ DaysList.defaultProps = {
   onChange: () => {},
   onDisabledDayError: () => {},
   disabledDays: [],
+  bookedDays: [],
+  pendingDays: [],
   calendarTodayClassName: '',
   calendarSelectedDayClassName: '',
   calendarRangeStartClassName: '',

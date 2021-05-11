@@ -17,6 +17,8 @@ const Calendar = ({
   calendarRangeBetweenClassName,
   calendarRangeEndClassName,
   disabledDays,
+  bookedDays,
+  pendingDays,
   colorPrimary,
   colorPrimaryLight,
   slideAnimationDuration,
@@ -28,6 +30,7 @@ const Calendar = ({
   shouldHighlightWeekends,
   renderFooter,
   customDaysClassName,
+  onChangeMonth,
 }) => {
   const calendarElement = useRef(null);
   const [mainState, setMainState] = useState({
@@ -130,6 +133,7 @@ const Calendar = ({
         isMonthSelectorOpen={mainState.isMonthSelectorOpen}
         isYearSelectorOpen={mainState.isYearSelectorOpen}
         locale={locale}
+        onChangeMonth={onChangeMonth}
       />
 
       <MonthSelector
@@ -160,6 +164,8 @@ const Calendar = ({
         monthChangeDirection={mainState.monthChangeDirection}
         onSlideChange={updateDate}
         disabledDays={disabledDays}
+        bookedDays={bookedDays}
+        pendingDays={pendingDays}
         onDisabledDayError={onDisabledDayError}
         minimumDate={minimumDate}
         maximumDate={maximumDate}
@@ -182,8 +188,8 @@ const Calendar = ({
 Calendar.defaultProps = {
   minimumDate: null,
   maximumDate: null,
-  colorPrimary: '#0eca2d',
-  colorPrimaryLight: '#cff4d5',
+  colorPrimary: 'rgba(0, 0, 0, 0.87)',
+  colorPrimaryLight: '#e0e0e0',
   slideAnimationDuration: '0.4s',
   calendarClassName: '',
   locale: 'en',

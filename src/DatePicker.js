@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-
 import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
 import { getValueType } from './shared/generalUtils';
@@ -22,6 +21,8 @@ const DatePicker = ({
   calendarRangeEndClassName,
   calendarPopperPosition,
   disabledDays,
+  bookedDays,
+  pendingDays,
   onDisabledDayError,
   colorPrimary,
   colorPrimaryLight,
@@ -34,12 +35,12 @@ const DatePicker = ({
   shouldHighlightWeekends,
   renderFooter,
   customDaysClassName,
+  onChangeMonth,
 }) => {
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
   const shouldPreventToggle = useRef(false);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
-
   useEffect(() => {
     const handleBlur = () => {
       setCalendarVisiblity(false);
@@ -49,7 +50,6 @@ const DatePicker = ({
       window.removeEventListener('blur', handleBlur, false);
     };
   }, []);
-
   // handle input focus/blur
   useEffect(() => {
     const valueType = getValueType(value);
@@ -75,6 +75,7 @@ const DatePicker = ({
 
   const openCalendar = () => {
     if (!shouldPreventToggle.current) setCalendarVisiblity(true);
+    inputElement.current.focus();
   };
 
   // Keep the calendar in the screen bounds if input is near the window edges
@@ -109,10 +110,7 @@ const DatePicker = ({
   }, [isCalendarOpen]);
 
   const handleCalendarChange = newValue => {
-    const valueType = getValueType(value);
     onChange(newValue);
-    if (valueType === TYPE_SINGLE_DATE) setCalendarVisiblity(false);
-    else if (valueType === TYPE_RANGE && newValue.from && newValue.to) setCalendarVisiblity(false);
   };
 
   const handleKeyUp = ({ key }) => {
@@ -127,6 +125,33 @@ const DatePicker = ({
     }
   };
 
+  const handleReset = () => {
+    const valueTypeData = getValueType(value);
+    if (valueTypeData === TYPE_SINGLE_DATE) {
+      handleCalendarChange(null);
+    }
+    if (valueTypeData === TYPE_RANGE) {
+      handleCalendarChange({
+        from: null,
+        to: null,
+      });
+    }
+    setCalendarVisiblity(false);
+  };
+  const handleApply = () => {
+    setCalendarVisiblity(false);
+  };
+
+  const renderFooterDefault = () => (
+    <div className="footer-canlendar">
+      <button type="button" onClick={handleApply}>
+        Apply
+      </button>
+      <button type="button" onClick={handleReset}>
+        Reset
+      </button>
+    </div>
+  );
   useEffect(() => {
     if (!isCalendarOpen && shouldPreventToggle.current) {
       inputElement.current.focus();
@@ -151,6 +176,7 @@ const DatePicker = ({
         renderInput={renderInput}
         inputName={inputName}
         locale={locale}
+        openCalendar={openCalendar}
       />
       {isCalendarOpen && (
         <>
@@ -173,6 +199,8 @@ const DatePicker = ({
               calendarRangeBetweenClassName={calendarRangeBetweenClassName}
               calendarRangeEndClassName={calendarRangeEndClassName}
               disabledDays={disabledDays}
+              bookedDays={bookedDays}
+              pendingDays={pendingDays}
               colorPrimary={colorPrimary}
               colorPrimaryLight={colorPrimaryLight}
               slideAnimationDuration={slideAnimationDuration}
@@ -183,8 +211,9 @@ const DatePicker = ({
               selectorEndingYear={selectorEndingYear}
               locale={locale}
               shouldHighlightWeekends={shouldHighlightWeekends}
-              renderFooter={renderFooter}
+              renderFooter={renderFooter || renderFooterDefault}
               customDaysClassName={customDaysClassName}
+              onChangeMonth={onChangeMonth}
             />
           </div>
           <div className="DatePicker__calendarArrow" />
@@ -197,7 +226,7 @@ const DatePicker = ({
 DatePicker.defaultProps = {
   wrapperClassName: '',
   locale: 'en',
-  calendarPopperPosition: 'auto',
+  calendarPopperPosition: 'top',
 };
 
 export default DatePicker;

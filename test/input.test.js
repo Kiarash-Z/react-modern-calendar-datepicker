@@ -26,7 +26,7 @@ describe('DatePicker Input', () => {
       to: { year: 2019, month: 10, day: 5 },
     };
     const { input, rerender } = renderInput({ value: gregorianValue });
-    expect(input).toHaveValue('from 2019/10/01 to 2019/10/05');
+    expect(input).toHaveValue('From 2019/10/01 to 2019/10/05');
 
     const persianValue = {
       from: { year: 1398, month: 10, day: 1 },

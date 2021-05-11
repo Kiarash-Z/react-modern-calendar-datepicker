@@ -1,24 +1,32 @@
 import React from 'react';
 
+import EventIcon from '@material-ui/icons/Event';
 import { useLocaleUtils, useLocaleLanguage } from './shared/hooks';
 import { putZero, getValueType } from './shared/generalUtils';
 import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
 
 const DatePickerInput = React.forwardRef(
   (
-    { value, inputPlaceholder, inputClassName, inputName, formatInputText, renderInput, locale },
+    {
+      value,
+      inputPlaceholder,
+      inputClassName,
+      inputName,
+      formatInputText,
+      renderInput,
+      locale,
+      openCalendar,
+    },
     ref,
   ) => {
     const { getLanguageDigits } = useLocaleUtils(locale);
     const {
-      from: fromWord,
       to: toWord,
       yearLetterSkip,
       digitSeparator,
       defaultPlaceholder,
       isRtl,
     } = useLocaleLanguage(locale);
-
     const getSingleDayValue = () => {
       if (!value) return '';
       const year = getLanguageDigits(value.year);
@@ -30,17 +38,17 @@ const DatePickerInput = React.forwardRef(
     const getDayRangeValue = () => {
       if (!value.from || !value.to) return '';
       const { from, to } = value;
-      const fromText = `${getLanguageDigits(putZero(from.year))
+      const fromText = `${getLanguageDigits(putZero(from.day))}/${getLanguageDigits(
+        putZero(from.month),
+      )}/${getLanguageDigits(putZero(from.year))
         .toString()
-        .slice(yearLetterSkip)}/${getLanguageDigits(putZero(from.month))}/${getLanguageDigits(
-        putZero(from.day),
-      )}`;
-      const toText = `${getLanguageDigits(putZero(to.year))
+        .slice(yearLetterSkip)}`;
+      const toText = `${getLanguageDigits(putZero(to.day))}/${getLanguageDigits(
+        putZero(to.month),
+      )}/${getLanguageDigits(putZero(to.year))
         .toString()
-        .slice(yearLetterSkip)}/${getLanguageDigits(putZero(to.month))}/${getLanguageDigits(
-        putZero(to.day),
-      )}`;
-      return `${fromWord} ${fromText} ${toWord} ${toText}`;
+        .slice(yearLetterSkip)}`;
+      return `From ${fromText} ${toWord} ${toText}`;
     };
 
     const getMultiDateValue = () => {
@@ -59,21 +67,23 @@ const DatePickerInput = React.forwardRef(
           return getMultiDateValue();
       }
     };
-
     const placeholderValue = inputPlaceholder || defaultPlaceholder;
     const render = () => {
       return (
         renderInput({ ref }) || (
-          <input
-            data-testid="datepicker-input"
-            readOnly
-            ref={ref}
-            value={getValue()}
-            name={inputName}
-            placeholder={placeholderValue}
-            className={`DatePicker__input -${isRtl ? 'rtl' : 'ltr'} ${inputClassName}`}
-            aria-label={placeholderValue}
-          />
+          <>
+            <input
+              data-testid="datepicker-input"
+              readOnly
+              ref={ref}
+              value={getValue()}
+              name={inputName}
+              placeholder={placeholderValue}
+              className={`DatePicker__input -${isRtl ? 'rtl' : 'ltr'} ${inputClassName}`}
+              aria-label={placeholderValue}
+            />
+            <EventIcon className="icon-DatePicker" onClick={openCalendar} />
+          </>
         )
       );
     };
