@@ -13,12 +13,18 @@ const App = () => {
       direction: directionArrow,
     };
   };
+  const handleOnChange = value => {
+    return {
+      date: value,
+    };
+  };
   return (
     <DatePicker
       onChangeMonth={onChangeMonth}
       value={selectedDay}
       onChange={setValue}
       shouldHighlightWeekends
+      handleOnChange={handleOnChange}
     />
   );
 };
