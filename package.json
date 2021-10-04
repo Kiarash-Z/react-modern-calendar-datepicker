@@ -1,6 +1,6 @@
 {
-  "name": "react-modern-calendar-datepicker",
-  "version": "3.1.6",
+  "name": "@doananh234/react-modern-calendar-datepicker",
+  "version": "3.1.26",
   "description": "A modern, beautiful, customizable date picker for React",
   "main": "lib/index.js",
   "types": "index.d.ts",
@@ -11,6 +11,7 @@
     "test": "jest ./test --coverage",
     "test:watch": "jest ./test --watch",
     "clean": "rimraf lib",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
     "build": "cross-env NODE_ENV=production rollup -c",
     "size": "npm run build && size-limit",
     "checkAll": "npm run size && npm run lint && npm run test",
@@ -20,14 +21,14 @@
     "lib",
     "index.d.ts"
   ],
-  "author": "Kiarash Zarinmehr",
-  "homepage": "https://kiarash-z.github.io/react-modern-calendar-datepicker",
+  "author": "Anh Doan",
+  "homepage": "https://github.com/doananh234/react-modern-calendar-datepicker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker.git"
+    "url": "git+https://github.com/doananh234/react-modern-calendar-datepicker.git"
   },
   "bugs": {
-    "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker/issues"
+    "url": "https://github.com/doananh234/react-modern-calendar-datepicker/issues"
   },
   "license": "MIT",
   "keywords": [
@@ -49,7 +50,9 @@
     }
   ],
   "dependencies": {
-    "jalaali-js": "^1.1.0"
+    "jalaali-js": "^1.1.5",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -108,5 +111,9 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
   }
 }

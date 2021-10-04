@@ -17,6 +17,8 @@ const Calendar = ({
   calendarRangeBetweenClassName,
   calendarRangeEndClassName,
   disabledDays,
+  bookedDays,
+  pendingDays,
   colorPrimary,
   colorPrimaryLight,
   slideAnimationDuration,
@@ -28,6 +30,8 @@ const Calendar = ({
   shouldHighlightWeekends,
   renderFooter,
   customDaysClassName,
+  onChangeMonth = () => {},
+  handleOnChange = () => {},
 }) => {
   const calendarElement = useRef(null);
   const [mainState, setMainState] = useState({
@@ -82,6 +86,12 @@ const Calendar = ({
       ...mainState,
       monthChangeDirection: direction,
     });
+    if (direction === 'NEXT') {
+      handleOnChange({ ...activeDate, month: activeDate.month === 12 ? 1 : activeDate.month + 1 });
+    }
+    if (direction === 'PREVIOUS') {
+      handleOnChange({ ...activeDate, month: activeDate.month === 1 ? 12 : activeDate.month - 1 });
+    }
   };
 
   const updateDate = () => {
@@ -98,6 +108,7 @@ const Calendar = ({
       activeDate: { ...activeDate, month: newMonthNumber },
       isMonthSelectorOpen: false,
     });
+    handleOnChange({ ...activeDate, month: newMonthNumber });
   };
 
   const selectYear = year => {
@@ -130,6 +141,7 @@ const Calendar = ({
         isMonthSelectorOpen={mainState.isMonthSelectorOpen}
         isYearSelectorOpen={mainState.isYearSelectorOpen}
         locale={locale}
+        onChangeMonth={onChangeMonth}
       />
 
       <MonthSelector
@@ -160,6 +172,8 @@ const Calendar = ({
         monthChangeDirection={mainState.monthChangeDirection}
         onSlideChange={updateDate}
         disabledDays={disabledDays}
+        bookedDays={bookedDays}
+        pendingDays={pendingDays}
         onDisabledDayError={onDisabledDayError}
         minimumDate={minimumDate}
         maximumDate={maximumDate}
@@ -182,8 +196,8 @@ const Calendar = ({
 Calendar.defaultProps = {
   minimumDate: null,
   maximumDate: null,
-  colorPrimary: '#0eca2d',
-  colorPrimaryLight: '#cff4d5',
+  colorPrimary: 'rgba(0, 0, 0, 0.87)',
+  colorPrimaryLight: '#e0e0e0',
   slideAnimationDuration: '0.4s',
   calendarClassName: '',
   locale: 'en',

@@ -15,7 +15,7 @@ type Value = DayValue | Day[] | DayRange;
 type CustomDayClassNameItem = Day & { className: string };
 
 export interface CalendarProps<TValue extends Value> {
-  value: TValue;
+  value?: TValue;
   onChange?(value: TValue): void;
   onDisabledDayError?(value: Day): void;
   selectorStartingYear?: number;
@@ -24,6 +24,8 @@ export interface CalendarProps<TValue extends Value> {
   minimumDate?: Day;
   maximumDate?: Day;
   disabledDays?: Day[];
+  bookedDays?: Day[];
+  pendingDays?: Day[];
   shouldHighlightWeekends?: boolean;
   colorPrimary?: string;
   colorPrimaryLight?: string;
@@ -36,6 +38,8 @@ export interface CalendarProps<TValue extends Value> {
   calendarRangeEndClassName?: string;
   renderFooter?: React.FC;
   customDaysClassName?: CustomDayClassNameItem[];
+  onChangeMonth?: (month: object, direction: string) => void;
+  handleOnChange?: (value: object) => void;
 }
 
 export function Calendar(props: Optional<CalendarProps<DayValue>, 'value'>): React.ReactElement;
@@ -50,15 +54,18 @@ export interface DatePickerProps<TValue extends Value> extends CalendarProps<TVa
   wrapperClassName?: string;
   inputClassName?: string;
   inputName?: string;
-  calendarPopperPosition?: 'auto' | 'top' | 'bottom';
+  calendarPopperPosition?: 'top';
   inputPlaceholder?: string;
   formatInputText?: () => string;
   renderInput?: React.FC<RenderInputProps>;
+  onChangeMonth?: (month: object, direction: string) => void;
 }
 
 type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-declare function DatePicker(props: Optional<DatePickerProps<DayValue>, 'value'>): React.ReactElement;
+declare function DatePicker(
+  props: Optional<DatePickerProps<DayValue>, 'value'>,
+): React.ReactElement;
 declare function DatePicker(props: DatePickerProps<Day[]>): React.ReactElement;
 declare function DatePicker(props: DatePickerProps<DayRange>): React.ReactElement;
 
@@ -66,7 +73,7 @@ type WeekDay = {
   name: string;
   short: string;
   isWeekend?: boolean;
-}
+};
 
 export type Utils = {
   monthsList: string[];

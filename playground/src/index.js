@@ -7,7 +7,26 @@ import * as serviceWorker from './serviceWorker';
 
 const App = () => {
   const [selectedDay, setValue] = useState(null);
-  return <DatePicker value={selectedDay} onChange={setValue} shouldHighlightWeekends />;
+  const onChangeMonth = (valueDate, directionArrow) => {
+    return {
+      date: valueDate,
+      direction: directionArrow,
+    };
+  };
+  const handleOnChange = value => {
+    return {
+      date: value,
+    };
+  };
+  return (
+    <DatePicker
+      onChangeMonth={onChangeMonth}
+      value={selectedDay}
+      onChange={setValue}
+      shouldHighlightWeekends
+      handleOnChange={handleOnChange}
+    />
+  );
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));

@@ -17,7 +17,13 @@ const config = {
     babel({
       exclude: /node_modules/,
     }),
-    commonjs(),
+    commonjs({
+      namedExports: {
+        'node_modules/react-is/index.js': ['isValidElementType', 'isContextConsumer'],
+        'node_modules/react-dom/index.js': ['unstable_batchedUpdates'],
+        'node_modules/styled-components/index.js': ['unstable_batchedUpdates'],
+      },
+    }),
     copy({
       targets: [{ src: 'src/DatePicker.css', dest: 'lib' }],
     }),
