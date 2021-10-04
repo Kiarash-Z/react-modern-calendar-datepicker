@@ -31,6 +31,7 @@ const Calendar = ({
   renderFooter,
   customDaysClassName,
   onChangeMonth = () => {},
+  handleOnChange = () => {},
 }) => {
   const calendarElement = useRef(null);
   const [mainState, setMainState] = useState({
@@ -85,6 +86,12 @@ const Calendar = ({
       ...mainState,
       monthChangeDirection: direction,
     });
+    if (direction === 'NEXT') {
+      handleOnChange({ ...activeDate, month: activeDate.month === 12 ? 1 : activeDate.month + 1 });
+    }
+    if (direction === 'PREVIOUS') {
+      handleOnChange({ ...activeDate, month: activeDate.month === 1 ? 12 : activeDate.month - 1 });
+    }
   };
 
   const updateDate = () => {
@@ -101,6 +108,7 @@ const Calendar = ({
       activeDate: { ...activeDate, month: newMonthNumber },
       isMonthSelectorOpen: false,
     });
+    handleOnChange({ ...activeDate, month: newMonthNumber });
   };
 
   const selectYear = year => {

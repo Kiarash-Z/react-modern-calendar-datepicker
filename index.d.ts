@@ -39,6 +39,7 @@ export interface CalendarProps<TValue extends Value> {
   renderFooter?: React.FC;
   customDaysClassName?: CustomDayClassNameItem[];
   onChangeMonth?: (month: object, direction: string) => void;
+  handleOnChange?: (value: object) => void;
 }
 
 export function Calendar(props: Optional<CalendarProps<DayValue>, 'value'>): React.ReactElement;
@@ -62,7 +63,9 @@ export interface DatePickerProps<TValue extends Value> extends CalendarProps<TVa
 
 type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-declare function DatePicker(props: Optional<DatePickerProps<DayValue>, 'value'>): React.ReactElement;
+declare function DatePicker(
+  props: Optional<DatePickerProps<DayValue>, 'value'>,
+): React.ReactElement;
 declare function DatePicker(props: DatePickerProps<Day[]>): React.ReactElement;
 declare function DatePicker(props: DatePickerProps<DayRange>): React.ReactElement;
 
@@ -70,7 +73,7 @@ type WeekDay = {
   name: string;
   short: string;
   isWeekend?: boolean;
-}
+};
 
 export type Utils = {
   monthsList: string[];
