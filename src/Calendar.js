@@ -17,6 +17,8 @@ const Calendar = ({
   calendarRangeBetweenClassName,
   calendarRangeEndClassName,
   disabledDays,
+  disabledWeekDays,
+  enabledDays,
   colorPrimary,
   colorPrimaryLight,
   slideAnimationDuration,
@@ -42,11 +44,19 @@ const Calendar = ({
       /* istanbul ignore else */
       if (key === 'Tab') calendarElement.current.classList.remove('-noFocusOutline');
     };
-    calendarElement.current.addEventListener('keyup', handleKeyUp, false);
+
+    /* istanbul ignore else */
+    if (calendarElement.current !== null) {
+      calendarElement.current.addEventListener('keyup', handleKeyUp, false);
+    }
+
     return () => {
-      calendarElement.current.removeEventListener('keyup', handleKeyUp, false);
+      /* istanbul ignore else */
+      if (calendarElement.current !== null) {
+        calendarElement.current.removeEventListener('keyup', handleKeyUp, false);
+      }
     };
-  });
+  }, [calendarElement]);
 
   const { getToday } = useLocaleUtils(locale);
   const { weekDays: weekDaysList, isRtl } = useLocaleLanguage(locale);
@@ -160,6 +170,8 @@ const Calendar = ({
         monthChangeDirection={mainState.monthChangeDirection}
         onSlideChange={updateDate}
         disabledDays={disabledDays}
+        disabledWeekDays={disabledWeekDays}
+        enabledDays={enabledDays}
         onDisabledDayError={onDisabledDayError}
         minimumDate={minimumDate}
         maximumDate={maximumDate}

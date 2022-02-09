@@ -106,6 +106,8 @@ export const PROPS_TABLE_CALENDAR_ROWS = [
   ['disabledDays', 'Array', `[]`, `An array of disabled calendar days. Disabled days won't be selectable, and
     they can't be included in a day range. If user tries to select/include them onDisabledDayError will be called`
   ],
+  ['disabledWeekDays', 'Array', `[]`, `An array of disabled week days (numbers 0-6. 0 = Monday, 6 = Sunday) Disabled week days won't be selectable. If user tries to select/include them onDisabledDayError will be called`],
+  ['enabledDays', 'Array', `[]`, `An array of forcely enabled calendar days. If a certain date is in 'enabledDays', then it will overwrite any disabled conditions. Meaning that this day will be always enabled.`],
   ['onDisabledDayError', 'Function', 'disabledDay => null', 'Gets called when user tries to select/include a disabled day'],
   ['selectorStartingYear', 'Number', 'current year - 100', 'The minimum selectable year when user opens the year selector'],
   ['selectorEndingYear', 'Number', 'current year + 50', 'The maximum selectable year when user opens the year selector'],
