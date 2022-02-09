@@ -1,5 +1,5 @@
 # react-modern-calendar-datepicker
-![npm](https://img.shields.io/npm/v/react-modern-calendar-datepicker)
+![npm](https://img.shields.io/npm/v/@sentisso/react-modern-calendar-datepicker)
 [![npm downloads](https://img.shields.io/npm/dm/@sentisso/react-modern-calendar-datepicker.svg)](https://npmjs.com/package/@sentisso/react-modern-calendar-datepicker)
 
 A modern, beautiful, customizable date picker for React.
