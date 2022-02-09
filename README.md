@@ -1,22 +1,39 @@
 # react-modern-calendar-datepicker
-[![Build Status](https://travis-ci.org/Kiarash-Z/react-modern-calendar-datepicker.svg?branch=master)](https://travis-ci.org/Kiarash-Z/react-modern-calendar-datepicker) [![codecov.io](https://codecov.io/github/kiarash-z/react-modern-calendar-datepicker/coverage.svg?branch=master)](https://codecov.io/github/kiarash-z/react-modern-calendar-datepicker?branch=master) ![npm](https://img.shields.io/npm/v/react-modern-calendar-datepicker)
+![npm](https://img.shields.io/npm/v/react-modern-calendar-datepicker)
 
 A modern, beautiful, customizable date picker for React.
 
-<a href="https://kiarash-z.github.io/react-modern-calendar-datepicker">
-	<img src="https://user-images.githubusercontent.com/20098648/76241893-f6722880-624a-11ea-9a80-eace8a4a27f0.png" alt="hero image" />
-</a>
+This is a modified version of the original [Kiarash-Z/react-modern-calendar-datepicker](https://github.com/Kiarash-Z/react-modern-calendar-datepicker) _(because it seems that it is no longer maintained)_, with some of my improvements (see below) merged with [HassanMojab/react-modern-calendar-datepicker](https://github.com/hassanmojab/react-modern-calendar-datepicker).
+
+## New features
+- Possibility to disable a specific week day _(for example a shop is closed on every saturday and sunday)_.
+- Possibility to forcely enable a day, even though it was disabled before via `disabledDays` or `disabledWeekDays` etc... _(for example there's an exception that a shop is opened on one specific saturday)_
+
+#### Usage:
+```jsx
+<DatePicker
+    disabledWeekDays={[0,3]} // this will disable every monday and thursday in every week
+
+    // just like disabledDays but it's just the opposite
+    enabledDays={[
+        { year: 2021, month: 2, day: 18 } // this day will be enabled, even though it is disabled via disabledWeekDays (this is a thursday)
+    ]}
+/>
+```
+
+- `disabledWeekDays`: an array of numeric values in the range of 0 to 6, where 0 is a Monday and 6 is a Sunday.
+- `enabledDays`: an array of `Day` objects. These days will be enabled eve.
 
 ## Installation 🚀
 ```bash
-npm i @hassanmojab/react-modern-calendar-datepicker
+npm i @sentisso/react-modern-calendar-datepicker
 
 # or if you prefer Yarn:
-yarn add @hassanmojab/react-modern-calendar-datepicker
+yarn add @sentisso/react-modern-calendar-datepicker
 ```
 
 ## Documentation 📄
-You can find documentation on [the website.](https://kiarash-z.github.io/react-modern-calendar-datepicker/)
+You can find documentation on [the official website.](https://kiarash-z.github.io/react-modern-calendar-datepicker/)
 
 The documentation is divided into several sections:
 - [Getting Started](https://kiarash-z.github.io/react-modern-calendar-datepicker/docs/getting-started)
