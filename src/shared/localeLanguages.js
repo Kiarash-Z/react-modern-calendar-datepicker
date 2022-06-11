@@ -74,6 +74,35 @@ const localeLanguages = {
     yearLetterSkip: -2,
     isRtl: true,
   },
+  pt: {
+    months: PORTUGUESE_MONTHS,
+    weekDays: PORTUGUESE_WEEK_DAYS,
+    weekStartingIndex: 0,
+    getToday(gregorainTodayObject) {
+      return gregorainTodayObject;
+    },
+    toNativeDate(date) {
+      return new Date(date.year, date.month - 1, date.day);
+    },
+    getMonthLength(date) {
+      return new Date(date.year, date.month, 0).getDate();
+    },
+    transformDigit(digit) {
+      return digit;
+    },
+    nextMonth: 'Próximo Mês',
+    previousMonth: 'Mês Anterior',
+    openMonthSelector: 'Selecionar Mês',
+    openYearSelector: 'Selecionar Ano',
+    closeMonthSelector: 'Voltar',
+    closeYearSelector: 'Voltar',
+    from: 'de',
+    to: 'para',
+    defaultPlaceholder: 'Selecione...',
+    digitSeparator: ',',
+    yearLetterSkip: 0,
+    isRtl: false,
+  },
 };
 
 const getLocaleDetails = locale => {
