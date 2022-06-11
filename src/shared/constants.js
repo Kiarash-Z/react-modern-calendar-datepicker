@@ -30,6 +30,21 @@ export const GREGORIAN_MONTHS = [
   'December',
 ];
 
+export const PORTUGUESE_MONTHS = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
+]
+
 export const PERSIAN_WEEK_DAYS = [
   {
     name: 'شنبه',
@@ -93,6 +108,39 @@ export const GREGORIAN_WEEK_DAYS = [
     short: 'S',
     isWeekend: true,
   },
+];
+
+export const PORTUGUESE_WEEK_DAYS = [
+   {
+     nome: 'Domingo',
+     short: 'D',
+     isWeekend: true,
+   },
+   {
+     nome: 'Segunda',
+     curto: 'S',
+   },
+   {
+     nome: 'Terça',
+     curto: 'T',
+   },
+   {
+     nome: 'Quarta',
+     curto: 'Q',
+   },
+   {
+     nome: 'Quinta',
+     curto: 'Q',
+   },
+   {
+     nome: 'Sexta',
+     curto: 'S',
+   },
+   {
+     nome: 'Sábado',
+     short: 'S',
+     isWeekend: true,
+   },
 ];
 
 export const MINIMUM_SELECTABLE_YEAR_SUBTRACT = 100;
