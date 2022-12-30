@@ -7,7 +7,7 @@
   "dependencies": {
     "@svgr/webpack": "^4.2.0",
     "axios": "^0.19.0",
-    "gatsby": "^2.3.16",
+    "gatsby": "^2.32.13",
     "gatsby-image": "^2.0.37",
     "gatsby-plugin-manifest": "^2.0.28",
     "gatsby-plugin-react-helmet": "^3.0.12",
