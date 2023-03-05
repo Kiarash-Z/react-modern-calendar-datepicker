@@ -37,16 +37,10 @@ const Calendar = ({
     isYearSelectorOpen: false,
   });
 
-  useEffect(() => {
-    const handleKeyUp = ({ key }) => {
-      /* istanbul ignore else */
-      if (key === 'Tab') calendarElement.current.classList.remove('-noFocusOutline');
-    };
-    calendarElement.current.addEventListener('keyup', handleKeyUp, false);
-    return () => {
-      calendarElement.current.removeEventListener('keyup', handleKeyUp, false);
-    };
-  });
+  const handleKeyUp = ({ key }) => {
+    /* istanbul ignore else */
+    if (key === 'Tab') calendarElement.current.classList.remove('-noFocusOutline');
+  };
 
   const { getToday } = useLocaleUtils(locale);
   const { weekDays: weekDaysList, isRtl } = useLocaleLanguage(locale);
@@ -117,6 +111,7 @@ const Calendar = ({
         '--cl-color-primary-light': colorPrimaryLight,
         '--animation-duration': slideAnimationDuration,
       }}
+      onKeyUp={handleKeyUp}
       ref={calendarElement}
     >
       <Header
