@@ -44,6 +44,7 @@ const Calendar = ({
     };
     calendarElement.current.addEventListener('keyup', handleKeyUp, false);
     return () => {
+      if (!calendarElement || !calendarElement.current) return;
       calendarElement.current.removeEventListener('keyup', handleKeyUp, false);
     };
   });
